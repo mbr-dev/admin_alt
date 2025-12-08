@@ -2,7 +2,7 @@ import tw from "tailwind-styled-components";
 
 export const Container = tw.div`
 w-[300px]
-h-[400px]
+h-[272px]
 flex
 flex-col
 items-center
@@ -15,17 +15,17 @@ bg-white
 z-10
 
 md:w-[500px]
-md:h-[550px]
+md:h-[450px]
 md:py-6
 md:px-4
 
 landscape:lg:w-[450px]
-landscape:lg:h-[524px]
+landscape:lg:h-[400px]
 landscape:lg:py-6
 landscape:lg:px-4
 
 landscape:xl:w-[500px]
-landscape:xl:h-[550px]
+landscape:xl:h-[450px]
 `;
 
 export const Main = tw.div`

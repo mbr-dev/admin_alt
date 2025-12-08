@@ -14,6 +14,20 @@ landscape:lg:h-[320px]
 landscape:xl:h-[324px]
 `;
 
+export const Title = tw.div`
+w-full
+h-full
+flex
+items-center
+justify-center
+text-xl
+font-bold
+
+md:text-2xl
+
+landscape:lg:text-2xl
+`;
+
 export const Trophies = tw.div`
 w-full
 h-full

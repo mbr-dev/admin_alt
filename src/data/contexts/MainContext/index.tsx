@@ -17,7 +17,6 @@ export function MainContextProvider({ children }: IMC.IMainContextProvider) {
 
   useEffect(() => {
     if (getData("token")) {
-      console.log("passou aqui")
       fetchData();
     }
   }, []);

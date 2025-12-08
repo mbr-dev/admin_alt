@@ -1,4 +1,5 @@
 export { default as XP } from "./XP.svg";
+export { default as Kid } from "./kid.svg";
 export { default as Home } from "./home.svg";
 export { default as Close } from "./close.svg";
 export { default as Moeda } from "./moeda.svg";
@@ -28,7 +29,6 @@ export { default as Login3 } from "./login_3.svg";
 export { default as Login4 } from "./login_4.svg";
 export { default as FlagBR } from "./flag_br.svg";
 export { default as FlagSP } from "./flag_es.svg";
-export { default as GeniusBtn } from "./genio.svg";
 export { default as FlagEUA } from "./flag_us.svg";
 export { default as Coracao } from "./coracao.svg";
 export { default as Numero1 } from "./numero1.svg";

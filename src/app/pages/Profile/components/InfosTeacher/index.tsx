@@ -42,7 +42,7 @@ export const InfosTeacher = () => {
                 <S.DropdownItem>
                   {profileContext?.userData?.unidades && profileContext?.userData?.unidades.map((item, index) => {
                     return index > 0 && (
-                      <p title={item.descricao}>{item.descricao}</p>
+                      <p key={index} title={item.descricao}>{item.descricao}</p>
                     )
                   })}
                 </S.DropdownItem>
@@ -66,7 +66,7 @@ export const InfosTeacher = () => {
                 <S.DropdownItem>
                   {profileContext?.userData?.turmas && profileContext?.userData?.turmas.map((item, index) => {
                     return index > 0 && (
-                      <p title={item.descricao}>{item.descricao}</p>
+                      <p key={index} title={item.descricao}>{item.descricao}</p>
                     )
                   })}
                 </S.DropdownItem>

@@ -19,7 +19,7 @@ export const Menu = ({ isOpen, handleNavigate }: MenuProps) => {
   return (
     <S.Container className={cn("", isOpen ? "animate-slidein-50dvw-0dvw" : "animate-slideout-50dvw-0dvw")}>
       {MENU_LIST.map((item, index) => {
-        return item.hierarchy.includes(Number(getData("hierarquia"))) && (
+        return (item.hierarchy.includes(Number(getData("hierarquia"))) && item.status === 1) && (
           <S.Main
             key={index}
             onClick={() => handleNavigate(item.route)}

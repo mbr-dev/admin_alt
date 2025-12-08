@@ -17,7 +17,7 @@ export function Home() {
 
   const getTeacherDatasForHomeALT = useCallback(async () => {
     try {
-      const { data } = await api.get("home/getTeacherDatasForHomeALT");
+      const { data } = await api.get("home/getTeacherDatasForHomeALTClinic");
       if (data) return data;
       return null;
     } catch (error) {

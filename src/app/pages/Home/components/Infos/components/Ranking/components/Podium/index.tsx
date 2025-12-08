@@ -9,61 +9,67 @@ export const Podium = () => {
 
   return (
     <S.Container>
-      <S.Trophies>
-        <S.TrophyInfo>
-          <S.Avatars>
-            <S.Avatar>
-              <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[1]?.avatar}.png`} alt="icone do avatar" />
-            </S.Avatar>
-            <p title={homeContext?.ranking[1]?.nome}>{homeContext?.ranking[1]?.nome}</p>
-          </S.Avatars>
-  
-          <S.XPInfo title={homeContext?.ranking[1]?.xp}>
-            <img src={ImgSVG.XP} alt="Medalha" />
-            <p>{homeContext?.ranking[1]?.xp > 999 ? "+999" : homeContext?.ranking[1]?.xp}XP</p>
-          </S.XPInfo>
+      {homeContext.ranking.length <= 0 ?
+        <S.Title>
+          Sem aluno no ranking...
+        </S.Title>
+        :
+        <S.Trophies>
+          <S.TrophyInfo>
+            <S.Avatars>
+              <S.Avatar>
+                <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[1]?.avatar}.png`} alt="icone do avatar" />
+              </S.Avatar>
+              <p title={homeContext?.ranking[1]?.nome}>{homeContext?.ranking[1]?.nome}</p>
+            </S.Avatars>
+    
+            <S.XPInfo title={homeContext?.ranking[1]?.xp}>
+              <img src={ImgSVG.XP} alt="Medalha" />
+              <p>{homeContext?.ranking[1]?.xp > 999 ? "+999" : homeContext?.ranking[1]?.xp}XP</p>
+            </S.XPInfo>
 
-          <S.Trophy>
-            <img src={`${ImgSVG.Trofeu2}`} alt="" />
-          </S.Trophy>
-        </S.TrophyInfo>
+            <S.Trophy>
+              <img src={`${ImgSVG.Trofeu2}`} alt="" />
+            </S.Trophy>
+          </S.TrophyInfo>
 
-        <S.TrophyInfo>
-          <S.Avatars>
-            <S.Avatar>
-              <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[0]?.avatar}.png`} alt="icone do avatar" />
-            </S.Avatar>
-            <p title={homeContext?.ranking[0]?.nome}>{homeContext?.ranking[0]?.nome}</p>
-          </S.Avatars>
+          <S.TrophyInfo>
+            <S.Avatars>
+              <S.Avatar>
+                <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[0]?.avatar}.png`} alt="icone do avatar" />
+              </S.Avatar>
+              <p title={homeContext?.ranking[0]?.nome}>{homeContext?.ranking[0]?.nome}</p>
+            </S.Avatars>
 
-          <S.XPInfo title={homeContext?.ranking[0]?.xp}>
-            <img src={ImgSVG.XP} alt="Medalha" />
-            <p>{homeContext?.ranking[0]?.xp > 999 ? "+999" : homeContext?.ranking[0]?.xp}XP</p>
-          </S.XPInfo>
+            <S.XPInfo title={homeContext?.ranking[0]?.xp}>
+              <img src={ImgSVG.XP} alt="Medalha" />
+              <p>{homeContext?.ranking[0]?.xp > 999 ? "+999" : homeContext?.ranking[0]?.xp}XP</p>
+            </S.XPInfo>
 
-          <S.Trophy>
-            <img src={`${ImgSVG.Trofeu1}`} alt="" />
-          </S.Trophy>
-        </S.TrophyInfo>
-  
-        <S.TrophyInfo>
-          <S.Avatars>
-            <S.Avatar>
-              <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[2]?.avatar}.png`} alt="icone do avatar" />
-            </S.Avatar>
-            <p title={homeContext?.ranking[2]?.nome}>{homeContext?.ranking[2]?.nome}</p>
-          </S.Avatars>
+            <S.Trophy>
+              <img src={`${ImgSVG.Trofeu1}`} alt="" />
+            </S.Trophy>
+          </S.TrophyInfo>
+    
+          <S.TrophyInfo>
+            <S.Avatars>
+              <S.Avatar>
+                <img src={`${URL_FILES}images/avatar/${homeContext?.ranking[2]?.avatar}.png`} alt="icone do avatar" />
+              </S.Avatar>
+              <p title={homeContext?.ranking[2]?.nome}>{homeContext?.ranking[2]?.nome}</p>
+            </S.Avatars>
 
-          <S.XPInfo title={homeContext?.ranking[2]?.xp}>
-            <img src={ImgSVG.XP} alt="Medalha" />
-            <p>{homeContext?.ranking[2]?.xp > 999 ? "+999" : homeContext?.ranking[2]?.xp}XP</p>
-          </S.XPInfo>
+            <S.XPInfo title={homeContext?.ranking[2]?.xp}>
+              <img src={ImgSVG.XP} alt="Medalha" />
+              <p>{homeContext?.ranking[2]?.xp > 999 ? "+999" : homeContext?.ranking[2]?.xp}XP</p>
+            </S.XPInfo>
 
-          <S.Trophy>
-            <img src={`${ImgSVG.Trofeu3}`} alt="" />
-          </S.Trophy>
-        </S.TrophyInfo>
-      </S.Trophies>
+            <S.Trophy>
+              <img src={`${ImgSVG.Trofeu3}`} alt="" />
+            </S.Trophy>
+          </S.TrophyInfo>
+        </S.Trophies>
+      }
     </S.Container>
   )
 }

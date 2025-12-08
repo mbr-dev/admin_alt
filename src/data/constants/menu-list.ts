@@ -7,6 +7,7 @@ interface IMENU_LIST {
   name: string;
   icon: string;
   hierarchy: number[];
+  status: number;
   subMenu: {
     id: number;
     route: string;
@@ -18,6 +19,7 @@ interface IMENU_LIST {
 export const MENU_LIST: IMENU_LIST[] = [
   {
     id: 0,
+    status: 1,
     route: "/",
     name: "home",
     icon: ImgSVG.Home,
@@ -26,6 +28,7 @@ export const MENU_LIST: IMENU_LIST[] = [
   },
   {
     id: 1,
+    status: 1,
     route: "NO",
     name: "management",
     icon: ImgSVG.Gestao,
@@ -47,6 +50,7 @@ export const MENU_LIST: IMENU_LIST[] = [
   },
   {
     id: 4,
+    status: 0,
     route: "NO",
     name: "learning",
     icon: ImgSVG.Books,
@@ -62,6 +66,7 @@ export const MENU_LIST: IMENU_LIST[] = [
   },
   {
     id: 2,
+    status: 1,
     route: "/profile",
     name: "profile",
     icon: ImgSVG.Perfil,
@@ -70,6 +75,7 @@ export const MENU_LIST: IMENU_LIST[] = [
   },
   {
     id: 3,
+    status: 1,
     route: "/support",
     name: "support",
     icon: ImgSVG.Suport,

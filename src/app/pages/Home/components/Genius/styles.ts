@@ -19,96 +19,48 @@ w-[280px]
 h-[144px]
 flex
 items-center
-justify-center
-gap-[32px]
+justify-between
 relative
-rounded-xl
-shadow-lg
 z-10
-bg-mbr-blue-50
+bg-red-20
 
 [&>img]:w-[250px]
 [&>img]:h-full
 [&>img]:object-contain
 
+landscape:w-[350px]
+
 md:w-[500px]
 md:h-[250px]
 
-landscape:lg:w-[800px]
+landscape:lg:w-[600px]
 landscape:lg:h-[350px]
 landscape:lg:rounded-2xl
-landscape:lg:gap-[100px]
 
-landscape:xl:w-[1000px]
+landscape:xl:w-[800px]
 landscape:xl:h-[380px]
 `;
 
-export const Genio = tw.div`
-w-[64px]
-animate-bounce3
-
-[&>img]:w-full
-[&>img]:h-full
-[&>img]:object-contain
-
-md:w-[132px]
-
-landscape:lg:w-[180px]
-
-landscape:xl:w-[200px]
-`;
-
 export const Div = tw.div`
-flex
-flex-col
-items-center
-justify-center
-gap-2
+w-[200px]
+text-[32px]
+text-white
 
-md:gap-4
+md:w-[320px]
+md:text-[44px]
 
-landscape:xl:gap-8
+landscape:lg:w-[400px]
+landscape:lg:text-[64px]
 `;
 
-export const Genio2 = tw.div`
-w-[132px]
-h-[74px]
+export const Kid = tw.div`
+w-[84px]
 
 [&>img]:w-full
 [&>img]:h-full
-[&>img]:object-contain
-
-md:w-[250px]
-md:h-[150px]
-
-landscape:lg:w-[350px]
-landscape:lg:h-[200px]
-
-landscape:xl:w-[400px]
-landscape:xl:h-[232px]
-`;
-
-export const ButtonPlay = tw.button`
-w-[84px]
-h-[32px]
-text-white
-text-base
-font-semibold
-rounded-lg
-
-bg-gradient-to-b
-from-mbr-blue-60
-to-mbr-blue-70
-
-hover:from-mbr-blue-70
-hover:to-mbr-blue-60
+[&>img]:object-cover
 
 md:w-[150px]
-md:h-[44px]
-md:rounded-xl
-md:text-lg
 
-landscape:lg:w-[224px]
-landscape:lg:h-[64px]
-landscape:lg:text-3xl
+landscape:lg:w-[200px]
 `;

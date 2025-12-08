@@ -22,7 +22,7 @@ export const Modal = () => {
 
         <S.Main>
           <S.Form>
-            {Number(getData("hierarquia")) === UserRole.SECRETARY &&
+            {/* {Number(getData("hierarquia")) === UserRole.SECRETARY &&
               <LabelSelect
                 id="1"
                 placeholder={t("select_unit")}
@@ -32,9 +32,9 @@ export const Modal = () => {
                 onChange={hook.handleSelectUnit}
                 label={t("unit")}
                 load={hook.loadLabel && hook.units?.list.length <= 0}
-              />}
+              />} */}
 
-            <LabelSelect
+            {/* <LabelSelect
               id="2"
               placeholder={t("select_class")}
               value={hook.classes?.selected ?? ""}
@@ -43,7 +43,7 @@ export const Modal = () => {
               disabled={hook.classes?.list.length <= 0}
               label={t("class")}
               load={hook.loadLabel && hook.classes?.list.length <= 0}
-            />
+            /> */}
 
             <LabelSelect
               id="3"

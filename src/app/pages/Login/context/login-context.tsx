@@ -8,7 +8,7 @@ export const LoginContext = createContext({} as ILC.ILoginContext);
 
 export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
   const nav = useNavigate();
-  const { Auth } = Login();
+  const { Auth, getUserUnitAndIdByIdUser } = Login();
   const { setData } = useStorage();
 
   const [load, setLoad] = useState<boolean>(false);
@@ -20,6 +20,13 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
       const response = await Auth({ usuario: user, senha: password});
       if (response) {
         saveDataInStorage({ keys: Object.keys(response), values: Object.values(response) });
+
+        const responseUnit = await getUserUnitAndIdByIdUser(response.id);
+        console.log("responseUnit ==> ", responseUnit)
+        if (responseUnit) {
+          setData("id_unidade", responseUnit.id_unidade);
+        }
+
         goToHome();
       }
     } finally {

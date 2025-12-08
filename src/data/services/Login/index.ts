@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { decodeToken } from "react-jwt";
 import { useApi, useToast } from "@/data/hooks";
+import { StudentService } from "@/data/models";
 
 export function Login() {
   const { api, get_error } = useApi();
@@ -20,5 +21,19 @@ export function Login() {
     }
   }, [api, get_error]);
 
-  return { Auth };
+  const getUserUnitAndIdByIdUser = useCallback(
+    async (id: number): Promise<StudentService.IUserUnitAndId> => {
+      try {
+        const { data } = await api.get(`unitUser/getUserUnitAndIdByIdUser/${id}`);
+        if (data) return data;
+        return {} as StudentService.IUserUnitAndId;
+      } catch (error) {
+        console.log(get_error(error));
+        return {} as StudentService.IUserUnitAndId;
+      }
+    },
+    [api, get_error]
+  );
+
+  return { Auth, getUserUnitAndIdByIdUser };
 }

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useApi } from "@/data/hooks";
-import { ClassTeacherService, ClassStudentService, ClassService, UnitNetworkService } from "@/data/models";
+import { ClassTeacherService, ClassStudentService, ClassService, UnitNetworkService, StudentService } from "@/data/models";
 
 export function Indicators() {
   const { api, get_error } = useApi();
@@ -22,6 +22,19 @@ export function Indicators() {
     async (id: number): Promise<ClassStudentService.IClassStudentService[]> => {
       try {
         const { data } = await api.get(`classStudent/getAllStudentByClass/${id}`);
+        return data ?? [];
+      } catch (error) {
+        console.log(get_error(error));
+        return [];
+      }
+    },
+    [api, get_error]
+  );
+
+  const getStudentsByUnit = useCallback(
+    async (idUnit: number): Promise<StudentService.IUnitStudent[]> => {
+      try {
+        const { data } = await api.get(`unitUser/getStudentsByUnit/${idUnit}`);
         return data ?? [];
       } catch (error) {
         console.log(get_error(error));
@@ -58,5 +71,5 @@ export function Indicators() {
     [api, get_error]
   );
 
-  return { getAllClassesByTeacher, getAllClassByUnit, getAllUnitsFromUnitNetworkByUser, getAllStudentByClass };
+  return { getAllClassesByTeacher, getAllClassByUnit, getAllUnitsFromUnitNetworkByUser, getAllStudentByClass, getStudentsByUnit };
 }

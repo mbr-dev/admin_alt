@@ -1,0 +1,20 @@
+{
+  "title": "Monitoring Panel -",
+  "subTitle": "Summary by use of schools in the network",
+  "total0": "Total rounds",
+  "total1": "Total number of students who played",
+  "total2": "Total active units",
+  "evolutionUnit": "Evolution of Rounds per Unit (Last 6 Months)",
+  "evolutionRound": "Evolution of Rounds per Student (Last 6 Months)",
+  "ranking": "Ranking of Units",
+  "inative": "Inactive units on the platform",
+  "totalStudent": "Total students",
+  "round": "Rounds",
+  "unit": "Unit",
+  "status": "Status",
+  "stable": "Stable",
+  "growth": "Growth",
+  "fall": "Fall",
+  "detailing": "School details",
+  "empty": "No units are inactive!"
+}

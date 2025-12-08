@@ -1,0 +1,26 @@
+import profile_ptBR from "./profile/pt-BR.json";
+import profile_en from "./profile/en.json";
+import profile_es from "./profile/es.json";
+import common_ptBR from "./common/pt-BR.json";
+import common_en from "./common/en.json";
+import common_es from "./common/es.json";
+import support_ptBR from "./support/pt-BR.json";
+import support_en from "./support/en.json";
+import support_es from "./support/es.json";
+import home_ptBR from "./home/pt-BR.json";
+import home_en from "./home/en.json";
+import home_es from "./home/es.json";
+import monitoring_ptBR from "./monitoring/pt-BR.json";
+import monitoring_en from "./monitoring/en.json";
+import monitoring_es from "./monitoring/es.json";
+import didactic_ptBR from "./didactic/pt-BR.json";
+import didactic_en from "./didactic/en.json";
+import didactic_es from "./didactic/es.json";
+import indicators_ptBR from "./indicators/pt-BR.json";
+import indicators_en from "./indicators/en.json";
+import indicators_es from "./indicators/es.json";
+import header_ptBR from "./header/pt-BR.json";
+import header_en from "./header/en.json";
+import header_es from "./header/es.json";
+
+export { profile_ptBR, profile_en, profile_es, common_ptBR, common_en, common_es, support_ptBR, support_en, support_es, home_ptBR, home_en, home_es, monitoring_ptBR, monitoring_en, monitoring_es, didactic_ptBR, didactic_en, didactic_es, indicators_ptBR, indicators_en, indicators_es, header_ptBR, header_en, header_es };

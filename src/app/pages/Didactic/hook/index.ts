@@ -1,0 +1,1 @@
+export { useDidactic } from "./useDidactic";

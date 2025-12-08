@@ -1,0 +1,9 @@
+export { Alt } from "./Alt";
+export { SME } from "./SME";
+export { Infos } from "./Infos";
+export { Genius } from "./Genius";
+export { Painel } from "./Painel";
+export { Student } from "./Student";
+export { Teacher } from "./Teacher";
+export { Container } from "./Container";
+export { Coordinator } from "./Coordinator";

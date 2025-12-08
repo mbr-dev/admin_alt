@@ -1,0 +1,20 @@
+{
+  "title": "Painel de Monitoramento -",
+  "subTitle": "Resumo por uso das escolas da rede",
+  "total0": "Total de rodadas",
+  "total1": "Total de alunos que jogaram",
+  "total2": "Total de unidades ativas",
+  "evolutionUnit": "Evolução de Rodadas por Unidade (Últimos 6 Meses)",
+  "evolutionRound": "Evolução de Rodadas por Aluno (Últimos 6 Meses)",
+  "ranking": "Ranking das Unidades",
+  "inative": "Unidades inativas na plataforma",
+  "totalStudent": "Total alunos",
+  "round": "Rodadas",
+  "unit": "Unidade",
+  "status": "Status",
+  "stable": "Estável",
+  "growth": "Crescimento",
+  "fall": "Caindo",
+  "detailing": "Detalhamento das escolas",
+  "empty": "Nenhuma unidade está inativa!"
+}

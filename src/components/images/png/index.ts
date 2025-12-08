@@ -1,0 +1,1 @@
+export { default as Login2 } from "./login_2.png";

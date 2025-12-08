@@ -1,0 +1,14 @@
+{
+  "name": "Nome",
+  "email": "E-mail",
+  "unit": "Unidade",
+  "class": "Turma",
+  "myConquest": "Minhas Conquistas",
+  "totalConquest": "Total de Conquistas",
+  "conquests": "Conquistas",
+  "allConquest": "Todas Conquistas",
+  "editAvatar": "Editar Avatar",
+  "save": "Salvar",
+  "done": "Feito",
+  "left": "Faltando"
+}

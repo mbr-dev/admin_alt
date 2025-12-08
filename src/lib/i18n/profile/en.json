@@ -1,0 +1,14 @@
+{
+  "name": "Name",
+  "email": "E-mail",
+  "unit": "Unit",
+  "class": "Class",
+  "myConquest": "My Achievements",
+  "totalConquest": "Total Achievements",
+  "conquests": "Achievements",
+  "allConquest": "All Achievements",
+  "editAvatar": "Edit Avatar",
+  "save": "Save",
+  "done": "Done",
+  "left": "Left"
+}

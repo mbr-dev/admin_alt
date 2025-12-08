@@ -1,15 +1,15 @@
 import * as S from "./styles";
 import { useHeader } from "./hook";
+import { Menu } from "./components";
 import { IoMdExit } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useApi, useMain } from "@/data/hooks";
-import { Menu, Language } from "./components";
 import { IoMenu, IoClose } from "react-icons/io5";
+import { useApi, useStorage } from "@/data/hooks";
 
 export const Header = () => {
   const navigate = useNavigate();
   const { URL_FILES } = useApi();
-  const mainContext = useMain();
+  const { getData } = useStorage();
   const hook = useHeader();
 
   return (
@@ -23,9 +23,9 @@ export const Header = () => {
         </S.Menu>
 
         <S.Infos>
-          <Language />
+          {/* <Language /> */}
           <S.Avatar onClick={() => navigate("/profile")}>
-            <img src={`${URL_FILES}images/avatar/${mainContext.avatarUser}.png`} alt="icone do avatar" />
+            <img src={`${URL_FILES}images/avatar/${getData("avatar")}.png`} alt="icone do avatar" />
           </S.Avatar>
           <S.ButtonExit onClick={hook.handleLogout}><IoMdExit /></S.ButtonExit>
         </S.Infos>

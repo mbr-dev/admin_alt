@@ -1,12 +1,11 @@
 import { Select } from "@/data/models";
-import { useMain, useStorage } from "@/data/hooks";
+import { useStorage } from "@/data/hooks";
 import { useEffect, useState } from "react";
 import { Indicators } from "@/data/services";
 import { useIndicators } from "../../../hook";
 import { UserRole } from "@/data/constants/user-roles";
 
 export const useModal = () => {
-  const mainContext = useMain();
   const { getData } = useStorage();
   const indicatorsContext = useIndicators();
   const { getAllClassesByTeacher, getAllStudentByClass, getAllClassByUnit, getAllUnitsFromUnitNetworkByUser } = Indicators();
@@ -22,7 +21,7 @@ export const useModal = () => {
     try {
       setLoadLabel(true);
 
-      const response = await getAllUnitsFromUnitNetworkByUser(mainContext.tokenData?.id);
+      const response = await getAllUnitsFromUnitNetworkByUser(Number(getData("id")));
       if(response) {
         const formatResponse = response.unit.map((item) => ({ id: item.id.toString(), label: item.descricao }));
         setUnits((prev) => ({
@@ -70,7 +69,7 @@ export const useModal = () => {
     try {
       setLoadLabel(true);
 
-      const response = await getAllClassesByTeacher(mainContext.tokenData?.id, unitId);
+      const response = await getAllClassesByTeacher(Number(getData("id")), unitId);
       if(response.length > 0) {
         const formatResponse = response.map((item) => ({ id: item.id_turma.toString(), label: item.descricao }));
         setClasses((prev) => ({
@@ -149,7 +148,7 @@ export const useModal = () => {
   }
 
   useEffect(() => {
-    if (mainContext.tokenData.hierarquia === UserRole.SECRETARY && indicatorsContext.showModal) {
+    if (Number(getData("hierarquia")) === UserRole.SECRETARY && indicatorsContext.showModal) {
       const cached = sessionStorage.getItem("class-sme");
       if (cached) {
         const parsed = JSON.parse(cached);
@@ -160,7 +159,7 @@ export const useModal = () => {
       } else {
         fetchDataSME();
       }
-    } else if (mainContext.tokenData.hierarquia === UserRole.COORDINATOR && indicatorsContext.showModal) {
+    } else if (Number(getData("hierarquia")) === UserRole.COORDINATOR && indicatorsContext.showModal) {
       const cached = sessionStorage.getItem("class-cood");
       if (cached) {
         const parsed = JSON.parse(cached);
@@ -171,7 +170,7 @@ export const useModal = () => {
       } else {
         fetchDataCood();
       }
-    } else if (mainContext.tokenData.hierarquia === UserRole.TEACHER && indicatorsContext.showModal) {
+    } else if (Number(getData("hierarquia")) === UserRole.TEACHER && indicatorsContext.showModal) {
       const cached = sessionStorage.getItem("class-teacher");
       if (cached) {
         const parsed = JSON.parse(cached);

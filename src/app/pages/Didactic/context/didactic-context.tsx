@@ -1,14 +1,15 @@
-import { useMain } from "@/data/hooks";
 import * as ICDC from "./didactic-model";
 import { Didactic } from "@/data/services";
+import { useMain, useStorage } from "@/data/hooks";
 import { ProjectInfosService } from "@/data/models";
-import { useState, createContext, useEffect } from "react";
 import { UserRole } from "@/data/constants/user-roles";
+import { useState, createContext, useEffect } from "react";
 
 export const DidacticContext = createContext({} as ICDC.IDidacticContext);
 
 export function DidacticContextProvider({ children }: ICDC.IDidacticContextProvider) {
   const mainContext = useMain();
+  const { getData } = useStorage();
   const { getStudentProjectInfoWithModules, getAllProjectModuleActivityByModule, getProjectInfosWithModules } = Didactic();;
 
   const [data, setData] = useState<ProjectInfosService.IProjectInfosService | null>(null);
@@ -23,7 +24,7 @@ export function DidacticContextProvider({ children }: ICDC.IDidacticContextProvi
     try {
       mainContext.setLoad(true);
 
-      const response = mainContext.tokenData.hierarquia === UserRole.STUDENT ?
+      const response = Number(getData("hierarquia")) === UserRole.STUDENT ?
         await getStudentProjectInfoWithModules(1)
         :
         await getProjectInfosWithModules(1);

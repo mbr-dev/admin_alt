@@ -1,21 +1,21 @@
 import * as S from "./styles";
 import { cn } from "@/lib/utils";
 import { ImgSVG } from "@/components/images";
-import { useApi, useMain } from "@/data/hooks";
+import { useApi, useStorage } from "@/data/hooks";
 import { useTranslation } from "react-i18next";
 import { useHome } from "../../../../../../hook";
 import { UserRole } from "@/data/constants/user-roles";
 
 export const Position = () => {
-  const { URL_FILES } = useApi();
-  const mainContext = useMain();
-  const { t } = useTranslation("home");
   const homeContext = useHome();
+  const { URL_FILES } = useApi();
+  const { getData } = useStorage();
+  const { t } = useTranslation("home");
 
   return (
     <S.Container className={
       cn("blur-sm",
-        (mainContext.tokenData.hierarquia === UserRole.STUDENT || mainContext.tokenData.hierarquia === UserRole.TEACHER) && "blur-none")
+        (Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) && "blur-none")
       }
     >
       <h3>{t("position")}</h3>

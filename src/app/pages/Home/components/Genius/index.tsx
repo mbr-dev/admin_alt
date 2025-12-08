@@ -1,13 +1,12 @@
 import * as S from "./styles";
 import { Animations } from "./components";
+import { useStorage } from "@/data/hooks";
 import { ImgSVG } from "@/components/images";
 import { useTranslation } from "react-i18next";
-import { useMain, useStorage } from "@/data/hooks";
 import { UserRole } from "@/data/constants/user-roles";
 
 export const Genius = () => {
   const { t } = useTranslation("home");
-  const mainContext = useMain();
   const { getData } = useStorage();
 
   const GENIUS_IMG = [
@@ -26,7 +25,7 @@ export const Genius = () => {
           <S.Genio2>
             <img src={GENIUS_IMG[Number(getData("id_idioma"))]} alt="Genio" />
           </S.Genio2>
-          {(mainContext.tokenData.hierarquia === UserRole.STUDENT || mainContext.tokenData.hierarquia === UserRole.TEACHER) &&
+          {(Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) &&
             <S.ButtonPlay>{t("button_play")}</S.ButtonPlay>}
         </S.Div>
 

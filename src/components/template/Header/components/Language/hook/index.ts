@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useStorage, useMain } from "@/data/hooks";
 
 export const useLanguage = () => {
-  const { getData, setData } = useStorage();
+  const { setData, getData } = useStorage();
   const mainContext = useMain();
   const { i18n, } = useTranslation();
 
@@ -38,7 +38,6 @@ export const useLanguage = () => {
       const selectedLanguage = languages.find(lang => lang.code === languageCode);
       if (selectedLanguage) {
         setData("id_idioma", selectedLanguage.id.toString());
-        mainContext.setIdioma(selectedLanguage.id);
       } else{
         console.log("Não foi encontrado o idioma");
       }
@@ -50,12 +49,12 @@ export const useLanguage = () => {
   };
 
   useEffect(() => {
-    const language = getLanguageFromId(getData("id_idioma"));
+    const language = getLanguageFromId(getData("idioma"));
 
     if (language && i18n.language !== language) {
       i18n.changeLanguage(language);
     }
-  }, [getData, i18n]);
+  }, [mainContext, i18n]);
 
   return { flags, showFlags, setShowFlags, setFlags, handleLanguageChange };
 }

@@ -1,20 +1,17 @@
 import * as ILC from "./login-model";
 import { Login } from "@/data/services";
+import { useStorage } from "@/data/hooks";
 import { useNavigate } from "react-router-dom";
 import { useState, createContext } from "react";
-import { useMain, useStorage } from "@/data/hooks";
 
 export const LoginContext = createContext({} as ILC.ILoginContext);
 
 export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
-  const mainContext = useMain();
-
   const nav = useNavigate();
   const { Auth } = Login();
   const { setData } = useStorage();
 
   const [load, setLoad] = useState<boolean>(false);
- 
   //Faz o login
   const handleSignIn = async (user: string, password: string) => {
     try {
@@ -22,7 +19,6 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
 
       const response = await Auth({ usuario: user, senha: password});
       if (response) {
-        console.log(response);
         saveDataInStorage({ keys: Object.keys(response), values: Object.values(response) });
         goToHome();
       }
@@ -42,11 +38,13 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
 
       setData(key, data.values[index]);
     });
+
+    setData("id_idioma", 1);
   }
   //Manda para Home
   const goToHome = () => {
     nav("/");
-    location.reload();
+    window.location.reload();
   }
 
   return (

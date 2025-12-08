@@ -3,7 +3,7 @@ import { useMenu } from "./hook";
 import { cn } from "@/lib/utils";
 import { MENU_LIST } from "@/data/constants";
 import { useTranslation } from "react-i18next";
-import { useMain, useStorage } from "@/data/hooks";
+import { useStorage } from "@/data/hooks";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 interface MenuProps {
@@ -12,7 +12,6 @@ interface MenuProps {
 }
 
 export const Menu = ({ isOpen, handleNavigate }: MenuProps) => {
-  const mainContext = useMain();
   const { t } = useTranslation("header");
   const hook = useMenu();
   const { getData } = useStorage();
@@ -20,7 +19,7 @@ export const Menu = ({ isOpen, handleNavigate }: MenuProps) => {
   return (
     <S.Container className={cn("", isOpen ? "animate-slidein-50dvw-0dvw" : "animate-slideout-50dvw-0dvw")}>
       {MENU_LIST.map((item, index) => {
-        return item.hierarchy.includes(mainContext.tokenData.hierarquia) && (
+        return item.hierarchy.includes(Number(getData("hierarquia"))) && (
           <S.Main
             key={index}
             onClick={() => handleNavigate(item.route)}
@@ -38,7 +37,7 @@ export const Menu = ({ isOpen, handleNavigate }: MenuProps) => {
               {hook.dropDown === item.id && item.subMenu.length > 0 && 
                 <S.Dropdown>
                   {item.subMenu.map((subItem, subIndex) => {
-                    return subItem.hierarchy.includes(mainContext.tokenData.hierarquia) && (
+                    return subItem.hierarchy.includes(Number(getData("hierarquia"))) && (
                       <S.DropdownItem
                         key={subIndex}
                         title={t(subItem.name)}

@@ -10,7 +10,7 @@ export const ProfileContext = createContext({} as IHC.IProfileContext);
 
 export function ProfileContextProvider({ children }: IHC.IProfileContextProvider) {
   const mainContext = useMain();
-  const { setData } = useStorage();
+  const { setData, getData } = useStorage();
   const { t } = useTranslation("profile");
   const { getStudentByStudentId, getTeacherProfile, getCoordinatorProfile, getAllAchievementsForHomeByUserId, getAllAvatars, updateAvatar } = Profile();
 
@@ -34,17 +34,17 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
       mainContext.setLoad(true);
 
       const response = 
-        mainContext.tokenData.hierarquia === UserRole.STUDENT ? await getStudentByStudentId(mainContext.tokenData?.id_hierarquia) :
-        mainContext.tokenData.hierarquia === UserRole.TEACHER ? await getTeacherProfile() : await getCoordinatorProfile();
+        Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentByStudentId(Number(getData("id_hierarquia"))) :
+        Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherProfile() : await getCoordinatorProfile();
 
       const responseAvatar = await getAllAvatars();
       //Busca as conquista do professor e do aluno
-      const responseAchievement = (mainContext.tokenData.hierarquia === UserRole.STUDENT || mainContext.tokenData.hierarquia === UserRole.TEACHER) &&
-        await getAllAchievementsForHomeByUserId(mainContext.tokenData?.id);
+      const responseAchievement = (Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) &&
+        await getAllAchievementsForHomeByUserId(Number(getData("id")));
 
       if (response) {
         setUserData(response);
-        if (mainContext.tokenData.hierarquia === UserRole.STUDENT || mainContext.tokenData.hierarquia === UserRole.TEACHER) {
+        if (Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) {
           setAchievements(responseAchievement);
         }
         setAllAvatars(responseAvatar);
@@ -80,10 +80,9 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
       mainContext.setLoad(true);
       setShowAvatars(false);
 
-      const response = await updateAvatar(mainContext.tokenData?.id, tempAvatar);
+      const response = await updateAvatar(Number(getData("id")), tempAvatar);
       if (response) {
         setData("avatar", tempLink);
-        mainContext.setAvatarUser(tempLink);
       }
 
       mainContext.setLoad(false);

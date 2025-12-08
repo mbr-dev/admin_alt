@@ -1,10 +1,10 @@
 import * as C from "../";
 import * as S from "./styles";
-import { useMain } from "@/data/hooks";
+import { useStorage } from "@/data/hooks";
 
 
 export const Container = () => {
-  const mainContext = useMain();
+  const { getData } = useStorage();
 
   const componentsByHierarchy = [
     null,
@@ -17,7 +17,7 @@ export const Container = () => {
 
   return (
     <S.Container>
-      {componentsByHierarchy[mainContext.tokenData?.hierarquia]}
+      {componentsByHierarchy[Number(getData("hierarquia"))]}
     </S.Container>
   )
 }

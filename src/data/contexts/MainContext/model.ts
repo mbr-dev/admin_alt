@@ -8,12 +8,7 @@ export interface IMainContextProvider {
 export interface IMainContext {
   load: boolean;
   isReady: boolean;
-  avatarUser: string;
-  idioma: number;
-  tokenData: ITokenData;
   setLoad: Dispatch<SetStateAction<boolean>>;
-  setIdioma: Dispatch<SetStateAction<number>>;
-  setAvatarUser: Dispatch<SetStateAction<string>>;
 }
 
 export interface ITokenData {

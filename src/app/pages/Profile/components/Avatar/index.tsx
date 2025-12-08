@@ -2,18 +2,18 @@ import * as S from "./styles";
 import { useProfile } from "../../hook"
 import { MdEdit } from "react-icons/md";
 import { ImgSVG } from "@/components/images";
-import { useApi, useMain } from "@/data/hooks";
+import { useApi, useStorage } from "@/data/hooks";
 
 export const Avatar = () => {
+  const { getData } = useStorage();
   const profileContext = useProfile();
-  const mainContext = useMain();
   const { URL_FILES } = useApi();
 
   return (
     <S.Container>
       <S.Avatar>
         <S.Button onClick={() => profileContext.setShowAvatars(true)}><MdEdit /></S.Button>
-        <img src={`${URL_FILES}images/avatar/${mainContext.avatarUser}.png`} alt="icone do avatar" />
+        <img src={`${URL_FILES}images/avatar/${getData("avatar")}.png`} alt="icone do avatar" />
       </S.Avatar>
 
       <S.Main>

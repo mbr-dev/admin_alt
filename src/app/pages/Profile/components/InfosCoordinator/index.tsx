@@ -1,14 +1,14 @@
-import { useMain } from "@/data/hooks";
 import { useProfile } from "../../hook";
+import { useStorage } from "@/data/hooks";
 import * as SIT from "../InfosTeacher/styles";
 import { useTranslation } from "react-i18next";
 import { UserRole } from "@/data/constants/user-roles";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export const InfosCoordinator = () => {
-  const mainContext = useMain();
   const { t } = useTranslation("profile");
   const profileContext = useProfile();
+  const { getData } = useStorage();
 
   return (
     <SIT.Container>
@@ -25,11 +25,11 @@ export const InfosCoordinator = () => {
         </SIT.Div>
 
         <SIT.Div>
-          {(mainContext.tokenData.hierarquia === UserRole.TEACHER || mainContext.tokenData.hierarquia === UserRole.STUDENT || mainContext.tokenData.hierarquia === UserRole.COORDINATOR) &&
+          {(Number(getData("hierarquia")) === UserRole.TEACHER || Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.COORDINATOR) &&
             <SIT.DivInside>
               <h3>{t("unit")}</h3>
-              {mainContext.tokenData.hierarquia === UserRole.STUDENT && <p>{profileContext.userData?.unidade}</p>}
-              {(mainContext.tokenData.hierarquia === UserRole.TEACHER || mainContext.tokenData.hierarquia === UserRole.COORDINATOR) &&
+              {Number(getData("hierarquia")) === UserRole.STUDENT && <p>{profileContext.userData?.unidade}</p>}
+              {(Number(getData("hierarquia")) === UserRole.TEACHER || Number(getData("hierarquia")) === UserRole.COORDINATOR) &&
                 <SIT.Dropdown>
                   {profileContext.userData?.unidades && profileContext.userData?.unidades.length > 1 ?
                     <SIT.ButtonDropdown onClick={() => profileContext.handleDropdown(0)}>

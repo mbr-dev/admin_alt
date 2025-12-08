@@ -1,12 +1,11 @@
+import { useStorage } from "@/data/hooks";
 import { useEffect, useState } from "react";
 import { MENU_LIST } from "@/data/constants";
 import { useTranslation } from "react-i18next";
-import { useStorage, useMain } from "@/data/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const useHeader = () => {
   const { removeAll } = useStorage();
-  const mainContext = useMain();
   const location = useLocation();
   const { t } = useTranslation("header");
   const navigate = useNavigate();
@@ -55,10 +54,10 @@ export const useHeader = () => {
     sessionStorage.removeItem("class-teacher");
     sessionStorage.removeItem("class-cood");
     sessionStorage.removeItem("class-sme");
-    window.parent.postMessage({ type: "NAVIGATE_TO_HOME" }, "*");
+    window.location.reload();
   }
 
-  useEffect(() => { fetchData(); }, [mainContext.idioma]);
+  useEffect(() => { fetchData(); }, []);
 
   return { showMenu, setShowMenu, handleLogout, label, handleNavigate }
 }

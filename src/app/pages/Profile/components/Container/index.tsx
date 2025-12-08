@@ -1,9 +1,9 @@
 import * as S from "./styles";
-import { useMain } from "@/data/hooks";
+import { useStorage } from "@/data/hooks";
 import { Animations, Avatar, InfosCoordinator, InfosStudent, InfosTeacher, ModalEditAvatar } from "../";
 
 export const Container = () => {
-  const mainContext = useMain();
+  const { getData } = useStorage();
 
   const infoByHierarchy = [
     null,
@@ -19,7 +19,7 @@ export const Container = () => {
 
       <S.Main>
         <Avatar />
-        {infoByHierarchy[mainContext.tokenData.hierarquia]}
+        {infoByHierarchy[Number(getData("hierarquia"))]}
       </S.Main>
     </S.Container>
   )

@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { useModal } from "./hook";
-import { useMain } from "@/data/hooks";
 import { Dialog } from "@/components/ui";
+import { useStorage  } from "@/data/hooks";
 import { useIndicators } from "../../hook";
 import { useTranslation } from "react-i18next";
 import { LabelSelect } from "@/components/template";
@@ -9,7 +9,7 @@ import { UserRole } from "@/data/constants/user-roles";
 
 export const Modal = () => {
   const hook = useModal();
-  const mainContext = useMain();
+  const { getData } = useStorage();
   const { t } = useTranslation("indicators");
   const indicatorsContext = useIndicators();
 
@@ -22,7 +22,7 @@ export const Modal = () => {
 
         <S.Main>
           <S.Form>
-            {mainContext.tokenData.hierarquia === UserRole.SECRETARY &&
+            {Number(getData("hierarquia")) === UserRole.SECRETARY &&
               <LabelSelect
                 id="1"
                 placeholder={t("select_unit")}

@@ -1,6 +1,6 @@
 import * as IHC from "./home-model";
 import { Home } from "@/data/services";
-import { useMain } from "@/data/hooks";
+import { useMain, useStorage } from "@/data/hooks";
 import { UserRole } from "@/data/constants/user-roles";
 import { useState, createContext, useEffect } from "react";
 
@@ -8,6 +8,7 @@ export const HomeContext = createContext({} as IHC.IHomeContext);
 
 export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   const mainContext = useMain();
+  const { getData } = useStorage();
 
   const { getStudentDatasForHomeALT, getTeacherDatasForHomeALT, getSecretaryDatasForHomeALT, getCoordinatorDatasForHomeALT } = Home();
 
@@ -20,12 +21,12 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
       mainContext.setLoad(true);
 
       const response = 
-        mainContext.tokenData.hierarquia === UserRole.COORDINATOR ? await getCoordinatorDatasForHomeALT() :
-        mainContext.tokenData.hierarquia === UserRole.TEACHER ? await getTeacherDatasForHomeALT() :
-        mainContext.tokenData.hierarquia === UserRole.STUDENT ? await getStudentDatasForHomeALT() : await getSecretaryDatasForHomeALT();
+        Number(getData("hierarquia")) === UserRole.COORDINATOR ? await getCoordinatorDatasForHomeALT() :
+        Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherDatasForHomeALT() :
+        Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentDatasForHomeALT() : await getSecretaryDatasForHomeALT();
 
       if (response) {
-        const eventByHierarchy = mainContext.tokenData.hierarquia === UserRole.SECRETARY ? response.eventsHome : response.eventsActivity;
+        const eventByHierarchy = Number(getData("hierarquia")) === UserRole.SECRETARY ? response.eventsHome : response.eventsActivity;
 
         setUserPosition(response.rakingHome.usuario_posicao);
         setRanking(response.rakingHome.data);
@@ -54,10 +55,10 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
       setRanking(parsed.ranking);
       setUserPosition(parsed.userPosition);
       setEvents(parsed.events);
-    } else if (mainContext.isReady && mainContext.tokenData.hierarquia) {
+    } else if (mainContext.isReady && Number(getData("hierarquia"))) {
       fetchData();
     }
-  }, [mainContext.tokenData, mainContext.isReady]);
+  }, [mainContext.isReady]);
 
   return (
     <HomeContext.Provider value={{ ranking, userPosition, events }}>

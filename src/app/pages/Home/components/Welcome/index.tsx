@@ -1,9 +1,12 @@
 import * as S from "./styles";
+import { useHome } from "../../hook";
 import { Animations } from "./components";
 import { ImgSVG } from "@/components/images";
 import { TypeAnimation } from "react-type-animation";
 
-export const Genius = () => {
+export const Welcome = () => {
+  const homeContext = useHome();
+
   return (
     <S.Container>
       <Animations />
@@ -12,7 +15,7 @@ export const Genius = () => {
         <S.Div>
           <TypeAnimation
             sequence={[
-              `BEM VINDO`,
+              `BEM VINDO, ${homeContext.name}`,
               1000,
             ]}
             wrapper="span"

@@ -3,7 +3,7 @@ import * as C from "..";
 export const Student = () => {
   return (
     <>
-      <C.Genius />
+      <C.Welcome />
       <C.Alt />
       <C.Infos />
     </>

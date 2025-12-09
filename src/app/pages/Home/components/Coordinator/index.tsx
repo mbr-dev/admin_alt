@@ -1,12 +1,12 @@
 import * as S from "./styles";
-import * as Components from "..";
+import * as C from "..";
 
 export const Coordinator = () => {
   return (
     <S.Container>
-      <Components.Genius />
-      <Components.Painel />
-      <Components.Infos />
+      <C.Welcome />
+      <C.Painel />
+      <C.Infos />
     </S.Container>
   )
 }

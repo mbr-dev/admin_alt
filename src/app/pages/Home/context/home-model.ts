@@ -7,8 +7,8 @@ export interface IHomeContextProvider {
 
 export interface IHomeContext {
   events: any[];
+  name: string;
   ranking: IUserPosition[];
-  userPosition: IUserPosition | null;
 }
 
 export interface IUserPosition {

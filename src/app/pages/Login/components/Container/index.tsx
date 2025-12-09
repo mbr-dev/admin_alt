@@ -41,12 +41,24 @@ export const Container = () => {
 
           <S.Label htmlFor="user_name">
             Usuário
-            <input type="text" id="user_name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input
+              type="text"
+              id="user_name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={loginContext.load}
+            />
           </S.Label>
 
           <S.Label htmlFor="user_password">
             Senha
-            <input type={showPassword ? "text" : "password"} id="user_password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type={showPassword ? "text" : "password"}
+              id="user_password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loginContext.load}
+            />
 
             <S.ButtonEyes
               type="button"

@@ -15,7 +15,7 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  const getTeacherDatasForHomeALT = useCallback(async () => {
+  const getTeacherDatasForHomeALTClinic = useCallback(async () => {
     try {
       const { data } = await api.get("home/getTeacherDatasForHomeALTClinic");
       if (data) return data;
@@ -48,5 +48,5 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  return { getStudentDatasForHomeALT, getTeacherDatasForHomeALT, getSecretaryDatasForHomeALT, getCoordinatorDatasForHomeALT };
+  return { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALT, getCoordinatorDatasForHomeALT };
 }

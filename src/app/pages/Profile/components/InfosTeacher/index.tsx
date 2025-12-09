@@ -1,13 +1,13 @@
 import * as S from "./styles";
-import { useApi } from "@/data/hooks";
+//import { useApi } from "@/data/hooks";
 import { useProfile } from "../../hook";
-import { Carousel } from "@/components/ui";
+//import { Carousel } from "@/components/ui";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
+//import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
 
 export const InfosTeacher = () => {
-  const { URL_FILES } = useApi();
+  //const { URL_FILES } = useApi();
   const { t } = useTranslation("profile");
   const profileContext = useProfile();
 
@@ -50,7 +50,7 @@ export const InfosTeacher = () => {
             </S.Dropdown>
           </S.DivInside>
 
-          <S.DivInside>
+          {/* <S.DivInside>
             <h3>{t("class")}</h3>
 
             <S.Dropdown>
@@ -72,10 +72,10 @@ export const InfosTeacher = () => {
                 </S.DropdownItem>
               }
             </S.Dropdown>
-          </S.DivInside>
+          </S.DivInside> */}
         </S.Div>
 
-        <S.DivInsideFull>
+{/*         <S.DivInsideFull>
           <h3>{t("myConquest")}</h3>
 
           <Carousel.Carousel>
@@ -90,9 +90,9 @@ export const InfosTeacher = () => {
               })}
             </Carousel.CarouselContent>
           </Carousel.Carousel>
-        </S.DivInsideFull>
+        </S.DivInsideFull> */}
   
-        <S.DivInsideFull>
+       {/*  <S.DivInsideFull>
           <h3>{t("totalConquest")}</h3>
 
           <S.Grafico>
@@ -144,9 +144,9 @@ export const InfosTeacher = () => {
               </PieChart>
             </ResponsiveContainer>
           </S.Grafico>
-        </S.DivInsideFull>
+        </S.DivInsideFull> */}
 
-        <S.DivInsideFull>
+        {/* <S.DivInsideFull>
           <h3>{t("allConquest")}</h3>
           <Carousel.Carousel>
             <Carousel.CarouselContent>
@@ -159,7 +159,7 @@ export const InfosTeacher = () => {
               ))}
             </Carousel.CarouselContent>
           </Carousel.Carousel>
-        </S.DivInsideFull>
+        </S.DivInsideFull> */}
       </S.Main>
     </S.Container>
   )

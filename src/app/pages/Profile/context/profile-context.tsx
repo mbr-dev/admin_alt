@@ -39,12 +39,11 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
 
       const responseAvatar = await getAllAvatars();
       //Busca as conquista do professor e do aluno
-      const responseAchievement = (Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) &&
-        await getAllAchievementsForHomeByUserId(Number(getData("id")));
+      const responseAchievement = Number(getData("hierarquia")) === UserRole.STUDENT && await getAllAchievementsForHomeByUserId(Number(getData("id")));
 
       if (response) {
         setUserData(response);
-        if (Number(getData("hierarquia")) === UserRole.STUDENT || Number(getData("hierarquia")) === UserRole.TEACHER) {
+        if (Number(getData("hierarquia")) === UserRole.STUDENT) {
           setAchievements(responseAchievement);
         }
         setAllAvatars(responseAvatar);

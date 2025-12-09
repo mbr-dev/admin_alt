@@ -11,15 +11,12 @@ export const useModal = () => {
 
   const [students, setStudents] = useState<Select.ISelect>({ list: [], selected: "" });
   const [loadLabel, setLoadLabel] = useState<boolean>(false);
-
-  const unitId = Number(getData("id_unidade"));
-
-  //Função que busca os dados para o select professor
+  //Função que busca os alunos pela unidade
   const fetchData = async () => {
     try {
       setLoadLabel(true);
 
-      const response = await getStudentsByUnit(unitId);
+      const response = await getStudentsByUnit(Number(getData("id_unidade")));
       if(response.length > 0) {
         const formatResponse = response.map((item) => ({ id: item.id.toString(), label: item.nome }));
         setStudents((prev) => ({
@@ -50,13 +47,16 @@ export const useModal = () => {
   }
 
   useEffect(() => {
+    //Pega os dados da sessão
     const cached = sessionStorage.getItem("students-teacher");
+    //Caso tenha dados na sessão carrega
     if (cached) {
       const parsed = JSON.parse(cached);
       setStudents((prev) => ({
         ...prev,
         list: parsed.studentsTeacher
       }))
+    //Caso não tenha dados na seção busca
     } else {
       fetchData();
     }

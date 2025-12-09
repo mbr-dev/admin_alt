@@ -27,8 +27,6 @@
   "time": "Time by Question",
   "start": "Start",
   "end": "Conclusion",
-  "select_unit": "Select a unit",
-  "select_class": "Select a class",
   "select_student": "Select a student",
   "iap_title": "Performance Index (IAP)",
   "iap_textTop": "The Performance Index (IAp) represents the percentage of correct answers a student receives in an activity. It is calculated by dividing the number of correct answers by the total number of attempts made.",

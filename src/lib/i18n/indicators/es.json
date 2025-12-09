@@ -27,8 +27,6 @@
   "time": "Tiempo por pregunta",
   "start": "Comenzar",
   "end": "Conclusión",
-  "select_unit": "Seleccione una unidad",
-  "select_class": "Selecciona una clase",
   "select_student": "Seleccione un estudiante",
   "iap_title": "Índice de rendimiento (IAP)",
   "iap_textTop": "El Índice de Rendimiento (IAp) representa el porcentaje de respuestas correctas que un estudiante recibe en una actividad. Se calcula dividiendo el número de respuestas correctas entre el número total de intentos realizados.",

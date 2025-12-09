@@ -27,8 +27,6 @@
   "time": "Tempo por Questão",
   "start": "Início",
   "end": "Conclusão",
-  "select_unit": "Selecione uma unidade",
-  "select_class": "Selecione uma turma",
   "select_student": "Selecione um aluno",
   "iap_title": "Índice de aproveitamento (IAP)",
   "iap_textTop": "O Índice de Aproveitamento (IAp) representa o percentual de acertos do aluno em uma atividade. Ele é calculado dividindo-se o número de respostas corretas pelo total de tentativas realizadas.",

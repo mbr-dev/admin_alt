@@ -1,6 +1,6 @@
 import * as S from "./styles";
-import { useState } from "react";
 import { useLogin } from "../../hook";
+import { FormEvent, useState } from "react";
 import { ImgSVG, ImgPng } from "@/components/images";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
@@ -10,6 +10,12 @@ export const Container = () => {
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  //Envia o dados para o login
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    loginContext.handleSignIn(name, password)
+  }
 
   return (
     <S.Container style={{ backgroundImage: `url(${ImgSVG.Login4})` }}>
@@ -23,7 +29,7 @@ export const Container = () => {
 
 
       <S.Main>
-        <S.Form>
+        <S.Form onSubmit={handleSubmit}>
           <S.Logo>
             <img src={ImgSVG.LogoMbr} alt="" />
           </S.Logo>
@@ -43,6 +49,7 @@ export const Container = () => {
             <input type={showPassword ? "text" : "password"} id="user_password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
             <S.ButtonEyes
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               disabled={loginContext.load}
             >
@@ -50,10 +57,7 @@ export const Container = () => {
             </S.ButtonEyes>
           </S.Label>
 
-          <S.Button
-            onClick={() => loginContext.handleSignIn(name, password)}
-            disabled={loginContext.load}
-          >
+          <S.Button type="submit" disabled={loginContext.load}>
             {loginContext.load ? "Carregando" : "Entrar"}
           </S.Button>
         </S.Form>

@@ -84,7 +84,7 @@ landscape:xl:h-[650px]
 landscape:xl:mr-6
 `;
 
-export const Form = tw.div`
+export const Form = tw.form`
 w-[320px]
 h-[320px]
 relative

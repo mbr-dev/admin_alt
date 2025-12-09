@@ -3,6 +3,8 @@
   "management": "Management Center",
   "management_monitoring": "ALT Tracking",
   "management_indicators": "Learning Indicators",
+  "management_students": "Students",
+  "management_groups": "Groups",
   "learning": "Learning",
   "learning_literacy": "Literacy",
   "profile": "Profile",

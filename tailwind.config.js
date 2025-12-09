@@ -51,6 +51,7 @@ module.exports = {
           5: "hsl(var(--chart-5))",
         },
         mbr: {
+          "bg-modal": "rgba(0, 0, 0, 0.45)",
           "gray-10": "#F0F0F0",
           "gray-20": "#d1d5db",
           "gray-30": "#5C5C5C",

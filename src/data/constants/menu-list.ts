@@ -45,6 +45,18 @@ export const MENU_LIST: IMENU_LIST[] = [
         route: "/indicators",
         name: "management_indicators",
         hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
+      },
+      {
+        id: 2,
+        route: "/studens",
+        name: "management_students",
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
+      },
+      {
+        id: 3,
+        route: "/groups",
+        name: "management_groups",
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
       }
     ]
   },

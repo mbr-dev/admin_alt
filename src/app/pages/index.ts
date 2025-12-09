@@ -1,7 +1,9 @@
 export { Home } from "./Home";
 export { Login } from "./Login";
+export { Groups } from "./Groups";
 export { Profile } from "./Profile";
 export { Support } from "./Support";
+export { Students } from "./Students";
 export { Indicators } from "./Indicators";
 export { Monitoring } from "./Monitoring";
 export { ChoiceDidactic } from "./Didactic";

@@ -52,3 +52,23 @@ export interface IUnitsAll {
   fuso_horario: string;
   data_cadastro: string;
 }
+
+export interface IStudent {
+  id: number;
+  id_admin?: number;
+  id_usuario: number;
+  usuario: string;
+  id_unidade: number;
+  descricao: string;
+  nome: string;
+  email: string;
+  id_avatar?: number;
+  link?: string;
+  status: number;
+  nascimento?: string | null;
+  ultimo_acesso?: string | null;
+  data_cadastro: string;
+  codigo: string;
+  codigo_ids: number[];
+  codigo_emoji: string[];
+}

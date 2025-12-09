@@ -37,7 +37,7 @@ landscape:lg:w-[800px]
 landscape:lg:h-[350px]
 landscape:lg:rounded-2xl
 
-landscape:xl:w-[800px]
+landscape:xl:w-[1000px]
 landscape:xl:h-[380px]
 `;
 
@@ -54,6 +54,8 @@ md:text-[44px]
 
 landscape:lg:w-[600px]
 landscape:lg:text-[64px]
+
+landscape:xl:w-[800px]
 `;
 
 export const Kid = tw.div`

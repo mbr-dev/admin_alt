@@ -1,5 +1,5 @@
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 export interface ILoginContextProvider {
   children: React.ReactNode;

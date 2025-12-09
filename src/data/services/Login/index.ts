@@ -35,5 +35,19 @@ export function Login() {
     [api, get_error]
   );
 
-  return { Auth, getUserUnitAndIdByIdUser };
+  const getAllUnitByNetworkId = useCallback(
+    async (id: number): Promise<StudentService.IUnitsAll[]> => {
+      try {
+        const { data } = await api.get(`unit/getAllUnitByNetworkId/${id}`);
+        if (data) return data;
+        return [];
+      } catch (error) {
+        console.log(get_error(error));
+        return [];
+      }
+    },
+    [api, get_error]
+  );
+
+  return { Auth, getUserUnitAndIdByIdUser, getAllUnitByNetworkId };
 }

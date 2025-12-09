@@ -10,7 +10,7 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   const mainContext = useMain();
   const { getData } = useStorage();
 
-  const { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALT, getCoordinatorDatasForHomeALT } = Home();
+  const { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALTClinic, getCoordinatorDatasForHomeALTClinc } = Home();
 
   const [ranking, setRanking] = useState<IHC.IUserPosition[]>([]);
   const [events, setEvents] = useState<any[]>([]);
@@ -21,21 +21,19 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
       mainContext.setLoad(true);
       //Busca os dados pela hierarquia
       const response = 
-        Number(getData("hierarquia")) === UserRole.COORDINATOR ? await getCoordinatorDatasForHomeALT() :
+        Number(getData("hierarquia")) === UserRole.COORDINATOR ? await getCoordinatorDatasForHomeALTClinc() :
         Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherDatasForHomeALTClinic() :
-        Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentDatasForHomeALT() : await getSecretaryDatasForHomeALT();
+        Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentDatasForHomeALT() : await getSecretaryDatasForHomeALTClinic();
 
       if (response) {
         //Filtra o evento pela hierarquia
-        const eventByHierarchy = Number(getData("hierarquia")) === UserRole.SECRETARY ? response.eventsHome : response.eventsActivity;
-        console.log("name", response.name)
         setRanking(response.rakingHome.data);
-        setEvents(eventByHierarchy);
+        setEvents(response.eventsActivity);
         setName(response.name);
         //Salva no storage
         const sessionData = {
           ranking: response.rakingHome.data,
-          events: eventByHierarchy,
+          events: response.eventsActivity,
           name: response.name
         }
         sessionStorage.setItem("home-data", JSON.stringify(sessionData));

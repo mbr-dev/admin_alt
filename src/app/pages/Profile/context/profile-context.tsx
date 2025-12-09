@@ -82,6 +82,7 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
       const response = await updateAvatar(Number(getData("id")), tempAvatar);
       if (response) {
         setData("avatar", tempLink);
+        window.location.reload();
       }
 
       mainContext.setLoad(false);

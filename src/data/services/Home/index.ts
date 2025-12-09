@@ -26,9 +26,9 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  const getSecretaryDatasForHomeALT = useCallback(async () => {
+  const getSecretaryDatasForHomeALTClinic = useCallback(async () => {
     try {
-      const { data } = await api.get("home/getSecretaryDatasForHomeALT");
+      const { data } = await api.get("home/getSecretaryDatasForHomeALTClinic");
       if (data) return data;
       return null;
     } catch (error) {
@@ -37,9 +37,9 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  const getCoordinatorDatasForHomeALT = useCallback(async () => {
+  const getCoordinatorDatasForHomeALTClinc = useCallback(async () => {
     try {
-      const { data } = await api.get("home/getCoordinatorDatasForHomeALT");
+      const { data } = await api.get("home/getCoordinatorDatasForHomeALTClinc");
       if (data) return data;
       return null;
     } catch (error) {
@@ -48,5 +48,5 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  return { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALT, getCoordinatorDatasForHomeALT };
+  return { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALTClinic, getCoordinatorDatasForHomeALTClinc };
 }

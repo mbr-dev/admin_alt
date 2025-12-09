@@ -13,16 +13,17 @@ export const Welcome = () => {
 
       <S.Main>
         <S.Div>
-          <TypeAnimation
-            sequence={[
-              `BEM VINDO, ${homeContext.name}`,
-              1000,
-            ]}
-            wrapper="span"
-            speed={50}
-            style={{ fontWeight: "bold", display: "inline-block" }}
-            repeat={Infinity}
-          />
+          {homeContext.name !== "" &&
+            <TypeAnimation
+              sequence={[
+                `BEM VINDO, ${homeContext.name}`,
+                1000,
+              ]}
+              wrapper="span"
+              speed={50}
+              style={{ fontWeight: "bold", display: "inline-block" }}
+              repeat={Infinity}
+            />}
         </S.Div>
 
         <S.Kid>

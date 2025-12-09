@@ -20,7 +20,7 @@ export const Ranking = () => {
           </S.DivBox>
         </S.Div>
 
-        <S.Div>
+        {/* <S.Div>
           <img src={ImgSVG.Trof2} alt="" />
           <S.DivBox>
             <h3 title={monitoringContext?.data.unidades[1].nome_unidade}>{monitoringContext?.data.unidades[1].nome_unidade}</h3>
@@ -36,7 +36,7 @@ export const Ranking = () => {
             <p>{`${t("totalStudent")} ${monitoringContext?.data.unidades[2].total_alunos}`}</p>
             <p>{`${monitoringContext?.data.unidades[2].total_rodadas} ${t("round")}`}</p>
           </S.DivBox>
-        </S.Div>
+        </S.Div> */}
       </div>
     </S.Container>
   )

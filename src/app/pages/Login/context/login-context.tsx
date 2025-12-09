@@ -3,12 +3,13 @@ import { Login } from "@/data/services";
 import { useStorage } from "@/data/hooks";
 import { useNavigate } from "react-router-dom";
 import { useState, createContext } from "react";
+import { UserRole } from "../../../../data/constants/user-roles";
 
 export const LoginContext = createContext({} as ILC.ILoginContext);
 
 export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
   const nav = useNavigate();
-  const { Auth, getUserUnitAndIdByIdUser } = Login();
+  const { Auth, getUserUnitAndIdByIdUser, getAllUnitByNetworkId } = Login();
   const { setData } = useStorage();
 
   const [load, setLoad] = useState<boolean>(false);
@@ -21,10 +22,16 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
       if (response) {
         saveDataInStorage({ keys: Object.keys(response), values: Object.values(response) });
 
-        const responseUnit = await getUserUnitAndIdByIdUser(response.id);
-        console.log("responseUnit ==> ", responseUnit)
-        if (responseUnit) {
-          setData("id_unidade", responseUnit.id_unidade);
+        if (response.hierarquia === UserRole.SECRETARY) {
+          const responseUnit = await getAllUnitByNetworkId(response.id_rede);
+          if (responseUnit) {
+            setData("id_unidade", responseUnit[0].id);
+          }
+        } else {
+          const responseUnit = await getUserUnitAndIdByIdUser(response.id);
+          if (responseUnit) {
+            setData("id_unidade", responseUnit.id_unidade);
+          }
         }
 
         goToHome();

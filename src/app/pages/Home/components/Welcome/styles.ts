@@ -28,12 +28,12 @@ bg-red-20
 [&>img]:h-full
 [&>img]:object-contain
 
-landscape:w-[350px]
+landscape:w-[450px]
 
-md:w-[500px]
+md:w-[600px]
 md:h-[250px]
 
-landscape:lg:w-[600px]
+landscape:lg:w-[800px]
 landscape:lg:h-[350px]
 landscape:lg:rounded-2xl
 
@@ -45,11 +45,14 @@ export const Div = tw.div`
 w-[200px]
 text-[32px]
 text-white
+text-center
 
-md:w-[320px]
+landscape:w-[400px]
+
+md:w-[450px]
 md:text-[44px]
 
-landscape:lg:w-[400px]
+landscape:lg:w-[600px]
 landscape:lg:text-[64px]
 `;
 

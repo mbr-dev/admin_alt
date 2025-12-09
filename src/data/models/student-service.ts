@@ -40,3 +40,15 @@ export interface IUserUnitAndId {
   unidade: string | null;
   cidade: string | null;
 }
+
+export interface IUnitsAll {
+  id: number;
+  id_fuso: number;
+  descricao: string;
+  cep: string;
+  cidade: string;
+  estado: string;
+  status: number;
+  fuso_horario: string;
+  data_cadastro: string;
+}

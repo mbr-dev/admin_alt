@@ -17,7 +17,10 @@ export const Painel = () => {
 
       <S.Main>
         {(Number(getData("hierarquia")) === UserRole.SECRETARY) &&
-          <S.Painel className="bg-gradient-to-b from-mbr-green-10 to-mbr-green-20 hover:from-mbr-green-20 hover:to-mbr-green-10" onClick={() => navigate("/monitoring")}>
+          <S.Painel
+            className="bg-gradient-to-b from-mbr-green-10 to-mbr-green-20 hover:from-mbr-green-20 hover:to-mbr-green-10"
+            onClick={() => navigate("/monitoring")}
+          >
             <S.PainelIcon>
               <img src={ImgSVG.Escola} alt="icone" />
             </S.PainelIcon>

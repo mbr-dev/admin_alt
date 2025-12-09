@@ -32,7 +32,7 @@ export const PainelStudent = () => {
             indicatorsContext?.typeSelected === 0 ? t("button0").toLocaleUpperCase() :
             indicatorsContext?.typeSelected === 1 ? t("button1").toLocaleUpperCase() : t("button2").toLocaleUpperCase()
           }</h2>
-          <p>{`${hook?.studentData?.unidade} - ${hook?.studentData?.turma} - ${hook?.studentData?.nome}`}</p>
+          <p>{hook?.studentData?.nome}</p>
         </S.Titles>
 
         <S.Filter>

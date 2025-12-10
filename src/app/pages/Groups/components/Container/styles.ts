@@ -7,24 +7,25 @@ h-full
 flex
 flex-col
 bg-mbr-gray-20
-p-4
-pb-10
+px-4
+pt-4
+gap-4
 relative
 
-md:p-8
-md:pb-15
+md:px-8
+md:pt-8
+md:gap-8
 
-landscape:lg:p-8
-landscape:lg:pb-15
+landscape:lg:px-8
+landscape:lg:pt-8
+landscape:lg:gap-8
 `;
 
 export const Main = tw.div`
 w-full
-h-full
 flex
 flex-col
 items-center
-gap-8
 
 landscape:lg:flex-row
 landscape:lg:justify-center

@@ -11,7 +11,7 @@ export function StudentsContextProvider({ children }: ISC.IStudentsContextProvid
   const { getData } = useStorage();
   const { getStudentsByUnitPaged } = Student();
   
-  const [selectType, setSelectType] = useState<number>(0);
+  const [selectType, setSelectType] = useState<number>(-1);
   const [students, setStudents] = useState<StudentService.IStudent[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalOfPages, setTotalOfPages] = useState<number>(0);

@@ -27,7 +27,6 @@ border-mbr-blue-400
 rounded-lg
 z-50
 relative
--ml-8
 
 landscape:w-[34.375rem]
 landscape:p-1

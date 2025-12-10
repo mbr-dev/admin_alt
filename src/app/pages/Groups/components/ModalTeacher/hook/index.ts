@@ -42,7 +42,7 @@ export const useModalTeacher = ({ classSelected, fetchData, handleShowTeacher }:
     const response = await deleteClassTeacherById(dataToDelete!.id);
 
     if (response) {
-      toast({ title: "Professor(a)", description: "Professor(a) removido da turma com sucesso!", variant: "successful" });
+      toast({ title: "Professor(a)", description: "Professor(a) removido da grupo com sucesso!", variant: "successful" });
       handleShowTeacher(false, 0);
       setTeachers([]);
       fetchData();

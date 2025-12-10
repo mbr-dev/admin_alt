@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useApi } from "@/data/hooks";
-import { ClassStudentService, ClassTeacherService, ClassService } from "@/data/models";
+import { ClassStudentService, ClassTeacherService, ClassService, StudentService } from "@/data/models";
 
 export function Classes() {
   const { api, get_error } = useApi();
@@ -10,6 +10,32 @@ export function Classes() {
       try {
         const { data } = await api.get(`classStudent/getAllStudentByClass/${id}`);
         return data ?? [];
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const getStudentsByUnitThatDontHaveClass = useCallback(
+    async (id: number) => {
+      try {
+        const { data } = await api.get(`unitUser/getStudentsByUnitThatDontHaveClass/${id}`);
+        if (data.length > 0) return data;
+        return [] as StudentService.IStudent[];
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const regiterTeacherToClass = useCallback(
+    async (dataToSend: ClassService.IRegisterTeacherToClassService) => {
+      try {
+        const { data } = await api.post("classTeacher/createClassTeacher", dataToSend);
+        if (data) return data;
+        return null;
       } catch (error) {
         console.log(get_error(error));
       }
@@ -79,5 +105,31 @@ export function Classes() {
     [api, get_error]
   );
 
-  return { getAllStudentByClass, registerClass, verifyCodeClass, getAllTeacherByClass, deleteClassStudenById, deleteClassTeacherById };
+  const getTeachersByUnit = useCallback(
+    async (id: number) => {
+      try {
+        const { data } = await api.get(`unitUser/getTeachersByUnit/${id}`);
+        if (data.length > 0) return data;
+        return [] as StudentService.IStudent[];
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const regiterStudentToClass = useCallback(
+    async (dataToSend: ClassService.IRegisterStudentToClassService) => {
+      try {
+        const { data } = await api.post("classStudent/createClassStudent", dataToSend);
+        if (data) return data;
+        return null;
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  return { getAllStudentByClass, regiterStudentToClass, getTeachersByUnit, registerClass, getStudentsByUnitThatDontHaveClass, verifyCodeClass, regiterTeacherToClass, getAllTeacherByClass, deleteClassStudenById, deleteClassTeacherById };
 }

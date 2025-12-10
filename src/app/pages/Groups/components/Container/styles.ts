@@ -6,6 +6,7 @@ w-full
 h-full
 flex
 flex-col
+items-center
 bg-mbr-gray-20
 px-4
 pt-4

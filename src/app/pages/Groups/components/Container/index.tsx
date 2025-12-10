@@ -7,7 +7,8 @@ export const Container = () => {
 
   const components = [
     <C.ListClasses />,
-    <C.RegisterClass />
+    <C.RegisterClass />,
+    <C.RegisterTeacherToClass />
   ];
 
   return (

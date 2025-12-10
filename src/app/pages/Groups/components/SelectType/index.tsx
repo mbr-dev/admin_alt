@@ -10,7 +10,9 @@ export const SelectType = () => {
 
   const TYPES = [
     {id:0,label:"Listar Grupos",hierarquia:[UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.ADMIN]},
-    {id:1,label:"Registrar Grupo",hierarquia:[UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.ADMIN]}
+    {id:1,label:"Registrar Grupo",hierarquia:[UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.ADMIN]},
+    {id:2,label:"Gerenciar Médico",hierarquia:[UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.ADMIN]},
+    {id:3,label:"Gerenciar Aluno",hierarquia:[UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.ADMIN]}
   ];
 
   return (

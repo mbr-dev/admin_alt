@@ -17,3 +17,13 @@ export interface IRegisterClassService {
   codigo: string;
   num_serie: number;
 }
+
+export interface IRegisterStudentToClassService {
+  id_aluno: number;
+  id_turma: number;
+}
+
+export interface IRegisterTeacherToClassService {
+  id_turma: number;
+  id_professor: number;
+}

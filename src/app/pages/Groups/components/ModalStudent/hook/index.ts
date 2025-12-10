@@ -48,7 +48,7 @@ export const useModalStudent = ({ handleShowStudent, classSelected, fetchData }:
 
     const response = await deleteClassStudenById(dataToDelete!.id);
     if (response) {
-      toast({ title: "Aluno(a)", description: "Aluno(a) removido da turma com sucesso!", variant: "successful" });
+      toast({ title: "Aluno(a)", description: "Aluno(a) removido do grupo com sucesso!", variant: "successful" });
       handleShowStudent(false, 0);
       setStudents([]);
       fetchData();

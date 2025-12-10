@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useApi } from "@/data/hooks";
-import { ClassStudentService, ClassTeacherService } from "@/data/models";
+import { ClassStudentService, ClassTeacherService, ClassService } from "@/data/models";
 
 export function Classes() {
   const { api, get_error } = useApi();
@@ -55,5 +55,29 @@ export function Classes() {
     [api, get_error]
   );
 
-  return { getAllStudentByClass, getAllTeacherByClass, deleteClassStudenById, deleteClassTeacherById };
+  const verifyCodeClass = useCallback(
+    async (code: string) => {
+      try {
+        const { data } = await api.get(`class/verifyCodeClass/${code}`);
+        if (data) return data;
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const registerClass = useCallback(
+    async (dataToSend: ClassService.IRegisterClassService) => {
+      try {
+        const { data } = await api.post("class/createClass", dataToSend);
+        if (data) return data;
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  return { getAllStudentByClass, registerClass, verifyCodeClass, getAllTeacherByClass, deleteClassStudenById, deleteClassTeacherById };
 }

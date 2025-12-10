@@ -4,3 +4,4 @@ export { Animations } from "./Animations";
 export { ListClasses } from "./ListClasses";
 export { ModalStudent } from "./ModalStudent";
 export { ModalTeacher } from "./ModalTeacher";
+export { RegisterClass } from "./RegisterClass";

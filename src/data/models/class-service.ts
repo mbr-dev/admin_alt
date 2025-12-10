@@ -10,3 +10,10 @@ export interface IClassService {
   total_disciplinas: number;
   data_cadastro: string;
 }
+
+export interface IRegisterClassService {
+  id_unidade: number;
+  descricao: string;
+  codigo: string;
+  num_serie: number;
+}

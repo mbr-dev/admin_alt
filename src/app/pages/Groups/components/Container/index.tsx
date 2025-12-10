@@ -1,31 +1,31 @@
+import * as C from "..";
 import * as S from "./styles";
 import { useGroups } from "../../hook";
-import { Animations, SelectType, ListClasses, ModalStudent, ModalTeacher } from "..";
 
 export const Container = () => {
   const groupsContext = useGroups();
 
   const components = [
-    <ListClasses />,
-    <></>
+    <C.ListClasses />,
+    <C.RegisterClass />
   ];
 
   return (
     <S.Container>
       {groupsContext.showModalStudent &&
-        <ModalStudent
+        <C.ModalStudent
           classSelected={groupsContext.classSelected}
           fetchData={groupsContext.fetchData}
           handleShowStudent={groupsContext.handleShowStudent}
         />}
       {groupsContext.showModalTeacher &&
-        <ModalTeacher
+        <C.ModalTeacher
           classSelected={groupsContext.classSelected}
           fetchData={groupsContext.fetchData}
           handleShowTeacher={groupsContext.handleShowTeacher}
         />}
-      <Animations />
-      <SelectType />
+      <C.Animations />
+      <C.SelectType />
 
       <S.Main>
         {components[groupsContext.selectType]}

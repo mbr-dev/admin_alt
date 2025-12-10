@@ -18,7 +18,7 @@ export const useModalTeacher = ({ classSelected, fetchData, handleShowTeacher }:
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [dataToDelete, setDataToDelete] = useState<ClassTeacherService.IClassTeacherService | null>(null);
   const [teachers, setTeachers] = useState<ClassTeacherService.IClassTeacherService[]>([]);
-
+  //Busca alunos da turma
   const fetchTeachersByClass = async () => {
     try {
       mainContext.setLoad(true);
@@ -27,28 +27,37 @@ export const useModalTeacher = ({ classSelected, fetchData, handleShowTeacher }:
       if (response) setTeachers(response);
 
       mainContext.setLoad(false);
-    } catch (error) {
+    } finally {
       mainContext.setLoad(false);
     }
   };
-
+  //Pega o professor para deletar
   const handleDelete = (open: boolean, data: ClassTeacherService.IClassTeacherService | null) => {
     setShowDelete(open);
     setDataToDelete(data);
   };
-
+  //Confirma a parte de deletar
   const handleConfirmDelete = async () => {
-    setDisabledBtn(true);
-    const response = await deleteClassTeacherById(dataToDelete!.id);
+    try {
+      mainContext.setLoad(true);
+      setDisabledBtn(true);
 
-    if (response) {
-      toast({ title: "Professor(a)", description: "Professor(a) removido da grupo com sucesso!", variant: "successful" });
-      handleShowTeacher(false, 0);
-      setTeachers([]);
-      fetchData();
+      const response = await deleteClassTeacherById(dataToDelete!.id);
+      if (response) {
+        toast({ title: "Professor(a)", description: "Professor(a) removido da grupo com sucesso!", variant: "successful" });
+        handleShowTeacher(false, 0);
+        setTeachers([]);
+        fetchData();
+      }
+
+      setDisabledBtn(false);
+      mainContext.setLoad(false);
+    } finally {
+      setDisabledBtn(false);
+      mainContext.setLoad(false);
     }
   }
-
+  //Limpa os campos
   const handleCancel = () => {
     setShowDelete(false);
     setDataToDelete(null);

@@ -16,7 +16,8 @@ i18n
         monitoring: lg.monitoring_ptBR,
         didactic: lg.didactic_ptBR,
         indicators: lg.indicators_ptBR,
-        header: lg.header_ptBR
+        header: lg.header_ptBR,
+        units: lg.units_ptBR
       },
       en: {
         common: lg.common_en,
@@ -26,7 +27,8 @@ i18n
         monitoring: lg.monitoring_en,
         didactic: lg.didactic_en,
         indicators: lg.indicators_en,
-        header: lg.header_en
+        header: lg.header_en,
+        units: lg.units_en
       },
       es: {
         common: lg.common_es,
@@ -36,7 +38,8 @@ i18n
         monitoring: lg.monitoring_es,
         didactic: lg.didactic_es,
         indicators: lg.indicators_es,
-        header: lg.header_es
+        header: lg.header_es,
+        units: lg.units_es
       }
     },
     fallbackLng: "pt_BR",
@@ -49,7 +52,8 @@ i18n
       "monitoring",
       "didactic",
       "indicators",
-      "header"
+      "header",
+      "units"
     ],
     defaultNS: "common",
     interpolation: { escapeValue: false },

@@ -6,3 +6,4 @@ export { Student } from "./Student";
 export { Monitoring } from "./Monitoring";
 export { Indicators } from "./Indicators";
 export { PainelStudent } from "./PainelStudent";
+export { Unit } from "./Unit";

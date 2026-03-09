@@ -48,16 +48,28 @@ export const MENU_LIST: IMENU_LIST[] = [
       },
       {
         id: 2,
+        route: "/units",
+        name: "management_units",
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN]
+      },
+      {
+        id: 3,
+        route: "/professionals",
+        name: "management_professionals",
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.COORDINATOR]
+      },
+      {
+        id: 4,
         route: "/studens",
         name: "management_students",
         hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
       },
       {
-        id: 3,
+        id: 5,
         route: "/groups",
         name: "management_groups",
-        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
-      }
+        hierarchy: [UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
+      },
     ]
   },
   {

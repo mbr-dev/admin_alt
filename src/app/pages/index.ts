@@ -7,3 +7,4 @@ export { Students } from "./Students";
 export { Indicators } from "./Indicators";
 export { Monitoring } from "./Monitoring";
 export { ChoiceDidactic } from "./Didactic";
+export { Units } from "./Units";

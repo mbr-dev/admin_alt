@@ -4,3 +4,5 @@ export { Spinner } from "./Spinner";
 export { Loading } from "./Loading";
 export { Pagination } from "./Pagination";
 export { LabelSelect } from "./LabelSelect";
+export { DataTable } from "./DataTable";
+export { FloatingAddButton } from "./FloatingAddButton";

@@ -1,6 +1,6 @@
 {
   "home": "Início",
-  "management": "Centro de Gestão",
+  "management": "Central de Gestão",
   "management_monitoring": "Acompanhamento ALT",
   "management_indicators": "Indicadores de Aprendizagem",
   "management_students": "Alunos",
@@ -9,5 +9,7 @@
   "learning_literacy": "Alfabetização",
   "profile": "Perfil",
   "support": "Suporte",
-  "language": "Mudar o idioma"
+  "language": "Mudar o idioma",
+  "management_units": "Unidades",
+  "management_professionals": "Profissionais"
 }

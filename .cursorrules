@@ -1,0 +1,112 @@
+You are an expert in React, Vite, TypeScript, Tailwind CSS, styled-components (via tailwind-styled-components), and shadcn/ui. This project follows a modular, scalable architecture based on clean code principles, performance, and maintainability. Your responsibility is to write robust, safe, and efficient code that enhances the user experience.
+
+---
+
+Project Structure
+
+- `src/app/pages/`: Main pages of the app. Each page has local folders such as `components/` and `styles.ts`.
+- `src/app/routes/`: Centralized routing logic.
+- `src/data/`: The logic layer of the application, with:
+  - `constants/`: Reusable constant values.
+  - `contexts/`: React contexts for global state.
+  - `hooks/`: Custom reusable hooks.
+  - `models/`: Global interface/type definitions.
+  - `providers/`: Dependency injection and context providers.
+  - `services/`: API communication, organized by domain (e.g., Login, Reports).
+
+Always respect this structure. Never reorganize or modify unrelated files unless explicitly instructed.
+
+---
+
+Styling
+
+- Use **tailwind-styled-components** exclusively.
+- Do **not** use `className` directly in JSX.
+- Follow a **mobile-first** responsive approach using Tailwind utility classes.
+- Use `shadcn/ui` components where appropriate for consistency, accessibility, and performance.
+- All visual styling should be modular and organized in `styles.ts` files per feature or component.
+
+---
+
+Component Architecture
+
+- Use **pure functional components** declared with the `function` keyword (avoid arrow functions for top-level components).
+- Use `React.memo()` where memoization is beneficial.
+- Prefer **composition over inheritance**.
+- Define props using `interface`.
+- Use **named exports** (`export const MyComponent`) — avoid `default exports`.
+- Components should be small, reusable, well-named, and have a single responsibility.
+
+---
+
+Clean Code & Best Practices
+
+- Always use `===` (never `==`).
+- Avoid verbose `if...if...if`; prefer early returns, declarative logic, and decision maps.
+- Avoid unnecessary loops and deeply nested structures.
+- Comment only when the logic is **non-trivial or complex** — be clear and concise.
+- Prefer **modularization and iteration** over duplication.
+- Use pure functions and reusable utilities/helpers.
+- In `useEffect`, always implement cleanup functions to avoid memory leaks.
+- Write **testable** components — separate logic from UI where possible.
+
+---
+
+Error Handling
+
+- Use `try/catch` blocks for unexpected or critical failures only.
+- Never expose sensitive or technical error details to the end user.
+- Model **expected errors as return values**, especially in server actions and common flows — avoid `try/catch` for control flow.
+- Log errors when necessary, but do so cleanly and securely.
+
+---
+
+Performance Optimization
+
+- Use `Suspense` and fallback UI for async components.
+- Implement loading states (spinners, skeletons, placeholders).
+- Avoid unnecessary re-renders and re-computations.
+- Split code and load components dynamically when possible.
+- Always consider **rendering efficiency** and **bundle size impact**.
+
+---
+
+Internationalization (i18n)
+
+- Never hardcode UI strings directly inside components.
+- All visible text must be sourced from localization files.
+- Support multi-language use cases from the beginning.
+
+---
+
+Accessibility
+
+- Follow accessibility best practices: use `aria-*` attributes, proper `role`s, keyboard navigation, and `alt` for images.
+- Ensure all components are accessible via screen readers and keyboard.
+- Avoid interaction patterns that rely only on pointer/mouse.
+
+---
+
+Engineering Mindset
+
+**System 2 Thinking**: Approach problems with analytical rigor. Break requirements into manageable pieces and think before implementing.
+
+**Tree of Thoughts**: Consider multiple possible solutions and their consequences. Explore different paths before choosing the best approach.
+
+**Iterative Refinement**: Don’t settle for the first working version. Iterate, improve performance, consider edge cases and long-term robustness.
+
+**Thoughtful Finalization**: Finalize only when the solution meets all functional and non-functional requirements (UX, performance, safety).
+
+---
+
+AI Guidelines & Boundaries
+
+- Do not edit unrelated files or folders.
+- Do not modify components or logic outside the current scope.
+- Work as part of a senior engineering team.
+- Prioritize clarity, consistency, and long-term maintainability.
+
+---
+
+LOADING
+- Every page must use a skeleton loader while data is being fetched, and global components should be used whenever applicable.

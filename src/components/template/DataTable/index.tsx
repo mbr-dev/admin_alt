@@ -12,10 +12,17 @@ interface IDataTableProps<T> {
   columns: IDataTableColumn<T>[];
   rows: T[];
   getRowKey: (row: T, index: number) => string | number;
+  getRowClassName?: (row: T, index: number) => string;
   emptyMessage?: string;
 }
 
-export function DataTable<T>({ columns, rows, getRowKey, emptyMessage = "Nenhum registro encontrado." }: IDataTableProps<T>) {
+export function DataTable<T>({
+  columns,
+  rows,
+  getRowKey,
+  getRowClassName,
+  emptyMessage = "Nenhum registro encontrado.",
+}: IDataTableProps<T>) {
   return (
     <S.Wrapper>
       <Table.Table>
@@ -31,7 +38,7 @@ export function DataTable<T>({ columns, rows, getRowKey, emptyMessage = "Nenhum 
 
         <Table.TableBody>
           {rows.length > 0 && rows.map((row, rowIndex) => (
-            <Table.TableRow key={getRowKey(row, rowIndex)}>
+            <Table.TableRow key={getRowKey(row, rowIndex)} className={getRowClassName?.(row, rowIndex)}>
               {columns.map((column, colIndex) => (
                 <S.Cell key={`${column.key}-${rowIndex}`} $isLast={colIndex === columns.length - 1}>
                   {column.render ? column.render(row) : String((row as Record<string, unknown>)[column.key] ?? "-")}

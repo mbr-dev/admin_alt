@@ -12,7 +12,8 @@ export function Container() {
   const { setLoad } = useMain();
   const { getData } = useStorage();
   const { toast } = useToast();
-  const { getAltSessionsByNetwork, getAltSessionById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions } = ATLSession();
+  const { getAltSessionsByNetwork, getAltSessionById, changeAltSessionStatusById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions } =
+    ATLSession();
 
   const [sessions, setSessions] = useState<AltSessionService.IAltSession[]>([]);
   const [sessionToEdit, setSessionToEdit] = useState<AltSessionService.IAltSession | null>(null);
@@ -23,6 +24,8 @@ export function Container() {
   const [showMedicalRecordForm, setShowMedicalRecordForm] = useState<boolean>(false);
   const [isFormLoading, setIsFormLoading] = useState<boolean>(false);
   const [downloadingSessionId, setDownloadingSessionId] = useState<number | null>(null);
+  const [editingStatusSessionId, setEditingStatusSessionId] = useState<number | null>(null);
+  const [changingStatusSessionId, setChangingStatusSessionId] = useState<number | null>(null);
   const [sessionToMedicalRecord, setSessionToMedicalRecord] = useState<AltSessionService.IAltSession | null>(null);
   const [professionalName, setProfessionalName] = useState<string>("");
   const [patientName, setPatientName] = useState<string>("");
@@ -39,6 +42,7 @@ export function Container() {
   const setLoadRef = useRef(setLoad);
   const getAltSessionsByNetworkRef = useRef(getAltSessionsByNetwork);
   const getAltSessionByIdRef = useRef(getAltSessionById);
+  const changeAltSessionStatusByIdRef = useRef(changeAltSessionStatusById);
   const getMedicalRecordSessionBySessionIdRef = useRef(getMedicalRecordSessionBySessionId);
   const getMedicalRecordQuestionsRef = useRef(getMedicalRecordQuestions);
 
@@ -54,9 +58,10 @@ export function Container() {
     setLoadRef.current = setLoad;
     getAltSessionsByNetworkRef.current = getAltSessionsByNetwork;
     getAltSessionByIdRef.current = getAltSessionById;
+    changeAltSessionStatusByIdRef.current = changeAltSessionStatusById;
     getMedicalRecordSessionBySessionIdRef.current = getMedicalRecordSessionBySessionId;
     getMedicalRecordQuestionsRef.current = getMedicalRecordQuestions;
-  }, [getData, setLoad, getAltSessionsByNetwork, getAltSessionById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions]);
+  }, [getData, setLoad, getAltSessionsByNetwork, getAltSessionById, changeAltSessionStatusById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions]);
 
   const loadData = useCallback(async () => {
     try {
@@ -311,6 +316,63 @@ export function Container() {
   };
 
   const normalizeStatus = (status: string) => (status === "em_andamento" ? "em andamento" : status);
+  const toApiStatus = (status: string): AltSessionService.TAltSessionStatus => (status === "em andamento" ? "em_andamento" : status) as AltSessionService.TAltSessionStatus;
+
+  const getSessionAlertVariant = (session: AltSessionService.IAltSession): "danger" | "warning" | "attention" | null => {
+    const now = new Date();
+    const startDate = new Date(session.data_inicio);
+    const endDate = new Date(session.data_final);
+
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return null;
+
+    const status = normalizeStatus(session.status);
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const sessionStartDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const isPastDay = sessionStartDay.getTime() < today.getTime();
+    const isToday = sessionStartDay.getTime() === today.getTime();
+
+    if (isPastDay && status !== "finalizada" && status !== "cancelada") {
+      return "danger";
+    }
+
+    if (status === "em andamento" && isToday && endDate < now) {
+      return "attention";
+    }
+
+    if (status === "aberta" && isToday && startDate <= now && endDate >= now) {
+      return "warning";
+    }
+
+    return null;
+  };
+
+  const getSessionRowClassName = (session: AltSessionService.IAltSession) => {
+    const variant = getSessionAlertVariant(session);
+    if (variant === "danger") return "bg-red-100 hover:bg-red-100";
+    if (variant === "warning") return "bg-yellow-100 hover:bg-yellow-100";
+    if (variant === "attention") return "bg-orange-100 hover:bg-orange-100";
+    return "";
+  };
+
+  const handleQuickStatusChange = async (session: AltSessionService.IAltSession, status: AltSessionService.TAltSessionStatus) => {
+    if (changingStatusSessionId === session.id) return;
+    if (session.status === status) {
+      setEditingStatusSessionId(null);
+      return;
+    }
+
+    try {
+      setChangingStatusSessionId(session.id);
+      const response = await changeAltSessionStatusByIdRef.current(session.id, { status });
+      if (!response) return;
+
+      toast({ title: "Sessões ALT", description: "Status atualizado com sucesso!", variant: "successful" });
+      setEditingStatusSessionId(null);
+      await loadData();
+    } finally {
+      setChangingStatusSessionId(null);
+    }
+  };
 
   const handleApplyFilters = () => {
     setAppliedProfessionalName(professionalName);
@@ -352,7 +414,25 @@ export function Container() {
     {
       key: "status",
       label: "Status",
-      render: (row: AltSessionService.IAltSession) => <S.StatusTag $status={normalizeStatus(row.status)}>{normalizeStatus(row.status)}</S.StatusTag>,
+      render: (row: AltSessionService.IAltSession) =>
+        editingStatusSessionId === row.id ? (
+          <S.QuickStatusSelect
+            autoFocus
+            value={toApiStatus(row.status)}
+            disabled={changingStatusSessionId === row.id}
+            onBlur={() => setEditingStatusSessionId(null)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => void handleQuickStatusChange(row, e.target.value as AltSessionService.TAltSessionStatus)}
+          >
+            <option value="aberta">aberta</option>
+            <option value="em_andamento">em andamento</option>
+            <option value="finalizada">finalizada</option>
+            <option value="cancelada">cancelada</option>
+          </S.QuickStatusSelect>
+        ) : (
+          <S.StatusTagButton type="button" title="Clique para alterar status" onClick={() => setEditingStatusSessionId(row.id)}>
+            <S.StatusTag $status={normalizeStatus(row.status)}>{normalizeStatus(row.status)}</S.StatusTag>
+          </S.StatusTagButton>
+        ),
     },
     {
       key: "editar",
@@ -504,7 +584,31 @@ export function Container() {
               </S.TableSkeleton>
             ) : (
               <>
-                <DataTable columns={columns} rows={sessions} getRowKey={(row) => row.id} emptyMessage="Nenhuma sessão encontrada." />
+                <DataTable
+                  columns={columns}
+                  rows={sessions}
+                  getRowKey={(row) => row.id}
+                  getRowClassName={(row) => getSessionRowClassName(row)}
+                  emptyMessage="Nenhuma sessão encontrada."
+                />
+
+                <S.LegendBox>
+                  <S.LegendTitle>Legenda de alertas</S.LegendTitle>
+                  <S.LegendList>
+                    <S.LegendItem>
+                      <S.LegendColor $variant="red" />
+                      Sessao de dia passado pendente (nao finalizada/cancelada)
+                    </S.LegendItem>
+                    <S.LegendItem>
+                      <S.LegendColor $variant="yellow" />
+                      Sessao aberta em andamento no horario atual
+                    </S.LegendItem>
+                    <S.LegendItem>
+                      <S.LegendColor $variant="orange" />
+                      Sessao em andamento com horario final excedido
+                    </S.LegendItem>
+                  </S.LegendList>
+                </S.LegendBox>
 
                 {totalOfPages > 1 && (
                   <Pagination

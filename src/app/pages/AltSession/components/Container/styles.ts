@@ -106,6 +106,55 @@ cursor-pointer
 ${({ $variant }) => ($variant === "primary" ? "bg-mbr-blue-10 text-white" : "bg-mbr-gray-30 text-white")}
 `;
 
+export const LegendBox = tw.div`
+w-full
+rounded-2xl
+border
+border-mbr-gray-30
+bg-white
+p-3
+flex
+flex-col
+gap-2
+`;
+
+export const LegendTitle = tw.p`
+text-sm
+font-semibold
+text-mbr-gray-80
+`;
+
+export const LegendList = tw.div`
+w-full
+grid
+grid-cols-1
+gap-2
+
+md:grid-cols-3
+`;
+
+export const LegendItem = tw.div`
+flex
+items-center
+gap-2
+text-xs
+text-mbr-gray-80
+`;
+
+export const LegendColor = tw.span<{ $variant: "red" | "yellow" | "orange" }>`
+w-4
+h-4
+rounded-md
+border
+border-mbr-gray-30
+
+${({ $variant }) => {
+  if ($variant === "red") return "bg-red-100";
+  if ($variant === "yellow") return "bg-yellow-100";
+  return "bg-orange-100";
+}}
+`;
+
 export const StatusTag = tw.span<{ $status: string }>`
 px-3
 py-1
@@ -120,6 +169,27 @@ ${({ $status }) => {
   if ($status === "cancelada") return "bg-red-100 text-red-700";
   return "bg-mbr-gray-20 text-mbr-gray-80";
 }}
+`;
+
+export const StatusTagButton = tw.button`
+bg-transparent
+cursor-pointer
+rounded-full
+`;
+
+export const QuickStatusSelect = tw.select`
+min-w-[130px]
+h-8
+rounded-lg
+border
+border-mbr-gray-30
+bg-white
+px-2
+text-xs
+text-mbr-gray-80
+outline-none
+
+focus:border-mbr-blue-10
 `;
 
 export const ActionCell = tw.div`

@@ -25,5 +25,39 @@ import header_es from "./header/es.json";
 import units_ptBR from "./units/pt-BR.json";
 import units_en from "./units/en.json";
 import units_es from "./units/es.json";
+import professionals_ptBR from "./professionals/pt-BR.json";
+import professionals_en from "./professionals/en.json";
+import professionals_es from "./professionals/es.json";
 
-export { profile_ptBR, profile_en, profile_es, common_ptBR, common_en, common_es, support_ptBR, support_en, support_es, home_ptBR, home_en, home_es, monitoring_ptBR, monitoring_en, monitoring_es, didactic_ptBR, didactic_en, didactic_es, indicators_ptBR, indicators_en, indicators_es, header_ptBR, header_en, header_es, units_ptBR, units_en, units_es };
+export {
+  profile_ptBR,
+  profile_en,
+  profile_es,
+  common_ptBR,
+  common_en,
+  common_es,
+  support_ptBR,
+  support_en,
+  support_es,
+  home_ptBR,
+  home_en,
+  home_es,
+  monitoring_ptBR,
+  monitoring_en,
+  monitoring_es,
+  didactic_ptBR,
+  didactic_en,
+  didactic_es,
+  indicators_ptBR,
+  indicators_en,
+  indicators_es,
+  header_ptBR,
+  header_en,
+  header_es,
+  units_ptBR,
+  units_en,
+  units_es,
+  professionals_ptBR,
+  professionals_en,
+  professionals_es,
+};

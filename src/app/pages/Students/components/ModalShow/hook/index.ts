@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export const userModalShow = () => {
   const { toast } = useToast();
-  const { updateStudentByUserId, deleteStudentByUserId } = Student();
+  const { updateStudentByUserId, deleteStudentByUserId, getClinicStudentByUserId } = Student();
   const studentsContext = useStudents();
  
   const [name, setName] = useState<string>("");
@@ -19,15 +19,39 @@ export const userModalShow = () => {
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [disabledBtnDel, setDisabledBtnDel] = useState<boolean>(false);
 
-  const fetchData = () => {
-    setName(studentsContext.selectedData?.nome ?? "");
-    setEmail(studentsContext.selectedData?.email ?? "");
-    setUser(studentsContext.selectedData?.usuario ?? "");
+  const fetchData = async () => {
+    const userId = studentsContext.selectedData?.id_usuario;
+    if (!userId) return;
+
+    const response = await getClinicStudentByUserId(userId);
+    if (!response) {
+      setName(studentsContext.selectedData?.nome ?? "");
+      setEmail(studentsContext.selectedData?.email ?? "");
+      setUser(studentsContext.selectedData?.usuario ?? "");
+      setUnit(studentsContext.selectedData?.descricao ?? "");
+
+      if (studentsContext.selectedData?.nascimento) {
+        const date = new Date(studentsContext.selectedData.nascimento);
+        const formattedDate = date.toISOString().split("T")[0];
+        setBirth(new Date(formattedDate));
+      } else {
+        setBirth(undefined);
+      }
+      return;
+    }
+
+    setName(response.aluno?.nome ?? studentsContext.selectedData?.nome ?? "");
+    setEmail(response.aluno?.email ?? studentsContext.selectedData?.email ?? "");
+    setUser(response.usuario?.usuario ?? studentsContext.selectedData?.usuario ?? "");
     setUnit(studentsContext.selectedData?.descricao ?? "");
 
-    const date = new Date(studentsContext.selectedData?.nascimento!);
-    const formattedDate = date.toISOString().split("T")[0];
-    setBirth(studentsContext.selectedData?.nascimento ? new Date(formattedDate) : undefined);
+    if (response.aluno?.data_nascimento) {
+      const date = new Date(response.aluno.data_nascimento);
+      const formattedDate = date.toISOString().split("T")[0];
+      setBirth(new Date(formattedDate));
+    } else {
+      setBirth(undefined);
+    }
   };
 
   const handleSubmit = async () => {
@@ -69,7 +93,9 @@ export const userModalShow = () => {
     }
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    void fetchData();
+  }, []);
 
   return { name, setName, email, disabledBtn, handleDelete, handleSubmit, disabledBtnDel, setEmail, user, setUser, birth, setBirth, unit, password, ableToEdit, setAbleToEdit, deleteData, setDeleteData };
 };

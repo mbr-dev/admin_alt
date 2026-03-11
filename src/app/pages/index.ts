@@ -8,3 +8,4 @@ export { Indicators } from "./Indicators";
 export { Monitoring } from "./Monitoring";
 export { ChoiceDidactic } from "./Didactic";
 export { Units } from "./Units";
+export { Professionals } from "./Professionals";

@@ -19,6 +19,20 @@ export function Student() {
     [api, get_error]
   );
 
+  const getAllStudentsNetwork = useCallback(
+    async (id_rede: number, page = 1, limit = 10, nome = "") => {
+      try {
+        const nomeQuery = nome ? `&nome=${encodeURIComponent(nome)}` : "";
+        const { data } = await api.get(`student/getAllStudentsNetwork/${id_rede}?page=${page}&limit=${limit}${nomeQuery}`);
+        if (data) return data;
+        return {} as StudentService.IStudent;
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
   const registerStudent = useCallback(
     async (dataToSend: unknown) => {
       try {
@@ -26,6 +40,46 @@ export function Student() {
         if (data) return data;
       } catch (error) {
         console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const createClinicStudent = useCallback(
+    async (dataToSend: StudentService.ICreateClinicStudentPayload) => {
+      try {
+        const { data } = await api.post("clinicStudent/createClinicStudent", dataToSend);
+        if (data) return data;
+      } catch (error) {
+        console.log(get_error(error));
+      }
+    },
+    [api, get_error]
+  );
+
+  const getClinicStudentByUserId = useCallback(
+    async (id: number): Promise<StudentService.ICreateClinicStudentPayload | null> => {
+      try {
+        const { data } = await api.get(`clinicStudent/getClinicStudentByUserId/${id}`);
+        if (data) return data;
+        return null;
+      } catch (error) {
+        console.log(get_error(error));
+        return null;
+      }
+    },
+    [api, get_error]
+  );
+
+  const updateClinicStudentByUserId = useCallback(
+    async (id: number, dataToSend: StudentService.ICreateClinicStudentPayload) => {
+      try {
+        const { data } = await api.patch(`clinicStudent/updateClinicStudentByUserId/${id}`, dataToSend);
+        if (data) return data;
+        return null;
+      } catch (error) {
+        console.log(get_error(error));
+        return null;
       }
     },
     [api, get_error]
@@ -44,7 +98,7 @@ export function Student() {
   );
 
   const updateStudentByUserId = useCallback(
-    async (id: number, dataToSend: any) => {
+    async (id: number, dataToSend: unknown) => {
       try {
         const { data } = await api.patch(`student/updateStudentByUserId/${id}`, dataToSend);
         if (data) return data;
@@ -84,5 +138,16 @@ export function Student() {
     [api, get_error]
   );
 
-  return { getStudentsByUnitPaged, getUnitById, verifyUser, registerStudent, deleteStudentByUserId, updateStudentByUserId };
+  return {
+    getStudentsByUnitPaged,
+    getAllStudentsNetwork,
+    getUnitById,
+    verifyUser,
+    registerStudent,
+    createClinicStudent,
+    getClinicStudentByUserId,
+    updateClinicStudentByUserId,
+    deleteStudentByUserId,
+    updateStudentByUserId,
+  };
 }

@@ -1,4 +1,5 @@
 export { Home } from "./Home";
+export { CID } from "./CID";
 export { Login } from "./Login";
 export { Profile } from "./Profile";
 export { Didactic } from "./Didactic";
@@ -7,3 +8,5 @@ export { Monitoring } from "./Monitoring";
 export { Indicators } from "./Indicators";
 export { PainelStudent } from "./PainelStudent";
 export { Unit } from "./Unit";
+export { Professionals } from "./Professionals";
+export { User } from "./User";

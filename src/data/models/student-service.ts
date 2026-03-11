@@ -72,3 +72,39 @@ export interface IStudent {
   codigo_ids: number[];
   codigo_emoji: string[];
 }
+
+export interface ICreateClinicStudentPayload {
+  usuario: {
+    usuario: string;
+    senha: string | null;
+    unidade: number;
+  };
+  aluno: {
+    nome: string;
+    email: string;
+    data_nascimento: string;
+    sexo: string;
+  };
+  responsavel: {
+    nome: string;
+    email: string;
+    data_nascimento: string;
+    cpf_cnpj: string;
+    parentesco: string;
+  };
+  responsavel_endereco: {
+    logradouro: string;
+    numero: string;
+    complemento?: string;
+    cep: string;
+    bairro: string;
+    regiao: string;
+    tipo: string;
+  };
+  responsavel_contato: {
+    nome_responsavel: string;
+    contato: string;
+    tipo: string;
+  };
+  cid_usuario: number[];
+}

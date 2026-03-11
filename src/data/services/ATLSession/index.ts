@@ -64,7 +64,10 @@ export function ATLSession() {
 
         if (params.id_unidade) searchParams.set("id_unidade", String(params.id_unidade));
         if (params.nome_profissional) searchParams.set("nome_profissional", params.nome_profissional);
-        if (params.nome_paciente) searchParams.set("nome_paciente", params.nome_paciente);
+        if (params.nome_aluno) searchParams.set("nome_aluno", params.nome_aluno);
+        if (params.tipo_sessao) searchParams.set("tipo_sessao", params.tipo_sessao);
+        if (params.periodo_data) searchParams.set("periodo_data", params.periodo_data);
+        if (params.status) searchParams.set("status", params.status);
 
         const { data } = await api.get(`altSession/getAltSessionsByNetwork?${searchParams.toString()}`);
         if (data) return data;

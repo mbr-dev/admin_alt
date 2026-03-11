@@ -1,4 +1,4 @@
-export type TAltSessionStatus = "aberta" | "finalizada" | "cancelada";
+export type TAltSessionStatus = "aberta" | "em_andamento" | "finalizada" | "cancelada";
 
 export interface IAltSession {
   id: number;
@@ -40,7 +40,10 @@ export interface IGetAltSessionsByNetworkParams {
   id_unidade_rede: number;
   id_unidade?: number;
   nome_profissional?: string;
-  nome_paciente?: string;
+  nome_aluno?: string;
+  tipo_sessao?: string;
+  periodo_data?: "hoje" | "ultimos_7_dias" | "ultimos_15_dias" | "ultimos_30_dias";
+  status?: TAltSessionStatus;
   page?: number;
   limit?: number;
 }

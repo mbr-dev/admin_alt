@@ -118,6 +118,7 @@ border-2
 
 ${({ $status }) => {
   if ($status === "aberta") return "border-blue-500";
+  if ($status === "em_andamento") return "border-yellow-500";
   if ($status === "finalizada") return "border-green-500";
   if ($status === "cancelada") return "border-red-500";
   return "border-mbr-gray-30";

@@ -92,7 +92,7 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
     };
 
     void loadQuestions();
-  }, []);
+  }, [session.id, session.preenchimento_formulario]);
 
   const handleAnswerOption = (questionId: number, optionId: number) => {
     setAnswersByQuestion((prev) => ({
@@ -156,29 +156,29 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
 
       if (!verifyData()) return;
 
-      const payload: AltSessionService.ICreateMedicalRecordSessionItem[] = questions.flatMap((question) => {
+      const payload = questions.flatMap<AltSessionService.ICreateMedicalRecordSessionItem>((question) => {
         const answer = answersByQuestion[question.id_pergunta];
         const questionType = getQuestionType(question);
+        const basePayload = {
+          id_sessao: session.id,
+          id_pergunta: question.id_pergunta,
+          status: 1,
+        };
 
         if (questionType === "check") {
           const selectedIds = answer?.id_respostas ?? [];
           return selectedIds.map((optionId) => ({
-            id_sessao: session.id,
-            id_pergunta: question.id_pergunta,
+            ...basePayload,
             id_resposta: optionId,
-            status: 1,
           }));
         }
 
-        return [
-          {
-            id_sessao: session.id,
-            id_pergunta: question.id_pergunta,
-            id_resposta: questionType === "select" ? answer?.id_resposta : undefined,
-            resposta_texto: questionType === "input" ? answer?.resposta_texto?.trim() : undefined,
-            status: 1,
-          },
-        ];
+        if (questionType === "select") {
+          if (typeof answer?.id_resposta !== "number") return [];
+          return [{ ...basePayload, id_resposta: answer.id_resposta }];
+        }
+
+        return [{ ...basePayload, resposta_texto: answer?.resposta_texto?.trim() ?? "" }];
       });
 
       const response = isEditMode

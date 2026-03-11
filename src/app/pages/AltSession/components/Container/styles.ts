@@ -38,6 +38,74 @@ flex-col
 gap-4
 `;
 
+export const FilterBox = tw.div`
+w-full
+rounded-2xl
+border
+border-mbr-gray-30
+bg-white
+p-3
+flex
+flex-col
+gap-3
+`;
+
+export const FilterGrid = tw.div`
+w-full
+grid
+grid-cols-1
+gap-2
+
+md:grid-cols-2
+lg:grid-cols-5
+`;
+
+export const FilterInput = tw.input`
+w-full
+h-10
+rounded-xl
+border
+border-mbr-gray-30
+px-3
+text-sm
+outline-none
+
+focus:border-mbr-blue-10
+`;
+
+export const FilterSelect = tw.select`
+w-full
+h-10
+rounded-xl
+border
+border-mbr-gray-30
+px-3
+text-sm
+outline-none
+bg-white
+
+focus:border-mbr-blue-10
+`;
+
+export const FilterActions = tw.div`
+w-full
+flex
+items-center
+justify-end
+gap-2
+`;
+
+export const FilterButton = tw.button<{ $variant: "primary" | "secondary" }>`
+h-10
+px-4
+rounded-xl
+font-semibold
+text-sm
+cursor-pointer
+
+${({ $variant }) => ($variant === "primary" ? "bg-mbr-blue-10 text-white" : "bg-mbr-gray-30 text-white")}
+`;
+
 export const StatusTag = tw.span<{ $status: string }>`
 px-3
 py-1
@@ -46,8 +114,9 @@ text-xs
 font-medium
 
 ${({ $status }) => {
-  if ($status === "aberta") return "bg-green-100 text-blue-700";
-  if ($status === "finalizada") return "bg-blue-100 text-green-700";
+  if ($status === "aberta") return "bg-blue-100 text-blue-700";
+  if ($status === "em andamento" || $status === "em_andamento") return "bg-yellow-100 text-yellow-700";
+  if ($status === "finalizada") return "bg-green-100 text-green-700";
   if ($status === "cancelada") return "bg-red-100 text-red-700";
   return "bg-mbr-gray-20 text-mbr-gray-80";
 }}

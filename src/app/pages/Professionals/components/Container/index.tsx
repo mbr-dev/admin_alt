@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { Professionals } from "@/data/services";
 import { ProfessionalsService } from "@/data/models";
 import { useMain, useStorage } from "@/data/hooks";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMagnifyingGlass, FaPencil } from "react-icons/fa6";
 import { DataTable, FloatingAddButton, Pagination } from "@/components/template";
@@ -139,8 +139,8 @@ export function Container() {
             <S.FilterBox>
               <S.FilterInput
                 value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
-                onKeyDown={(e) => {
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
+                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === "Enter") {
                     handleSearch();
                   }

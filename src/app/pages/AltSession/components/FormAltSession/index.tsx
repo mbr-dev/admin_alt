@@ -123,6 +123,7 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
                   $status={props.status}
                 >
                   <option value="aberta">aberta</option>
+                  <option value="em_andamento">em andamento</option>
                   <option value="finalizada">finalizada</option>
                   <option value="cancelada">cancelada</option>
                 </StatusSelect>

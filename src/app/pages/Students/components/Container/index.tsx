@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { Animations, FormStudent, ModalShow } from "..";
 import { useStudents } from "../../hook";
 import { StudentService } from "@/data/models";
-import { useMemo, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useMemo, useState } from "react";
 import { FaMagnifyingGlass, FaPencil } from "react-icons/fa6";
 import { DataTable, FloatingAddButton, Pagination } from "@/components/template";
 
@@ -85,8 +85,8 @@ export function Container() {
             <S.FilterBox>
               <S.FilterInput
                 value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
-                onKeyDown={(e) => {
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
+                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === "Enter") {
                     handleSearch();
                   }

@@ -1,0 +1,1 @@
+export { FormMedicalRecord } from "./FormMedicalRecord";

@@ -1,0 +1,246 @@
+import { ATLSession } from "@/data/services";
+import { Professionals, Student } from "@/data/services";
+import { AltSessionService } from "@/data/models";
+import { ProfessionalsService, StudentService } from "@/data/models";
+import { useMain, useStorage, useToast } from "@/data/hooks";
+import { useEffect, useRef, useState } from "react";
+
+interface IUseFormAltSession {
+  onClose: () => void;
+  onSuccess: () => Promise<void>;
+  sessionToEdit?: AltSessionService.IAltSession | null;
+}
+
+export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: IUseFormAltSession) {
+  const { setLoad } = useMain();
+  const { toast } = useToast();
+  const { getData } = useStorage();
+  const { createAltSession, updateAltSessionById, changeAltSessionStatusById } = ATLSession();
+  const { getClinicProfessionalsByNetwork } = Professionals();
+  const { getAllStudentsNetwork } = Student();
+
+  const [idProfessional, setIdProfessional] = useState<string>("");
+  const [idPatient, setIdPatient] = useState<string>("");
+  const [professionalName, setProfessionalName] = useState<string>("");
+  const [patientName, setPatientName] = useState<string>("");
+  const [sessionType, setSessionType] = useState<string>("Pedagógica (ALT)");
+  const [status, setStatus] = useState<string>("aberta");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [professionals, setProfessionals] = useState<ProfessionalsService.IProfessionalByNetwork[]>([]);
+  const [students, setStudents] = useState<StudentService.IStudent[]>([]);
+  const [isLoadingOptions, setIsLoadingOptions] = useState<boolean>(false);
+  const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
+  const isEditMode = !!sessionToEdit;
+
+  const getDataRef = useRef(getData);
+  const getClinicProfessionalsByNetworkRef = useRef(getClinicProfessionalsByNetwork);
+  const getAllStudentsNetworkRef = useRef(getAllStudentsNetwork);
+
+  useEffect(() => {
+    getDataRef.current = getData;
+    getClinicProfessionalsByNetworkRef.current = getClinicProfessionalsByNetwork;
+    getAllStudentsNetworkRef.current = getAllStudentsNetwork;
+  }, [getData, getClinicProfessionalsByNetwork, getAllStudentsNetwork]);
+
+  useEffect(() => {
+    const loadOptions = async () => {
+      try {
+        setIsLoadingOptions(true);
+        const networkId = Number(getDataRef.current("id_rede"));
+
+        if (Number.isNaN(networkId) || networkId <= 0) {
+          setProfessionals([]);
+          setStudents([]);
+          return;
+        }
+
+        const loadedProfessionals: ProfessionalsService.IProfessionalByNetwork[] = [];
+        const loadedStudents: StudentService.IStudent[] = [];
+
+        const firstProfessionalsPage = await getClinicProfessionalsByNetworkRef.current(networkId, 1);
+        if (firstProfessionalsPage?.data) {
+          loadedProfessionals.push(...firstProfessionalsPage.data);
+          for (let page = 2; page <= firstProfessionalsPage.totalPages; page += 1) {
+            const nextPage = await getClinicProfessionalsByNetworkRef.current(networkId, page);
+            if (nextPage?.data) loadedProfessionals.push(...nextPage.data);
+          }
+        }
+
+        const firstStudentsPage = await getAllStudentsNetworkRef.current(networkId, 1, 100);
+        if (Array.isArray(firstStudentsPage)) {
+          loadedStudents.push(...firstStudentsPage);
+        } else if (firstStudentsPage?.data) {
+          loadedStudents.push(...firstStudentsPage.data);
+          const totalPages = firstStudentsPage.totalPages ?? 1;
+          for (let page = 2; page <= totalPages; page += 1) {
+            const nextPage = await getAllStudentsNetworkRef.current(networkId, page, 100);
+            if (Array.isArray(nextPage)) {
+              loadedStudents.push(...nextPage);
+            } else if (nextPage?.data) {
+              loadedStudents.push(...nextPage.data);
+            }
+          }
+        }
+
+        setProfessionals(loadedProfessionals);
+        setStudents(loadedStudents);
+      } finally {
+        setIsLoadingOptions(false);
+      }
+    };
+
+    void loadOptions();
+  }, []);
+
+  useEffect(() => {
+    if (!sessionToEdit) return;
+
+    const toDatetimeLocalValue = (dateValue?: string) => {
+      if (!dateValue) return "";
+      const date = new Date(dateValue);
+      if (Number.isNaN(date.getTime())) return "";
+      const timezoneOffset = date.getTimezoneOffset() * 60000;
+      return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 16);
+    };
+
+    setIdProfessional(String(sessionToEdit.id_profissional));
+    setIdPatient(String(sessionToEdit.id_paciente));
+    setProfessionalName(sessionToEdit.nome_profissional ?? "");
+    setPatientName(sessionToEdit.nome_paciente ?? "");
+    setSessionType(sessionToEdit.tipo_sessao ?? "Pedagógica (ALT)");
+    setStatus(sessionToEdit.status ?? "aberta");
+    setStartDate(toDatetimeLocalValue(sessionToEdit.data_inicio));
+    setEndDate(toDatetimeLocalValue(sessionToEdit.data_final));
+  }, [sessionToEdit]);
+
+  const filteredProfessionals = professionals
+    .filter((item) => (item.nome ?? "").toLowerCase().includes(professionalName.toLowerCase()))
+    .slice(0, 8);
+
+  const filteredStudents = students
+    .filter((item) => (item.nome ?? "").toLowerCase().includes(patientName.toLowerCase()))
+    .slice(0, 8);
+
+  const handleSelectProfessional = (item: ProfessionalsService.IProfessionalByNetwork) => {
+    setIdProfessional(String(item.id_usuario ?? ""));
+    setProfessionalName(item.nome ?? "");
+  };
+
+  const handleProfessionalNameChange = (value: string) => {
+    setProfessionalName(value);
+    setIdProfessional("");
+  };
+
+  const handleSelectPatient = (item: StudentService.IStudent) => {
+    setIdPatient(String(item.id_usuario));
+    setPatientName(item.nome);
+  };
+
+  const handlePatientNameChange = (value: string) => {
+    setPatientName(value);
+    setIdPatient("");
+  };
+
+  const verifyData = () => {
+    if (!idProfessional.trim()) {
+      toast({ title: "Sessões ALT", description: "Selecione o profissional!", variant: "destructive" });
+      return false;
+    }
+    if (!idPatient.trim()) {
+      toast({ title: "Sessões ALT", description: "Selecione o paciente!", variant: "destructive" });
+      return false;
+    }
+    if (!sessionType.trim()) {
+      toast({ title: "Sessões ALT", description: "Informe o tipo da sessão!", variant: "destructive" });
+      return false;
+    }
+    if (!startDate) {
+      toast({ title: "Sessões ALT", description: "Informe a data/hora de início!", variant: "destructive" });
+      return false;
+    }
+    if (!endDate) {
+      toast({ title: "Sessões ALT", description: "Informe a data/hora de fim!", variant: "destructive" });
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoad(true);
+      setDisabledBtn(true);
+
+      if (!verifyData()) return;
+
+      const dataToSend: AltSessionService.ICreateAltSessionPayload = {
+        id_profissional: Number(idProfessional),
+        id_paciente: Number(idPatient),
+        tipo_sessao: sessionType.trim(),
+        data_inicio: new Date(startDate).toISOString(),
+        data_final: new Date(endDate).toISOString(),
+        status: status as AltSessionService.TAltSessionStatus,
+      };
+
+      if (isEditMode && sessionToEdit) {
+        const updatePayload: AltSessionService.IUpdateAltSessionPayload = {
+          id_profissional: Number(idProfessional),
+          id_paciente: Number(idPatient),
+          tipo_sessao: sessionType.trim(),
+          data_inicio: new Date(startDate).toISOString(),
+          data_final: new Date(endDate).toISOString(),
+        };
+
+        const updatedSession = await updateAltSessionById(sessionToEdit.id, updatePayload);
+        if (!updatedSession) return;
+
+        if (status !== sessionToEdit.status) {
+          const changedStatus = await changeAltSessionStatusById(sessionToEdit.id, {
+            status: status as AltSessionService.TAltSessionStatus,
+          });
+          if (!changedStatus) return;
+        }
+
+        toast({ title: "Sessões ALT", description: "Sessão atualizada com sucesso!", variant: "successful" });
+        await onSuccess();
+        onClose();
+        return;
+      }
+
+      const response = await createAltSession(dataToSend);
+      if (!response) return;
+
+      toast({ title: "Sessões ALT", description: "Sessão cadastrada com sucesso!", variant: "successful" });
+      await onSuccess();
+      onClose();
+    } finally {
+      setDisabledBtn(false);
+      setLoad(false);
+    }
+  };
+
+  return {
+    idProfessional,
+    professionalName,
+    setProfessionalName: handleProfessionalNameChange,
+    filteredProfessionals,
+    handleSelectProfessional,
+    idPatient,
+    patientName,
+    setPatientName: handlePatientNameChange,
+    filteredStudents,
+    handleSelectPatient,
+    sessionType,
+    setSessionType,
+    status,
+    setStatus,
+    isEditMode,
+    isLoadingOptions,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    disabledBtn,
+    handleSubmit,
+  };
+}

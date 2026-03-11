@@ -18,6 +18,10 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
     setter(e.target.value);
   };
 
+  const handleSelectChange = (setter: (value: string) => void) => (e: ChangeEvent<HTMLSelectElement>) => {
+    setter(e.target.value);
+  };
+
   if (props.isLoading) {
     return (
       <S.Container>
@@ -61,7 +65,7 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
                 <S.Input
                   id="professional-user"
                   value={props.usuario}
-                  onChange={(e) => {
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     props.setUsuario(e.target.value);
                     props.setIsUserAvailable(null);
                   }}
@@ -79,7 +83,7 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
                 <S.Select
                   id="professional-unit"
                   value={props.selectedUnitId}
-                  onChange={(e) => props.setSelectedUnitId(e.target.value)}
+                  onChange={handleSelectChange(props.setSelectedUnitId)}
                 >
                   <option value="">{props.t("field_unit_placeholder")}</option>
                   {props.units.map((unit) => (

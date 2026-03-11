@@ -21,6 +21,7 @@ export interface IProfessionalByNetworkResponse {
 export interface IProfessionalRegister {
   usuario: string;
   senha: string;
+  id_unidade: number;
   id_unidade_rede: number;
   nome: string;
   cpf_cnpj?: string;

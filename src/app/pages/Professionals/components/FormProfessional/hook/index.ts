@@ -108,11 +108,13 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
       setDisabledBtn(true);
 
       if (!verifyData()) return;
+      const selectedUnit = units.find((unit) => String(unit.id) === selectedUnitId);
 
       const dataToSend: ProfessionalsService.IProfessionalRegister = {
         usuario: usuario.trim(),
         senha: senha.trim(),
-        id_unidade_rede: Number(selectedUnitId),
+        id_unidade: Number(selectedUnitId),
+        id_unidade_rede: selectedUnit?.id_unidade_rede ?? Number(selectedUnitId),
         nome: nome.trim(),
         cpf_cnpj: cpfCnpj.trim() || undefined,
         email: email.trim() || undefined,

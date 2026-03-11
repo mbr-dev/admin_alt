@@ -4,6 +4,7 @@ export { Groups } from "./Groups";
 export { Profile } from "./Profile";
 export { Support } from "./Support";
 export { Students } from "./Students";
+export { AltSession } from "./AltSession";
 export { Indicators } from "./Indicators";
 export { Monitoring } from "./Monitoring";
 export { ChoiceDidactic } from "./Didactic";

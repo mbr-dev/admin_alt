@@ -1,4 +1,5 @@
 export * as Select from "./select";
+export * as AltSessionService from "./alt-session-service";
 export * as CidService from "./cid-service";
 export * as ClassService from "./class-service";
 export * as AvatarService from "./avatar-service";

@@ -66,6 +66,7 @@ export interface IStudent {
   link?: string;
   status: number;
   nascimento?: string | null;
+  data_nascimento?: string | null;
   ultimo_acesso?: string | null;
   data_cadastro: string;
   codigo: string;

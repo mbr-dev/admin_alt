@@ -30,8 +30,9 @@ export const userModalShow = () => {
       setUser(studentsContext.selectedData?.usuario ?? "");
       setUnit(studentsContext.selectedData?.descricao ?? "");
 
-      if (studentsContext.selectedData?.nascimento) {
-        const date = new Date(studentsContext.selectedData.nascimento);
+      const selectedBirthDate = studentsContext.selectedData?.data_nascimento ?? studentsContext.selectedData?.nascimento;
+      if (selectedBirthDate) {
+        const date = new Date(selectedBirthDate);
         const formattedDate = date.toISOString().split("T")[0];
         setBirth(new Date(formattedDate));
       } else {

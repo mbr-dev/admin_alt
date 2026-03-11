@@ -1,3 +1,4 @@
+//import { format } from "date-fns";
 import { Bar } from "../";
 import * as S from "./styles";
 import { useApi } from "@/data/hooks";
@@ -6,10 +7,24 @@ import { useTranslation } from "react-i18next";
 import { FaCaretUp, FaCaretDown, FaCircleExclamation } from "react-icons/fa6";
 
 interface ITable0 {
-  reportData: any[];
+  reportData: ITable0Row[];
   reportType: number;
   handleOrderData: (type: number, key: string) => void;
   showDoubt: (type: number, show: boolean) => void;
+}
+
+interface ITable0Row {
+  idioma?: string;
+  modulo?: string;
+  atividade?: string;
+  data_inicio?: string;
+  imagem?: string;
+  id_modulo?: number;
+  conteudo?: string;
+  total_acessos?: number;
+  total_acertos?: number;
+  percentual_acerto?: number;
+  score_ponderado?: number;
 }
 
 export const Table0 = ({ reportData, reportType, showDoubt, handleOrderData }: ITable0) => {
@@ -120,10 +135,10 @@ export const Table0 = ({ reportData, reportType, showDoubt, handleOrderData }: I
             <S.Cell>{item?.total_acessos}</S.Cell>
             <S.Cell>{item?.total_acertos}</S.Cell>
             <S.Cell>
-              <Bar value={item?.percentual_acerto} />
+              <Bar value={item?.percentual_acerto ?? 0} />
             </S.Cell>
             <S.Cell className="border-r-transparent">
-              <Bar value={item?.score_ponderado} />
+              <Bar value={item?.score_ponderado ?? 0} />
             </S.Cell>
           </Table.TableRow>
         ))}

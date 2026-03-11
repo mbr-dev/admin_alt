@@ -26,7 +26,7 @@ export function Container() {
       {
         key: "data_nascimento",
         label: "Data de nascimento",
-        render: (row: StudentService.IStudent) => formatBirthDate(row.nascimento),
+        render: (row: StudentService.IStudent) => formatBirthDate(row.data_nascimento ?? row.nascimento),
       },
       {
         key: "status",

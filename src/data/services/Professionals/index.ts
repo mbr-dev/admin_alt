@@ -40,5 +40,42 @@ export function Professionals() {
     [api, get_error, toast]
   );
 
-  return { getClinicProfessionalsByNetwork, createClinicProfessional };
+  const getClinicProfessionalByUserId = useCallback(
+    async (id: number): Promise<ProfessionalsService.IProfessionalByUserId | null> => {
+      try {
+        const { data } = await api.get(`clinicProfessional/getClinicProfessionalByUserId/${id}`);
+        if (data) return data;
+        return null;
+      } catch (error) {
+        const errorMessage = get_error(error);
+        console.log(errorMessage);
+        toast({ title: "Profissionais", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, get_error, toast]
+  );
+
+  const updateClinicProfessionalByUserId = useCallback(
+    async (id: number, dataToSend: ProfessionalsService.IProfessionalUpdateByUserId) => {
+      try {
+        const { data } = await api.patch(`clinicProfessional/updateClinicProfessionalByUserId/${id}`, dataToSend);
+        if (data) return data;
+        return null;
+      } catch (error) {
+        const errorMessage = get_error(error);
+        console.log(errorMessage);
+        toast({ title: "Profissionais", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, get_error, toast]
+  );
+
+  return {
+    getClinicProfessionalsByNetwork,
+    createClinicProfessional,
+    getClinicProfessionalByUserId,
+    updateClinicProfessionalByUserId,
+  };
 }

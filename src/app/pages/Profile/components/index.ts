@@ -5,3 +5,4 @@ export { InfosTeacher } from "./InfosTeacher";
 export { InfosStudent } from "./InfosStudent";
 export { ModalEditAvatar } from "./ModalEditAvatar";
 export { InfosCoordinator } from "./InfosCoordinator";
+export { InfosSecretary } from "./InfosSecretary";

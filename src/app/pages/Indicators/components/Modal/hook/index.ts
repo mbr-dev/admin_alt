@@ -1,6 +1,6 @@
-import { Select } from "@/data/models";
+import { Select, StudentService } from "@/data/models";
 import { useStorage } from "@/data/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Student } from "@/data/services";
 import { useIndicators } from "../../../hook";
 
@@ -12,7 +12,7 @@ export const useModal = () => {
   const [students, setStudents] = useState<Select.ISelect>({ list: [], selected: "" });
   const [loadLabel, setLoadLabel] = useState<boolean>(false);
   //Função que busca os alunos pela rede
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoadLabel(true);
 
@@ -25,10 +25,10 @@ export const useModal = () => {
       }
 
       const response = await getAllStudentsNetwork(networkId, 1, 9999);
-      const studentList = Array.isArray(response) ? response : (response?.data ?? []);
+      const studentList: StudentService.IStudent[] = Array.isArray(response) ? response : (response?.data ?? []);
 
       if(studentList.length > 0) {
-        const formatResponse = studentList.map((item) => ({ id: item.id.toString(), label: item.nome }));
+        const formatResponse = studentList.map((item: StudentService.IStudent) => ({ id: item.id.toString(), label: item.nome }));
         setStudents((prev) => ({
           ...prev,
           list: formatResponse
@@ -44,7 +44,7 @@ export const useModal = () => {
     } finally {
       setLoadLabel(false);
     }
-  }
+  }, [getAllStudentsNetwork, getData]);
   //Função que Seleciona a aluno
   const handleSelectStudent = (value: string) => {
     indicatorsContext.setStudentSelected(Number(value));
@@ -58,7 +58,7 @@ export const useModal = () => {
 
   useEffect(() => {
     void fetchData();
-  }, []);
+  }, [fetchData]);
 
   return { handleConfirm, loadLabel, students, handleSelectStudent };
 }

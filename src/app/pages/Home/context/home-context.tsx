@@ -30,13 +30,6 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
         setRanking(response.rakingHome.data);
         setEvents(response.eventsActivity);
         setName(response.name);
-        //Salva no storage
-        const sessionData = {
-          ranking: response.rakingHome.data,
-          events: response.eventsActivity,
-          name: response.name
-        }
-        sessionStorage.setItem("home-data", JSON.stringify(sessionData));
       }
 
       mainContext.setLoad(false);
@@ -46,16 +39,7 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   }
 
   useEffect(() => {
-    //Verifica se tem no session os dados
-    const cached = sessionStorage.getItem("home-data");
-    //Caso tenha session usar ele
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      setRanking(parsed.ranking);
-      setEvents(parsed.events);
-      setName(parsed.name);
-      //Caso não tenha recarregue
-    } else if (mainContext.isReady && Number(getData("hierarquia"))) {
+    if (mainContext.isReady && Number(getData("hierarquia"))) {
       fetchData();
     }
   }, [mainContext.isReady]);

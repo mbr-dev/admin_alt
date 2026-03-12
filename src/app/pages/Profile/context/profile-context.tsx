@@ -1,10 +1,10 @@
 import * as IHC from "./profile-model";
-import { Profile } from "@/data/services";
+import { Profile, SME } from "@/data/services";
 import { useTranslation } from "react-i18next";
 import { useMain, useStorage } from "@/data/hooks";
 import { UserRole } from "@/data/constants/user-roles";
 import { useState, createContext, useEffect } from "react";
-import { ProfileService, AchievementService, AvatarService } from "@/data/models";
+import { ProfileService, AchievementService, AvatarService, SmeService } from "@/data/models";
 
 export const ProfileContext = createContext({} as IHC.IProfileContext);
 
@@ -13,8 +13,9 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
   const { setData, getData } = useStorage();
   const { t } = useTranslation("profile");
   const { getStudentByStudentId, getTeacherProfile, getCoordinatorProfile, getAllAchievementsForHomeByUserId, getAllAvatars, updateAvatar } = Profile();
+  const { getSecretaryByUserId } = SME();
 
-  const [userData, setUserData] = useState<null | ProfileService.IProfileService>(null);
+  const [userData, setUserData] = useState<null | ProfileService.IProfileService | SmeService.ISecretaryByUserId>(null);
   const [allAvatars, setAllAvatars] = useState<AvatarService.IAvatarService[]>([]);
   const [showAvatars, setShowAvatars] = useState<boolean>(false);
   const [tempAvatar, setTempAvatar] = useState<number>(0);
@@ -35,7 +36,9 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
 
       const response = 
         Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentByStudentId(Number(getData("id_hierarquia"))) :
-        Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherProfile() : await getCoordinatorProfile();
+        Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherProfile() :
+        Number(getData("hierarquia")) === UserRole.SECRETARY ? await getSecretaryByUserId(Number(getData("id"))) :
+        await getCoordinatorProfile();
 
       const responseAvatar = await getAllAvatars();
       //Busca as conquista do professor e do aluno
@@ -48,14 +51,6 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
         }
         setAllAvatars(responseAvatar);
         setTempAvatar(response.id_avatar);
-        //Salva no storage os dados
-        const sessionData = {
-          userData: response,
-          achievements: responseAchievement ?? [],
-          allAvatars: responseAvatar,
-          tempAvatar: response.id_avatar,
-        }
-        sessionStorage.setItem("profile-data", JSON.stringify(sessionData));
       }
 
       mainContext.setLoad(false);
@@ -92,18 +87,7 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
   }
 
   useEffect(() => {
-    const cached = sessionStorage.getItem("profile-data");
-
-    if (cached) {
-      const parsed = JSON.parse(cached);
-
-      setUserData(parsed.userData);
-      setAchievements(parsed.achievements);
-      setAllAvatars(parsed.allAvatars);
-      setTempAvatar(parsed.tempAvatar);
-    } else {
-      fetchData();
-    }
+    fetchData();
   }, []);
 
   return (

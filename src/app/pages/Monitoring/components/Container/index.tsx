@@ -29,8 +29,8 @@ export const Container = () => {
             dataKey="total_alunos"
             title={t("evolutionRound")}
           />
-          <C.Ranking />
-          <C.Inactive />
+          {/* <C.Ranking /> */}
+          {/* <C.Inactive /> */}
           <C.Details />
         </S.Main>}
     </S.Container>

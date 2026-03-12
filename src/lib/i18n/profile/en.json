@@ -10,5 +10,13 @@
   "editAvatar": "Edit Avatar",
   "save": "Save",
   "done": "Done",
-  "left": "Left"
+  "left": "Left",
+  "secretary_edit_title": "Edit information",
+  "secretary_user": "User",
+  "secretary_password": "Password",
+  "secretary_name": "Name",
+  "secretary_save_pending": "Secretary update endpoint is not integrated yet.",
+  "secretary_required_name": "Enter the name.",
+  "secretary_required_password": "Enter the password.",
+  "secretary_update_success": "Secretary data updated successfully."
 }

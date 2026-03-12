@@ -12,5 +12,9 @@
   "language": "Cambiar idioma",
   "management_units": "Unidades",
   "management_professionals": "Profesionales",
-  "alt_session":"Sesiones"
+  "alt_session":"Sesiones",
+  "logout_modal_title": "Confirmar salida",
+  "logout_modal_description": "Desea realmente salir de la plataforma?",
+  "logout_modal_cancel": "Cancelar",
+  "logout_modal_confirm": "Salir"
 }

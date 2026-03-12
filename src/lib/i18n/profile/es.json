@@ -10,5 +10,13 @@
   "editAvatar": "Editar avatar",
   "save": "Ahorrar",
   "done": "Hecho",
-  "left": "Falar"
+  "left": "Falar",
+  "secretary_edit_title": "Editar informacion",
+  "secretary_user": "Usuario",
+  "secretary_password": "Contrasena",
+  "secretary_name": "Nombre",
+  "secretary_save_pending": "El endpoint de actualizacion de secretaria aun no esta integrado.",
+  "secretary_required_name": "Ingrese el nombre.",
+  "secretary_required_password": "Ingrese la contrasena.",
+  "secretary_update_success": "Datos de secretaria actualizados con exito."
 }

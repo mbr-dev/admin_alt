@@ -5,17 +5,18 @@ import { useMain, useStorage, useToast } from "@/data/hooks";
 import { useTranslation } from "react-i18next";
 
 interface IUseFormProfessional {
+  professionalToEdit: ProfessionalsService.IProfessionalByUserId | null;
   onClose: () => void;
   onSuccess: () => Promise<void>;
 }
 
-export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional) {
+export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: IUseFormProfessional) {
   const { t } = useTranslation("professionals");
   const { toast } = useToast();
   const { setLoad } = useMain();
   const { getData } = useStorage();
   const { verifyUser } = User();
-  const { createClinicProfessional } = Professionals();
+  const { createClinicProfessional, updateClinicProfessionalByUserId } = Professionals();
   const { getAllUnitsFromUnitNetworkByUser } = Indicators();
 
   const [usuario, setUsuario] = useState<string>("");
@@ -26,10 +27,14 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
   const [email, setEmail] = useState<string>("");
   const [especialidade, setEspecialidade] = useState<string>("");
   const [registroProfissional, setRegistroProfissional] = useState<string>("");
+  const [status, setStatus] = useState<number>(1);
   const [units, setUnits] = useState<UnitNetworkService.IUnitNetworkService["unit"]>([]);
   const [isUserAvailable, setIsUserAvailable] = useState<boolean | null>(null);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const isEditMode = !!professionalToEdit;
+  const initialUser = professionalToEdit?.usuario?.trim() ?? "";
 
   const getDataRef = useRef(getData);
   const getAllUnitsFromUnitNetworkByUserRef = useRef(getAllUnitsFromUnitNetworkByUser);
@@ -54,18 +59,49 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
     void loadUnits();
   }, []);
 
+  const cleanData = () => {
+    setUsuario("");
+    setSenha("");
+    setSelectedUnitId("");
+    setNome("");
+    setCpfCnpj("");
+    setEmail("");
+    setEspecialidade("");
+    setRegistroProfissional("");
+    setStatus(1);
+    setIsUserAvailable(null);
+  };
+
+  useEffect(() => {
+    if (!professionalToEdit) {
+      cleanData();
+      return;
+    }
+
+    setUsuario(professionalToEdit.usuario ?? "");
+    setSenha("");
+    setSelectedUnitId(professionalToEdit.id_unidade ? String(professionalToEdit.id_unidade) : "");
+    setNome(professionalToEdit.nome ?? "");
+    setCpfCnpj(professionalToEdit.cpf_cnpj ?? "");
+    setEmail(professionalToEdit.email ?? "");
+    setEspecialidade(professionalToEdit.especialidade ?? "");
+    setRegistroProfissional(professionalToEdit.registro_profissional ?? "");
+    setStatus(professionalToEdit.status ?? 1);
+    setIsUserAvailable(true);
+  }, [professionalToEdit]);
+
   const verifyData = () => {
     if (!usuario.trim()) {
       toast({ title: t("title"), description: t("validation_required_user"), variant: "destructive" });
       return false;
     }
 
-    if (isUserAvailable !== true) {
+    if ((!isEditMode || usuario.trim() !== initialUser) && isUserAvailable !== true) {
       toast({ title: t("title"), description: t("validation_user_unavailable"), variant: "destructive" });
       return false;
     }
 
-    if (!senha.trim()) {
+    if (!isEditMode && !senha.trim()) {
       toast({ title: t("title"), description: t("validation_required_password"), variant: "destructive" });
       return false;
     }
@@ -90,6 +126,11 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
       return;
     }
 
+    if (isEditMode && userValue === initialUser) {
+      setIsUserAvailable(true);
+      return;
+    }
+
     const userExists = await verifyUser(userValue);
     if (userExists === null) return;
 
@@ -109,6 +150,33 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
 
       if (!verifyData()) return;
       const selectedUnit = units.find((unit) => String(unit.id) === selectedUnitId);
+
+      if (isEditMode && professionalToEdit?.id_usuario) {
+        const dataToSend: ProfessionalsService.IProfessionalUpdateByUserId = {
+          id_unidade: Number(selectedUnitId),
+          id_usuario: professionalToEdit.id_usuario,
+          usuario: usuario.trim(),
+          nome: nome.trim(),
+          cpf_cnpj: cpfCnpj.trim() || undefined,
+          email: email.trim() || undefined,
+          especialidade: especialidade.trim() || undefined,
+          registro_profissional: registroProfissional.trim() || undefined,
+          status,
+        };
+
+        const password = senha.trim();
+        if (password) {
+          dataToSend.senha = password;
+        }
+
+        const response = await updateClinicProfessionalByUserId(professionalToEdit.id_usuario, dataToSend);
+        if (response) {
+          toast({ title: t("title"), description: t("success_update"), variant: "successful" });
+          await onSuccess();
+          onClose();
+        }
+        return;
+      }
 
       const dataToSend: ProfessionalsService.IProfessionalRegister = {
         usuario: usuario.trim(),
@@ -136,6 +204,7 @@ export function useFormProfessional({ onClose, onSuccess }: IUseFormProfessional
 
   return {
     t,
+    isEditMode,
     usuario,
     senha,
     selectedUnitId,

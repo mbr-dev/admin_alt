@@ -1,14 +1,17 @@
 import * as S from "./styles";
 import { useFormProfessional } from "./hook";
 import { ChangeEvent } from "react";
+import { ProfessionalsService } from "@/data/models";
 
 interface IFormProfessional {
+  professionalToEdit: ProfessionalsService.IProfessionalByUserId | null;
   onClose: () => void;
   onSuccess: () => Promise<void>;
+  isLoading?: boolean;
 }
 
-export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
-  const props = useFormProfessional({ onClose, onSuccess });
+export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoading = false }: IFormProfessional) {
+  const props = useFormProfessional({ professionalToEdit, onClose, onSuccess });
 
   const handleInputChange = (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {
     setter(e.target.value);
@@ -22,7 +25,7 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
     setter(e.target.value);
   };
 
-  if (props.isLoading) {
+  if (isLoading || props.isLoading) {
     return (
       <S.Container>
         <S.SkeletonCard>
@@ -53,7 +56,7 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
     <S.Container>
       <S.FormCard>
         <S.Header>
-          <S.FormTitle>{props.t("form_create_title")}</S.FormTitle>
+          <S.FormTitle>{props.isEditMode ? props.t("form_edit_title") : props.t("form_create_title")}</S.FormTitle>
         </S.Header>
 
         <S.Sections>
@@ -151,7 +154,7 @@ export function FormProfessional({ onClose, onSuccess }: IFormProfessional) {
             {props.t("button_cancel")}
           </S.Button>
           <S.Button type="button" $variant="primary" onClick={props.handleSubmit} disabled={props.disabledBtn}>
-            {props.t("button_save")}
+            {props.isEditMode ? props.t("button_update") : props.t("button_save")}
           </S.Button>
         </S.Footer>
       </S.FormCard>

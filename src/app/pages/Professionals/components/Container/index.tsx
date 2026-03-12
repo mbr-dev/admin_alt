@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { Professionals } from "@/data/services";
 import { ProfessionalsService } from "@/data/models";
 import { useMain, useStorage } from "@/data/hooks";
-import { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMagnifyingGlass, FaPencil } from "react-icons/fa6";
 import { DataTable, FloatingAddButton, Pagination } from "@/components/template";
@@ -12,19 +12,40 @@ export function Container() {
   const { t } = useTranslation("professionals");
   const { setLoad } = useMain();
   const { getData } = useStorage();
-  const { getClinicProfessionalsByNetwork } = Professionals();
+  const { getClinicProfessionalsByNetwork, getClinicProfessionalByUserId } = Professionals();
 
   const [professionals, setProfessionals] = useState<ProfessionalsService.IProfessionalByNetwork[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalOfPages, setTotalOfPages] = useState<number>(1);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [isProfessionalLoading, setIsProfessionalLoading] = useState<boolean>(false);
+  const [professionalToEdit, setProfessionalToEdit] = useState<ProfessionalsService.IProfessionalByUserId | null>(null);
   const [searchName, setSearchName] = useState<string>("");
   const [appliedSearchName, setAppliedSearchName] = useState<string>("");
 
   const getDataRef = useRef(getData);
   const setLoadRef = useRef(setLoad);
   const getClinicProfessionalsByNetworkRef = useRef(getClinicProfessionalsByNetwork);
+  const getClinicProfessionalByUserIdRef = useRef(getClinicProfessionalByUserId);
+
+  const handleEdit = useCallback(async (professional: ProfessionalsService.IProfessionalByNetwork) => {
+    const userId = professional.id_usuario;
+    if (!userId) return;
+
+    setShowForm(true);
+    setIsProfessionalLoading(true);
+    setProfessionalToEdit(null);
+
+    try {
+      const response = await getClinicProfessionalByUserIdRef.current(userId);
+      if (response) {
+        setProfessionalToEdit(response);
+      }
+    } finally {
+      setIsProfessionalLoading(false);
+    }
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -43,14 +64,14 @@ export function Container() {
         label: "",
         render: (row: ProfessionalsService.IProfessionalByNetwork) => (
           <S.EditCell>
-            <S.EditButton type="button" aria-label={`${t("table_edit_aria")} ${row.nome ?? ""}`}>
+            <S.EditButton type="button" aria-label={`${t("table_edit_aria")} ${row.nome ?? ""}`} onClick={() => void handleEdit(row)}>
               <FaPencil />
             </S.EditButton>
           </S.EditCell>
         ),
       },
     ],
-    [t]
+    [t, handleEdit]
   );
 
   const filteredProfessionals = useMemo(() => {
@@ -66,10 +87,14 @@ export function Container() {
   };
 
   const handleOpenForm = () => {
+    setProfessionalToEdit(null);
+    setIsProfessionalLoading(false);
     setShowForm(true);
   };
 
   const handleCloseForm = () => {
+    setProfessionalToEdit(null);
+    setIsProfessionalLoading(false);
     setShowForm(false);
   };
 
@@ -99,7 +124,8 @@ export function Container() {
     getDataRef.current = getData;
     setLoadRef.current = setLoad;
     getClinicProfessionalsByNetworkRef.current = getClinicProfessionalsByNetwork;
-  }, [getData, setLoad, getClinicProfessionalsByNetwork]);
+    getClinicProfessionalByUserIdRef.current = getClinicProfessionalByUserId;
+  }, [getData, setLoad, getClinicProfessionalsByNetwork, getClinicProfessionalByUserId]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -133,7 +159,12 @@ export function Container() {
 
       <S.Main>
         {showForm ? (
-          <FormProfessional onClose={handleCloseForm} onSuccess={handleRefresh} />
+          <FormProfessional
+            professionalToEdit={professionalToEdit}
+            isLoading={isProfessionalLoading}
+            onClose={handleCloseForm}
+            onSuccess={handleRefresh}
+          />
         ) : (
           <S.TableArea>
             <S.FilterBox>

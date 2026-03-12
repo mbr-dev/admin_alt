@@ -1,6 +1,6 @@
 
 import React, { Dispatch, SetStateAction } from "react";
-import { ProfileService, AchievementService, AvatarService } from "@/data/models";
+import { ProfileService, AchievementService, AvatarService, SmeService } from "@/data/models";
 
 export interface IProfileContextProvider {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ export interface IProfileContextProvider {
 
 export interface IProfileContext {
   achievements: AchievementService.IAchievementsUserService | null;
-  userData: ProfileService.IProfileService | null;
+  userData: ProfileService.IProfileService | SmeService.ISecretaryByUserId | null;
   showAvatars: boolean;
   tempAvatar: number;
   dropDown: number | null;

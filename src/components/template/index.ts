@@ -6,3 +6,4 @@ export { Pagination } from "./Pagination";
 export { LabelSelect } from "./LabelSelect";
 export { DataTable } from "./DataTable";
 export { FloatingAddButton } from "./FloatingAddButton";
+export { ConfirmActionModal } from "./ConfirmActionModal";

@@ -9,6 +9,7 @@ export * as AchievementService from "./achievement-service";
 export * as UnitNetworkService from "./unit-network-service";
 export * as UnitService from "./unit-service";
 export * as ProfessionalsService from "./professionals-service";
+export * as SmeService from "./sme-service";
 export * as ClassStudentService from "./class-student-service";
 export * as ProjectInfosService from "./project-infos-service";
 export * as ClassTeacherService from "./class-teacher-service";

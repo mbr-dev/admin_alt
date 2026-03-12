@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { useStorage } from "@/data/hooks";
-import { Animations, Avatar, InfosCoordinator, InfosStudent, InfosTeacher, ModalEditAvatar } from "../";
+import { Animations, Avatar, InfosCoordinator, InfosSecretary, InfosStudent, InfosTeacher, ModalEditAvatar } from "../";
 
 export const Container = () => {
   const { getData } = useStorage();
@@ -11,6 +11,7 @@ export const Container = () => {
     <InfosCoordinator />,
     <InfosTeacher />,
     <InfosStudent />,
+    <InfosSecretary />,
   ]
   return (
     <S.Container>

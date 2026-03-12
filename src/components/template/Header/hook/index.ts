@@ -54,7 +54,8 @@ export const useHeader = () => {
     sessionStorage.removeItem("class-teacher");
     sessionStorage.removeItem("class-cood");
     sessionStorage.removeItem("class-sme");
-    window.location.reload();
+    setShowMenu(false);
+    navigate("/login", { replace: true });
   }
 
   useEffect(() => { fetchData(); }, []);

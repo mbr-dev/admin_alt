@@ -1,6 +1,6 @@
 import { Select, StudentService } from "@/data/models";
 import { useStorage } from "@/data/hooks";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Student } from "@/data/services";
 import { useIndicators } from "../../../hook";
 
@@ -11,12 +11,19 @@ export const useModal = () => {
 
   const [students, setStudents] = useState<Select.ISelect>({ list: [], selected: "" });
   const [loadLabel, setLoadLabel] = useState<boolean>(false);
+  const getDataRef = useRef(getData);
+  const getAllStudentsNetworkRef = useRef(getAllStudentsNetwork);
+
+  useEffect(() => {
+    getDataRef.current = getData;
+    getAllStudentsNetworkRef.current = getAllStudentsNetwork;
+  }, [getData, getAllStudentsNetwork]);
   //Função que busca os alunos pela rede
   const fetchData = useCallback(async () => {
     try {
       setLoadLabel(true);
 
-      const networkIdRaw = getData("id_rede") || getData("id_unidade_rede");
+      const networkIdRaw = getDataRef.current("id_rede") || getDataRef.current("id_unidade_rede");
       const networkId = Number(networkIdRaw);
 
       if (Number.isNaN(networkId) || networkId <= 0) {
@@ -24,7 +31,7 @@ export const useModal = () => {
         return;
       }
 
-      const response = await getAllStudentsNetwork(networkId, 1, 9999);
+      const response = await getAllStudentsNetworkRef.current(networkId, 1, 9999);
       const studentList: StudentService.IStudent[] = Array.isArray(response) ? response : (response?.data ?? []);
 
       if(studentList.length > 0) {
@@ -44,7 +51,7 @@ export const useModal = () => {
     } finally {
       setLoadLabel(false);
     }
-  }, [getAllStudentsNetwork, getData]);
+  }, []);
   //Função que Seleciona a aluno
   const handleSelectStudent = (value: string) => {
     indicatorsContext.setStudentSelected(Number(value));
@@ -57,8 +64,9 @@ export const useModal = () => {
   }
 
   useEffect(() => {
+    if (!indicatorsContext.showModal) return;
     void fetchData();
-  }, [fetchData]);
+  }, [indicatorsContext.showModal, fetchData]);
 
   return { handleConfirm, loadLabel, students, handleSelectStudent };
 }

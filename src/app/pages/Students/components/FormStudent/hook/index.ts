@@ -2,7 +2,7 @@ import { Student } from "@/data/services";
 import { Unit } from "@/data/services";
 import { CID } from "@/data/services";
 import { CidService, StudentService, UnitService } from "@/data/models";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useStorage, useToast, useMain } from "@/data/hooks";
 import { consultarCep } from "@/lib/consultarCep";
 
@@ -55,6 +55,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [verified, setVerified] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const isEditMode = !!studentToEdit;
+  const previousUserPrefixRef = useRef<string>("");
 
   const fetchData = async (studentToEditData?: StudentService.IStudent | null) => {
     try {
@@ -135,16 +136,67 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   };
 
   const generateUser = (value: string) => {  
-    const formattedName = value
+    const valueWithoutPrefix = userPrefix && value.startsWith(userPrefix) ? value.slice(userPrefix.length) : value;
+    const formattedName = valueWithoutPrefix
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/\s+/g, "_");
   
-    setUser(formattedName);
+    const userToSet = !isEditMode && userPrefix ? `${userPrefix}${formattedName}` : formattedName;
+    setUser(userToSet);
     setValidatedUser("");
     setVerified(false);
   };
+
+  const selectedUnit = useMemo(
+    () => units.find((unit) => String(unit.id) === selectedUnitId) ?? null,
+    [selectedUnitId, units]
+  );
+
+  const hasSingleUnit = units.length === 1;
+
+  const buildUserPrefix = (unitDescription: string) => {
+    const words = unitDescription
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (words.length === 0) return "";
+    if (words.length >= 3) return `${words[0][0]}${words[1][0]}${words[2][0]}_`;
+    if (words.length === 2) return `${words[0][0]}${words[1].slice(0, 2)}_`;
+    return `${words[0].slice(0, 3)}_`;
+  };
+
+  const userPrefix = !isEditMode && selectedUnit?.descricao ? buildUserPrefix(selectedUnit.descricao) : "";
+
+  useEffect(() => {
+    if (isEditMode) return;
+    if (!hasSingleUnit) return;
+    setSelectedUnitId(String(units[0].id));
+  }, [hasSingleUnit, isEditMode, units]);
+
+  useEffect(() => {
+    if (isEditMode) return;
+
+    const previousPrefix = previousUserPrefixRef.current;
+    if (!userPrefix) {
+      previousUserPrefixRef.current = "";
+      return;
+    }
+
+    setUser((prevValue) => {
+      const baseSuffix =
+        previousPrefix && prevValue.startsWith(previousPrefix) ? prevValue.slice(previousPrefix.length) : prevValue;
+      return `${userPrefix}${baseSuffix}`;
+    });
+    setValidatedUser("");
+    setVerified(false);
+    previousUserPrefixRef.current = userPrefix;
+  }, [isEditMode, userPrefix]);
 
   const verifyIfUserExists = async () => {
     if (user === "") return;
@@ -361,6 +413,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     password,
     setPassword,
     units,
+    hasSingleUnit,
     selectedUnitId,
     setSelectedUnitId,
     isFormLoading,

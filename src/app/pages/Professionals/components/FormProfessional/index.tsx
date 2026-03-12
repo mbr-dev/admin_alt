@@ -60,45 +60,7 @@ export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoa
         </S.Header>
 
         <S.Sections>
-          <S.Section>
-            <S.SectionTitle>{props.t("section_user_info")}</S.SectionTitle>
-            <S.Grid>
-              <S.Label htmlFor="professional-user">
-                {props.t("field_user")}
-                <S.Input
-                  id="professional-user"
-                  value={props.usuario}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    props.setUsuario(e.target.value);
-                    props.setIsUserAvailable(null);
-                  }}
-                  onBlur={props.handleBlurUser}
-                />
-              </S.Label>
-
-              <S.Label htmlFor="professional-password">
-                {props.t("field_password")}
-                <S.Input id="professional-password" type="password" value={props.senha} onChange={handleInputChange(props.setSenha)} />
-              </S.Label>
-
-              <S.Label htmlFor="professional-unit">
-                {props.t("field_unit")}
-                <S.Select
-                  id="professional-unit"
-                  value={props.selectedUnitId}
-                  onChange={handleSelectChange(props.setSelectedUnitId)}
-                >
-                  <option value="">{props.t("field_unit_placeholder")}</option>
-                  {props.units.map((unit) => (
-                    <option key={unit.id} value={unit.id}>
-                      {unit.descricao}
-                    </option>
-                  ))}
-                </S.Select>
-              </S.Label>
-            </S.Grid>
-          </S.Section>
-
+          
           <S.Section>
             <S.SectionTitle>{props.t("section_personal_info")}</S.SectionTitle>
             <S.Grid>
@@ -119,6 +81,47 @@ export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoa
             </S.Grid>
           </S.Section>
 
+          <S.Section>
+            <S.SectionTitle>{props.t("section_user_info")}</S.SectionTitle>
+            <S.Grid>
+              <S.Label htmlFor="professional-user">
+                {props.t("field_user")}
+                <S.Input
+                  id="professional-user"
+                  value={props.usuario}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => props.handleChangeUser(e.target.value)}
+                  onBlur={props.handleBlurUser}
+                />
+              </S.Label>
+
+              <S.Label htmlFor="professional-password">
+                {props.t("field_password")}
+                <S.Input id="professional-password" type="password" value={props.senha} onChange={handleInputChange(props.setSenha)} />
+              </S.Label>
+
+              <S.Label htmlFor="professional-unit">
+                {props.t("field_unit")}
+                <S.Select
+                  id="professional-unit"
+                  value={props.selectedUnitId}
+                  onChange={handleSelectChange(props.setSelectedUnitId)}
+                  disabled={props.hasSingleUnit}
+                >
+                  {!props.hasSingleUnit && <option value="">{props.t("field_unit_placeholder")}</option>}
+                  {props.hasSingleUnit ? (
+                    <option value={props.units[0]?.id}>{props.units[0]?.descricao ?? props.t("field_unit_placeholder")}</option>
+                  ) : (
+                    props.units.map((unit) => (
+                      <option key={unit.id} value={unit.id}>
+                        {unit.descricao}
+                      </option>
+                    ))
+                  )}
+                </S.Select>
+              </S.Label>
+            </S.Grid>
+          </S.Section>
+          
           <S.Section>
             <S.SectionTitle>{props.t("section_professional_info")}</S.SectionTitle>
             <S.Grid>

@@ -73,44 +73,6 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
           <S.FormTitle>Cadastro de aluno</S.FormTitle>
         </S.Header>
 
-        <S.Sections>
-          <S.Section>
-            <S.SectionTitle>Acesso</S.SectionTitle>
-            <S.Grid>
-              <S.Label htmlFor="student-user">
-                Usuário
-                <S.Input
-                  id="student-user"
-                  value={props.user}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => props.generateUser(e.target.value)}
-                  onBlur={props.verifyIfUserExists}
-                  disabled={!!studentToEdit}
-                />
-              </S.Label>
-
-              <S.Label htmlFor="student-password">
-                Senha
-                <S.Input id="student-password" type="password" value={props.password} onChange={handleInputChange(props.setPassword)} />
-              </S.Label>
-
-              <S.Label htmlFor="student-unit">
-                Unidade
-                <S.Select
-                  id="student-unit"
-                  value={props.selectedUnitId}
-                  onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setSelectedUnitId(e.target.value)}
-                >
-                  {props.units.length === 0 && <option value="">Nenhuma unidade encontrada</option>}
-                  {props.units.map((unit) => (
-                    <option key={unit.id} value={unit.id}>
-                      {unit.descricao}
-                    </option>
-                  ))}
-                </S.Select>
-              </S.Label>
-            </S.Grid>
-          </S.Section>
-
           <S.Section>
             <S.SectionTitle>Dados do aluno</S.SectionTitle>
             <S.Grid>
@@ -150,7 +112,49 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
               </S.Label>
             </S.Grid>
           </S.Section>
+      
+          <S.Sections>
+          <S.Section>
+            <S.SectionTitle>Acesso</S.SectionTitle>
+            <S.Grid>
+              <S.Label htmlFor="student-user">
+                Usuário
+                <S.Input
+                  id="student-user"
+                  value={props.user}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => props.generateUser(e.target.value)}
+                  onBlur={props.verifyIfUserExists}
+                  disabled={!!studentToEdit}
+                />
+              </S.Label>
 
+              <S.Label htmlFor="student-password">
+                Senha
+                <S.Input id="student-password" type="password" value={props.password} onChange={handleInputChange(props.setPassword)} />
+              </S.Label>
+
+              <S.Label htmlFor="student-unit">
+                Unidade
+                <S.Select
+                  id="student-unit"
+                  value={props.selectedUnitId}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setSelectedUnitId(e.target.value)}
+                  disabled={props.hasSingleUnit}
+                >
+                  {props.units.length === 0 && <option value="">Nenhuma unidade encontrada</option>}
+                  {props.hasSingleUnit ? (
+                    <option value={props.units[0]?.id}>{props.units[0]?.descricao ?? "Nenhuma unidade encontrada"}</option>
+                  ) : (
+                    props.units.map((unit) => (
+                      <option key={unit.id} value={unit.id}>
+                        {unit.descricao}
+                      </option>
+                    ))
+                  )}
+                </S.Select>
+              </S.Label>
+            </S.Grid>
+          </S.Section>
           <S.Section>
             <S.SectionTitle>Diagnóstico e Classificação CID</S.SectionTitle>
             <CidContainer>

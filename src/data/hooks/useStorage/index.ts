@@ -22,6 +22,7 @@ export function useStorage() {
   const removeData = useCallback(
     (key: string) => {
       try {
+        cookies.remove(key, { path: "/" });
         cookies.remove(key);
         return true;
       } catch (error) {

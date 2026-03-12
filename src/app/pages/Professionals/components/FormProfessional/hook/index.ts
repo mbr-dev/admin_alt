@@ -1,6 +1,6 @@
 import { Indicators, Professionals, User } from "@/data/services";
 import { ProfessionalsService, UnitNetworkService } from "@/data/models";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMain, useStorage, useToast } from "@/data/hooks";
 import { useTranslation } from "react-i18next";
 
@@ -35,6 +35,7 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
 
   const isEditMode = !!professionalToEdit;
   const initialUser = professionalToEdit?.usuario?.trim() ?? "";
+  const previousUserPrefixRef = useRef<string>("");
 
   const getDataRef = useRef(getData);
   const getAllUnitsFromUnitNetworkByUserRef = useRef(getAllUnitsFromUnitNetworkByUser);
@@ -58,6 +59,54 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
 
     void loadUnits();
   }, []);
+
+  const selectedUnit = useMemo(
+    () => units.find((unit) => String(unit.id) === selectedUnitId) ?? null,
+    [selectedUnitId, units]
+  );
+
+  const hasSingleUnit = units.length === 1;
+
+  const buildUserPrefix = (unitDescription: string) => {
+    const words = unitDescription
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (words.length === 0) return "";
+    if (words.length >= 3) return `${words[0][0]}${words[1][0]}${words[2][0]}_`;
+    if (words.length === 2) return `${words[0][0]}${words[1].slice(0, 2)}_`;
+    return `${words[0].slice(0, 3)}_`;
+  };
+
+  const userPrefix = !isEditMode && selectedUnit?.descricao ? buildUserPrefix(selectedUnit.descricao) : "";
+
+  useEffect(() => {
+    if (isEditMode) return;
+    if (!hasSingleUnit) return;
+    setSelectedUnitId(String(units[0].id));
+  }, [hasSingleUnit, isEditMode, units]);
+
+  useEffect(() => {
+    if (isEditMode) return;
+
+    const previousPrefix = previousUserPrefixRef.current;
+    if (!userPrefix) {
+      previousUserPrefixRef.current = "";
+      return;
+    }
+
+    setUsuario((prevValue) => {
+      const baseSuffix =
+        previousPrefix && prevValue.startsWith(previousPrefix) ? prevValue.slice(previousPrefix.length) : prevValue;
+      return `${userPrefix}${baseSuffix}`;
+    });
+
+    previousUserPrefixRef.current = userPrefix;
+  }, [isEditMode, userPrefix]);
 
   const cleanData = () => {
     setUsuario("");
@@ -143,6 +192,18 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     setIsUserAvailable(true);
   };
 
+  const handleChangeUser = (value: string) => {
+    if (isEditMode || !userPrefix) {
+      setUsuario(value);
+      setIsUserAvailable(null);
+      return;
+    }
+
+    const valueWithoutPrefix = value.startsWith(userPrefix) ? value.slice(userPrefix.length) : value;
+    setUsuario(`${userPrefix}${valueWithoutPrefix}`);
+    setIsUserAvailable(null);
+  };
+
   const handleSubmit = async () => {
     try {
       setLoad(true);
@@ -214,6 +275,7 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     especialidade,
     registroProfissional,
     units,
+    hasSingleUnit,
     isUserAvailable,
     disabledBtn,
     isLoading,
@@ -226,6 +288,7 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     setEspecialidade,
     setRegistroProfissional,
     setIsUserAvailable,
+    handleChangeUser,
     handleBlurUser,
     handleSubmit,
   };

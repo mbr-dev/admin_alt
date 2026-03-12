@@ -16,7 +16,7 @@ export const Welcome = () => {
           {homeContext.name !== "" &&
             <TypeAnimation
               sequence={[
-                `BEM VINDO, ${homeContext.name}`,
+                `BEM-VINDO(A), ${homeContext.name}!`,
                 1000,
               ]}
               wrapper="span"

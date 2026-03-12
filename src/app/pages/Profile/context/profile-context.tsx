@@ -65,7 +65,7 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
   }
   //Função responsavel pelo dropdown
   const handleDropdown = (id: number) => {
-    if (userData?.unidades && userData?.unidades.length < 1) return;
+    if (userData && "unidades" in userData && userData.unidades.length < 1) return;
     setDropDown((prev) => prev === id ? null : id);
   }
   //Função que salva a edição do avatar

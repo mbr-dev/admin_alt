@@ -5,11 +5,13 @@ import { useProfile } from "../../hook";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 //import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
+import { ProfileService } from "@/data/models";
 
 export const InfosTeacher = () => {
   //const { URL_FILES } = useApi();
   const { t } = useTranslation("profile");
   const profileContext = useProfile();
+  const profileData = profileContext.userData as ProfileService.IProfileService | null;
 
   return (
     <S.Container>
@@ -17,11 +19,11 @@ export const InfosTeacher = () => {
         <S.Div>
           <S.DivInside>
             <h3>{t("name")}</h3>
-            <p>{profileContext.userData?.nome}</p>
+            <p>{profileData?.nome}</p>
           </S.DivInside>
           <S.DivInside>
             <h3>{t("email")}</h3>
-            <p>{profileContext.userData?.email}</p>
+            <p>{profileData?.email}</p>
           </S.DivInside>
         </S.Div>
     
@@ -30,17 +32,17 @@ export const InfosTeacher = () => {
             <h3>{t("unit")}</h3>
   
             <S.Dropdown>
-              {profileContext.userData?.unidades && profileContext.userData?.unidades.length > 1 ?
+              {profileData?.unidades && profileData?.unidades.length > 1 ?
                 <S.ButtonDropdown onClick={() => profileContext.handleDropdown(0)}>
-                  <p title={profileContext?.userData?.unidades[0].descricao}>{profileContext?.userData?.unidades[0].descricao}</p>
+                  <p title={profileData?.unidades[0].descricao}>{profileData?.unidades[0].descricao}</p>
                   {profileContext.dropDown === 0 ? <FaChevronUp /> : <FaChevronDown />}
                 </S.ButtonDropdown>
                 :
-                <p title={profileContext?.userData?.unidades[0].descricao}>{profileContext?.userData?.unidades[0].descricao}</p>
+                <p title={profileData?.unidades[0].descricao}>{profileData?.unidades[0].descricao}</p>
               }
               {profileContext.dropDown === 0 &&
                 <S.DropdownItem>
-                  {profileContext?.userData?.unidades && profileContext?.userData?.unidades.map((item, index) => {
+                  {profileData?.unidades && profileData?.unidades.map((item, index) => {
                     return index > 0 && (
                       <p key={index} title={item.descricao}>{item.descricao}</p>
                     )

@@ -4,11 +4,13 @@ import { Carousel } from "@/components/ui";
 import * as SIT from "../InfosTeacher/styles";
 import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
+import { ProfileService } from "@/data/models";
 
 export const InfosStudent = () => {
   const { URL_FILES } = useApi();
   const { t } = useTranslation("profile");
   const profileContext = useProfile();
+  const profileData = profileContext.userData as ProfileService.IProfileService | null;
 
   return (
     <SIT.Container>
@@ -16,23 +18,23 @@ export const InfosStudent = () => {
         <SIT.Div>
           <SIT.DivInside>
             <h3>{t("name")}</h3>
-            <p>{profileContext.userData?.nome}</p>
+            <p>{profileData?.nome}</p>
           </SIT.DivInside>
           <SIT.DivInside>
             <h3>{t("email")}</h3>
-            <p>{profileContext.userData?.email}</p>
+            <p>{profileData?.email}</p>
           </SIT.DivInside>
         </SIT.Div>
     
         <SIT.Div>
           <SIT.DivInside>
             <h3>{t("unit")}</h3>
-            <p>{profileContext.userData?.unidade}</p>
+            <p>{profileData?.unidade}</p>
           </SIT.DivInside>
 
           <SIT.DivInside>
             <h3>{t("class")}</h3>
-            <p>{profileContext.userData?.turma}</p>
+            <p>{profileData?.turma}</p>
           </SIT.DivInside>
         </SIT.Div>
 

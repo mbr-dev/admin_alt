@@ -15,9 +15,11 @@ export function Container() {
   const formatBirthDate = (birthDate: string | null | undefined) => {
     if (!birthDate) return "-";
 
-    const date = new Date(birthDate);
-    if (Number.isNaN(date.getTime())) return "-";
-    return date.toLocaleDateString("pt-BR");
+    // Evita deslocamento de fuso ao renderizar datas ISO em UTC (ex: 00:00Z -> dia anterior no Brasil)
+    const [year, month, day] = birthDate.split("T")[0].split("-");
+    if (!year || !month || !day) return "-";
+
+    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
   };
 
   const columns = useMemo(

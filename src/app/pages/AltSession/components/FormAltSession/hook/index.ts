@@ -3,7 +3,23 @@ import { Professionals, Student } from "@/data/services";
 import { AltSessionService } from "@/data/models";
 import { ProfessionalsService, StudentService } from "@/data/models";
 import { useMain, useStorage, useToast } from "@/data/hooks";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+function professionalMatchesSessionType(
+  professional: ProfessionalsService.IProfessionalByNetwork,
+  sessionType: string
+): boolean {
+  const st = sessionType.trim();
+  if (!st) return true;
+  const profissoes = professional.profissoes ?? [];
+  if (profissoes.length === 0) return false;
+  return profissoes.some((p) => {
+    const t = (p.tipo_atendimento ?? "").trim();
+    if (!t) return false;
+    if (t === st) return true;
+    return t.split(",").map((s) => s.trim()).some((part) => part === st);
+  });
+}
 
 interface IUseFormAltSession {
   onClose: () => void;
@@ -16,32 +32,38 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
   const { toast } = useToast();
   const { getData } = useStorage();
   const { createAltSession, updateAltSessionById, changeAltSessionStatusById } = ATLSession();
-  const { getClinicProfessionalsByNetwork } = Professionals();
+  const { getClinicProfessionalsByNetwork, getAllClinicProfession } = Professionals();
   const { getAllStudentsNetwork } = Student();
 
   const [idProfessional, setIdProfessional] = useState<string>("");
   const [idPatient, setIdPatient] = useState<string>("");
   const [professionalName, setProfessionalName] = useState<string>("");
   const [patientName, setPatientName] = useState<string>("");
-  const [sessionType, setSessionType] = useState<string>("Pedagógica (ALT)");
+  const [sessionType, setSessionType] = useState<string>("");
   const [status, setStatus] = useState<string>("aberta");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [professionals, setProfessionals] = useState<ProfessionalsService.IProfessionalByNetwork[]>([]);
   const [students, setStudents] = useState<StudentService.IStudent[]>([]);
   const [isLoadingOptions, setIsLoadingOptions] = useState<boolean>(false);
+  const [clinicProfessions, setClinicProfessions] = useState<ProfessionalsService.IClinicProfession[]>([]);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
+  const [strictFilterProfessionals, setStrictFilterProfessionals] = useState<boolean>(false);
+  const [showProfessionMismatchDialog, setShowProfessionMismatchDialog] = useState<boolean>(false);
+  const mismatchDialogClosingForSubmitRef = useRef(false);
   const isEditMode = !!sessionToEdit;
 
   const getDataRef = useRef(getData);
   const getClinicProfessionalsByNetworkRef = useRef(getClinicProfessionalsByNetwork);
+  const getAllClinicProfessionRef = useRef(getAllClinicProfession);
   const getAllStudentsNetworkRef = useRef(getAllStudentsNetwork);
 
   useEffect(() => {
     getDataRef.current = getData;
     getClinicProfessionalsByNetworkRef.current = getClinicProfessionalsByNetwork;
+    getAllClinicProfessionRef.current = getAllClinicProfession;
     getAllStudentsNetworkRef.current = getAllStudentsNetwork;
-  }, [getData, getClinicProfessionalsByNetwork, getAllStudentsNetwork]);
+  }, [getData, getClinicProfessionalsByNetwork, getAllClinicProfession, getAllStudentsNetwork]);
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -57,6 +79,9 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
 
         const loadedProfessionals: ProfessionalsService.IProfessionalByNetwork[] = [];
         const loadedStudents: StudentService.IStudent[] = [];
+
+        const clinicProfessionsResponse = await getAllClinicProfessionRef.current();
+        setClinicProfessions(clinicProfessionsResponse ?? []);
 
         const firstProfessionalsPage = await getClinicProfessionalsByNetworkRef.current(networkId, 1);
         if (firstProfessionalsPage?.data) {
@@ -108,13 +133,38 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
     setIdPatient(String(sessionToEdit.id_paciente));
     setProfessionalName(sessionToEdit.nome_profissional ?? "");
     setPatientName(sessionToEdit.nome_paciente ?? "");
-    setSessionType(sessionToEdit.tipo_sessao ?? "Pedagógica (ALT)");
+    setSessionType(sessionToEdit.tipo_sessao ?? "");
     setStatus(sessionToEdit.status ?? "aberta");
     setStartDate(toDatetimeLocalValue(sessionToEdit.data_inicio));
     setEndDate(toDatetimeLocalValue(sessionToEdit.data_final));
   }, [sessionToEdit]);
 
-  const filteredProfessionals = professionals
+  useEffect(() => {
+    if (sessionToEdit) return;
+    if (clinicProfessions.length === 0) return;
+    setSessionType((prev) => {
+      if (prev.trim()) return prev;
+      const first = clinicProfessions[0];
+      return (first.tipo_atendimento ?? first.descricao ?? "").trim();
+    });
+  }, [clinicProfessions, sessionToEdit]);
+
+  const sessionTypeOptions = useMemo(() => {
+    const seen = new Set<string>();
+    return clinicProfessions.filter((item) => {
+      const value = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+      if (!value || seen.has(value)) return false;
+      seen.add(value);
+      return true;
+    });
+  }, [clinicProfessions]);
+
+  const professionalsForPicker = useMemo(() => {
+    if (!strictFilterProfessionals || !sessionType.trim()) return professionals;
+    return professionals.filter((p) => professionalMatchesSessionType(p, sessionType));
+  }, [professionals, strictFilterProfessionals, sessionType]);
+
+  const filteredProfessionals = professionalsForPicker
     .filter((item) => (item.nome ?? "").toLowerCase().includes(professionalName.toLowerCase()))
     .slice(0, 8);
 
@@ -130,6 +180,17 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
   const handleProfessionalNameChange = (value: string) => {
     setProfessionalName(value);
     setIdProfessional("");
+  };
+
+  const handleSessionTypeChange = (value: string) => {
+    setSessionType(value);
+    setStrictFilterProfessionals(true);
+    if (!idProfessional.trim()) return;
+    const prof = professionals.find((p) => String(p.id_usuario) === idProfessional);
+    if (!prof || !professionalMatchesSessionType(prof, value)) {
+      setIdProfessional("");
+      setProfessionalName("");
+    }
   };
 
   const handleSelectPatient = (item: StudentService.IStudent) => {
@@ -166,6 +227,64 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
     return true;
   };
 
+  const submitSession = useCallback(async () => {
+    const dataToSend: AltSessionService.ICreateAltSessionPayload = {
+      id_profissional: Number(idProfessional),
+      id_paciente: Number(idPatient),
+      tipo_sessao: sessionType.trim(),
+      data_inicio: new Date(startDate).toISOString(),
+      data_final: new Date(endDate).toISOString(),
+      status: status as AltSessionService.TAltSessionStatus,
+    };
+
+    if (isEditMode && sessionToEdit) {
+      const updatePayload: AltSessionService.IUpdateAltSessionPayload = {
+        id_profissional: Number(idProfessional),
+        id_paciente: Number(idPatient),
+        tipo_sessao: sessionType.trim(),
+        data_inicio: new Date(startDate).toISOString(),
+        data_final: new Date(endDate).toISOString(),
+      };
+
+      const updatedSession = await updateAltSessionById(sessionToEdit.id, updatePayload);
+      if (!updatedSession) return;
+
+      if (status !== sessionToEdit.status) {
+        const changedStatus = await changeAltSessionStatusById(sessionToEdit.id, {
+          status: status as AltSessionService.TAltSessionStatus,
+        });
+        if (!changedStatus) return;
+      }
+
+      toast({ title: "Sessões ALT", description: "Sessão atualizada com sucesso!", variant: "successful" });
+      await onSuccess();
+      onClose();
+      return;
+    }
+
+    const response = await createAltSession(dataToSend);
+    if (!response) return;
+
+    toast({ title: "Sessões ALT", description: "Sessão cadastrada com sucesso!", variant: "successful" });
+    await onSuccess();
+    onClose();
+  }, [
+    idProfessional,
+    idPatient,
+    sessionType,
+    startDate,
+    endDate,
+    status,
+    isEditMode,
+    sessionToEdit,
+    createAltSession,
+    updateAltSessionById,
+    changeAltSessionStatusById,
+    onSuccess,
+    onClose,
+    toast,
+  ]);
+
   const handleSubmit = async () => {
     try {
       setLoad(true);
@@ -173,49 +292,45 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
 
       if (!verifyData()) return;
 
-      const dataToSend: AltSessionService.ICreateAltSessionPayload = {
-        id_profissional: Number(idProfessional),
-        id_paciente: Number(idPatient),
-        tipo_sessao: sessionType.trim(),
-        data_inicio: new Date(startDate).toISOString(),
-        data_final: new Date(endDate).toISOString(),
-        status: status as AltSessionService.TAltSessionStatus,
-      };
-
-      if (isEditMode && sessionToEdit) {
-        const updatePayload: AltSessionService.IUpdateAltSessionPayload = {
-          id_profissional: Number(idProfessional),
-          id_paciente: Number(idPatient),
-          tipo_sessao: sessionType.trim(),
-          data_inicio: new Date(startDate).toISOString(),
-          data_final: new Date(endDate).toISOString(),
-        };
-
-        const updatedSession = await updateAltSessionById(sessionToEdit.id, updatePayload);
-        if (!updatedSession) return;
-
-        if (status !== sessionToEdit.status) {
-          const changedStatus = await changeAltSessionStatusById(sessionToEdit.id, {
-            status: status as AltSessionService.TAltSessionStatus,
-          });
-          if (!changedStatus) return;
-        }
-
-        toast({ title: "Sessões ALT", description: "Sessão atualizada com sucesso!", variant: "successful" });
-        await onSuccess();
-        onClose();
+      const selectedProfessional = professionals.find((p) => String(p.id_usuario) === idProfessional.trim());
+      if (!selectedProfessional) {
+        toast({ title: "Sessões ALT", description: "Selecione o profissional!", variant: "destructive" });
         return;
       }
 
-      const response = await createAltSession(dataToSend);
-      if (!response) return;
+      if (!professionalMatchesSessionType(selectedProfessional, sessionType)) {
+        setShowProfessionMismatchDialog(true);
+        return;
+      }
 
-      toast({ title: "Sessões ALT", description: "Sessão cadastrada com sucesso!", variant: "successful" });
-      await onSuccess();
-      onClose();
+      await submitSession();
     } finally {
       setDisabledBtn(false);
       setLoad(false);
+    }
+  };
+
+  const handleMismatchDialogYes = async () => {
+    if (!verifyData()) return;
+    mismatchDialogClosingForSubmitRef.current = true;
+    setShowProfessionMismatchDialog(false);
+    try {
+      setLoad(true);
+      setDisabledBtn(true);
+      await submitSession();
+    } finally {
+      mismatchDialogClosingForSubmitRef.current = false;
+      setDisabledBtn(false);
+      setLoad(false);
+    }
+  };
+
+  const handleMismatchDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      if (mismatchDialogClosingForSubmitRef.current) return;
+      setStrictFilterProfessionals(true);
+      setIdProfessional("");
+      setProfessionalName("");
     }
   };
 
@@ -231,7 +346,13 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
     filteredStudents,
     handleSelectPatient,
     sessionType,
-    setSessionType,
+    setSessionType: handleSessionTypeChange,
+    showProfessionMismatchDialog,
+    handleMismatchDialogYes,
+    handleMismatchDialogOpenChange,
+    setShowProfessionMismatchDialog,
+    clinicProfessions,
+    sessionTypeOptions,
     status,
     setStatus,
     isEditMode,

@@ -16,7 +16,7 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
   const { setLoad } = useMain();
   const { getData } = useStorage();
   const { verifyUser } = User();
-  const { createClinicProfessional, updateClinicProfessionalByUserId } = Professionals();
+  const { createClinicProfessional, updateClinicProfessionalByUserId, getAllClinicProfession } = Professionals();
   const { getAllUnitsFromUnitNetworkByUser } = Indicators();
 
   const [usuario, setUsuario] = useState<string>("");
@@ -25,13 +25,39 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
   const [nome, setNome] = useState<string>("");
   const [cpfCnpj, setCpfCnpj] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [especialidade, setEspecialidade] = useState<string>("");
   const [registroProfissional, setRegistroProfissional] = useState<string>("");
+  const [clinicProfessions, setClinicProfessions] = useState<ProfessionalsService.IClinicProfession[]>([]);
+  const [selectedProfessionIds, setSelectedProfessionIds] = useState<number[]>([]);
   const [status, setStatus] = useState<number>(1);
   const [units, setUnits] = useState<UnitNetworkService.IUnitNetworkService["unit"]>([]);
   const [isUserAvailable, setIsUserAvailable] = useState<boolean | null>(null);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const extractProfessionIds = (professional: ProfessionalsService.IProfessionalByUserId | null): number[] => {
+    if (!professional) return [];
+
+    const rawProfessions = professional.profissoes;
+    if (!rawProfessions) return [];
+
+    if ("id_profissoes" in rawProfessions && Array.isArray(rawProfessions.id_profissoes)) {
+      return rawProfessions.id_profissoes.filter((id): id is number => typeof id === "number");
+    }
+
+    if (Array.isArray(rawProfessions)) {
+      return rawProfessions
+        .map((item) => {
+          if (typeof item === "number") return item;
+          if (item && typeof item === "object" && "id" in item && typeof item.id === "number") return item.id;
+          if (item && typeof item === "object" && "id_profissao" in item && typeof item.id_profissao === "number") return item.id_profissao;
+          if (item && typeof item === "object" && "id_profissoes" in item && typeof item.id_profissoes === "number") return item.id_profissoes;
+          return null;
+        })
+        .filter((id): id is number => id !== null);
+    }
+
+    return [];
+  };
 
   const isEditMode = !!professionalToEdit;
   const initialUser = professionalToEdit?.usuario?.trim() ?? "";
@@ -39,25 +65,31 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
 
   const getDataRef = useRef(getData);
   const getAllUnitsFromUnitNetworkByUserRef = useRef(getAllUnitsFromUnitNetworkByUser);
+  const getAllClinicProfessionRef = useRef(getAllClinicProfession);
 
   useEffect(() => {
     getDataRef.current = getData;
     getAllUnitsFromUnitNetworkByUserRef.current = getAllUnitsFromUnitNetworkByUser;
-  }, [getData, getAllUnitsFromUnitNetworkByUser]);
+    getAllClinicProfessionRef.current = getAllClinicProfession;
+  }, [getData, getAllUnitsFromUnitNetworkByUser, getAllClinicProfession]);
 
   useEffect(() => {
-    const loadUnits = async () => {
+    const loadData = async () => {
       try {
         setIsLoading(true);
         const userId = Number(getDataRef.current("id"));
-        const response = await getAllUnitsFromUnitNetworkByUserRef.current(userId);
-        setUnits(response?.unit ?? []);
+        const [unitsResponse, clinicProfessionsResponse] = await Promise.all([
+          getAllUnitsFromUnitNetworkByUserRef.current(userId),
+          getAllClinicProfessionRef.current(),
+        ]);
+        setUnits(unitsResponse?.unit ?? []);
+        setClinicProfessions(clinicProfessionsResponse ?? []);
       } finally {
         setIsLoading(false);
       }
     };
 
-    void loadUnits();
+    void loadData();
   }, []);
 
   const selectedUnit = useMemo(
@@ -115,8 +147,8 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     setNome("");
     setCpfCnpj("");
     setEmail("");
-    setEspecialidade("");
     setRegistroProfissional("");
+    setSelectedProfessionIds([]);
     setStatus(1);
     setIsUserAvailable(null);
   };
@@ -133,11 +165,20 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     setNome(professionalToEdit.nome ?? "");
     setCpfCnpj(professionalToEdit.cpf_cnpj ?? "");
     setEmail(professionalToEdit.email ?? "");
-    setEspecialidade(professionalToEdit.especialidade ?? "");
     setRegistroProfissional(professionalToEdit.registro_profissional ?? "");
     setStatus(professionalToEdit.status ?? 1);
+    setSelectedProfessionIds(extractProfessionIds(professionalToEdit));
     setIsUserAvailable(true);
   }, [professionalToEdit]);
+
+  const handleToggleProfession = (professionId: number) => {
+    setSelectedProfessionIds((prev) => {
+      if (prev.includes(professionId)) {
+        return prev.filter((id) => id !== professionId);
+      }
+      return [...prev, professionId];
+    });
+  };
 
   const verifyData = () => {
     if (!usuario.trim()) {
@@ -220,9 +261,11 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
           nome: nome.trim(),
           cpf_cnpj: cpfCnpj.trim() || undefined,
           email: email.trim() || undefined,
-          especialidade: especialidade.trim() || undefined,
           registro_profissional: registroProfissional.trim() || undefined,
           status,
+          profissoes: {
+            id_profissoes: selectedProfessionIds,
+          },
         };
 
         const password = senha.trim();
@@ -247,8 +290,10 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
         nome: nome.trim(),
         cpf_cnpj: cpfCnpj.trim() || undefined,
         email: email.trim() || undefined,
-        especialidade: especialidade.trim() || undefined,
         registro_profissional: registroProfissional.trim() || undefined,
+        profissoes: {
+          id_profissoes: selectedProfessionIds,
+        },
       };
 
       const response = await createClinicProfessional(dataToSend);
@@ -272,8 +317,9 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     nome,
     cpfCnpj,
     email,
-    especialidade,
     registroProfissional,
+    clinicProfessions,
+    selectedProfessionIds,
     units,
     hasSingleUnit,
     isUserAvailable,
@@ -285,9 +331,9 @@ export function useFormProfessional({ professionalToEdit, onClose, onSuccess }: 
     setNome,
     setCpfCnpj,
     setEmail,
-    setEspecialidade,
     setRegistroProfissional,
     setIsUserAvailable,
+    handleToggleProfession,
     handleChangeUser,
     handleBlurUser,
     handleSubmit,

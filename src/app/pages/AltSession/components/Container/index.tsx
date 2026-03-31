@@ -1,12 +1,34 @@
 import * as S from "./styles";
-import { ATLSession } from "@/data/services";
-import { AltSessionService } from "@/data/models";
+import { ATLSession, Professionals } from "@/data/services";
+import { AltSessionService, ProfessionalsService } from "@/data/models";
 import { useMain, useStorage, useToast } from "@/data/hooks";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DataTable, FloatingAddButton, Pagination } from "@/components/template";
 import { Animations, FormAltSession, FormMedicalRecord } from "..";
 import { FaCircleCheck, FaDownload, FaPencil, FaRegFileLines, FaSpinner, FaTriangleExclamation } from "react-icons/fa6";
 import { jsPDF } from "jspdf";
+
+function formatPdfSessionDateTime(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "-";
+  return d.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function formatPdfSessionDuration(startIso: string, endIso: string): string {
+  const start = new Date(startIso).getTime();
+  const end = new Date(endIso).getTime();
+  if (Number.isNaN(start) || Number.isNaN(end) || end < start) return "00:00";
+  const totalMinutes = Math.floor((end - start) / 60000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
 
 export function Container() {
   const { setLoad } = useMain();
@@ -14,6 +36,7 @@ export function Container() {
   const { toast } = useToast();
   const { getAltSessionsByNetwork, getAltSessionById, changeAltSessionStatusById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions } =
     ATLSession();
+  const { getAllClinicProfession } = Professionals();
 
   const [sessions, setSessions] = useState<AltSessionService.IAltSession[]>([]);
   const [sessionToEdit, setSessionToEdit] = useState<AltSessionService.IAltSession | null>(null);
@@ -37,6 +60,7 @@ export function Container() {
   const [appliedSessionType, setAppliedSessionType] = useState<string>("");
   const [appliedDateRange, setAppliedDateRange] = useState<string>("");
   const [appliedStatusFilter, setAppliedStatusFilter] = useState<string>("");
+  const [clinicProfessions, setClinicProfessions] = useState<ProfessionalsService.IClinicProfession[]>([]);
 
   const getDataRef = useRef(getData);
   const setLoadRef = useRef(setLoad);
@@ -45,6 +69,7 @@ export function Container() {
   const changeAltSessionStatusByIdRef = useRef(changeAltSessionStatusById);
   const getMedicalRecordSessionBySessionIdRef = useRef(getMedicalRecordSessionBySessionId);
   const getMedicalRecordQuestionsRef = useRef(getMedicalRecordQuestions);
+  const getAllClinicProfessionRef = useRef(getAllClinicProfession);
 
   const formatDate = (dateValue?: string) => {
     if (!dateValue) return "-";
@@ -61,7 +86,26 @@ export function Container() {
     changeAltSessionStatusByIdRef.current = changeAltSessionStatusById;
     getMedicalRecordSessionBySessionIdRef.current = getMedicalRecordSessionBySessionId;
     getMedicalRecordQuestionsRef.current = getMedicalRecordQuestions;
-  }, [getData, setLoad, getAltSessionsByNetwork, getAltSessionById, changeAltSessionStatusById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions]);
+    getAllClinicProfessionRef.current = getAllClinicProfession;
+  }, [getData, setLoad, getAltSessionsByNetwork, getAltSessionById, changeAltSessionStatusById, getMedicalRecordSessionBySessionId, getMedicalRecordQuestions, getAllClinicProfession]);
+
+  useEffect(() => {
+    const loadClinicProfessions = async () => {
+      const data = await getAllClinicProfessionRef.current();
+      setClinicProfessions(data ?? []);
+    };
+    void loadClinicProfessions();
+  }, []);
+
+  const sessionTypeFilterOptions = useMemo(() => {
+    const seen = new Set<string>();
+    return clinicProfessions.filter((item) => {
+      const value = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+      if (!value || seen.has(value)) return false;
+      seen.add(value);
+      return true;
+    });
+  }, [clinicProfessions]);
 
   const loadData = useCallback(async () => {
     try {
@@ -147,7 +191,7 @@ export function Container() {
       setDownloadingSessionId(session.id);
       const [medicalRecordResponse, questionsResponse] = await Promise.all([
         getMedicalRecordSessionBySessionIdRef.current(session.id),
-        getMedicalRecordQuestionsRef.current(),
+        getMedicalRecordQuestionsRef.current(session.id),
       ]);
 
       if (!medicalRecordResponse || !questionsResponse) {
@@ -230,21 +274,27 @@ export function Container() {
         y = 16;
       };
 
+      const dataLineText = `Data Início: ${formatPdfSessionDateTime(session.data_inicio)} - Data Término: ${formatPdfSessionDateTime(session.data_final)} - Duração: ${formatPdfSessionDuration(session.data_inicio, session.data_final)}`;
+      const headerDataLines = doc.splitTextToSize(dataLineText, maxWidth - 6) as string[];
+      const headerBlockHeight = 14 + 5 + 5 + headerDataLines.length * lineHeight + 5 + 8;
+
       doc.setDrawColor(220, 220, 220);
       doc.setFillColor(245, 247, 250);
-      doc.roundedRect(margin, y, maxWidth, 28, 2, 2, "F");
+      doc.roundedRect(margin, y, maxWidth, headerBlockHeight, 2, 2, "F");
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(15);
-      doc.text(`Prontuário da Sessão - ${session.nome_paciente}`, pageWidth / 2, y + 8, { align: "center" });
+      doc.text("Prontuário da Sessão", pageWidth / 2, y + 8, { align: "center" });
 
+      const leftX = margin + 3;
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
-      doc.text(`Profissional: ${session.nome_profissional}`, margin + 3, y + 15);
-      doc.text(`Aluno: ${session.nome_paciente}`, margin + 3, y + 20);
-      doc.text(`Período: ${formatDate(session.data_inicio)} - ${formatDate(session.data_final)}`, margin + 3, y + 25);
+      doc.text(`Paciente: ${session.nome_paciente}`, leftX, y + 16);
+      doc.text(`Tipo Sessão: ${session.tipo_sessao}`, leftX, y + 21);
+      doc.text(headerDataLines, leftX, y + 26);
+      doc.text(`Profissional: ${session.nome_profissional}`, leftX, y + 26 + headerDataLines.length * lineHeight + 2);
 
-      y += 34;
+      y += headerBlockHeight + 6;
 
       questions.forEach((question, index) => {
         const questionType = getQuestionType(question);
@@ -526,13 +576,20 @@ export function Container() {
                 />
                 <S.FilterSelect value={sessionType} onChange={(e: ChangeEvent<HTMLSelectElement>) => setSessionType(e.target.value)}>
                   <option value="">Tipo de Sessão</option>
-                  <option value="Pedagógica (ALT)">Pedagógica (ALT)</option>
-                  <option value="Fonoaudiologia">Fonoaudiologia</option>
-                  <option value="Fisioterapia">Fisioterapia</option>
-                  <option value="Terapia Ocupacional">Terapia Ocupacional</option>
-                  <option value="Psicologia">Psicologia</option>
-                  <option value="ABA">ABA</option>
-                  <option value="Outro">Outro</option>
+                  {sessionType.trim() &&
+                    !sessionTypeFilterOptions.some(
+                      (item) => (item.tipo_atendimento ?? item.descricao ?? "").trim() === sessionType.trim()
+                    ) && (
+                      <option value={sessionType}>{sessionType}</option>
+                    )}
+                  {sessionTypeFilterOptions.map((item) => {
+                    const label = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+                    return (
+                      <option key={item.id} value={label}>
+                        {label}
+                      </option>
+                    );
+                  })}
                 </S.FilterSelect>
                 <S.FilterSelect value={dateRange} onChange={(e: ChangeEvent<HTMLSelectElement>) => setDateRange(e.target.value)}>
                   <option value="">Data</option>

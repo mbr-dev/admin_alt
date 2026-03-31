@@ -50,7 +50,17 @@ export function Container() {
   const columns = useMemo(
     () => [
       { key: "nome", label: t("table_name") },
-      { key: "especialidade", label: t("table_speciality") },
+      {
+        key: "especialidade",
+        label: t("table_speciality"),
+        render: (row: ProfessionalsService.IProfessionalByNetwork) => {
+          const fromProfissoes = row.profissoes?.map((p) => p.descricao).filter(Boolean);
+          if (fromProfissoes && fromProfissoes.length > 0) {
+            return fromProfissoes.join(", ");
+          }
+          return row.especialidade ?? "-";
+        },
+      },
       {
         key: "status",
         label: t("table_status"),

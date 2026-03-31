@@ -1,3 +1,10 @@
+/** Item de `profissoes` em listagens por rede (ex.: getClinicProfessionalsByNetwork) */
+export interface IProfessionByNetwork {
+  id_profissao: number;
+  descricao: string;
+  tipo_atendimento?: string;
+}
+
 export interface IProfessionalByNetwork {
   id_unidade?: number | null;
   id_unidade_rede?: number | null;
@@ -9,6 +16,7 @@ export interface IProfessionalByNetwork {
   id_usuario: number | null;
   usuario: string | null;
   status: number | null;
+  profissoes?: IProfessionByNetwork[];
 }
 
 export interface IProfessionalByNetworkResponse {
@@ -30,6 +38,9 @@ export interface IProfessionalRegister {
   email?: string;
   especialidade?: string;
   registro_profissional?: string;
+  profissoes: {
+    id_profissoes: number[];
+  };
 }
 
 export interface IProfessionalByUserId {
@@ -42,6 +53,9 @@ export interface IProfessionalByUserId {
   especialidade: string | null;
   registro_profissional: string | null;
   status: number | null;
+  profissoes?: {
+    id_profissoes: number[];
+  };
 }
 
 export interface IProfessionalUpdateByUserId {
@@ -55,4 +69,13 @@ export interface IProfessionalUpdateByUserId {
   especialidade?: string;
   registro_profissional?: string;
   status: number;
+  profissoes: {
+    id_profissoes: number[];
+  };
+}
+
+export interface IClinicProfession {
+  id: number;
+  descricao: string;
+  tipo_atendimento?: string;
 }

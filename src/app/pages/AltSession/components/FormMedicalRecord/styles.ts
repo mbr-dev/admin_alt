@@ -38,9 +38,17 @@ font-bold
 md:text-2xl
 `;
 
-export const SessionInfo = tw.p`
+export const SessionInfo = tw.div`
+w-full
+flex
+flex-col
+gap-1
 text-sm
 text-mbr-gray-80
+`;
+
+export const SessionInfoLine = tw.p`
+m-0
 `;
 
 export const Sections = tw.div`

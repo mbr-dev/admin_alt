@@ -3,6 +3,28 @@ import { AltSessionService } from "@/data/models";
 import { ChangeEvent } from "react";
 import { useFormMedicalRecord } from "./hook";
 
+function formatSessionDateTime(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "-";
+  return d.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function formatSessionDuration(startIso: string, endIso: string): string {
+  const start = new Date(startIso).getTime();
+  const end = new Date(endIso).getTime();
+  if (Number.isNaN(start) || Number.isNaN(end) || end < start) return "00:00";
+  const totalMinutes = Math.floor((end - start) / 60000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
 interface IFormMedicalRecord {
   session: AltSessionService.IAltSession;
   onClose: () => void;
@@ -32,7 +54,14 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
         </S.Header>
 
         <S.SessionInfo>
-          Profissional: {props.session.nome_profissional} | Paciente: {props.session.nome_paciente}
+          <S.SessionInfoLine>Paciente: {props.session.nome_paciente}</S.SessionInfoLine>
+          <S.SessionInfoLine>Tipo Sessão: {props.session.tipo_sessao}</S.SessionInfoLine>
+          <S.SessionInfoLine>
+            Data Início: {formatSessionDateTime(props.session.data_inicio)} - Data Término:{" "}
+            {formatSessionDateTime(props.session.data_final)} - Duração:{" "}
+            {formatSessionDuration(props.session.data_inicio, props.session.data_final)}
+          </S.SessionInfoLine>
+          <S.SessionInfoLine>Profissional: {props.session.nome_profissional}</S.SessionInfoLine>
         </S.SessionInfo>
 
         <S.Sections>

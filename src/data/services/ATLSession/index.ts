@@ -100,9 +100,9 @@ export function ATLSession() {
   );
 
   const getMedicalRecordQuestions = useCallback(
-    async (): Promise<AltSessionService.IGetMedicalRecordQuestionsResponse | null> => {
+    async (id_sessao: number): Promise<AltSessionService.IGetMedicalRecordQuestionsResponse | null> => {
       try {
-        const { data } = await api.get("altSession/getMedicalRecordQuestions");
+        const { data } = await api.get(`altSession/getMedicalRecordQuestions?id_sessao=${id_sessao}`);
         if (data) return data;
         return null;
       } catch (error) {

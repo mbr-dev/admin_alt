@@ -118,6 +118,51 @@ resize-vertical
 md:text-base
 `;
 
+export const ProfessionContainer = tw.div`
+w-full
+rounded-xl
+border
+border-mbr-gray-30
+bg-mbr-gray-10
+p-3
+flex
+flex-col
+gap-2
+`;
+
+export const ProfessionEmpty = tw.p`
+text-sm
+text-mbr-gray-80
+`;
+
+export const ProfessionList = tw.div`
+w-full
+grid
+grid-cols-1
+gap-2
+
+md:grid-cols-2
+`;
+
+export const ProfessionItem = tw.div`
+w-full
+flex
+items-center
+gap-2
+rounded-lg
+bg-white
+p-2
+`;
+
+export const ProfessionCheckLabel = tw.label`
+flex
+items-center
+gap-2
+text-sm
+text-black
+cursor-pointer
+`;
+
 export const FullWidth = tw.div`
 w-full
 

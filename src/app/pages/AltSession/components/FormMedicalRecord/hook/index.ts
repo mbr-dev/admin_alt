@@ -48,7 +48,7 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
       try {
         setIsLoading(true);
         const [questionsResponse, medicalRecordSessionResponse] = await Promise.all([
-          getMedicalRecordQuestionsRef.current(),
+          getMedicalRecordQuestionsRef.current(session.id),
           session.preenchimento_formulario ? getMedicalRecordSessionBySessionIdRef.current(session.id) : Promise.resolve(null),
         ]);
 

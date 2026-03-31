@@ -25,6 +25,10 @@ export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoa
     setter(e.target.value);
   };
 
+  const handleCheckboxChange = (professionId: number) => () => {
+    props.handleToggleProfession(professionId);
+  };
+
   if (isLoading || props.isLoading) {
     return (
       <S.Container>
@@ -128,12 +132,26 @@ export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoa
               <S.FullWidth>
                 <S.Label htmlFor="professional-speciality">
                   {props.t("field_speciality")}
-                  <S.TextArea
-                    id="professional-speciality"
-                    rows={3}
-                    value={props.especialidade}
-                    onChange={handleTextAreaChange(props.setEspecialidade)}
-                  />
+                  <S.ProfessionContainer id="professional-speciality">
+                    {props.clinicProfessions.length === 0 && (
+                      <S.ProfessionEmpty>{props.t("empty_professionals")}</S.ProfessionEmpty>
+                    )}
+
+                    <S.ProfessionList>
+                      {props.clinicProfessions.map((profession) => (
+                        <S.ProfessionItem key={profession.id}>
+                          <S.ProfessionCheckLabel>
+                            <input
+                              type="checkbox"
+                              checked={props.selectedProfessionIds.includes(profession.id)}
+                              onChange={handleCheckboxChange(profession.id)}
+                            />
+                            <span>{profession.descricao}</span>
+                          </S.ProfessionCheckLabel>
+                        </S.ProfessionItem>
+                      ))}
+                    </S.ProfessionList>
+                  </S.ProfessionContainer>
                 </S.Label>
               </S.FullWidth>
 

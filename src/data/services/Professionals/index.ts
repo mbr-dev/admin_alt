@@ -72,10 +72,24 @@ export function Professionals() {
     [api, get_error, toast]
   );
 
+  const getAllClinicProfession = useCallback(async (): Promise<ProfessionalsService.IClinicProfession[] | null> => {
+    try {
+      const { data } = await api.get("clinicProfession/getAllClinicProfession");
+      if (data) return data;
+      return null;
+    } catch (error) {
+      const errorMessage = get_error(error);
+      console.log(errorMessage);
+      toast({ title: "Profissionais", description: errorMessage, variant: "destructive" });
+      return null;
+    }
+  }, [api, get_error, toast]);
+
   return {
     getClinicProfessionalsByNetwork,
     createClinicProfessional,
     getClinicProfessionalByUserId,
     updateClinicProfessionalByUserId,
+    getAllClinicProfession,
   };
 }

@@ -79,69 +79,174 @@ hover:opacity-90
 [&>svg]:text-base
 `;
 
+export const CardsGrid = tw.div`
+w-full
+grid
+grid-cols-2
+gap-4
+
+sm:grid-cols-3
+md:grid-cols-4
+lg:grid-cols-5
+`;
+
 export const TableSkeleton = tw.div`
+w-full
+grid
+grid-cols-2
+gap-4
+animate-pulse
+
+sm:grid-cols-3
+md:grid-cols-4
+lg:grid-cols-5
+`;
+
+export const CardSkeleton = tw.div`
+flex
+flex-col
+items-center
+gap-3
+rounded-2xl
+border
+border-mbr-gray-40
+bg-white
+p-4
+`;
+
+export const SkeletonAvatar = tw.div`
+w-16
+h-16
+rounded-full
+bg-mbr-gray-20
+`;
+
+export const SkeletonLine = tw.div`
+mx-auto
+h-3
+w-4/5
+max-w-[10rem]
+rounded-md
+bg-mbr-gray-20
+`;
+
+export const SkeletonLineShort = tw.div`
+mx-auto
+h-3
+w-1/2
+rounded-md
+bg-mbr-gray-20
+`;
+
+export const StudentCard = tw.article`
+flex
+flex-col
+items-center
+text-center
+gap-2
+rounded-2xl
+border
+border-mbr-blue-80/40
+bg-white
+p-4
+shadow-sm
+transition-transform
+duration-200
+ease-out
+
+hover:scale-105
+hover:shadow-md
+`;
+
+export const InitialsCircle = tw.div`
+flex
+h-16
+w-16
+shrink-0
+items-center
+justify-center
+rounded-full
+bg-mbr-blue-10
+text-lg
+font-semibold
+text-white
+`;
+
+export const CardName = tw.h3`
+text-sm
+font-medium
+text-mbr-gray-30
+line-clamp-2
+
+md:text-base
+`;
+
+export const CardAge = tw.p`
+text-sm
+text-mbr-gray-50
+`;
+
+export const CardSessions = tw.p`
+text-sm
+font-medium
+text-mbr-blue-10
+`;
+
+export const CardActions = tw.div`
+mt-1
+flex
+w-full
+max-w-[14rem]
+flex-col
+gap-2
+`;
+
+export const CardActionButton = tw.button`
+flex
+w-full
+items-center
+justify-center
+gap-2
+rounded-xl
+border
+border-mbr-blue-10
+bg-white
+px-2
+py-2
+text-xs
+font-medium
+text-mbr-blue-10
+transition-colors
+outline-none
+
+hover:bg-mbr-blue-90
+focus-visible:ring-2
+focus-visible:ring-mbr-blue-10
+focus-visible:ring-offset-2
+
+md:text-sm
+
+[&>svg]:shrink-0
+[&>svg]:text-sm
+
+md:[&>svg]:text-base
+`;
+
+export const PaginationWrap = tw.div`
+flex
+w-full
+justify-center
+pt-2
+`;
+
+export const EmptyState = tw.p`
 w-full
 rounded-2xl
 border
 border-mbr-gray-30
 bg-white
-p-4
-animate-pulse
-flex
-flex-col
-gap-3
-`;
-
-export const SkeletonHeader = tw.div`
-w-full
-h-6
-rounded-md
-bg-mbr-gray-30
-`;
-
-export const SkeletonRow = tw.div`
-w-full
-grid
-grid-cols-2
-gap-3
-
-md:grid-cols-4
-`;
-
-export const SkeletonCell = tw.div`
-h-10
-rounded-md
-bg-mbr-gray-20
-`;
-
-export const EditButton = tw.button`
-w-8
-h-8
-rounded-lg
-flex
-items-center
-justify-center
-cursor-pointer
-
-hover:bg-mbr-gray-20
-
-[&>svg]:text-mbr-blue-10
-[&>svg]:text-lg
-`;
-
-export const EditCell = tw.div`
-w-full
-flex
-items-center
-justify-center
-`;
-
-export const StatusTag = tw.span<{ $active: boolean }>`
-px-3
-py-1
-rounded-full
-text-xs
-font-medium
-
-${({ $active }) => ($active ? "bg-green-100 text-green-700" : "bg-mbr-gray-20 text-mbr-gray-80")}
+py-12
+text-center
+text-sm
+text-mbr-gray-50
 `;

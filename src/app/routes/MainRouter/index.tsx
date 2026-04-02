@@ -12,7 +12,8 @@ export const MainRouter = () => {
       <Route path="/didactic" element={<Page.ChoiceDidactic />} />
       <Route path="/support" element={<Page.Support />} />
       <Route path="/profile" element={<Page.Profile />} />
-      <Route path="/studens" element={<Page.Students />} />
+      <Route path="/students" element={<Page.Students />} />
+      <Route path="/report-student" element={<Page.ReportStudent />} />
       <Route path="/groups" element={<Page.Groups />} />
       <Route path="/units" element={<Page.Units />} />
       <Route path="/professionals" element={<Page.Professionals />} />

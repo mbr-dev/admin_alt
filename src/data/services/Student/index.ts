@@ -58,7 +58,7 @@ export function Student() {
   );
 
   const getClinicStudentByUserId = useCallback(
-    async (id: number): Promise<StudentService.ICreateClinicStudentPayload | null> => {
+    async (id: number): Promise<StudentService.IClinicStudentDetails | null> => {
       try {
         const { data } = await api.get(`clinicStudent/getClinicStudentByUserId/${id}`);
         if (data) return data;

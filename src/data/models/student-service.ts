@@ -109,3 +109,17 @@ export interface ICreateClinicStudentPayload {
   };
   cid_usuario: number[];
 }
+
+/** Item CID retornado pelo GET clinicStudent (pode divergir do array de ids usado no cadastro). */
+export interface IClinicCidUsuarioItem {
+  id_cid?: number;
+  sigla?: string;
+  descricao?: string;
+}
+
+export type IClinicCidUsuarioFromApi = number[] | IClinicCidUsuarioItem | IClinicCidUsuarioItem[];
+
+/** Resposta de getClinicStudentByUserId — estrutura base do payload com CID flexível. */
+export interface IClinicStudentDetails extends Omit<ICreateClinicStudentPayload, "cid_usuario"> {
+  cid_usuario?: IClinicCidUsuarioFromApi;
+}

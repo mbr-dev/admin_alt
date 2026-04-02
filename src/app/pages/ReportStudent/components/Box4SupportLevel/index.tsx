@@ -1,0 +1,173 @@
+import * as S from "./styles";
+import { ReportUserSession } from "@/data/services";
+import { ReportUserSessionService } from "@/data/models";
+import { useEffect, useMemo, useState } from "react";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, type PieLabelRenderProps } from "recharts";
+
+/** Trecho dentro do primeiro `(...)` em `descricao`, ex.: "Independente (I): ..." → "I". */
+export function extractParenLabel(descricao: string): string {
+  const m = descricao.match(/\(([^)]+)\)/);
+  const inner = m?.[1]?.trim();
+  return inner || (descricao.trim() ? descricao.trim().slice(0, 14) : "—");
+}
+
+const PIE_COLORS = ["#FA912C", "#F07DB0", "#3F37A6", "#46C080"];
+const RADIAN = Math.PI / 180;
+
+type PieDatum = {
+  name: string;
+  value: number;
+  quantidade: number;
+  descricaoFull: string;
+};
+
+function reportToStrategiesPieData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): PieDatum[] {
+  if (!res?.data?.length) return [];
+  return res.data.map((item) => {
+    const full = item.descricao.trim();
+    const legendName = full.length > 28 ? `${full.slice(0, 28)}…` : full;
+    return {
+      name: legendName || "—",
+      descricaoFull: full,
+      value: Math.max(0, item.frequencia),
+      quantidade: item.quantidade,
+    };
+  });
+}
+
+/** `paddingAngle` + `cornerRadius` no `Pie` (exemplo oficial Recharts). */
+const PIE_PADDING_ANGLE = 4;
+const PIE_CORNER_RADIUS = 6;
+
+function renderPieLabel(props: PieLabelRenderProps) {
+  const { cx = 0, cy = 0, midAngle = 0, innerRadius = 0, outerRadius = 0, percent } = props;
+  if (percent == null || percent < 0.04) return null;
+  const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.55;
+  const x = Number(cx) + radius * Math.cos(-RADIAN * Number(midAngle));
+  const y = Number(cy) + radius * Math.sin(-RADIAN * Number(midAngle));
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="white"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      className="pointer-events-none text-[10px] font-semibold sm:text-xs"
+    >
+      {`${Math.round(percent * 100)}%`}
+    </text>
+  );
+}
+
+type TooltipPieProps = {
+  active?: boolean;
+  payload?: { payload: PieDatum }[];
+};
+
+function StrategiesPieTooltip({ active, payload }: TooltipPieProps) {
+  if (!active || !payload?.length) return null;
+  const row = payload[0].payload;
+  return (
+    <S.TooltipBox>
+      <p className="font-medium text-mbr-gray-30">{row.descricaoFull}</p>
+      <p className="mt-1 text-mbr-gray-50">Frequência: {row.value}%</p>
+      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+    </S.TooltipBox>
+  );
+}
+
+const STRATEGIES_SUBTITLE =
+  "Mostra quais abordagens terapêuticas foram mais eficazes durante as sessões.";
+
+type Props = {
+  idUsuario: number;
+};
+
+export function Box4SupportLevel({ idUsuario }: Props) {
+  const { getStrategies } = ReportUserSession();
+
+  const [loading, setLoading] = useState(true);
+  const [strategiesRes, setStrategiesRes] = useState<ReportUserSessionService.IReportUserSessionReportResponse | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      setLoading(true);
+      setStrategiesRes(null);
+
+      const data = await getStrategies({ id_usuario: idUsuario });
+
+      if (cancelled) return;
+      setStrategiesRes(data);
+      setLoading(false);
+    }
+
+    void load();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- getStrategies instável por useApi
+  }, [idUsuario]);
+
+  const pieData = useMemo(() => reportToStrategiesPieData(strategiesRes), [strategiesRes]);
+
+  return (
+    <S.Box4>
+      <S.BoxTitle>Estratégias terapêuticas</S.BoxTitle>
+      <S.ChartBody>
+        {loading ? (
+          <p className="py-10 text-center text-sm text-mbr-gray-50">Carregando gráfico…</p>
+        ) : (
+          <S.ChartCard>
+            <S.ChartCardTitle>Abordagens nas sessões</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{STRATEGIES_SUBTITLE}</S.ChartCardSubtitle>
+            {pieData.length === 0 ? (
+              <S.EmptyHint>Sem dados de estratégias.</S.EmptyHint>
+            ) : (
+              <S.ChartWrap>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+                    <Pie
+                      data={pieData}
+                      cx="36%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderPieLabel}
+                      innerRadius="48%"
+                      outerRadius="78%"
+                      paddingAngle={PIE_PADDING_ANGLE}
+                      cornerRadius={PIE_CORNER_RADIUS}
+                      dataKey="value"
+                      nameKey="name"
+                    >
+                      {pieData.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<StrategiesPieTooltip />} />
+                    <Legend
+                      layout="vertical"
+                      align="right"
+                      verticalAlign="middle"
+                      iconType="circle"
+                      iconSize={8}
+                      wrapperStyle={{
+                        fontSize: "11px",
+                        lineHeight: "1.35",
+                        paddingLeft: "4px",
+                        maxWidth: "52%",
+                      }}
+                      formatter={(value: string) => (value.length > 28 ? `${value.slice(0, 28)}…` : value)}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </S.ChartWrap>
+            )}
+          </S.ChartCard>
+        )}
+      </S.ChartBody>
+    </S.Box4>
+  );
+}

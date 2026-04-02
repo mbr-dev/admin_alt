@@ -60,7 +60,7 @@ export const MENU_LIST: IMENU_LIST[] = [
       },
       {
         id: 4,
-        route: "/studens",
+        route: "/students",
         name: "management_students",
         hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
       },

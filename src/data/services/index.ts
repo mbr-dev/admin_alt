@@ -12,3 +12,4 @@ export { Unit } from "./Unit";
 export { Professionals } from "./Professionals";
 export { SME } from "./SME";
 export { User } from "./User";
+export { ReportUserSession } from "./ReportUserSession";

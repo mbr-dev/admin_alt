@@ -131,7 +131,7 @@ export function Box4SupportLevel({ idUsuario }: Props) {
                   <PieChart margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
                     <Pie
                       data={pieData}
-                      cx="36%"
+                      cx="66%"
                       cy="50%"
                       labelLine={false}
                       label={renderPieLabel}
@@ -149,15 +149,16 @@ export function Box4SupportLevel({ idUsuario }: Props) {
                     <Tooltip content={<StrategiesPieTooltip />} />
                     <Legend
                       layout="vertical"
-                      align="right"
+                      align="left"
                       verticalAlign="middle"
                       iconType="circle"
-                      iconSize={8}
+                      iconSize={10}
                       wrapperStyle={{
-                        fontSize: "11px",
-                        lineHeight: "1.35",
-                        paddingLeft: "4px",
-                        maxWidth: "52%",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        lineHeight: "1.5",
+                        paddingRight: "6px",
+                        maxWidth: "44%",
                       }}
                       formatter={(value: string) => (value.length > 28 ? `${value.slice(0, 28)}…` : value)}
                     />

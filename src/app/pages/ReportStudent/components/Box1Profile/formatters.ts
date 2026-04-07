@@ -1,5 +1,11 @@
 import { StudentService } from "@/data/models";
 
+/** Primeiro nome para exibição compacta (ex.: menu lateral). */
+export function getFirstName(fullName: string): string {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  return parts[0] || "—";
+}
+
 /** Primeira letra do nome + primeira letra do segundo termo (igual ao card de alunos). */
 export function getStudentInitials(fullName: string): string {
   const parts = fullName.trim().split(/\s+/).filter(Boolean);

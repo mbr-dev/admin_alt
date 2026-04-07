@@ -2,6 +2,7 @@ import tw from "tailwind-styled-components";
 
 export const Container = tw.div`
 flex-1
+min-h-0
 w-full
 h-full
 flex
@@ -21,6 +22,8 @@ landscape:lg:pb-24
 `;
 
 export const Main = tw.div`
+flex-1
+min-h-0
 w-full
 h-full
 flex
@@ -31,9 +34,38 @@ z-30
 md:gap-6
 `;
 
+/** Linha: menu (esquerda) + conteúdo rolável (direita). */
+export const ReportShell = tw.div`
+flex
+min-h-0
+flex-1
+h-full
+flex-col
+gap-4
+
+lg:flex-row
+lg:items-stretch
+lg:gap-6
+`;
+
+/** Painel direito: única área com scroll vertical. */
+export const ContentScroll = tw.div`
+min-h-0
+flex-1
+h-full
+overflow-y-auto
+overflow-x-hidden
+pr-1
+
+lg:max-h-full
+`;
+
 export const ContentArea = tw.div`
 w-full
 flex
+min-h-0
+flex-1
+h-full
 flex-col
 gap-4
 `;

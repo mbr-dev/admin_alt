@@ -19,3 +19,33 @@ export interface IReportUserSessionReportResponse {
   total_respostas: number;
   data: IReportUserSessionDataItem[];
 }
+
+/** Item de `session_types_distribution`. */
+export interface ISessionTypesDistributionItem {
+  tipo_sessao: string;
+  quantidade: number;
+  frequencia: number;
+}
+
+/** Resposta de `GET reportUserSession/session_types_distribution`. */
+export interface ISessionTypesDistributionResponse {
+  id_usuario: number;
+  total_sessoes: number;
+  data: ISessionTypesDistributionItem[];
+}
+
+/** Resposta de `GET reportUserSession/technical_ia_report`. */
+export interface ITechnicalIaReportResponse {
+  id_usuario: number;
+  resumo_clinico: string;
+  engajamento: string;
+  comunicacao: string;
+  atencao: string;
+  comportamento: string;
+  interacoes_sociais: string;
+  nivel_prompt: string;
+  intervencoes_eficazes: string[];
+  dificuldades: string[];
+  evolucao_geral: string;
+  observacoes_relevantes: string;
+}

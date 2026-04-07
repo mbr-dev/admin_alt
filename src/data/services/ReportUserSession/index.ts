@@ -74,6 +74,54 @@ export function ReportUserSession() {
     [fetchReport]
   );
 
+  const getSessionTypesDistribution = useCallback(
+    async (
+      params: ReportUserSessionService.IReportUserSessionQueryParams
+    ): Promise<ReportUserSessionService.ISessionTypesDistributionResponse | null> => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.set("id_usuario", String(params.id_usuario));
+        if (params.tipo_sessao) searchParams.set("tipo_sessao", params.tipo_sessao);
+
+        const { data } = await api.get(
+          `reportUserSession/session_types_distribution?${searchParams.toString()}`
+        );
+        if (!data) return null;
+        return data as ReportUserSessionService.ISessionTypesDistributionResponse;
+      } catch (error) {
+        const errorMessage = get_error(error);
+        console.log(errorMessage);
+        toast({ title: "Relatório da sessão", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, get_error, toast]
+  );
+
+  const getTechnicalIaReport = useCallback(
+    async (
+      params: ReportUserSessionService.IReportUserSessionQueryParams
+    ): Promise<ReportUserSessionService.ITechnicalIaReportResponse | null> => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.set("id_usuario", String(params.id_usuario));
+        if (params.tipo_sessao) searchParams.set("tipo_sessao", params.tipo_sessao);
+
+        const { data } = await api.get(
+          `reportUserSession/technical_ia_report?${searchParams.toString()}`
+        );
+        if (!data) return null;
+        return data as ReportUserSessionService.ITechnicalIaReportResponse;
+      } catch (error) {
+        const errorMessage = get_error(error);
+        console.log(errorMessage);
+        toast({ title: "Relatório da sessão", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, get_error, toast]
+  );
+
   return {
     getEvolution,
     getTypeActivity,
@@ -84,5 +132,7 @@ export function ReportUserSession() {
     getBehaviors,
     getBehaviorFunction,
     getStrategies,
+    getSessionTypesDistribution,
+    getTechnicalIaReport,
   };
 }

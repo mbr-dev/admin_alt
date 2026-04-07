@@ -2,12 +2,13 @@ import tw from "tailwind-styled-components";
 
 export const Box7 = tw.div`
 w-full
+max-h-[80dvh]
 rounded-2xl
 border
 border-mbr-blue-80/40
 bg-white
 shadow-sm
-overflow-hidden
+overflow-y-auto
 `;
 
 export const BoxTitle = tw.h2`
@@ -32,6 +33,61 @@ gap-4
 p-4
 
 sm:p-6
+`;
+
+export const ChartBlock = tw.div`
+flex
+flex-col
+gap-2
+`;
+
+export const ChartMeta = tw.p`
+text-center
+text-xs
+text-mbr-gray-50
+
+sm:text-sm
+`;
+
+export const ChartWrap = tw.div`
+h-[280px]
+w-full
+shrink-0
+
+sm:h-[320px]
+`;
+
+export const CurtainBar = tw.div`
+flex
+flex-col
+gap-2
+`;
+
+export const ExpandToggle = tw.button`
+flex
+w-full
+items-center
+justify-center
+gap-2
+rounded-xl
+border
+border-mbr-blue-10/30
+bg-mbr-gray-10
+px-4
+py-3
+text-sm
+font-semibold
+text-mbr-blue-10
+transition-colors
+hover:bg-mbr-blue-10/10
+
+sm:py-3.5
+`;
+
+export const CurtainHint = tw.p`
+text-center
+text-xs
+text-mbr-gray-50
 `;
 
 export const SessionsList = tw.div`

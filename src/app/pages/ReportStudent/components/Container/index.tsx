@@ -8,6 +8,7 @@ import { Box5Behaviors } from "../Box5Behaviors";
 import { Box6AttentionEmotion } from "../Box6AttentionEmotion";
 import { Box7AltSessions } from "../Box7AltSessions";
 import { Box8TechnicalIaReport } from "../Box8TechnicalIaReport";
+import { Box9ABAReport } from "../Box9ABAReport";
 import { ReportSidebar } from "../ReportSidebar";
 import { DEFAULT_REPORT_SECTION, type ReportSectionId } from "../reportSections";
 import { Student } from "@/data/services";
@@ -105,6 +106,7 @@ export function Container() {
                 {activeSection === "attention-emotion" ? <Box6AttentionEmotion idUsuario={reportUserId} /> : null}
                 {activeSection === "behaviors" ? <Box5Behaviors idUsuario={reportUserId} /> : null}
                 {activeSection === "strategies" ? <Box4SupportLevel idUsuario={reportUserId} /> : null}
+                {activeSection === "metodo-aba" ? <Box9ABAReport key={reportUserId} idUsuario={reportUserId} /> : null}
                 {activeSection === "technical-ia" ? <Box8TechnicalIaReport idUsuario={reportUserId} /> : null}
                 {activeSection === "sessions" ? (
                   <Box7AltSessions

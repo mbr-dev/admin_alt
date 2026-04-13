@@ -13,3 +13,4 @@ export { Professionals } from "./Professionals";
 export { SME } from "./SME";
 export { User } from "./User";
 export { ReportUserSession } from "./ReportUserSession";
+export { ReportABASession } from "./ReportABASession";

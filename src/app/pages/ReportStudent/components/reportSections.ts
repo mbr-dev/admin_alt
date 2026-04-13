@@ -6,6 +6,7 @@ export type ReportSectionId =
   | "attention-emotion"
   | "behaviors"
   | "strategies"
+  | "metodo-aba"
   | "technical-ia"
   | "sessions";
 

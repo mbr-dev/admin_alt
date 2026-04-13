@@ -210,6 +210,7 @@ export function Container() {
 
       const getQuestionType = (question: AltSessionService.IMedicalRecordQuestion) => {
         const normalizedType = (question.tipo ?? "").toLowerCase();
+        if (normalizedType.includes("input_number")) return "input_number";
         if (normalizedType.includes("check")) return "check";
         if (normalizedType.includes("select")) return "select";
         return "input";

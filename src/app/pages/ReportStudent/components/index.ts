@@ -8,3 +8,4 @@ export { Box5Behaviors } from "./Box5Behaviors";
 export { Box6AttentionEmotion } from "./Box6AttentionEmotion";
 export { Box7AltSessions } from "./Box7AltSessions";
 export { Box8TechnicalIaReport } from "./Box8TechnicalIaReport";
+export { Box9ABAReport } from "./Box9ABAReport";

@@ -38,6 +38,8 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
 
   const getQuestionType = (question: AltSessionService.IMedicalRecordQuestion) => {
     const normalizedType = (question.tipo ?? "").toLowerCase();
+    /** Antes de `includes("input")` — `input_number` contém a substring `input`. */
+    if (normalizedType.includes("input_number")) return "input_number";
     if (normalizedType.includes("check")) return "check";
     if (normalizedType.includes("select")) return "select";
     return "input";
@@ -140,9 +142,17 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
         return false;
       }
 
-      if (questionType === "input" && !answer?.resposta_texto?.trim()) {
+      if ((questionType === "input" || questionType === "input_number") && !answer?.resposta_texto?.trim()) {
         toast({ title: "Prontuário", description: "Preencha todas as perguntas obrigatórias.", variant: "destructive" });
         return false;
+      }
+
+      if (questionType === "input_number" && answer?.resposta_texto?.trim()) {
+        const n = Number(answer.resposta_texto);
+        if (!Number.isFinite(n)) {
+          toast({ title: "Prontuário", description: "Informe um número válido em todas as perguntas numéricas.", variant: "destructive" });
+          return false;
+        }
       }
     }
 

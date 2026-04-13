@@ -3,6 +3,7 @@ import { getFirstName, getStudentInitials } from "../Box1Profile/formatters";
 import * as B1 from "../Box1Profile/styles";
 import {
   FaCalendarDays,
+  FaChartColumn,
   FaChartSimple,
   FaIdCard,
   FaRobot,
@@ -25,6 +26,7 @@ const ITEMS: { id: ReportSectionId; label: string; Icon: IconType }[] = [
   { id: "attention-emotion", label: "Atenção e regulação emocional", Icon: FaChartSimple },
   { id: "behaviors", label: "Comportamentos", Icon: FaChartSimple },
   { id: "strategies", label: "Estratégias terapêuticas", Icon: FaChartSimple },
+  { id: "metodo-aba", label: "Método ABA", Icon: FaChartColumn },
   { id: "technical-ia", label: "Resumo Técnico IA", Icon: FaRobot },
   { id: "sessions", label: "Sessões", Icon: FaCalendarDays },
 ];

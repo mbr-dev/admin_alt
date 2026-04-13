@@ -14,3 +14,4 @@ export * as ClassStudentService from "./class-student-service";
 export * as ProjectInfosService from "./project-infos-service";
 export * as ClassTeacherService from "./class-teacher-service";
 export * as ReportUserSessionService from "./report-user-session-service";
+export * as ReportABASessionService from "./report-aba-session-service";

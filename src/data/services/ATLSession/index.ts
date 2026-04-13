@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { extractApiErrorMessage } from "@/data/constants";
 import { useApi, useToast } from "@/data/hooks";
 import { AltSessionService } from "@/data/models";
 
@@ -119,12 +120,18 @@ export function ATLSession() {
     async (dataToSend: AltSessionService.ICreateMedicalRecordSessionItem[]) => {
       try {
         const { data } = await api.post("altSession/createMedicalRecordSession", dataToSend);
-        if (data) return data;
-        return null;
+
+        if (data && typeof data === "object" && "success" in data && (data as { success?: boolean }).success === false) {
+          const msg = extractApiErrorMessage(data) ?? "Não foi possível salvar o prontuário.";
+          toast({ title: "Prontuário", description: msg, variant: "destructive" });
+          return null;
+        }
+
+        return data ?? {};
       } catch (error) {
         const errorMessage = get_error(error);
         console.log(errorMessage);
-        toast({ title: "Sessões ALT", description: errorMessage, variant: "destructive" });
+        toast({ title: "Prontuário", description: errorMessage, variant: "destructive" });
         return null;
       }
     },
@@ -155,12 +162,18 @@ export function ATLSession() {
     async (id_sessao: number, dataToSend: AltSessionService.IUpdateMedicalRecordSessionBySessionIdPayload) => {
       try {
         const { data } = await api.patch(`altSession/updateMedicalRecordSessionBySessionId/${id_sessao}`, dataToSend);
-        if (data) return data;
-        return null;
+
+        if (data && typeof data === "object" && "success" in data && (data as { success?: boolean }).success === false) {
+          const msg = extractApiErrorMessage(data) ?? "Não foi possível atualizar o prontuário.";
+          toast({ title: "Prontuário", description: msg, variant: "destructive" });
+          return null;
+        }
+
+        return data ?? {};
       } catch (error) {
         const errorMessage = get_error(error);
         console.log(errorMessage);
-        toast({ title: "Sessões ALT", description: errorMessage, variant: "destructive" });
+        toast({ title: "Prontuário", description: errorMessage, variant: "destructive" });
         return null;
       }
     },

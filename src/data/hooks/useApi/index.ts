@@ -1,6 +1,7 @@
 //import { useMemo } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 //import { useLocation } from "react-router";
+import { GetError } from "@/data/constants";
 import { useStorage } from "../";
 
 const url = import.meta.env.VITE_BASEAPI;
@@ -15,17 +16,7 @@ export function useApi() {
   //const token = useMemo(() => new URLSearchParams(search).get("token"), [search]);
   const token = getData("token");
 
-  const get_error = (error: unknown) => {
-    if (error instanceof AxiosError) {
-      if (error.response?.status === 403) {
-        console.log("error ==>")
-        return;
-      }
-
-      return error.response?.data?.message ?? error.message;
-    }
-    return String(error);
-  };
+  const get_error = (error: unknown) => GetError(error);
 
   const returnApi = () => {
     switch (apiType) {

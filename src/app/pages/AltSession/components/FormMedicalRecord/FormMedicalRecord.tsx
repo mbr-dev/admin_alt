@@ -71,6 +71,24 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
             const answer = props.answersByQuestion[question.id_pergunta];
             const questionType = props.getQuestionType(question);
 
+            if (questionType === "input_number") {
+              return (
+                <S.NumberQuestionCard key={question.id_pergunta}>
+                  <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{question.descricao}</S.QuestionLabel>
+                  <S.NumberInput
+                    id={`question-${question.id_pergunta}`}
+                    type="number"
+                    inputMode="decimal"
+                    step="any"
+                    value={answer?.resposta_texto ?? ""}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      props.handleAnswerText(question.id_pergunta, e.target.value)
+                    }
+                  />
+                </S.NumberQuestionCard>
+              );
+            }
+
             return (
               <S.QuestionCard key={question.id_pergunta}>
                 <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{question.descricao}</S.QuestionLabel>

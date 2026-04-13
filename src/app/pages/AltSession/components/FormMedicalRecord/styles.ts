@@ -54,8 +54,9 @@ m-0
 export const Sections = tw.div`
 w-full
 flex
-flex-col
+flex-wrap
 gap-4
+items-stretch
 `;
 
 export const QuestionCard = tw.div`
@@ -70,6 +71,23 @@ flex-col
 gap-2
 `;
 
+/** Perguntas `input_number`: mesmo padrão visual de `QuestionCard`, só a largura muda no `md`. */
+export const NumberQuestionCard = tw.div`
+w-full
+min-w-0
+shrink-0
+rounded-xl
+border
+border-mbr-gray-30
+bg-mbr-gray-10
+p-3
+flex
+flex-col
+gap-2
+
+md:w-[30%]
+`;
+
 export const QuestionLabel = tw.label`
 w-full
 text-md
@@ -79,6 +97,18 @@ text-black
 
 export const Input = tw.input`
 w-full
+p-3
+rounded-lg
+bg-white
+border
+border-mbr-gray-30
+text-black
+text-sm
+`;
+
+export const NumberInput = tw.input`
+w-full
+min-w-0
 p-3
 rounded-lg
 bg-white

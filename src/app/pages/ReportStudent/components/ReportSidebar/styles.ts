@@ -9,7 +9,7 @@ gap-4
 overflow-y-auto
 rounded-2xl
 border
-border-mbr-blue-80/40
+border-[#ec5691]/40
 bg-white
 p-4
 shadow-sm
@@ -59,7 +59,7 @@ md:text-sm
 
 ${(p) =>
   p.$active
-    ? "bg-mbr-blue-10/10 text-mbr-blue-10 ring-1 ring-mbr-blue-10/30"
+    ? "bg-[#ec5691]/10 text-[#f21a6f] ring-1 ring-[#ec5691]/30"
     : "text-mbr-gray-30 hover:bg-mbr-gray-20/80"}
 `;
 
@@ -67,7 +67,7 @@ export const NavIcon = tw.span`
 inline-flex
 shrink-0
 text-base
-text-mbr-blue-10
+text-[#f21a6f]
 
 [&>svg]:block
 `;

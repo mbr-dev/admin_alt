@@ -13,6 +13,8 @@
   "management_units": "Units",
   "management_professionals": "Profissionals",
   "alt_session":"Sessions",
+  "breadcrumb_aria_label": "Breadcrumb navigation",
+  "breadcrumb_report_student": "Student report",
   "logout_modal_title": "Confirm logout",
   "logout_modal_description": "Do you really want to leave the platform?",
   "logout_modal_cancel": "Cancel",

@@ -13,6 +13,34 @@ function normalizeStatus(status: string): string {
   return status === "em_andamento" ? "em andamento" : status;
 }
 
+function getSessionAlertVariant(session: AltSessionService.IAltSession): "danger" | "warning" | "attention" | null {
+  const now = new Date();
+  const startDate = new Date(session.data_inicio);
+  const endDate = new Date(session.data_final);
+
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return null;
+
+  const status = normalizeStatus(session.status);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const sessionStartDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+  const isPastDay = sessionStartDay.getTime() < today.getTime();
+  const isToday = sessionStartDay.getTime() === today.getTime();
+
+  if (isPastDay && status !== "finalizada" && status !== "cancelada") {
+    return "danger";
+  }
+
+  if (status === "em andamento" && isToday && endDate < now) {
+    return "attention";
+  }
+
+  if (status === "aberta" && isToday && startDate <= now && endDate >= now) {
+    return "warning";
+  }
+
+  return null;
+}
+
 function formatSessionDate(dateValue?: string): string {
   if (!dateValue) return "—";
   const date = new Date(dateValue);
@@ -248,8 +276,9 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
       <S.SessionsList>
         {sessions.map((session) => {
           const statusNorm = normalizeStatus(session.status);
+          const alertVariant = getSessionAlertVariant(session);
           return (
-            <S.SessionCard key={session.id} $statusNorm={statusNorm}>
+            <S.SessionCard key={session.id} $statusNorm={statusNorm} $alertVariant={alertVariant}>
               <S.SessionHeader>
                 <S.SessionType>{session.tipo_sessao || "Sessão ALT"}</S.SessionType>
                 <S.StatusBadge $statusNorm={statusNorm}>{statusNorm}</S.StatusBadge>
@@ -280,6 +309,20 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
           );
         })}
       </S.SessionsList>
+      <S.AlertLegend>
+        <S.AlertLegendItem>
+          <S.AlertLegendColor $variant="red" />
+          Sessão de dia passado pendente (não finalizada/cancelada)
+        </S.AlertLegendItem>
+        <S.AlertLegendItem>
+          <S.AlertLegendColor $variant="yellow" />
+          Sessão aberta em andamento no horário atual
+        </S.AlertLegendItem>
+        <S.AlertLegendItem>
+          <S.AlertLegendColor $variant="orange" />
+          Sessão em andamento com horário final excedido
+        </S.AlertLegendItem>
+      </S.AlertLegend>
       {sessions.length >= PAGE_LIMIT ? (
         <S.MetaHint>Exibindo até {PAGE_LIMIT} registros. Use a página de sessões ALT para ver mais.</S.MetaHint>
       ) : null}

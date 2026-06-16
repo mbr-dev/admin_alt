@@ -12,6 +12,17 @@ interface IUseFormStudent {
   studentToEdit?: StudentService.IStudent | null;
 }
 
+export const FORM_STEPS = [
+  { key: "student", label: "Dados do aluno" },
+  { key: "access", label: "Acesso" },
+  { key: "cid", label: "Diagnóstico CID" },
+  { key: "guardian", label: "Dados do responsável" },
+  { key: "address", label: "Endereço" },
+  { key: "contact", label: "Contato" },
+] as const;
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormStudent = {}) => {
   const { toast } = useToast();
   const { setLoad } = useMain();
@@ -54,7 +65,11 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [isFormLoading, setIsFormLoading] = useState<boolean>(false);
   const [verified, setVerified] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const isEditMode = !!studentToEdit;
+  const totalSteps = FORM_STEPS.length;
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === totalSteps - 1;
   const previousUserPrefixRef = useRef<string>("");
 
   const fetchData = async (studentToEditData?: StudentService.IStudent | null) => {
@@ -252,7 +267,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
         responsavel: {
           nome: guardianName.trim(),
           email: guardianEmail.trim(),
-          data_nascimento: new Date(`${guardianBirth}T00:00:00`).toISOString(),
+          data_nascimento: guardianBirth ? new Date(`${guardianBirth}T00:00:00`).toISOString() : "",
           cpf_cnpj: guardianCpfCnpj.trim(),
           parentesco: guardianKinship.trim(),
         },
@@ -301,67 +316,105 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     }
   };
 
-  const verifyData = () => {
-    let result = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-
+  const verifyStudentStep = () => {
     if (!studentName.trim()) {
       toast({ title: "Alunos", description: "Informe o nome!", variant: "destructive" });
-      result = false;
-    } else if (!studentEmail.trim()) {
-      toast({ title: "Alunos", description: "Informe o e-mail!", variant: "destructive" });
-      result = false;
-    } else if (!emailRegex.test(studentEmail.trim())) {
-      toast({ title: "Alunos", description: "E-mail inválido!", variant: "destructive" });
-      result = false;
-    } else if (!studentBirth) {
-      toast({ title: "Alunos", description: "Informe a data de nascimento do aluno!", variant: "destructive" });
-      result = false;
-    } else if (!guardianName.trim()) {
-      toast({ title: "Alunos", description: "Informe o nome do responsável!", variant: "destructive" });
-      result = false;
-    } else if (!guardianEmail.trim()) {
-      toast({ title: "Alunos", description: "Informe o e-mail do responsável!", variant: "destructive" });
-      result = false;
-    } else if (!emailRegex.test(guardianEmail.trim())) {
-      toast({ title: "Alunos", description: "E-mail do responsável inválido!", variant: "destructive" });
-      result = false;
-    } else if (!guardianBirth) {
-      toast({ title: "Alunos", description: "Informe a data de nascimento do responsável!", variant: "destructive" });
-      result = false;
-    } else if (!guardianCpfCnpj.trim()) {
-      toast({ title: "Alunos", description: "Informe o CPF/CNPJ do responsável!", variant: "destructive" });
-      result = false;
-    } else if (!guardianKinship.trim()) {
-      toast({ title: "Alunos", description: "Informe o parentesco do responsável!", variant: "destructive" });
-      result = false;
-    } else if (!addressStreet.trim() || !addressNumber.trim() || !addressCep.trim() || !addressDistrict.trim() || !addressRegion.trim()) {
-      toast({ title: "Alunos", description: "Preencha os dados obrigatórios de endereço!", variant: "destructive" });
-      result = false;
-    } else if (!contactGuardianName.trim() || !contactValue.trim()) {
-      toast({ title: "Alunos", description: "Preencha os dados obrigatórios de contato!", variant: "destructive" });
-      result = false;
-    } else if (user === "") {
-      toast({ title: "Alunos", description: "Informe o usuário!", variant: "destructive" });
-      result = false;
-    } else if (!isEditMode && !password.trim()) {
-      toast({ title: "Alunos", description: "Informe a senha!", variant: "destructive" });
-      result = false;
-    } else if (!selectedUnitId) {
-      toast({ title: "Alunos", description: "Selecione a unidade!", variant: "destructive" });
-      result = false;
-    } else if (!isEditMode && !verified) {
-      toast({ title: "Alunos", description: "Precisa verificar o usuário primeiro!", variant: "destructive" });
-      result = false;
-    } else if (!isEditMode && validatedUser !== user.trim()) {
-      toast({ title: "Alunos", description: "Usuário alterado. Verifique novamente antes de cadastrar!", variant: "destructive" });
-      result = false;
-    } else if (selectedCidIds.length === 0) {
-      toast({ title: "Alunos", description: "Selecione ao menos um CID!", variant: "destructive" });
-      result = false;
+      return false;
     }
 
-    return result;
+    if (!studentEmail.trim()) {
+      toast({ title: "Alunos", description: "Informe o e-mail!", variant: "destructive" });
+      return false;
+    }
+
+    if (!EMAIL_REGEX.test(studentEmail.trim())) {
+      toast({ title: "Alunos", description: "E-mail inválido!", variant: "destructive" });
+      return false;
+    }
+
+    if (!studentBirth) {
+      toast({ title: "Alunos", description: "Informe a data de nascimento do aluno!", variant: "destructive" });
+      return false;
+    }
+
+    return true;
+  };
+
+  const verifyAccessStep = () => {
+    if (user === "") {
+      toast({ title: "Alunos", description: "Informe o usuário!", variant: "destructive" });
+      return false;
+    }
+
+    if (!isEditMode && !password.trim()) {
+      toast({ title: "Alunos", description: "Informe a senha!", variant: "destructive" });
+      return false;
+    }
+
+    if (!selectedUnitId) {
+      toast({ title: "Alunos", description: "Selecione a unidade!", variant: "destructive" });
+      return false;
+    }
+
+    if (!isEditMode && !verified) {
+      toast({ title: "Alunos", description: "Precisa verificar o usuário primeiro!", variant: "destructive" });
+      return false;
+    }
+
+    if (!isEditMode && validatedUser !== user.trim()) {
+      toast({ title: "Alunos", description: "Usuário alterado. Verifique novamente antes de cadastrar!", variant: "destructive" });
+      return false;
+    }
+
+    return true;
+  };
+
+  const verifyGuardianStep = () => {
+    if (!guardianName.trim()) {
+      toast({ title: "Alunos", description: "Informe o nome do responsável!", variant: "destructive" });
+      return false;
+    }
+
+    if (guardianEmail.trim() && !EMAIL_REGEX.test(guardianEmail.trim())) {
+      toast({ title: "Alunos", description: "E-mail do responsável inválido!", variant: "destructive" });
+      return false;
+    }
+
+    if (!guardianKinship.trim()) {
+      toast({ title: "Alunos", description: "Informe o parentesco do responsável!", variant: "destructive" });
+      return false;
+    }
+
+    return true;
+  };
+
+  const verifyStep = (step: number) => {
+    const stepKey = FORM_STEPS[step]?.key;
+
+    if (stepKey === "student") return verifyStudentStep();
+    if (stepKey === "access") return verifyAccessStep();
+    if (stepKey === "guardian") return verifyGuardianStep();
+
+    return true;
+  };
+
+  const verifyData = () => {
+    for (let step = 0; step < totalSteps; step += 1) {
+      if (!verifyStep(step)) return false;
+    }
+
+    return true;
+  };
+
+  const goToNextStep = () => {
+    if (!verifyStep(currentStep)) return;
+    if (isLastStep) return;
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const goToPreviousStep = () => {
+    if (isFirstStep) return;
+    setCurrentStep((prev) => prev - 1);
   };
 
   const cleanData = () => {
@@ -394,6 +447,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     }
     setSelectedCidIds([]);
     setVerified(false);
+    setCurrentStep(0);
   };
 
   useEffect(() => {
@@ -408,6 +462,13 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     verifyIfUserExists,
     generateUser,
     disabledBtn,
+    currentStep,
+    totalSteps,
+    isFirstStep,
+    isLastStep,
+    goToNextStep,
+    goToPreviousStep,
+    formSteps: FORM_STEPS,
     user,
     setUser,
     password,

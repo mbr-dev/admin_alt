@@ -13,6 +13,8 @@
   "management_units": "Unidades",
   "management_professionals": "Profesionales",
   "alt_session":"Sesiones",
+  "breadcrumb_aria_label": "Navegación estructural",
+  "breadcrumb_report_student": "Informe del estudiante",
   "logout_modal_title": "Confirmar salida",
   "logout_modal_description": "Desea realmente salir de la plataforma?",
   "logout_modal_cancel": "Cancelar",

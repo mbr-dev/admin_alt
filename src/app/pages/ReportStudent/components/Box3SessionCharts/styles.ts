@@ -4,7 +4,7 @@ export const Box3 = tw.div`
 w-full
 rounded-2xl
 border
-border-mbr-blue-80/40
+border-[#ec5691]/40
 bg-white
 shadow-sm
 overflow-hidden
@@ -19,7 +19,7 @@ text-sm
 font-semibold
 uppercase
 tracking-wide
-text-mbr-blue-10
+text-[#f21a6f]
 
 sm:px-6
 sm:text-base

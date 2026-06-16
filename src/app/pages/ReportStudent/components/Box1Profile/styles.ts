@@ -4,7 +4,7 @@ export const Box1 = tw.div`
 w-full
 rounded-2xl
 border
-border-mbr-blue-80/40
+border-[#ec5691]/40
 bg-white
 shadow-sm
 overflow-hidden
@@ -41,7 +41,7 @@ text-xs
 font-semibold
 uppercase
 tracking-wide
-text-mbr-blue-10
+text-[#f21a6f]
 
 sm:text-sm
 `;
@@ -68,7 +68,7 @@ shrink-0
 items-center
 justify-center
 rounded-full
-bg-mbr-blue-10
+bg-[#ec5691]
 text-lg
 font-semibold
 text-white
@@ -110,7 +110,7 @@ sm:justify-start
 export const MetaIcon = tw.span`
 inline-flex
 shrink-0
-text-mbr-blue-10
+text-[#f21a6f]
 
 [&>svg]:text-base
 `;

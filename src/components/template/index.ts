@@ -7,3 +7,4 @@ export { LabelSelect } from "./LabelSelect";
 export { DataTable } from "./DataTable";
 export { FloatingAddButton } from "./FloatingAddButton";
 export { ConfirmActionModal } from "./ConfirmActionModal";
+export { Breadcrumb } from "./Breadcrumb";

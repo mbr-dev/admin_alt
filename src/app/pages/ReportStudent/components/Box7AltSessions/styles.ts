@@ -5,7 +5,7 @@ w-full
 max-h-[80dvh]
 rounded-2xl
 border
-border-mbr-blue-80/40
+border-[#ec5691]/40
 bg-white
 shadow-sm
 overflow-y-auto
@@ -20,7 +20,7 @@ text-sm
 font-semibold
 uppercase
 tracking-wide
-text-mbr-blue-10
+text-[#f21a6f]
 
 sm:px-6
 sm:text-base
@@ -71,15 +71,15 @@ justify-center
 gap-2
 rounded-xl
 border
-border-mbr-blue-10/30
+border-[#ec5691]/30
 bg-mbr-gray-10
 px-4
 py-3
 text-sm
 font-semibold
-text-mbr-blue-10
+text-[#f21a6f]
 transition-colors
-hover:bg-mbr-blue-10/10
+hover:bg-[#ec5691]/10
 
 sm:py-3.5
 `;
@@ -91,19 +91,24 @@ text-mbr-gray-50
 `;
 
 export const SessionsList = tw.div`
-flex
-flex-col
+grid
+grid-cols-1
 gap-4
+
+xl:grid-cols-2
 `;
 
-export const SessionCard = tw.article<{ $statusNorm: string }>`
+export const SessionCard = tw.article<{ $statusNorm: string; $alertVariant: "danger" | "warning" | "attention" | null }>`
 w-full
 rounded-xl
 border
 p-4
 
-${({ $statusNorm }) => {
-  if ($statusNorm === "aberta") return "border-blue-200 bg-blue-50/80";
+${({ $statusNorm, $alertVariant }) => {
+  if ($alertVariant === "danger") return "border-red-300 bg-red-100";
+  if ($alertVariant === "warning") return "border-yellow-300 bg-yellow-100";
+  if ($alertVariant === "attention") return "border-orange-300 bg-orange-100";
+  if ($statusNorm === "aberta") return "border-[#ec5691]/30 bg-[#ec5691]/10";
   if ($statusNorm === "em andamento") return "border-amber-200 bg-amber-50/80";
   if ($statusNorm === "finalizada") return "border-emerald-200 bg-emerald-50/80";
   if ($statusNorm === "cancelada") return "border-red-200 bg-red-50/80";
@@ -137,7 +142,7 @@ text-xs
 font-medium
 
 ${({ $statusNorm }) => {
-  if ($statusNorm === "aberta") return "bg-blue-100 text-blue-800";
+  if ($statusNorm === "aberta") return "bg-[#ec5691]/15 text-[#f21a6f]";
   if ($statusNorm === "em andamento") return "bg-amber-100 text-amber-900";
   if ($statusNorm === "finalizada") return "bg-emerald-100 text-emerald-800";
   if ($statusNorm === "cancelada") return "bg-red-100 text-red-800";
@@ -197,4 +202,35 @@ export const MetaHint = tw.p`
 text-center
 text-xs
 text-mbr-gray-50
+`;
+
+export const AlertLegend = tw.div`
+mt-2
+grid
+grid-cols-1
+gap-2
+
+sm:grid-cols-3
+`;
+
+export const AlertLegendItem = tw.div`
+flex
+items-center
+gap-2
+text-xs
+text-mbr-gray-50
+`;
+
+export const AlertLegendColor = tw.span<{ $variant: "red" | "yellow" | "orange" }>`
+w-4
+h-4
+rounded-md
+border
+border-mbr-gray-40
+
+${({ $variant }) => {
+  if ($variant === "red") return "bg-red-100";
+  if ($variant === "yellow") return "bg-yellow-100";
+  return "bg-orange-100";
+}}
 `;

@@ -60,7 +60,7 @@ px-3
 text-sm
 outline-none
 
-focus:border-mbr-blue-10
+focus:border-[#ec5691]
 `;
 
 export const SearchButton = tw.button`
@@ -70,7 +70,7 @@ rounded-xl
 flex
 items-center
 justify-center
-bg-mbr-blue-10
+bg-[#ec5691]
 cursor-pointer
 
 hover:opacity-90
@@ -146,7 +146,7 @@ text-center
 gap-2
 rounded-2xl
 border
-border-mbr-blue-80/40
+border-[#ec5691]/40
 bg-white
 p-4
 shadow-sm
@@ -166,7 +166,7 @@ shrink-0
 items-center
 justify-center
 rounded-full
-bg-mbr-blue-10
+bg-[#ec5691]
 text-lg
 font-semibold
 text-white
@@ -189,7 +189,7 @@ text-mbr-gray-50
 export const CardSessions = tw.p`
 text-sm
 font-medium
-text-mbr-blue-10
+text-[#f21a6f]
 `;
 
 export const CardActions = tw.div`
@@ -209,19 +209,19 @@ justify-center
 gap-2
 rounded-xl
 border
-border-mbr-blue-10
+border-[#ec5691]
 bg-white
 px-2
 py-2
 text-xs
 font-medium
-text-mbr-blue-10
+text-[#f21a6f]
 transition-colors
 outline-none
 
-hover:bg-mbr-blue-90
+hover:bg-[#ec5691]/10
 focus-visible:ring-2
-focus-visible:ring-mbr-blue-10
+focus-visible:ring-[#ec5691]
 focus-visible:ring-offset-2
 
 md:text-sm

@@ -30,26 +30,11 @@ export const Menu = tw.div`
 flex
 items-center
 justify-center
+gap-2
+min-w-0
+flex-1
 
-[&>p]:hidden
-
-landscape:[&>p]:flex
-landscape:[&>p]:text-white
-landscape:[&>p]:text-xl
-landscape:[&>p]:font-bold
-landscape:gap-2
-
-md:[&>p]:flex
-md:[&>p]:text-white
-md:[&>p]:text-3xl
-md:[&>p]:font-bold
-md:gap-2
-
-landscape:lg:[&>p]:flex
-landscape:lg:[&>p]:text-white
-landscape:lg:[&>p]:text-3xl
-landscape:lg:[&>p]:font-bold
-landscape:lg:gap-2
+md:gap-4
 `;
 
 export const Button = tw.div`

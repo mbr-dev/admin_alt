@@ -1,7 +1,10 @@
 import { useIndicators } from "../../hook";
-import { SelectReport, PainelStudent } from "../";
+import { SelectReport, PainelStudent, DevelopmentReport } from "../";
 
 export const Container = () => {
   const indicatorsContext = useIndicators();
-  return indicatorsContext.showReports ? <PainelStudent /> : <SelectReport />
+
+  if (!indicatorsContext.showReports) return <SelectReport />;
+  if (indicatorsContext.typeSelected === 3) return <DevelopmentReport />;
+  return <PainelStudent />;
 }

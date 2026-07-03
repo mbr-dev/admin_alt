@@ -43,3 +43,4 @@ export { default as Grafico2 } from "./grafico2.svg";
 export { default as IrisSupport } from "./iris_support.svg";
 export { default as MedalhaAzul } from "./medalha_azul.svg";
 export { default as MbrLogoWhite } from "./mbr_logo_white.svg";
+export { default as reportDevelopment } from "./reportDevelopment.svg";

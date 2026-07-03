@@ -17,6 +17,7 @@ export function IndicatorsContextProvider({ children }: IHC.IIndicatorsContextPr
     {id:0,label:t("button0"),icon:ImgSVG.Grafico0,color:["#FFEE00","#E39F00"]},
     {id:1,label:t("button1"),icon:ImgSVG.Grafico1,color:["#F3367E","#F981B1"]},
     {id:2,label:t("button2"),icon:ImgSVG.Grafico2,color:["#0CA644","#00D54F"]},
+    {id:3,label:t("button3"),icon:ImgSVG.reportDevelopment,color:["#9B5CFF","#6C2CE8"]},
   ];
   //Funçao para abrir e fechar o modal e pegar o tipo de botão selecionado
   const handleToggleModal = (open: boolean, type: number) => {

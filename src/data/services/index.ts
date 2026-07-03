@@ -14,3 +14,4 @@ export { SME } from "./SME";
 export { User } from "./User";
 export { ReportUserSession } from "./ReportUserSession";
 export { ReportABASession } from "./ReportABASession";
+export { ALTDevelopmentReport } from "./ALTDevelopmentReport";

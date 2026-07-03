@@ -9,3 +9,4 @@ export { Container } from "./Container";
 export { Animations } from "./Animations";
 export { SelectReport } from "./SelectReport";
 export { PainelStudent } from "./PainelStudent";
+export { DevelopmentReport } from "./DevelopmentReport";

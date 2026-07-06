@@ -1,8 +1,7 @@
 import tw from "tailwind-styled-components";
 
-export const Card = tw.div`
+export const Card = tw.div<{ $exporting?: boolean }>`
 w-full
-h-full
 flex
 flex-col
 rounded-xl
@@ -10,7 +9,16 @@ shadow-xl
 bg-white
 border
 border-mbr-gray-20
+${(p) =>
+  p.$exporting
+    ? `
+h-auto
+overflow-visible
+`
+    : `
+h-full
 overflow-hidden
+`}
 `;
 
 export const TitleBar = tw.div<{ $variant: "strong" | "weak" }>`
@@ -42,20 +50,37 @@ flex-col
 gap-1
 `;
 
-export const Category = tw.span`
+export const Category = tw.span<{ $exporting?: boolean }>`
 text-xs
 uppercase
-truncate
 text-mbr-gray-50
+${(p) =>
+  p.$exporting
+    ? `
+whitespace-normal
+break-words
+`
+    : `
+truncate
+`}
 `;
 
-export const Skill = tw.span`
+export const Skill = tw.span<{ $exporting?: boolean }>`
 text-sm
 font-semibold
-truncate
 text-mbr-gray-30
 
 md:text-base
+
+${(p) =>
+  p.$exporting
+    ? `
+whitespace-normal
+break-words
+`
+    : `
+truncate
+`}
 `;
 
 export const Empty = tw.div`

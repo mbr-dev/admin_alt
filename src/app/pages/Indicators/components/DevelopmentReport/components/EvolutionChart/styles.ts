@@ -27,7 +27,7 @@ md:text-2xl
 `;
 
 export const Subtitle = tw.p`
-max-w-3xl
+w-full
 text-sm
 text-center
 leading-relaxed

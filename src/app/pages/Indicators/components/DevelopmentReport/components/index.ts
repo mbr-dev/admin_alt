@@ -5,3 +5,4 @@ export { EvolutionChart } from "./EvolutionChart";
 export { CategoryPerformance } from "./CategoryPerformance";
 export { PerformanceAccordion } from "./PerformanceAccordion";
 export { ActivityDistribution } from "./ActivityDistribution";
+export { CompetencyMap } from "./CompetencyMap";

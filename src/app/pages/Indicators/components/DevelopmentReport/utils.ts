@@ -21,3 +21,9 @@ export const getPerformanceColor = (value: number): string => {
 //Exibe inteiro quando possível, mantendo uma casa decimal apenas se necessário
 export const formatPercent = (value: number): string =>
   Number.isInteger(value) ? String(value) : value.toFixed(1);
+
+export const EXPORT_CHART_SIZE = {
+  wide: { width: 920, height: 340 },
+  distribution: { width: 920, height: 320 },
+  evolution: { width: 920, height: 420 },
+} as const;

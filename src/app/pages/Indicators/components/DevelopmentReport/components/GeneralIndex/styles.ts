@@ -27,15 +27,31 @@ uppercase
 md:text-2xl
 `;
 
-export const ChartWrapper = tw.div`
-relative
+export const ChartSection = tw.div`
 w-full
-h-[220px]
+flex
+flex-col
+items-center
+`;
+
+export const ChartWrapper = tw.div<{ $exporting?: boolean }>`
+relative
 flex
 items-center
 justify-center
+${(p) =>
+  p.$exporting
+    ? `
+w-[260px]
+h-[260px]
+shrink-0
+`
+    : `
+w-full
+h-[220px]
 
 md:h-[260px]
+`}
 `;
 
 export const CenterLabel = tw.div`

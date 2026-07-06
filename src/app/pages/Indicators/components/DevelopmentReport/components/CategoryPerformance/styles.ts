@@ -35,10 +35,19 @@ text-mbr-gray-30
 md:text-base
 `;
 
-export const ChartWrapper = tw.div`
+export const ChartWrapper = tw.div<{ $exporting?: boolean }>`
 w-full
 h-[280px]
 mt-2
+${(p) =>
+  p.$exporting
+    ? `
+flex
+items-center
+justify-center
+overflow-hidden
+`
+    : ""}
 
 md:h-[340px]
 `;

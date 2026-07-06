@@ -67,7 +67,7 @@ export function ALTDevelopmentReport() {
       try {
         const searchParams = new URLSearchParams();
         searchParams.set("id_usuario", String(params.id_usuario));
-
+        //&filter=full
         const { data } = await api.get(
           `altDevelopmentReport/competencyTree?${searchParams.toString()}`
         );

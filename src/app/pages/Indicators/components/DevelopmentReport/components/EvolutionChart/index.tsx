@@ -20,7 +20,7 @@ interface IEvolutionChart {
 
 export const EvolutionChart = ({ periods }: IEvolutionChart) => {
   const { t } = useTranslation("indicators");
-  //Lista as tags únicas na ordem de aparição para gerar uma linha por tag
+
   const tags = useMemo(() => {
     const seen = new Map<string, string>();
     periods.forEach((period) => {
@@ -30,7 +30,7 @@ export const EvolutionChart = ({ periods }: IEvolutionChart) => {
     });
     return Array.from(seen.keys());
   }, [periods]);
-  //Converte os períodos em linhas com uma coluna por tag para o gráfico
+
   const data = useMemo(
     () =>
       periods.map((period) => {

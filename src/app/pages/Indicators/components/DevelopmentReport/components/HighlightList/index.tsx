@@ -7,21 +7,22 @@ interface IHighlightList {
   title: string;
   variant: "strong" | "weak";
   items: ALTDevelopmentReportService.IPerformanceSubtagHighlight[];
+  isExporting?: boolean;
 }
 
-export const HighlightList = ({ title, variant, items }: IHighlightList) => {
+export const HighlightList = ({ title, variant, items, isExporting = false }: IHighlightList) => {
   const { t } = useTranslation("indicators");
 
   return (
-    <S.Card>
+    <S.Card $exporting={isExporting} data-export-highlight={isExporting ? "" : undefined}>
       <S.TitleBar $variant={variant}>{title}</S.TitleBar>
 
       {items.length > 0 ? (
         <S.Body>
           {items.map((item) => (
             <S.Item key={`${item.id_tag}-${item.id_subtag}`}>
-              <S.Category>{item.tag}</S.Category>
-              <S.Skill>{item.subtag}</S.Skill>
+              <S.Category $exporting={isExporting}>{item.tag}</S.Category>
+              <S.Skill $exporting={isExporting}>{item.subtag}</S.Skill>
               <PerformanceBar value={item.percentual} />
             </S.Item>
           ))}

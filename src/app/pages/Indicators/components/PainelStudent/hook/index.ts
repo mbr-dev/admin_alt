@@ -17,6 +17,8 @@ export const usePainelStudent = () => {
   const [studentData, setStudentData] = useState<StudentService.IStudentService | null>(null);
   //Função que busca os dados para PainelStudent
   const fetchData = async () => {
+    if (indicatorsContext.typeSelected === 3) return;
+
     try {
       mainContext.setLoad(true);
       //Busca informação do aluno
@@ -42,10 +44,16 @@ export const usePainelStudent = () => {
   }
   //Função que muda de relatório
   const handleChangeReport = (id: number) => {
-    mainContext.setLoad(true);
     setReportData([]);
     setCurrentPage(1);
     indicatorsContext.setTypeSelected(id);
+
+    if (id === 3) {
+      mainContext.setLoad(false);
+      return;
+    }
+
+    mainContext.setLoad(true);
   }
   //Função que retorna para mudar o aluno
   const handleBack = () => {

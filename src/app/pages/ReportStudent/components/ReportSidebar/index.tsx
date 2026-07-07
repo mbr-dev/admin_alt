@@ -26,7 +26,7 @@ const ITEMS: { id: ReportSectionId; label: string; Icon: IconType }[] = [
   { id: "attention-emotion", label: "Atenção e regulação emocional", Icon: FaChartSimple },
   { id: "behaviors", label: "Comportamentos", Icon: FaChartSimple },
   { id: "strategies", label: "Estratégias terapêuticas", Icon: FaChartSimple },
-  { id: "metodo-aba", label: "Método ABA", Icon: FaChartColumn },
+  { id: "metodo-aba", label: "ABA", Icon: FaChartColumn },
   { id: "technical-ia", label: "Resumo Técnico IA", Icon: FaRobot },
   { id: "sessions", label: "Sessões", Icon: FaCalendarDays },
 ];

@@ -2,7 +2,6 @@ import tw from "tailwind-styled-components";
 
 export const Card = tw.div`
 w-full
-h-full
 flex
 flex-col
 items-center
@@ -39,18 +38,18 @@ md:text-base
 export const ChartWrapper = tw.div<{ $exporting?: boolean }>`
 w-full
 h-[280px]
+min-h-[280px]
 mt-2
-${(p) =>
-  p.$exporting
-    ? `
-flex
-items-center
-justify-center
-overflow-hidden
-`
-    : ""}
+shrink-0
+${(p) => (p.$exporting ? "flex items-center justify-center overflow-hidden" : "")}
 
 md:h-[320px]
+md:min-h-[320px]
+`;
+
+export const ChartMeasure = tw.div`
+w-full
+h-full
 `;
 
 export const Empty = tw.div`

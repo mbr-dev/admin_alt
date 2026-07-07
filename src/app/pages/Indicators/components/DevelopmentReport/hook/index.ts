@@ -109,10 +109,10 @@ export const useDevelopmentReport = (reportRef: RefObject<HTMLDivElement | null>
   }, [loading, isExporting, reportRef, studentData?.nome, toast]);
 
   useEffect(() => {
-    if (indicatorsContext.showReports) {
+    if (indicatorsContext.showReports && indicatorsContext.typeSelected === 3) {
       fetchData();
     }
-  }, [indicatorsContext.showReports, indicatorsContext.studentSelected]);
+  }, [indicatorsContext.showReports, indicatorsContext.studentSelected, indicatorsContext.typeSelected]);
 
   return {
     loading,

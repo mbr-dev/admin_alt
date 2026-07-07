@@ -237,7 +237,7 @@ export function Box9ABAReport({ idUsuario }: Props) {
   if (!idUsuario || idUsuario <= 0) {
     return (
       <B8.Box>
-        <B8.Title>Método ABA</B8.Title>
+        <B8.Title>ABA</B8.Title>
         <B8.Body>
           <B8.Hint>Identificador de usuário inválido.</B8.Hint>
         </B8.Body>
@@ -248,7 +248,7 @@ export function Box9ABAReport({ idUsuario }: Props) {
   if (loading) {
     return (
       <B8.Box>
-        <B8.Title>Método ABA</B8.Title>
+        <B8.Title>ABA</B8.Title>
         <B8.Body>
           <B8.Loading>Carregando indicadores ABA…</B8.Loading>
         </B8.Body>
@@ -258,7 +258,7 @@ export function Box9ABAReport({ idUsuario }: Props) {
 
   return (
     <B8.Box>
-      <B8.Title>Método ABA</B8.Title>
+      <B8.Title>ABA</B8.Title>
       <B8.Body>
         <S.GridTwo>
           {/* Box 1 — Nível de Independência */}

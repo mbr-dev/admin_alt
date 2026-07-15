@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import * as S from "./styles";
 import { CHART_COLORS } from "../../utils";
 import { useTranslation } from "react-i18next";
@@ -14,12 +14,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const ALL_TAGS = "all";
+
 interface IEvolutionChart {
   periods: ALTDevelopmentReportService.IEvolutionAltTagPeriod[];
+  isExporting?: boolean;
 }
 
-export const EvolutionChart = ({ periods }: IEvolutionChart) => {
+export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart) => {
   const { t } = useTranslation("indicators");
+  const [selectedTag, setSelectedTag] = useState<string>(ALL_TAGS);
 
   const tags = useMemo(() => {
     const seen = new Map<string, string>();
@@ -43,6 +47,11 @@ export const EvolutionChart = ({ periods }: IEvolutionChart) => {
     [periods]
   );
 
+  const visibleTags = useMemo(() => {
+    if (isExporting || selectedTag === ALL_TAGS) return tags;
+    return tags.filter((tag) => tag === selectedTag);
+  }, [isExporting, selectedTag, tags]);
+
   if (!periods || periods.length <= 0) {
     return (
       <S.Card>
@@ -59,6 +68,23 @@ export const EvolutionChart = ({ periods }: IEvolutionChart) => {
       <S.Title>{t("dev_evolutionTitle")}</S.Title>
       <S.Subtitle>{t("dev_evolutionSubtitle")}</S.Subtitle>
 
+      <S.FilterRow data-export-ignore>
+        <S.FilterLabel htmlFor="evolution-tag-filter">{t("dev_evolutionFilterLabel")}</S.FilterLabel>
+        <S.FilterSelect
+          id="evolution-tag-filter"
+          value={selectedTag}
+          onChange={(event) => setSelectedTag(event.target.value)}
+          aria-label={t("dev_evolutionFilterLabel")}
+        >
+          <option value={ALL_TAGS}>{t("dev_evolutionFilterAll")}</option>
+          {tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </S.FilterSelect>
+      </S.FilterRow>
+
       <S.ChartWrapper>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 8, right: 16, bottom: 8, left: -8 }}>
@@ -70,17 +96,20 @@ export const EvolutionChart = ({ periods }: IEvolutionChart) => {
               contentStyle={{ borderRadius: 8, borderColor: "#E0E0E0" }}
             />
             <Legend wrapperStyle={{ fontSize: 12 }} />
-            {tags.map((tag, index) => (
-              <Line
-                key={tag}
-                type="monotone"
-                dataKey={tag}
-                stroke={CHART_COLORS[index % CHART_COLORS.length]}
-                strokeWidth={2}
-                dot={{ r: 3 }}
-                activeDot={{ r: 5 }}
-              />
-            ))}
+            {visibleTags.map((tag) => {
+              const colorIndex = tags.indexOf(tag);
+              return (
+                <Line
+                  key={tag}
+                  type="monotone"
+                  dataKey={tag}
+                  stroke={CHART_COLORS[colorIndex % CHART_COLORS.length]}
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                  activeDot={{ r: 5 }}
+                />
+              );
+            })}
           </LineChart>
         </ResponsiveContainer>
       </S.ChartWrapper>

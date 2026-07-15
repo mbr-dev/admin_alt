@@ -36,12 +36,39 @@ export interface IPerformanceSubtagHighlight {
   percentual: number;
 }
 
+export interface IRecommendedActivityTag {
+  id_tag: number;
+  tag: string;
+}
+
+export interface IRecommendedActivity {
+  id: number;
+  id_modulo: number;
+  descricao: string;
+  cor: string;
+  icone: string | null;
+  atividade_id: number;
+  descricao_modulo: string;
+  cor_modulo: string;
+  icone_modulo: string | null;
+  tags: IRecommendedActivityTag[];
+}
+
+export interface IRecommendedActivityGroup {
+  id_tag: number;
+  tag: string;
+  id_subtag: number;
+  subtag: string;
+  atividades: IRecommendedActivity[];
+}
+
 /** Resposta de `GET altDevelopmentReport/performanceSubtag`. */
 export interface IGetPerformanceSubtagResponse {
   id_usuario: number;
   tags: IPerformanceSubtagTag[];
   pontos_fortes: IPerformanceSubtagHighlight[];
   pontos_fracos: IPerformanceSubtagHighlight[];
+  atividades_recomendadas?: IRecommendedActivityGroup[];
 }
 
 export interface ICompetencyTreeCompetency {

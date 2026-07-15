@@ -36,6 +36,49 @@ text-mbr-gray-30
 md:text-base
 `;
 
+export const FilterRow = tw.div`
+w-full
+flex
+flex-col
+items-stretch
+gap-1.5
+mt-2
+
+sm:flex-row
+sm:items-center
+sm:justify-end
+sm:gap-3
+`;
+
+export const FilterLabel = tw.label`
+text-sm
+font-medium
+text-mbr-gray-30
+whitespace-nowrap
+`;
+
+export const FilterSelect = tw.select`
+w-full
+h-10
+px-3
+rounded-lg
+border
+border-mbr-gray-20
+bg-white
+text-sm
+text-mbr-blue-10
+outline-none
+cursor-pointer
+transition-colors
+
+focus:border-mbr-blue-10
+focus:ring-1
+focus:ring-mbr-blue-10
+
+sm:w-auto
+sm:min-w-[220px]
+`;
+
 export const ChartWrapper = tw.div`
 w-full
 h-[340px]

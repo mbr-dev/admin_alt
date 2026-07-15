@@ -10,6 +10,7 @@ import {
   CategoryPerformance,
   PerformanceAccordion,
   ActivityDistribution,
+  RecommendedActivities,
   //CompetencyMap,
 } from "./components";
 
@@ -25,8 +26,16 @@ export const DevelopmentReport = () => {
   const hasDistribution = !!hook.distribution?.tags?.length;
   const hasStrengths = !!hook.performance?.pontos_fortes?.length;
   const hasWeaknesses = !!hook.performance?.pontos_fracos?.length;
+  const hasRecommended =
+    !!hook.performance?.atividades_recomendadas?.some((group) => group.atividades?.length > 0);
   const hasSummary = hasDistribution || hasStrengths || hasWeaknesses;
-  const isEmpty = !hasGeneralIndex && !hasPerformance && !hasEvolution && !hasCompetencyTree && !hasSummary;
+  const isEmpty =
+    !hasGeneralIndex &&
+    !hasPerformance &&
+    !hasEvolution &&
+    !hasCompetencyTree &&
+    !hasSummary &&
+    !hasRecommended;
 
   return (
     <S.Container>
@@ -125,9 +134,21 @@ export const DevelopmentReport = () => {
               </S.ExportSection>
             )}
 
+            {hasRecommended && (
+              <S.ExportSection data-export-section data-export-page-break-before>
+                <RecommendedActivities
+                  groups={hook.performance!.atividades_recomendadas ?? []}
+                  isExporting={hook.isExporting}
+                />
+              </S.ExportSection>
+            )}
+
             {hasEvolution && (
               <S.ExportSection data-export-section data-export-page-break-before>
-                <EvolutionChart periods={hook.evolution!.periodos} />
+                <EvolutionChart
+                  periods={hook.evolution!.periodos}
+                  isExporting={hook.isExporting}
+                />
               </S.ExportSection>
             )}
 

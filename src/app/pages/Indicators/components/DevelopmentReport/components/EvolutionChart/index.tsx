@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import * as S from "./styles";
 import { CHART_COLORS } from "../../utils";
 import { useTranslation } from "react-i18next";
@@ -73,7 +73,7 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
         <S.FilterSelect
           id="evolution-tag-filter"
           value={selectedTag}
-          onChange={(event) => setSelectedTag(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLSelectElement>) => setSelectedTag(event.target.value)}
           aria-label={t("dev_evolutionFilterLabel")}
         >
           <option value={ALL_TAGS}>{t("dev_evolutionFilterAll")}</option>

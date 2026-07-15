@@ -144,7 +144,6 @@ flex
 flex-col
 items-start
 gap-1
-mt-auto
 `;
 
 export const TagItem = tw.li`

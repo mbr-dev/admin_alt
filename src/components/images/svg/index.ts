@@ -51,3 +51,6 @@ export { default as altTag4 } from "./alt_tag_4.svg";
 export { default as altTag5 } from "./alt_tag_5.svg";
 export { default as altTag6 } from "./alt_tag_6.svg";
 export { default as altTag7 } from "./alt_tag_7.svg";
+export { default as MonitoringVerde } from "./monitoring_verde.svg";
+export { default as MonitoringAmarelo } from "./monitoring_amarelo.svg";
+export { default as MonitoringVermelho } from "./monitoring_vermelho.svg";

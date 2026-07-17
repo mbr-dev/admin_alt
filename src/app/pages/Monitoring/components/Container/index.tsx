@@ -16,23 +16,14 @@ export const Container = () => {
         <p>{`${t("subTitle")} (${monitoringContext?.data?.rede})`}</p>
       </S.Titles>
 
-      {monitoringContext.data &&
-        <S.Main>
-          <C.TotalInfos />
-          <C.ChartLine
-            unidades={monitoringContext.data.unidades || []}
-            dataKey="total_alunos"
-            title={t("evolutionUnit")}
-          />
-          <C.ChartLine
-            unidades={monitoringContext.data.unidades || []}
-            dataKey="total_alunos"
-            title={t("evolutionRound")}
-          />
-          {/* <C.Ranking /> */}
-          {/* <C.Inactive /> */}
-          <C.Details />
-        </S.Main>}
+      <C.PeriodFilter />
+
+      <S.Main>
+        <C.StatisticCards />
+        <C.NetworkSummary />
+        <C.SkillsDeveloped />
+        <C.Details />
+      </S.Main>
     </S.Container>
-  )
-}
+  );
+};

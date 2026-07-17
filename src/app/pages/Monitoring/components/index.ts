@@ -5,3 +5,7 @@ export { ChartLine } from "./ChartLine";
 export { Container } from "./Container";
 export { Animations } from "./Animations";
 export { TotalInfos } from "./TotalInfos";
+export { PeriodFilter } from "./PeriodFilter";
+export { StatisticCards } from "./StatisticCards";
+export { NetworkSummary } from "./NetworkSummary";
+export { SkillsDeveloped } from "./SkillsDeveloped";

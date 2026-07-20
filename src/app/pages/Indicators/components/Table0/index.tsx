@@ -130,7 +130,7 @@ export const Table0 = ({ reportData, reportType, showDoubt, handleOrderData }: I
             <S.Cell>{item?.modulo}</S.Cell>
             <S.Cell>{item?.atividade}</S.Cell>
             <S.Cell>
-              {item?.imagem ? <img src={`${URL_FILES}images/alt/app/idioma1/Imagens1/${item?.id_modulo}/${item?.conteudo}.png`} alt="" /> : item?.conteudo}
+              {item?.imagem === 'S' ? <img src={`${URL_FILES}images/alt/app/idioma1/Imagens1/${item?.id_modulo}/${item?.conteudo}.png`} alt="" /> : item?.conteudo}
             </S.Cell>
             <S.Cell>{item?.total_acessos}</S.Cell>
             <S.Cell>{item?.total_acertos}</S.Cell>

@@ -6,10 +6,22 @@ import { useTranslation } from "react-i18next";
 import { FaCaretUp, FaCaretDown, FaCircleExclamation } from "react-icons/fa6";
 
 interface ITable2 {
-  reportData: any[];
+  reportData: ITable2Row[];
   reportType: number;
   handleOrderData: (type: number, key: string) => void;
   showDoubt: (type: number, show: boolean) => void;
+}
+
+interface ITable2Row {
+  idioma?: string;
+  modulo?: string;
+  atividade?: string;
+  imagem?: string;
+  id_modulo?: number;
+  conteudo?: string;
+  total_acessos?: number;
+  total_acertos?: number;
+  percentual_acerto?: number;
 }
 
 export const Table2 = ({ reportData, showDoubt, reportType, handleOrderData }: ITable2) => {
@@ -102,12 +114,12 @@ export const Table2 = ({ reportData, showDoubt, reportType, handleOrderData }: I
             <S.Cell>{item?.modulo}</S.Cell>
             <S.Cell>{item?.atividade}</S.Cell>
             <S.Cell>
-              {item?.imagem ? <img src={`${URL_FILES}images/alt/app/idioma1/Imagens1/${item?.id_modulo}/${item?.conteudo}.png`} alt="" /> : item?.conteudo}
+              {item?.imagem === 'S' ? <img src={`${URL_FILES}images/alt/app/idioma1/Imagens1/${item?.id_modulo}/${item?.conteudo}.png`} alt="" /> : item?.conteudo}
             </S.Cell>
             <S.Cell>{item?.total_acessos}</S.Cell>
             <S.Cell>{item?.total_acertos}</S.Cell>
             <S.Cell className="border-r-transparent">
-              <Bar value={item?.percentual_acerto} />
+              <Bar value={item?.percentual_acerto ?? 0} />
             </S.Cell>
           </Table.TableRow>
         ))}

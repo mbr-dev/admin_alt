@@ -65,9 +65,9 @@ export const GeneralIndex = ({ value, isExporting = false }: IGeneralIndex) => {
 
           <S.CenterLabel>
             <S.Percent>{formatPercent(safeValue)}%</S.Percent>
-            <S.Level>{t(`dev_level_${levelKey}`)}</S.Level>
           </S.CenterLabel>
         </S.ChartWrapper>
+          <S.Level>{t(`dev_level_${levelKey}`)}</S.Level>
       </S.ChartSection>
 
       <S.Description>{t(`dev_level_${levelKey}_desc`)}</S.Description>

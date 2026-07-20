@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import * as S from "../Table0/styles";
+import { useApi } from "@/data/hooks";
 import { Table } from "@/components/ui";
 import { formatTime } from "@/lib/utils";
 import { IoClose } from "react-icons/io5";
@@ -7,13 +8,40 @@ import { useTranslation } from "react-i18next";
 import { FaCaretUp, FaCaretDown, FaCheck } from "react-icons/fa6";
 
 interface ITable1 {
-  reportData: any[];
+  reportData: ITable1Row[];
   reportType: number;
   handleOrderData: (type: number, key: string) => void;
 }
 
+interface ITable1Row {
+  descricao?: string;
+  atividade?: string;
+  idioma?: string;
+  imagem?: string;
+  id_modulo?: number;
+  alternativa_correta?: string;
+  alternativa_escolhida?: string;
+  tempo_em_segundos?: number;
+  data_inicio?: string;
+  data_termino?: string;
+}
+
 export const Table1 = ({ reportData, reportType, handleOrderData }: ITable1) => {
+  const { URL_FILES } = useApi();
   const { t } = useTranslation("indicators");
+
+  const renderAnswer = (value?: string, item?: ITable1Row) => {
+    if (item?.imagem === "S" && value) {
+      return (
+        <img
+          src={`${URL_FILES}images/alt/app/idioma1/Imagens1/${item.id_modulo}/${value}.png`}
+          alt=""
+        />
+      );
+    }
+
+    return value;
+  };
 
   return (
     <Table.Table>
@@ -117,12 +145,12 @@ export const Table1 = ({ reportData, reportType, handleOrderData }: ITable1) => 
             <S.Cell>{item?.descricao}</S.Cell>
             <S.Cell>{item?.atividade}</S.Cell>
             <S.Cell>{item?.idioma}</S.Cell>
-            <S.Cell>{item?.alternativa_correta}</S.Cell>
-            <S.Cell>{item?.alternativa_escolhida}</S.Cell>
+            <S.Cell>{renderAnswer(item?.alternativa_correta, item)}</S.Cell>
+            <S.Cell>{renderAnswer(item?.alternativa_escolhida, item)}</S.Cell>
             <S.Cell>{item?.alternativa_escolhida === item?.alternativa_correta ? <FaCheck className="text-mbr-green-40" /> : <IoClose className="text-mbr-red-20" />}</S.Cell>
-            <S.Cell>{formatTime(item?.tempo_em_segundos)}</S.Cell>
-            <S.Cell>{format(new Date(item?.data_inicio), "dd/MM/yyyy HH:mm")}</S.Cell>
-            <S.Cell className="border-r-transparent">{format(new Date(item?.data_termino), "dd/MM/yyyy HH:mm")}</S.Cell>
+            <S.Cell>{formatTime(item?.tempo_em_segundos ?? 0)}</S.Cell>
+            <S.Cell>{item?.data_inicio ? format(new Date(item.data_inicio), "dd/MM/yyyy HH:mm") : "-"}</S.Cell>
+            <S.Cell className="border-r-transparent">{item?.data_termino ? format(new Date(item.data_termino), "dd/MM/yyyy HH:mm") : "-"}</S.Cell>
           </Table.TableRow>
         ))}
       </Table.TableBody>

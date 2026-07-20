@@ -10,6 +10,12 @@ interface IHighlightList {
   isExporting?: boolean;
 }
 
+function toCamelCaseLabel(value: string): string {
+  return value
+    .toLocaleLowerCase("pt-BR")
+    .replace(/(^|\s)\S/g, (char) => char.toLocaleUpperCase("pt-BR"));
+}
+
 export const HighlightList = ({ title, variant, items, isExporting = false }: IHighlightList) => {
   const { t } = useTranslation("indicators");
 
@@ -22,7 +28,7 @@ export const HighlightList = ({ title, variant, items, isExporting = false }: IH
           {items.map((item) => (
             <S.Item key={`${item.id_tag}-${item.id_subtag}`}>
               <S.Category $exporting={isExporting}>{item.tag}</S.Category>
-              <S.Skill $exporting={isExporting}>{item.subtag}</S.Skill>
+              <S.Skill $exporting={isExporting}>{toCamelCaseLabel(item.subtag)}</S.Skill>
               <PerformanceBar value={item.percentual} />
             </S.Item>
           ))}

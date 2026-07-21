@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import * as S from "./styles";
 import { useDevelopmentReport } from "./hook";
+import { useIndicators } from "../../hook";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import {
@@ -18,6 +19,7 @@ export const DevelopmentReport = () => {
   const reportRef = useRef<HTMLDivElement>(null);
   const hook = useDevelopmentReport(reportRef);
   const { t } = useTranslation("indicators");
+  const indicatorsContext = useIndicators();
 
   const hasGeneralIndex = !!hook.generalIndex;
   const hasPerformance = !!hook.performance?.tags?.length;
@@ -73,6 +75,25 @@ export const DevelopmentReport = () => {
             </S.StudentName>
           </S.Header>
         </S.ExportSection>
+
+        <S.Filter data-export-ignore>
+          <h2>{t("select")}</h2>
+
+          <S.Div>
+            {indicatorsContext.BUTTONS.map((item, index) => (
+              <S.FilterDiv key={index}>
+                <input
+                  type="radio"
+                  name="filterOption"
+                  value={item.id}
+                  checked={indicatorsContext.typeSelected === item.id}
+                  onChange={() => hook.handleChangeReport(item.id)}
+                />
+                {item.label}
+              </S.FilterDiv>
+            ))}
+          </S.Div>
+        </S.Filter>
 
         {hook.loading && (
           <>

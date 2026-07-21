@@ -23,6 +23,7 @@ export interface IStatisticNetworkDevelopment {
 /** Resposta de `GET altDevelopmentNetwork/getStatisticNetwork`. */
 export interface IGetStatisticNetworkResponse {
   id_rede: number;
+  nome_rede: string;
   filter: number;
   progress: IStatisticNetworkProgress;
   utilization: IStatisticNetworkRateComparison;

@@ -6,7 +6,7 @@ h-[32px]
 absolute
 top-[24px]
 right-2
-z-20
+z-10
 animate-bolha2
 
 [&>img]:w-full
@@ -30,7 +30,7 @@ absolute
 top-[255px]
 left-2
 animate-bolha1
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -59,7 +59,7 @@ absolute
 bottom-4
 right-2
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -88,7 +88,7 @@ absolute
 bottom-[16px]
 left-2
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -185,7 +185,7 @@ absolute
 animate-bounce2
 top-[364px]
 left-[8px]
-z-[60]
+z-[20]
 
 [&>img]:w-full
 [&>img]:h-full
@@ -202,7 +202,7 @@ landscape:lg:h-[150px]
 landscape:lg:top-[484px]
 landscape:lg:left-2
 
-landscape:xl:left-[200px]
+landscape:xl:left-[20px]
 `;
 
 export const Banana = tw.div`
@@ -211,7 +211,7 @@ absolute
 top-[12px]
 left-[2px]
 animate-bounce
-z-20
+-z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -262,7 +262,7 @@ absolute
 animate-bounce2
 top-[284px]
 right-[8px]
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full

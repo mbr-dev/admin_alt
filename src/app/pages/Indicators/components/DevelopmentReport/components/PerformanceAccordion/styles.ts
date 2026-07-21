@@ -178,7 +178,8 @@ items-center
 export const Skill = tw.span<{ $exporting?: boolean }>`
 text-sm
 text-mbr-gray-30
-
+lowercase
+first-letter:uppercase
 md:text-base
 
 ${(p) =>

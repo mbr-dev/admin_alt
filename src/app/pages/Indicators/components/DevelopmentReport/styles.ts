@@ -178,6 +178,49 @@ text-base
 md:text-lg
 `;
 
+export const Filter = tw.div`
+self-center
+flex
+items-center
+flex-col
+gap-1
+bg-white
+shadow-xl
+py-2
+px-8
+border-2
+rounded-lg
+z-50
+
+[&>h2]:font-bold
+[&>h2]:text-center
+[&>h2]:text-lg
+
+md:[&>h2]:text-2xl
+md:px-8
+
+landscape:lg:[&>h2]:text-2xl
+landscape:lg:px-8
+landscape:lg:py-4
+landscape:lg:gap-4
+`;
+
+export const Div = tw.div`
+flex
+flex-col
+gap-1
+justify-center
+
+landscape:lg:flex-row
+landscape:lg:gap-6
+`;
+
+export const FilterDiv = tw.div`
+flex
+gap-1
+items-center
+`;
+
 export const ReportContent = tw.div`
 w-full
 flex

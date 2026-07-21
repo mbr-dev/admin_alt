@@ -35,3 +35,9 @@ export function formatTime(time: number): string {
 
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
+
+export function toCamelCaseLabel(value: string): string {
+  const lower = value.toLocaleLowerCase("pt-BR");
+
+  return lower.charAt(0).toLocaleUpperCase("pt-BR") + lower.slice(1);
+}

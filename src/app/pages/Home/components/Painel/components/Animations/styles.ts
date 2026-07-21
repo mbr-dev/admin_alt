@@ -7,7 +7,7 @@ absolute
 bottom-[100px]
 left-2
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -34,7 +34,7 @@ absolute
 top-[216px]
 right-10
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -63,7 +63,7 @@ absolute
 bottom-[16px]
 right-2
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -77,7 +77,7 @@ md:w-[44px]
 md:h-[44px]
 md:bottom-[44px]
 md:right-[32px]
-md:z-20
+md:z-10
 
 landscape:lg:w-[44px]
 landscape:lg:h-[44px]
@@ -128,7 +128,7 @@ absolute
 animate-bounce2
 top-[194px]
 left-[12px]
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -145,7 +145,7 @@ landscape:lg:h-[150px]
 landscape:lg:top-[84px]
 landscape:lg:left-2
 
-landscape:xl:left-[200px]
+landscape:xl:left-[30px]
 `;
 
 export const Emoji = tw.div`
@@ -180,7 +180,7 @@ absolute
 animate-bounce2
 top-[100px]
 right-[8px]
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -196,5 +196,5 @@ landscape:lg:h-[108px]
 landscape:lg:top-[32px]
 landscape:lg:right-[64px]
 
-landscape:xl:right-[200px]
+landscape:xl:right-[30px]
 `;

@@ -29,7 +29,7 @@ md:px-8
 export const Menu = tw.div`
 flex
 items-center
-justify-center
+justify-start
 gap-2
 min-w-0
 flex-1

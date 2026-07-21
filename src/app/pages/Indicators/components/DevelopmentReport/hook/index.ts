@@ -71,6 +71,12 @@ export const useDevelopmentReport = (reportRef: RefObject<HTMLDivElement | null>
     }
   };
 
+  //Função que muda de relatório (o Container troca para o PainelStudent quando id !== 3)
+  const handleChangeReport = (id: number) => {
+    if (id === indicatorsContext.typeSelected) return;
+    indicatorsContext.setTypeSelected(id);
+  };
+
   const handleBack = () => {
     setStudentData(null);
     setGeneralIndex(null);
@@ -125,5 +131,6 @@ export const useDevelopmentReport = (reportRef: RefObject<HTMLDivElement | null>
     distribution,
     handleBack,
     handleDownload,
+    handleChangeReport,
   };
 };

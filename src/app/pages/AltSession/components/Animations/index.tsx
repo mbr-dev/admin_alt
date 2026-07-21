@@ -10,7 +10,7 @@ export function Animations() {
       <S.Nuvem4><img src={ImgSVG.Nuvem4} alt="Nuvem" /></S.Nuvem4>
       <S.Bolha><img src={ImgSVG.Bolha} alt="Bolha" /></S.Bolha>
       <S.Bolha2><img src={ImgSVG.Bolha} alt="Bolha" /></S.Bolha2>
-      <S.Bolha3><img src={ImgSVG.Bolha} alt="Bolha" /></S.Bolha3>
+      {/* <S.Bolha3><img src={ImgSVG.Bolha} alt="Bolha" /></S.Bolha3> */}
       <S.Bolha4><img src={ImgSVG.Bolha} alt="Bolha" /></S.Bolha4>
     </>
   );

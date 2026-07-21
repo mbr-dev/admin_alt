@@ -2,18 +2,13 @@ import * as S from "./styles";
 import { PerformanceBar } from "../PerformanceBar";
 import { useTranslation } from "react-i18next";
 import { ALTDevelopmentReportService } from "@/data/models";
+import { toCamelCaseLabel } from "@/lib/utils";
 
 interface IHighlightList {
   title: string;
   variant: "strong" | "weak";
   items: ALTDevelopmentReportService.IPerformanceSubtagHighlight[];
   isExporting?: boolean;
-}
-
-function toCamelCaseLabel(value: string): string {
-  return value
-    .toLocaleLowerCase("pt-BR")
-    .replace(/(^|\s)\S/g, (char) => char.toLocaleUpperCase("pt-BR"));
 }
 
 export const HighlightList = ({ title, variant, items, isExporting = false }: IHighlightList) => {

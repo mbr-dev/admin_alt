@@ -1,4 +1,5 @@
 import * as S from "./styles";
+import { useState, useEffect } from "react";
 import { EXPORT_CHART_SIZE } from "../../utils";
 import { ALTDevelopmentReportService } from "@/data/models";
 import { useTranslation } from "react-i18next";
@@ -17,10 +18,79 @@ interface ICategoryPerformance {
   isExporting?: boolean;
 }
 
-const renderRadarChart = (categories: ALTDevelopmentReportService.IGeneralDevelopmentIndexCategory[], title: string) => (
-  <RadarChart data={categories} outerRadius="70%">
+interface IAngleTickProps {
+  x?: number;
+  y?: number;
+  textAnchor?: string;
+  payload?: { value?: string | number };
+  $small?: boolean;
+}
+
+const MOBILE_BREAKPOINT = 768;
+
+//Detecta viewport mobile para compactar os rótulos do radar
+const useIsMobile = (): boolean => {
+  const [isMobile, setIsMobile] = useState<boolean>(
+    () => window.innerWidth < MOBILE_BREAKPOINT
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const handleChange = (event: MediaQueryListEvent) => setIsMobile(event.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  return isMobile;
+};
+
+//Quebra rótulos longos em múltiplas linhas para não cortarem nas bordas do gráfico
+const wrapTickLabel = (label: string, maxLineLength: number): string[] => {
+  const words = label.split(" ");
+  const lines: string[] = [];
+  let current = "";
+
+  words.forEach((word) => {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxLineLength && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  });
+
+  if (current) lines.push(current);
+  return lines;
+};
+
+const AngleTick = ({ x = 0, y = 0, textAnchor, payload, $small = false }: IAngleTickProps) => {
+  const fontSize = $small ? 10 : 12;
+  const lineHeight = $small ? 11 : 13;
+  const maxLineLength = $small ? 10 : 12;
+  const lines = wrapTickLabel(String(payload?.value ?? ""), maxLineLength);
+  const offsetY = ((lines.length - 1) * lineHeight) / 2;
+
+  return (
+    <text x={x} y={y - offsetY} textAnchor={textAnchor} fill="#5C5C5C" fontSize={fontSize}>
+      {lines.map((line, index) => (
+        <tspan key={index} x={x} dy={index === 0 ? 0 : lineHeight}>
+          {line}
+        </tspan>
+      ))}
+    </text>
+  );
+};
+
+const renderRadarChart = (
+  categories: ALTDevelopmentReportService.IGeneralDevelopmentIndexCategory[],
+  title: string,
+  isMobile: boolean
+) => (
+  <RadarChart data={categories} outerRadius={isMobile ? "60%" : "70%"}>
     <PolarGrid stroke="#E0E0E0" />
-    <PolarAngleAxis dataKey="categoria" tick={{ fill: "#5C5C5C", fontSize: 12 }} />
+    <PolarAngleAxis dataKey="categoria" tick={<AngleTick $small={isMobile} />} />
     <PolarRadiusAxis
       domain={[0, 100]}
       angle={90}
@@ -37,6 +107,7 @@ const renderRadarChart = (categories: ALTDevelopmentReportService.IGeneralDevelo
 
 export const CategoryPerformance = ({ categories, isExporting = false }: ICategoryPerformance) => {
   const { t } = useTranslation("indicators");
+  const isMobile = useIsMobile();
   const { width, height } = EXPORT_CHART_SIZE.wide;
 
   return (
@@ -48,7 +119,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
         {isExporting ? (
           <RadarChart width={width} height={height} data={categories} outerRadius="70%">
             <PolarGrid stroke="#E0E0E0" />
-            <PolarAngleAxis dataKey="categoria" tick={{ fill: "#5C5C5C", fontSize: 12 }} />
+            <PolarAngleAxis dataKey="categoria" tick={<AngleTick />} />
             <PolarRadiusAxis
               domain={[0, 100]}
               angle={90}
@@ -65,7 +136,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
           </RadarChart>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
-            {renderRadarChart(categories, t("dev_categoryTitle"))}
+            {renderRadarChart(categories, t("dev_categoryTitle"), isMobile)}
           </ResponsiveContainer>
         )}
       </S.ChartWrapper>

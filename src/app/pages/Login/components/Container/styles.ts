@@ -46,7 +46,7 @@ z-30
 
 landscape:left-4
 
-md:w-[500px]
+md:w-[400px]
 md:bottom-20
 
 landscape:lg:w-[580px]

@@ -13,7 +13,7 @@ items-center
 justify-center
 cursor-pointer
 shadow-lg
-z-20
+z-[200]
 
 hover:opacity-90
 

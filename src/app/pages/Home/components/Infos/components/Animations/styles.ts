@@ -7,7 +7,7 @@ absolute
 animate-bounce2
 -bottom-[24px]
 left-[64px]
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -123,7 +123,7 @@ absolute
 bottom-[2px]
 right-6
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -150,7 +150,7 @@ absolute
 top-[44px]
 left-2
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -180,7 +180,7 @@ absolute
 top-[450px]
 right-[180px]
 animate-bolha3
-z-20
+z-10
 
 [&>img]:w-full
 [&>img]:h-full
@@ -195,8 +195,8 @@ landscape:lg:w-[100px]
 landscape:lg:h-[100px]
 landscape:lg:right-[32px]
 landscape:lg:top-[600px]
-landscape:lg:z-50
+landscape:lg:z-10
 
 landscape:xl:top-[350px]
-landscape:xl:left-[80px]
+landscape:xl:left-[20px]
 `;

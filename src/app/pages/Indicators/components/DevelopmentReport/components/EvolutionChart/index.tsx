@@ -107,6 +107,7 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
                   strokeWidth={2}
                   dot={{ r: 3 }}
                   activeDot={{ r: 5 }}
+                  isAnimationActive={!isExporting}
                 />
               );
             })}

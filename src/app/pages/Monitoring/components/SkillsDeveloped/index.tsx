@@ -1,4 +1,5 @@
 import * as S from "./styles";
+import { useEffect, useState } from "react";
 import { ImgSVG } from "@/components/images";
 import { useMonitoring } from "../../hook";
 import { useTranslation } from "react-i18next";
@@ -21,12 +22,117 @@ const FUNNEL_COLORS = {
 
 type TFunnelKey = keyof typeof FUNNEL_COLORS;
 
+const MOBILE_BREAKPOINT = 768;
+const LABEL_OUTWARD_OFFSET = 12;
+const LABEL_OUTWARD_OFFSET_MOBILE = 8;
+
+interface IAngleTickProps {
+  x?: number;
+  y?: number;
+  cx?: number;
+  cy?: number;
+  textAnchor?: string;
+  payload?: { value?: string | number };
+  $small?: boolean;
+}
+
 function formatPercentValue(value: number): string {
   const abs = Math.abs(value);
   const formatted = Number.isInteger(abs)
     ? String(abs)
     : abs.toFixed(1).replace(".", ",");
   return `${formatted}%`;
+}
+
+//Detecta viewport mobile para compactar os rótulos do radar
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState<boolean>(
+    () => window.innerWidth < MOBILE_BREAKPOINT
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const handleChange = (event: MediaQueryListEvent) => setIsMobile(event.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  return isMobile;
+}
+
+//Quebra rótulos longos em múltiplas linhas para não cortarem nas bordas do gráfico
+function wrapTickLabel(label: string, maxLineLength: number): string[] {
+  const words = label.split(" ");
+  const lines: string[] = [];
+  let current = "";
+
+  words.forEach((word) => {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxLineLength && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  });
+
+  if (current) lines.push(current);
+  return lines;
+}
+
+//Empurra o rótulo radialmente para fora do gráfico, evitando sobreposição com o eixo
+function getOutwardPosition(
+  x: number,
+  y: number,
+  cx: number,
+  cy: number,
+  offset: number
+): { x: number; y: number } {
+  const dx = x - cx;
+  const dy = y - cy;
+  const distance = Math.hypot(dx, dy);
+
+  if (distance === 0) return { x, y: y - offset };
+
+  return {
+    x: x + (dx / distance) * offset,
+    y: y + (dy / distance) * offset,
+  };
+}
+
+function AngleTick({
+  x = 0,
+  y = 0,
+  cx = 0,
+  cy = 0,
+  textAnchor,
+  payload,
+  $small = false,
+}: IAngleTickProps) {
+  const fontSize = $small ? 10 : 11;
+  const lineHeight = $small ? 11 : 13;
+  const maxLineLength = $small ? 10 : 12;
+  const outwardOffset = $small ? LABEL_OUTWARD_OFFSET_MOBILE : LABEL_OUTWARD_OFFSET;
+  const lines = wrapTickLabel(String(payload?.value ?? ""), maxLineLength);
+  const offsetY = ((lines.length - 1) * lineHeight) / 2;
+  const position = getOutwardPosition(x, y, cx, cy, outwardOffset);
+
+  return (
+    <text
+      x={position.x}
+      y={position.y - offsetY}
+      textAnchor={textAnchor}
+      fill="#5C5C5C"
+      fontSize={fontSize}
+    >
+      {lines.map((line, index) => (
+        <tspan key={index} x={position.x} dy={index === 0 ? 0 : lineHeight}>
+          {line}
+        </tspan>
+      ))}
+    </text>
+  );
 }
 
 function FunnelDiff({
@@ -57,6 +163,7 @@ function FunnelDiff({
 function SkillsRadarCard() {
   const { t } = useTranslation("monitoring");
   const { skillsDeveloped } = useMonitoring();
+  const isMobile = useIsMobile();
 
   const chartData =
     skillsDeveloped?.skills_tag?.categorias?.map((item) => ({
@@ -72,11 +179,11 @@ function SkillsRadarCard() {
 
       <S.ChartWrapper>
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={chartData} outerRadius="70%">
+          <RadarChart data={chartData} outerRadius={isMobile ? "48%" : "55%"}>
             <PolarGrid stroke="#E0E0E0" />
             <PolarAngleAxis
               dataKey="categoria"
-              tick={{ fill: "#5C5C5C", fontSize: 11 }}
+              tick={<AngleTick $small={isMobile} />}
             />
             <PolarRadiusAxis
               domain={[0, 100]}

@@ -44,9 +44,10 @@ md:text-lg
 
 export const ChartWrapper = tw.div`
 w-full
-h-[280px]
+h-[300px]
+overflow-visible
 
-md:h-[320px]
+md:h-[340px]
 `;
 
 export const FunnelBody = tw.div`

@@ -52,7 +52,7 @@ md:bottom-20
 landscape:lg:w-[580px]
 landscape:lg:bottom-[150px]
 
-landscape:xl:w-[800px]
+landscape:xl:w-[600px]
 landscape:xl:bottom-[100px]
 landscape:xl:left-[100px]
 `;

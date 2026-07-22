@@ -70,7 +70,7 @@ const renderPieLabel = (props: PieLabelRenderProps) => {
   );
 };
 
-const renderPieChart = (data: PieDatum[], width: number, height: number) => (
+const renderPieChart = (data: PieDatum[], width: number, height: number, animated: boolean) => (
   <PieChart width={width} height={height} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
     <Pie
       data={data}
@@ -82,6 +82,7 @@ const renderPieChart = (data: PieDatum[], width: number, height: number) => (
       labelLine={false}
       label={renderPieLabel}
       paddingAngle={data.length > 1 ? 2 : 0}
+      isAnimationActive={animated}
     >
       {data.map((item, index) => (
         <Cell key={item.id} fill={CHART_COLORS[index % CHART_COLORS.length]} />
@@ -164,8 +165,8 @@ export const ActivityDistribution = ({ items, isExporting = false }: IActivityDi
         <S.ChartWrapper $exporting={isExporting}>
           <S.ChartMeasure ref={chartRef}>
             {isExporting
-              ? renderPieChart(pieData, exportWidth, exportHeight)
-              : renderPieChart(pieData, chartWidth, chartHeight)}
+              ? renderPieChart(pieData, exportWidth, exportHeight, false)
+              : renderPieChart(pieData, chartWidth, chartHeight, true)}
           </S.ChartMeasure>
         </S.ChartWrapper>
       ) : (

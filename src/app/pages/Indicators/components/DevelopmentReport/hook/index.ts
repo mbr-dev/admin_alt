@@ -95,7 +95,8 @@ export const useDevelopmentReport = (reportRef: RefObject<HTMLDivElement | null>
     try {
       setIsExporting(true);
       window.dispatchEvent(new Event("resize"));
-      await new Promise((resolve) => window.setTimeout(resolve, 600));
+      // Aguarda o React aplicar o layout de exportação (gráficos estáticos sem animação)
+      await new Promise((resolve) => window.setTimeout(resolve, 300));
       await new Promise((resolve) => {
         requestAnimationFrame(() => requestAnimationFrame(resolve));
       });

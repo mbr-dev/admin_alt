@@ -72,23 +72,15 @@ hover:bg-mbr-gray-10
 md:px-6
 md:py-4
 
-${(p) => (p.$exporting ? "items-start" : "")}
+${(p) => (p.$exporting ? "cursor-default hover:bg-transparent" : "")}
 `;
 
 export const HeaderLeft = tw.div<{ $exporting?: boolean }>`
 flex
+items-center
 gap-3
 min-w-0
-${(p) =>
-  p.$exporting
-    ? `
-flex-col
-items-start
-flex-1
-`
-    : `
-items-center
-`}
+${(p) => (p.$exporting ? "flex-1" : "")}
 `;
 
 export const Category = tw.h4<{ $exporting?: boolean }>`
@@ -103,6 +95,8 @@ ${(p) =>
     ? `
 whitespace-normal
 break-words
+min-w-0
+flex-1
 `
     : `
 truncate
@@ -160,40 +154,22 @@ md:pb-5
 md:gap-4
 `;
 
-export const Row = tw.div<{ $exporting?: boolean }>`
-gap-4
-${(p) =>
-  p.$exporting
-    ? `
-flex
-flex-col
-items-stretch
-`
-    : `
+export const Row = tw.div`
 flex
 items-center
-`}
+gap-4
 `;
 
-export const Skill = tw.span<{ $exporting?: boolean }>`
+export const Skill = tw.span`
+w-2/5
+min-w-[110px]
+shrink-0
 text-sm
 text-mbr-gray-30
 lowercase
 first-letter:uppercase
-md:text-base
 
-${(p) =>
-  p.$exporting
-    ? `
-w-full
-whitespace-normal
-break-words
-`
-    : `
-w-2/5
-min-w-[110px]
-shrink-0
-`}
+md:text-base
 `;
 
 export const BarBox = tw.div`

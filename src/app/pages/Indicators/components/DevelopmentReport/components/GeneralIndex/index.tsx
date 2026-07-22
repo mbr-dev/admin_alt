@@ -20,7 +20,7 @@ const getLevelKey = (value: number): "low" | "mid" | "high" => {
 const formatPercent = (value: number): string =>
   Number.isInteger(value) ? String(value) : value.toFixed(1);
 
-const renderPieChart = (data: { name: string; value: number }[]) => (
+const renderPieChart = (data: { name: string; value: number }[], animated: boolean) => (
   <Pie
     data={data}
     dataKey="value"
@@ -30,6 +30,7 @@ const renderPieChart = (data: { name: string; value: number }[]) => (
     outerRadius="100%"
     cornerRadius={8}
     stroke="none"
+    isAnimationActive={animated}
   >
     <Cell fill={VALUE_COLOR} />
     <Cell fill={TRACK_COLOR} />
@@ -55,11 +56,11 @@ export const GeneralIndex = ({ value, isExporting = false }: IGeneralIndex) => {
         <S.ChartWrapper $exporting={isExporting}>
           {isExporting ? (
             <PieChart width={EXPORT_CHART_SIZE} height={EXPORT_CHART_SIZE}>
-              {renderPieChart(data)}
+              {renderPieChart(data, false)}
             </PieChart>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>{renderPieChart(data)}</PieChart>
+              <PieChart>{renderPieChart(data, true)}</PieChart>
             </ResponsiveContainer>
           )}
 

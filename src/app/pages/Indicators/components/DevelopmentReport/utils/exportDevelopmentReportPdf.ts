@@ -75,13 +75,11 @@ const fixPerformanceAccordionForExport = (clonedRoot: HTMLElement) => {
   clonedRoot.querySelectorAll<HTMLElement>("[data-export-performance]").forEach((card) => {
     card.style.overflow = "visible";
 
-    card.querySelectorAll<HTMLElement>("h4, span").forEach((text) => {
+    card.querySelectorAll<HTMLElement>("h4").forEach((text) => {
       text.style.whiteSpace = "normal";
       text.style.wordBreak = "break-word";
       text.style.overflow = "visible";
       text.style.textOverflow = "unset";
-      text.style.width = "100%";
-      text.style.maxWidth = "100%";
     });
   });
 };

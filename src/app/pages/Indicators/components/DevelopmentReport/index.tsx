@@ -177,7 +177,6 @@ export const DevelopmentReport = () => {
               <S.ExportSection data-export-section>
                 <PerformanceAccordion
                   tags={hook.performance!.tags}
-                  forceExpanded={hook.isExporting}
                   isExporting={hook.isExporting}
                 />
               </S.ExportSection>

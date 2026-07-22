@@ -21,12 +21,16 @@ interface ICategoryPerformance {
 interface IAngleTickProps {
   x?: number;
   y?: number;
+  cx?: number;
+  cy?: number;
   textAnchor?: string;
   payload?: { value?: string | number };
   $small?: boolean;
 }
 
 const MOBILE_BREAKPOINT = 768;
+const LABEL_OUTWARD_OFFSET = 14;
+const LABEL_OUTWARD_OFFSET_MOBILE = 10;
 
 //Detecta viewport mobile para compactar os rótulos do radar
 const useIsMobile = (): boolean => {
@@ -65,17 +69,53 @@ const wrapTickLabel = (label: string, maxLineLength: number): string[] => {
   return lines;
 };
 
-const AngleTick = ({ x = 0, y = 0, textAnchor, payload, $small = false }: IAngleTickProps) => {
+//Empurra o rótulo radialmente para fora do gráfico, evitando sobreposição com o eixo (ex.: 100)
+const getOutwardPosition = (
+  x: number,
+  y: number,
+  cx: number,
+  cy: number,
+  offset: number
+): { x: number; y: number } => {
+  const dx = x - cx;
+  const dy = y - cy;
+  const distance = Math.hypot(dx, dy);
+
+  if (distance === 0) return { x, y: y - offset };
+
+  return {
+    x: x + (dx / distance) * offset,
+    y: y + (dy / distance) * offset,
+  };
+};
+
+const AngleTick = ({
+  x = 0,
+  y = 0,
+  cx = 0,
+  cy = 0,
+  textAnchor,
+  payload,
+  $small = false,
+}: IAngleTickProps) => {
   const fontSize = $small ? 10 : 12;
   const lineHeight = $small ? 11 : 13;
   const maxLineLength = $small ? 10 : 12;
+  const outwardOffset = $small ? LABEL_OUTWARD_OFFSET_MOBILE : LABEL_OUTWARD_OFFSET;
   const lines = wrapTickLabel(String(payload?.value ?? ""), maxLineLength);
   const offsetY = ((lines.length - 1) * lineHeight) / 2;
+  const position = getOutwardPosition(x, y, cx, cy, outwardOffset);
 
   return (
-    <text x={x} y={y - offsetY} textAnchor={textAnchor} fill="#5C5C5C" fontSize={fontSize}>
+    <text
+      x={position.x}
+      y={position.y - offsetY}
+      textAnchor={textAnchor}
+      fill="#5C5C5C"
+      fontSize={fontSize}
+    >
       {lines.map((line, index) => (
-        <tspan key={index} x={x} dy={index === 0 ? 0 : lineHeight}>
+        <tspan key={index} x={position.x} dy={index === 0 ? 0 : lineHeight}>
           {line}
         </tspan>
       ))}
@@ -88,7 +128,7 @@ const renderRadarChart = (
   title: string,
   isMobile: boolean
 ) => (
-  <RadarChart data={categories} outerRadius={isMobile ? "60%" : "70%"}>
+  <RadarChart data={categories} outerRadius={isMobile ? "48%" : "55%"}>
     <PolarGrid stroke="#E0E0E0" />
     <PolarAngleAxis dataKey="categoria" tick={<AngleTick $small={isMobile} />} />
     <PolarRadiusAxis
@@ -117,7 +157,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
 
       <S.ChartWrapper $exporting={isExporting}>
         {isExporting ? (
-          <RadarChart width={width} height={height} data={categories} outerRadius="70%">
+          <RadarChart width={width} height={height} data={categories} outerRadius="55%">
             <PolarGrid stroke="#E0E0E0" />
             <PolarAngleAxis dataKey="categoria" tick={<AngleTick />} />
             <PolarRadiusAxis
@@ -132,6 +172,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
               stroke="#0288D1"
               fill="#0288D1"
               fillOpacity={0.5}
+              isAnimationActive={false}
             />
           </RadarChart>
         ) : (

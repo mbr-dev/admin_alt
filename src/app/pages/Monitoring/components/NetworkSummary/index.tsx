@@ -45,6 +45,9 @@ export function NetworkSummary() {
     return <S.Skeleton aria-busy="true" aria-label={t("networkSummaryLoading")} />;
   }
 
+  const totalTimeSeconds =
+    (numbersNetwork?.time?.time_alt ?? 0) + (numbersNetwork?.time?.time_session ?? 0);
+
   const items: ISummaryItem[] = [
     {
       id: "unity",
@@ -65,16 +68,10 @@ export function NetworkSummary() {
       labelKey: "networkSessionsLabel",
     },
     {
-      id: "time_alt",
+      id: "time_total",
       icon: <FiClock aria-hidden />,
-      value: formatSecondsToTime(numbersNetwork?.time?.time_alt),
-      labelKey: "networkTimeAltLabel",
-    },
-    {
-      id: "time_session",
-      icon: <FiClock aria-hidden />,
-      value: formatSecondsToTime(numbersNetwork?.time?.time_session),
-      labelKey: "networkTimeSessionLabel",
+      value: formatSecondsToTime(totalTimeSeconds),
+      labelKey: "networkTimeTotalLabel",
     },
   ];
 

@@ -28,6 +28,18 @@ import units_es from "./units/es.json";
 import professionals_ptBR from "./professionals/pt-BR.json";
 import professionals_en from "./professionals/en.json";
 import professionals_es from "./professionals/es.json";
+import login_ptBR from "./login/pt-BR.json";
+import login_en from "./login/en.json";
+import login_es from "./login/es.json";
+import students_ptBR from "./students/pt-BR.json";
+import students_en from "./students/en.json";
+import students_es from "./students/es.json";
+import reportStudent_ptBR from "./reportStudent/pt-BR.json";
+import reportStudent_en from "./reportStudent/en.json";
+import reportStudent_es from "./reportStudent/es.json";
+import altSession_ptBR from "./altSession/pt-BR.json";
+import altSession_en from "./altSession/en.json";
+import altSession_es from "./altSession/es.json";
 
 export {
   profile_ptBR,
@@ -60,4 +72,16 @@ export {
   professionals_ptBR,
   professionals_en,
   professionals_es,
+  login_ptBR,
+  login_en,
+  login_es,
+  students_ptBR,
+  students_en,
+  students_es,
+  reportStudent_ptBR,
+  reportStudent_en,
+  reportStudent_es,
+  altSession_ptBR,
+  altSession_en,
+  altSession_es,
 };

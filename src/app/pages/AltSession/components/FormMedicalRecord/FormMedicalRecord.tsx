@@ -2,11 +2,21 @@ import * as S from "./styles";
 import { AltSessionService } from "@/data/models";
 import { ChangeEvent } from "react";
 import { useFormMedicalRecord } from "./hook";
+import { useTranslation } from "react-i18next";
+import { resolveLanguageFromBrowser } from "@/lib/i18n/resolve-language";
+import { translateProntuarioOpcao, translateProntuarioPergunta, translateTipoAtendimento } from "@/lib/i18n/tables/lookup";
 
-function formatSessionDateTime(iso: string): string {
+function toDateLocale(language: string): string {
+  const resolved = resolveLanguageFromBrowser(language);
+  if (resolved === "pt_BR") return "pt-BR";
+  if (resolved === "es") return "es-ES";
+  return "en-US";
+}
+
+function formatSessionDateTime(iso: string, language: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "-";
-  return d.toLocaleString("pt-BR", {
+  return d.toLocaleString(toDateLocale(language), {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -32,7 +42,14 @@ interface IFormMedicalRecord {
 }
 
 export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalRecord) {
+  const { t, i18n } = useTranslation("altSession");
   const props = useFormMedicalRecord({ session, onClose, onSuccess });
+
+  const sessionTypeLabel = translateTipoAtendimento(
+    props.session.tipo_sessao,
+    i18n.language,
+    props.session.tipo_sessao
+  );
 
   if (props.isLoading) {
     return (
@@ -50,37 +67,49 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
     <S.Container>
       <S.FormCard>
         <S.Header>
-          <S.FormTitle>Prontuário da sessão</S.FormTitle>
+          <S.FormTitle>{t("record_title")}</S.FormTitle>
         </S.Header>
 
         <S.SessionInfo>
-          <S.SessionInfoLine>Paciente: {props.session.nome_paciente}</S.SessionInfoLine>
-          <S.SessionInfoLine>Tipo Sessão: {props.session.tipo_sessao}</S.SessionInfoLine>
           <S.SessionInfoLine>
-            Data Início: {formatSessionDateTime(props.session.data_inicio)} - Data Término:{" "}
-            {formatSessionDateTime(props.session.data_final)} - Duração:{" "}
+            {t("field_patient")}: {props.session.nome_paciente}
+          </S.SessionInfoLine>
+          <S.SessionInfoLine>
+            {t("field_session_type")}: {sessionTypeLabel}
+          </S.SessionInfoLine>
+          <S.SessionInfoLine>
+            {t("field_start")}: {formatSessionDateTime(props.session.data_inicio, i18n.language)} - {t("field_end")}:{" "}
+            {formatSessionDateTime(props.session.data_final, i18n.language)} - {t("record_duration")}:{" "}
             {formatSessionDuration(props.session.data_inicio, props.session.data_final)}
           </S.SessionInfoLine>
-          <S.SessionInfoLine>Profissional: {props.session.nome_profissional}</S.SessionInfoLine>
+          <S.SessionInfoLine>
+            {t("field_professional")}: {props.session.nome_profissional}
+          </S.SessionInfoLine>
         </S.SessionInfo>
 
         <S.Sections>
-          {!props.hasQuestions && <S.EmptyState>Nenhuma pergunta de prontuário foi encontrada.</S.EmptyState>}
+          {!props.hasQuestions && <S.EmptyState>{t("record_empty")}</S.EmptyState>}
 
           {props.questions.map((question) => {
             const answer = props.answersByQuestion[question.id_pergunta];
             const questionType = props.getQuestionType(question);
+            const questionLabel = translateProntuarioPergunta(
+              question.id_pergunta,
+              question.descricao,
+              i18n.language
+            );
 
             if (questionType === "input_number") {
               return (
                 <S.NumberQuestionCard key={question.id_pergunta}>
-                  <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{question.descricao}</S.QuestionLabel>
+                  <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{questionLabel}</S.QuestionLabel>
                   <S.NumberInput
                     id={`question-${question.id_pergunta}`}
                     type="number"
                     inputMode="decimal"
                     step="any"
                     value={answer?.resposta_texto ?? ""}
+                    placeholder={t("placeholder_number_answer")}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       props.handleAnswerText(question.id_pergunta, e.target.value)
                     }
@@ -91,7 +120,7 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
 
             return (
               <S.QuestionCard key={question.id_pergunta}>
-                <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{question.descricao}</S.QuestionLabel>
+                <S.QuestionLabel htmlFor={`question-${question.id_pergunta}`}>{questionLabel}</S.QuestionLabel>
 
                 {questionType === "check" ? (
                   <S.OptionsGroup>
@@ -102,7 +131,7 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
                           checked={(answer?.id_respostas ?? []).includes(option.id_resposta)}
                           onChange={() => props.handleToggleAnswerOption(question.id_pergunta, option.id_resposta)}
                         />
-                        {option.descricao}
+                        {translateProntuarioOpcao(option.id_resposta, option.descricao, i18n.language)}
                       </S.OptionLabel>
                     ))}
                   </S.OptionsGroup>
@@ -116,7 +145,7 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
                           checked={answer?.id_resposta === option.id_resposta}
                           onChange={() => props.handleAnswerOption(question.id_pergunta, option.id_resposta)}
                         />
-                        {option.descricao}
+                        {translateProntuarioOpcao(option.id_resposta, option.descricao, i18n.language)}
                       </S.OptionLabel>
                     ))}
                   </S.OptionsGroup>
@@ -125,6 +154,7 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
                     id={`question-${question.id_pergunta}`}
                     rows={5}
                     value={answer?.resposta_texto ?? ""}
+                    placeholder={t("placeholder_text_answer")}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => props.handleAnswerText(question.id_pergunta, e.target.value)}
                   />
                 )}
@@ -135,10 +165,10 @@ export function FormMedicalRecord({ session, onClose, onSuccess }: IFormMedicalR
 
         <S.Footer>
           <S.Button type="button" $variant="secondary" onClick={onClose}>
-            Voltar
+            {t("button_back")}
           </S.Button>
           <S.Button type="button" $variant="primary" onClick={props.handleSubmit} disabled={props.disabledBtn || !props.hasQuestions}>
-            {props.isEditMode ? "Atualizar prontuário" : "Salvar prontuário"}
+            {props.isEditMode ? t("button_update_record") : t("button_save_record")}
           </S.Button>
         </S.Footer>
       </S.FormCard>

@@ -1,21 +1,35 @@
 import * as S from "./styles";
 import { useLogin } from "../../hook";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { ImgSVG, ImgPng } from "@/components/images";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { useStorage } from "@/data/hooks";
+import { resolveLanguageFromBrowser } from "@/lib/i18n/resolve-language";
 
-export const Container = () => {
+export function Container() {
   const loginContext = useLogin();
+  const { getData } = useStorage();
+  const { t, i18n } = useTranslation("login");
 
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  //Envia o dados para o login
+
+  useEffect(() => {
+    const isLoggedIn = Boolean(getData("token"));
+    if (isLoggedIn) return;
+
+    const browserLanguage = resolveLanguageFromBrowser(navigator.language);
+    if (i18n.language !== browserLanguage) {
+      void i18n.changeLanguage(browserLanguage);
+    }
+  }, [getData, i18n]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    loginContext.handleSignIn(name, password)
-  }
+    loginContext.handleSignIn(name, password);
+  };
 
   return (
     <S.Container style={{ backgroundImage: `url(${ImgSVG.Login4})` }}>
@@ -27,20 +41,19 @@ export const Container = () => {
         <img src={ImgSVG.Login1} alt="" />
       </S.Guys>
 
-
       <S.Main>
         <S.Form onSubmit={handleSubmit}>
           <S.Logo>
             <img src={ImgSVG.LogoMbr} alt="" />
           </S.Logo>
 
-          <h2>Portal de acesso</h2>
+          <h2>{t("title")}</h2>
           <S.BgMain>
             <img src={ImgPng.Login2} alt="" />
           </S.BgMain>
 
           <S.Label htmlFor="user_name">
-            Usuário
+            {t("user")}
             <input
               type="text"
               id="user_name"
@@ -51,7 +64,7 @@ export const Container = () => {
           </S.Label>
 
           <S.Label htmlFor="user_password">
-            Senha
+            {t("password")}
             <input
               type={showPassword ? "text" : "password"}
               id="user_password"
@@ -70,10 +83,10 @@ export const Container = () => {
           </S.Label>
 
           <S.Button type="submit" disabled={loginContext.load}>
-            {loginContext.load ? "Carregando" : "Entrar"}
+            {loginContext.load ? t("loading") : t("submit")}
           </S.Button>
         </S.Form>
       </S.Main>
     </S.Container>
-  )
+  );
 }

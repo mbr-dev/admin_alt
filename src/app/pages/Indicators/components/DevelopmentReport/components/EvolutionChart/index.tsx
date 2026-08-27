@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { CHART_COLORS } from "../../utils";
 import { useTranslation } from "react-i18next";
 import { ALTDevelopmentReportService } from "@/data/models";
+import { translateAltTagById } from "@/lib/i18n/tables/lookup";
 import {
   Line,
   XAxis,
@@ -21,26 +22,40 @@ interface IEvolutionChart {
   isExporting?: boolean;
 }
 
-export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart) => {
-  const { t } = useTranslation("indicators");
+interface IEvolutionTagOption {
+  id_tag: number;
+  key: string;
+  label: string;
+}
+
+export function EvolutionChart({ periods, isExporting = false }: IEvolutionChart) {
+  const { t, i18n } = useTranslation("indicators");
   const [selectedTag, setSelectedTag] = useState<string>(ALL_TAGS);
 
-  const tags = useMemo(() => {
-    const seen = new Map<string, string>();
+  const tags = useMemo<IEvolutionTagOption[]>(() => {
+    const seen = new Map<number, IEvolutionTagOption>();
+
     periods.forEach((period) => {
       period.tags.forEach((tag) => {
-        if (!seen.has(tag.tag)) seen.set(tag.tag, tag.tag);
+        if (seen.has(tag.id_tag)) return;
+
+        seen.set(tag.id_tag, {
+          id_tag: tag.id_tag,
+          key: String(tag.id_tag),
+          label: translateAltTagById(tag.id_tag, i18n.language, tag.tag),
+        });
       });
     });
-    return Array.from(seen.keys());
-  }, [periods]);
+
+    return Array.from(seen.values());
+  }, [periods, i18n.language]);
 
   const data = useMemo(
     () =>
       periods.map((period) => {
         const row: Record<string, string | number> = { periodo: period.periodo };
         period.tags.forEach((tag) => {
-          row[tag.tag] = tag.percentual;
+          row[String(tag.id_tag)] = tag.percentual;
         });
         return row;
       }),
@@ -49,7 +64,7 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
 
   const visibleTags = useMemo(() => {
     if (isExporting || selectedTag === ALL_TAGS) return tags;
-    return tags.filter((tag) => tag === selectedTag);
+    return tags.filter((tag) => tag.key === selectedTag);
   }, [isExporting, selectedTag, tags]);
 
   if (!periods || periods.length <= 0) {
@@ -78,8 +93,8 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
         >
           <option value={ALL_TAGS}>{t("dev_evolutionFilterAll")}</option>
           {tags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
+            <option key={tag.key} value={tag.key}>
+              {tag.label}
             </option>
           ))}
         </S.FilterSelect>
@@ -97,12 +112,13 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
             />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             {visibleTags.map((tag) => {
-              const colorIndex = tags.indexOf(tag);
+              const colorIndex = tags.findIndex((item) => item.key === tag.key);
               return (
                 <Line
-                  key={tag}
+                  key={tag.key}
                   type="monotone"
-                  dataKey={tag}
+                  dataKey={tag.key}
+                  name={tag.label}
                   stroke={CHART_COLORS[colorIndex % CHART_COLORS.length]}
                   strokeWidth={2}
                   dot={{ r: 3 }}
@@ -116,4 +132,4 @@ export const EvolutionChart = ({ periods, isExporting = false }: IEvolutionChart
       </S.ChartWrapper>
     </S.Card>
   );
-};
+}

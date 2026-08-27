@@ -69,11 +69,55 @@ sm:text-sm
 `;
 
 export const ChartWrap = tw.div`
-h-[300px]
+flex
+w-full
+shrink-0
+flex-col
+`;
+
+export const ChartPlot = tw.div`
+h-[240px]
 w-full
 shrink-0
 
-sm:h-[320px]
+sm:h-[260px]
+`;
+
+export const LegendRow = tw.div`
+flex
+flex-wrap
+items-center
+justify-center
+gap-x-3
+gap-y-2
+px-1
+pt-2
+`;
+
+export const LegendItem = tw.button<{ $dimmed: boolean }>`
+inline-flex
+max-w-full
+items-center
+gap-1.5
+border-0
+bg-transparent
+p-0
+text-left
+text-[11px]
+leading-snug
+text-mbr-gray-30
+cursor-pointer
+transition-opacity
+
+${({ $dimmed }) => ($dimmed ? "opacity-40" : "opacity-100")}
+`;
+
+export const LegendDot = tw.span`
+inline-block
+h-2
+w-2
+shrink-0
+rounded-full
 `;
 
 export const EmptyHint = tw.p`

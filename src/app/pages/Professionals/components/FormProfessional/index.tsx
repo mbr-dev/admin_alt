@@ -2,6 +2,8 @@ import * as S from "./styles";
 import { useFormProfessional } from "./hook";
 import { ChangeEvent } from "react";
 import { ProfessionalsService } from "@/data/models";
+import { useTranslation } from "react-i18next";
+import { translateClinicaProfissaoById } from "@/lib/i18n/tables/lookup";
 
 interface IFormProfessional {
   professionalToEdit: ProfessionalsService.IProfessionalByUserId | null;
@@ -12,6 +14,7 @@ interface IFormProfessional {
 
 export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoading = false }: IFormProfessional) {
   const props = useFormProfessional({ professionalToEdit, onClose, onSuccess });
+  const { i18n } = useTranslation("professionals");
 
   const handleInputChange = (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {
     setter(e.target.value);
@@ -146,7 +149,13 @@ export function FormProfessional({ professionalToEdit, onClose, onSuccess, isLoa
                               checked={props.selectedProfessionIds.includes(profession.id)}
                               onChange={handleCheckboxChange(profession.id)}
                             />
-                            <span>{profession.descricao}</span>
+                            <span>
+                              {translateClinicaProfissaoById(
+                                profession.id,
+                                i18n.language,
+                                profession.descricao
+                              )}
+                            </span>
                           </S.ProfessionCheckLabel>
                         </S.ProfessionItem>
                       ))}

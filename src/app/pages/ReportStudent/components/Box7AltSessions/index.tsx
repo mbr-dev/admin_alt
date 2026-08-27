@@ -1,8 +1,10 @@
 import * as S from "./styles";
 import { ATLSession, ReportUserSession } from "@/data/services";
 import { AltSessionService, ReportUserSessionService } from "@/data/models";
+import { translateClinicaProfissaoByDescricaoPt } from "@/lib/i18n/tables/lookup";
 import { useStorage } from "@/data/hooks";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, type PieLabelRenderProps } from "recharts";
 
@@ -55,13 +57,16 @@ type PieRow = {
   quantidade: number;
 };
 
-function distributionToPieData(res: ReportUserSessionService.ISessionTypesDistributionResponse | null): PieRow[] {
+function distributionToPieData(
+  res: ReportUserSessionService.ISessionTypesDistributionResponse | null,
+  language: string
+): PieRow[] {
   if (!res?.data?.length) return [];
   return res.data.map((row) => {
-    const full = row.tipo_sessao?.trim() || "—";
-    const short = full.length > 36 ? `${full.slice(0, 36)}…` : full;
+    const fallback = row.tipo_sessao?.trim() || "—";
+    const full = translateClinicaProfissaoByDescricaoPt(row.tipo_sessao, language, fallback);
     return {
-      name: short,
+      name: full,
       tipoFull: full,
       value: Math.max(0, row.frequencia),
       quantidade: row.quantidade,
@@ -96,13 +101,14 @@ type TooltipProps = {
 };
 
 function DistributionTooltip({ active, payload }: TooltipProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <div className="max-w-xs rounded-lg border border-mbr-gray-40 bg-white px-3 py-2 text-left text-xs shadow-md sm:text-sm">
       <p className="font-medium text-mbr-gray-30">{row.tipoFull}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.value}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.value })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </div>
   );
 }
@@ -116,6 +122,7 @@ type Props = {
 const PAGE_LIMIT = 50;
 
 export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const { getData } = useStorage();
   const { getAltSessionsByNetwork } = ATLSession();
   const { getSessionTypesDistribution } = ReportUserSession();
@@ -144,7 +151,10 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
     });
   };
 
-  const pieData = useMemo(() => distributionToPieData(distribution), [distribution]);
+  const pieData = useMemo(
+    () => distributionToPieData(distribution, i18n.language),
+    [distribution, i18n.language]
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -220,15 +230,15 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
   }, [sessionsOpen, canFetchSessions, idUnidade, nomeAluno]);
 
   const distributionBlock = !idUsuario || idUsuario <= 0 ? (
-    <S.EmptyHint>Identificador do usuário inválido para o gráfico de tipos de sessão.</S.EmptyHint>
+    <S.EmptyHint>{t("invalid_user_chart")}</S.EmptyHint>
   ) : distributionLoading ? (
-    <S.LoadingHint>Carregando distribuição…</S.LoadingHint>
+    <S.LoadingHint>{t("loading_distribution")}</S.LoadingHint>
   ) : !distribution || pieData.length === 0 ? (
-    <S.EmptyHint>Nenhum dado de distribuição por tipo de sessão.</S.EmptyHint>
+    <S.EmptyHint>{t("empty_session_distribution")}</S.EmptyHint>
   ) : (
     <S.ChartBlock>
       {distribution.total_sessoes != null ? (
-        <S.ChartMeta>Total de sessões consideradas: {distribution.total_sessoes}</S.ChartMeta>
+        <S.ChartMeta>{t("total_sessions_considered", { count: distribution.total_sessoes })}</S.ChartMeta>
       ) : null}
       <S.ChartWrap>
         <ResponsiveContainer width="100%" height="100%">
@@ -266,11 +276,11 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
   );
 
   const sessionsBody = !sessionsOpen ? null : !canFetchSessions ? (
-    <S.EmptyHint>Informações de unidade ou nome do aluno insuficientes para buscar sessões ALT.</S.EmptyHint>
+    <S.EmptyHint>{t("insufficient_session_info")}</S.EmptyHint>
   ) : sessionsLoading ? (
-    <S.LoadingHint>Carregando sessões…</S.LoadingHint>
+    <S.LoadingHint>{t("loading_sessions")}</S.LoadingHint>
   ) : sessions.length === 0 ? (
-    <S.EmptyHint>Nenhuma sessão ALT encontrada para este aluno nesta unidade.</S.EmptyHint>
+    <S.EmptyHint>{t("empty_alt_sessions")}</S.EmptyHint>
   ) : (
     <>
       <S.SessionsList>
@@ -280,29 +290,29 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
           return (
             <S.SessionCard key={session.id} $statusNorm={statusNorm} $alertVariant={alertVariant}>
               <S.SessionHeader>
-                <S.SessionType>{session.tipo_sessao || "Sessão ALT"}</S.SessionType>
+                <S.SessionType>{session.tipo_sessao || t("session_alt_fallback")}</S.SessionType>
                 <S.StatusBadge $statusNorm={statusNorm}>{statusNorm}</S.StatusBadge>
               </S.SessionHeader>
               <S.SessionGrid>
                 <S.Field>
-                  <S.FieldLabel>Profissional</S.FieldLabel>
+                  <S.FieldLabel>{t("professional")}</S.FieldLabel>
                   <S.FieldValue>{session.nome_profissional || "—"}</S.FieldValue>
                 </S.Field>
                 <S.Field>
-                  <S.FieldLabel>Aluno</S.FieldLabel>
+                  <S.FieldLabel>{t("student")}</S.FieldLabel>
                   <S.FieldValue>{session.nome_paciente || "—"}</S.FieldValue>
                 </S.Field>
                 <S.Field>
-                  <S.FieldLabel>Início</S.FieldLabel>
+                  <S.FieldLabel>{t("start")}</S.FieldLabel>
                   <S.FieldValue>{formatSessionDate(session.data_inicio)}</S.FieldValue>
                 </S.Field>
                 <S.Field>
-                  <S.FieldLabel>Término</S.FieldLabel>
+                  <S.FieldLabel>{t("end")}</S.FieldLabel>
                   <S.FieldValue>{formatSessionDate(session.data_final)}</S.FieldValue>
                 </S.Field>
                 <S.Field>
-                  <S.FieldLabel>Formulário</S.FieldLabel>
-                  <S.FieldValue>{session.preenchimento_formulario ? "Preenchido" : "Pendente"}</S.FieldValue>
+                  <S.FieldLabel>{t("form")}</S.FieldLabel>
+                  <S.FieldValue>{session.preenchimento_formulario ? t("filled") : t("pending")}</S.FieldValue>
                 </S.Field>
               </S.SessionGrid>
             </S.SessionCard>
@@ -312,26 +322,26 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
       <S.AlertLegend>
         <S.AlertLegendItem>
           <S.AlertLegendColor $variant="red" />
-          Sessão de dia passado pendente (não finalizada/cancelada)
+          {t("session_past_pending")}
         </S.AlertLegendItem>
         <S.AlertLegendItem>
           <S.AlertLegendColor $variant="yellow" />
-          Sessão aberta em andamento no horário atual
+          {t("session_open_now")}
         </S.AlertLegendItem>
         <S.AlertLegendItem>
           <S.AlertLegendColor $variant="orange" />
-          Sessão em andamento com horário final excedido
+          {t("session_overdue")}
         </S.AlertLegendItem>
       </S.AlertLegend>
       {sessions.length >= PAGE_LIMIT ? (
-        <S.MetaHint>Exibindo até {PAGE_LIMIT} registros. Use a página de sessões ALT para ver mais.</S.MetaHint>
+        <S.MetaHint>{t("showing_up_to", { count: PAGE_LIMIT })}</S.MetaHint>
       ) : null}
     </>
   );
 
   return (
     <S.Box7>
-      <S.BoxTitle>Sessões</S.BoxTitle>
+      <S.BoxTitle>{t("sessions_title")}</S.BoxTitle>
       <S.Body>
         {distributionBlock}
 
@@ -340,18 +350,16 @@ export function Box7AltSessions({ idUsuario, idUnidade, nomeAluno }: Props) {
             {sessionsOpen ? (
               <>
                 <FaChevronUp aria-hidden className="shrink-0" />
-                Ocultar lista de sessões
+                {t("hide_session_list")}
               </>
             ) : (
               <>
                 <FaChevronDown aria-hidden className="shrink-0" />
-                Ver lista de sessões
+                {t("show_session_list")}
               </>
             )}
           </S.ExpandToggle>
-          <S.CurtainHint>
-            A lista detalhada só é carregada ao expandir.
-          </S.CurtainHint>
+          <S.CurtainHint>{t("list_loads_on_expand")}</S.CurtainHint>
         </S.CurtainBar>
 
         {sessionsBody}

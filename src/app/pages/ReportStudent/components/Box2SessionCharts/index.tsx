@@ -2,7 +2,9 @@ import * as S from "./styles";
 import { extractParenLabel } from "../Box4SupportLevel";
 import { ReportUserSession } from "@/data/services";
 import { ReportUserSessionService } from "@/data/models";
+import { translateProntuarioOpcaoById } from "@/lib/i18n/tables/lookup";
 import { useEffect, useId, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Area,
   AreaChart,
@@ -18,21 +20,16 @@ import {
   YAxis,
 } from "recharts";
 
-/** Ordem fixa do eixo X — valores da API são casados pelo trecho em `patterns` (sem acentos). */
-const EVOLUTION_AXIS: { label: string; patterns: string[] }[] = [
-  { label: "Meta Atingida", patterns: ["meta atingida"] },
-  { label: "Evolução Parcial", patterns: ["evolucao parcial"] },
-  { label: "Estagnação", patterns: ["estagnacao"] },
-  { label: "Regressão", patterns: ["regressao"] },
+/** Ordem fixa do radar — `idResposta` casa `data[].id_resposta` com `prontuario_opcoes.json`. */
+const EVOLUTION_AXIS: {
+  labelKey: "evolution_goal_met" | "evolution_partial" | "evolution_stagnation" | "evolution_regression";
+  idResposta: number;
+}[] = [
+  { labelKey: "evolution_goal_met", idResposta: 48 },
+  { labelKey: "evolution_partial", idResposta: 49 },
+  { labelKey: "evolution_stagnation", idResposta: 50 },
+  { labelKey: "evolution_regression", idResposta: 51 },
 ];
-
-function normalizeForMatch(s: string): string {
-  return s
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
-}
 
 type LineDatum = {
   label: string;
@@ -48,26 +45,33 @@ type AreaDatum = {
   quantidade: number;
 };
 
-function reportToLineData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): LineDatum[] {
+function reportToLineData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  resolveLabel: (key: (typeof EVOLUTION_AXIS)[number]["labelKey"]) => string,
+  language: string
+): LineDatum[] {
   const rows = res?.data ?? [];
-  return EVOLUTION_AXIS.map(({ label, patterns }) => {
-    const found = rows.find((item) => {
-      const n = normalizeForMatch(item.descricao ?? "");
-      return patterns.some((p) => n.includes(p));
-    });
+  return EVOLUTION_AXIS.map(({ labelKey, idResposta }) => {
+    const label = resolveLabel(labelKey);
+    const found = rows.find((item) => item.id_resposta === idResposta);
+    const fallback = found?.descricao?.trim() || label;
     return {
       label,
-      descricao: found?.descricao?.trim() || label,
+      descricao: translateProntuarioOpcaoById(found?.id_resposta ?? idResposta, language, fallback),
       frequencia: found?.frequencia ?? 0,
       quantidade: found?.quantidade ?? 0,
     };
   });
 }
 
-function reportToSupportLevelAreaData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): AreaDatum[] {
+function reportToSupportLevelAreaData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  language: string
+): AreaDatum[] {
   if (!res?.data?.length) return [];
   return res.data.map((item) => {
-    const full = item.descricao.trim();
+    const fallback = item.descricao.trim();
+    const full = translateProntuarioOpcaoById(item.id_resposta, language, fallback);
     return {
       label: extractParenLabel(full),
       descricaoFull: full,
@@ -83,13 +87,14 @@ type TooltipEvolutionProps = {
 };
 
 function EvolutionTooltip({ active, payload }: TooltipEvolutionProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.descricao}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.frequencia}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.frequencia })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
@@ -100,13 +105,14 @@ type AreaTooltipProps = {
 };
 
 function SupportLevelTooltip({ active, payload }: AreaTooltipProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.descricaoFull}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.frequencia}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.frequencia })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
@@ -115,13 +121,8 @@ type Props = {
   idUsuario: number;
 };
 
-const EVOLUTION_SUBTITLE =
-  "Apresenta o progresso do paciente ao longo das sessões. Permite identificar tendências de melhora ou necessidade de ajuste na intervenção.";
-
-const SUPPORT_SUBTITLE =
-  "Apresenta o nível de ajuda necessário para o paciente realizar as atividades, variando de suporte total até independência.";
-
 export function Box2SessionCharts({ idUsuario }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const fillGradientId = `b2sl-${useId().replace(/[^a-zA-Z0-9_-]/g, "") || "0"}`;
   const { getEvolution, getSupportLevel } = ReportUserSession();
 
@@ -155,19 +156,25 @@ export function Box2SessionCharts({ idUsuario }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- callbacks do serviço mudam a cada render (useApi)
   }, [idUsuario]);
 
-  const evolutionChartData = useMemo(() => reportToLineData(evolutionRes), [evolutionRes]);
-  const supportChartData = useMemo(() => reportToSupportLevelAreaData(supportRes), [supportRes]);
+  const evolutionChartData = useMemo(
+    () => reportToLineData(evolutionRes, (key) => t(key), i18n.language),
+    [evolutionRes, t, i18n.language]
+  );
+  const supportChartData = useMemo(
+    () => reportToSupportLevelAreaData(supportRes, i18n.language),
+    [supportRes, i18n.language]
+  );
 
   return (
     <S.Box2>
-      <S.BoxTitle>Suporte × Resultado</S.BoxTitle>
+      <S.BoxTitle>{t("support_result_title")}</S.BoxTitle>
       {loading ? (
-        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">Carregando gráficos…</div>
+        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">{t("loading_charts")}</div>
       ) : (
         <S.ChartsGrid>
           <S.ChartCard>
-            <S.ChartCardTitle>Evolução</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{EVOLUTION_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("evolution_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("evolution_subtitle")}</S.ChartCardSubtitle>
             <S.ChartWrap>
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="78%" data={evolutionChartData}>
@@ -180,7 +187,7 @@ export function Box2SessionCharts({ idUsuario }: Props) {
                     tickFormatter={(v) => `${v}%`}
                   />
                   <Radar
-                    name="Frequência"
+                    name={t("frequency")}
                     dataKey="frequencia"
                     stroke="#0065A4"
                     fill="#0065A4"
@@ -194,10 +201,10 @@ export function Box2SessionCharts({ idUsuario }: Props) {
           </S.ChartCard>
 
           <S.ChartCard>
-            <S.ChartCardTitle>Nível de suporte</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{SUPPORT_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("support_level_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("support_level_subtitle")}</S.ChartCardSubtitle>
             {supportChartData.length === 0 ? (
-              <S.EmptyHint>Sem dados de nível de suporte para este aluno.</S.EmptyHint>
+              <S.EmptyHint>{t("empty_support_level")}</S.EmptyHint>
             ) : (
               <S.ChartWrap>
                 <ResponsiveContainer width="100%" height="100%">
@@ -220,7 +227,7 @@ export function Box2SessionCharts({ idUsuario }: Props) {
                     <Area
                       type="monotone"
                       dataKey="frequencia"
-                      name="Frequência"
+                      name={t("frequency")}
                       stroke="#0065A4"
                       strokeWidth={2}
                       fill={`url(#${fillGradientId})`}

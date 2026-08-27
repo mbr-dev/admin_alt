@@ -10,5 +10,14 @@
   "position": "Tu posición:",
   "literacy": "Alfabetismo",
   "start": "Comenzar",
-  "alt_session": "Sesiones"
+  "alt_session": "Sesiones",
+  "empty_sessions_today": "Ninguna sesión para hoy.",
+  "view_more": "Ver más",
+  "col_professional": "Profesional",
+  "col_student": "Alumno",
+  "col_session_type": "Tipo de sesión",
+  "col_start": "Fecha/hora de inicio",
+  "col_end": "Fecha/hora de fin",
+  "col_status": "Estado",
+  "welcome": "¡BIENVENIDO(A), {{name}}!"
 }

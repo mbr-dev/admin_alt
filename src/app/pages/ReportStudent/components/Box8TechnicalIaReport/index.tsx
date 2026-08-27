@@ -2,6 +2,7 @@ import * as S from "./styles";
 import { ReportUserSession } from "@/data/services";
 import { ReportUserSessionService } from "@/data/models";
 import { useEffect, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   idUsuario: number;
@@ -38,6 +39,7 @@ function ThemeCard({
 }
 
 export function Box8TechnicalIaReport({ idUsuario }: Props) {
+  const { t } = useTranslation("reportStudent");
   const { getTechnicalIaReport } = ReportUserSession();
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState<ReportUserSessionService.ITechnicalIaReportResponse | null>(null);
@@ -73,9 +75,9 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
   if (!idUsuario || idUsuario <= 0) {
     return (
       <S.Box>
-        <S.Title>Resumo técnico (IA)</S.Title>
+        <S.Title>{t("technical_ia_title")}</S.Title>
         <S.Body>
-          <S.Hint>Identificador de usuário inválido.</S.Hint>
+          <S.Hint>{t("invalid_user")}</S.Hint>
         </S.Body>
       </S.Box>
     );
@@ -84,9 +86,9 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
   if (loading) {
     return (
       <S.Box>
-        <S.Title>Resumo técnico (IA)</S.Title>
+        <S.Title>{t("technical_ia_title")}</S.Title>
         <S.Body>
-          <S.Loading>Gerando resumo…</S.Loading>
+          <S.Loading>{t("generating_summary")}</S.Loading>
         </S.Body>
       </S.Box>
     );
@@ -95,9 +97,9 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
   if (!report) {
     return (
       <S.Box>
-        <S.Title>Resumo técnico (IA)</S.Title>
+        <S.Title>{t("technical_ia_title")}</S.Title>
         <S.Body>
-          <S.Hint>Não foi possível carregar o resumo técnico.</S.Hint>
+          <S.Hint>{t("empty_technical")}</S.Hint>
         </S.Body>
       </S.Box>
     );
@@ -108,38 +110,38 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
 
   return (
     <S.Box>
-      <S.Title>Resumo técnico (IA)</S.Title>
+      <S.Title>{t("technical_ia_title")}</S.Title>
       <S.Body>
         {/* 1 — Resumo clínico */}
         {report.resumo_clinico ? (
           <section>
-            <S.Subtitle>Resumo clínico</S.Subtitle>
+            <S.Subtitle>{t("clinical_summary")}</S.Subtitle>
             <S.Lead>{report.resumo_clinico}</S.Lead>
           </section>
         ) : null}
 
         {/* 2 — Engajamento, Comunicação, Atenção */}
         <S.CardGrid3>
-          <ThemeCard accent={C.engajamento} title="Engajamento">
+          <ThemeCard accent={C.engajamento} title={t("engagement")}>
             {report.engajamento}
           </ThemeCard>
-          <ThemeCard accent={C.comunicacao} title="Comunicação">
+          <ThemeCard accent={C.comunicacao} title={t("communication")}>
             {report.comunicacao}
           </ThemeCard>
-          <ThemeCard accent={C.atencao} title="Atenção">
+          <ThemeCard accent={C.atencao} title={t("attention")}>
             {report.atencao}
           </ThemeCard>
         </S.CardGrid3>
 
         {/* 3 — Comportamento, Interações sociais, Evolução geral */}
         <S.CardGrid3>
-          <ThemeCard accent={C.comportamento} title="Comportamento">
+          <ThemeCard accent={C.comportamento} title={t("behavior")}>
             {report.comportamento}
           </ThemeCard>
-          <ThemeCard accent={C.interacoesSociais} title="Interações sociais">
+          <ThemeCard accent={C.interacoesSociais} title={t("social_interactions")}>
             {report.interacoes_sociais}
           </ThemeCard>
-          <ThemeCard accent={C.evolucaoGeral} title="Evolução geral">
+          <ThemeCard accent={C.evolucaoGeral} title={t("general_evolution")}>
             {report.evolucao_geral}
           </ThemeCard>
         </S.CardGrid3>
@@ -147,10 +149,10 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
         {/* 4 — Intervenções eficazes (verde) e Dificuldades (vermelho) */}
         <S.CardGrid2>
           <S.ThemeCard>
-            <S.ThemeCardHeader style={{ backgroundColor: "#46C080" }}>Intervenções eficazes</S.ThemeCardHeader>
+            <S.ThemeCardHeader style={{ backgroundColor: "#46C080" }}>{t("effective_interventions")}</S.ThemeCardHeader>
             <S.ThemeCardBody>
               {intervencoes.length === 0 ? (
-                <span className="text-mbr-gray-50">Nenhuma intervenção listada.</span>
+                <span className="text-mbr-gray-50">{t("empty_interventions")}</span>
               ) : (
                 <S.PillRow>
                   {intervencoes.map((item, i) => (
@@ -162,10 +164,10 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
           </S.ThemeCard>
 
           <S.ThemeCard>
-            <S.ThemeCardHeader style={{ backgroundColor: "#E53935" }}>Dificuldades</S.ThemeCardHeader>
+            <S.ThemeCardHeader style={{ backgroundColor: "#E53935" }}>{t("difficulties")}</S.ThemeCardHeader>
             <S.ThemeCardBody>
               {dificuldades.length === 0 ? (
-                <span className="text-mbr-gray-50">Nenhuma dificuldade listada.</span>
+                <span className="text-mbr-gray-50">{t("empty_difficulties")}</span>
               ) : (
                 <S.ListRed>
                   {dificuldades.map((item, i) => (
@@ -180,7 +182,7 @@ export function Box8TechnicalIaReport({ idUsuario }: Props) {
         {/* 5 — Observações relevantes (formato anterior) */}
         {report.observacoes_relevantes ? (
           <section>
-            <S.Subtitle>Observações relevantes</S.Subtitle>
+            <S.Subtitle>{t("relevant_notes")}</S.Subtitle>
             <S.Lead>{report.observacoes_relevantes}</S.Lead>
           </section>
         ) : null}

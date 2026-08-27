@@ -59,7 +59,7 @@ absolute
 bottom-4
 right-2
 animate-bolha3
-z-20
+z-1
 
 [&>img]:w-full
 [&>img]:h-full
@@ -76,7 +76,7 @@ md:bottom-[100px]
 landscape:lg:w-[100px]
 landscape:lg:h-[100px]
 landscape:lg:right-[32px]
-landscape:lg:z-50
+landscape:lg:z-1
 
 landscape:xl:right-[132px]
 `;

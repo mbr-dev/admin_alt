@@ -7,6 +7,24 @@ import { DataTable, FloatingAddButton, Pagination } from "@/components/template"
 import { Animations, FormAltSession, FormMedicalRecord } from "..";
 import { FaCircleCheck, FaDownload, FaPencil, FaRegFileLines, FaSpinner, FaTriangleExclamation } from "react-icons/fa6";
 import { jsPDF } from "jspdf";
+import { useTranslation } from "react-i18next";
+import { resolveLanguageFromBrowser } from "@/lib/i18n/resolve-language";
+import { translateClinicaProfissaoById, translateTipoAtendimento, translateTipoAtendimentoById } from "@/lib/i18n/tables/lookup";
+
+const STATUS_I18N_KEYS: Record<string, "status_open" | "status_in_progress" | "status_finished" | "status_cancelled"> = {
+  aberta: "status_open",
+  "em andamento": "status_in_progress",
+  em_andamento: "status_in_progress",
+  finalizada: "status_finished",
+  cancelada: "status_cancelled",
+};
+
+function toDateLocale(language: string): string {
+  const resolved = resolveLanguageFromBrowser(language);
+  if (resolved === "pt_BR") return "pt-BR";
+  if (resolved === "es") return "es-ES";
+  return "en-US";
+}
 
 function formatPdfSessionDateTime(iso: string): string {
   const d = new Date(iso);
@@ -31,6 +49,7 @@ function formatPdfSessionDuration(startIso: string, endIso: string): string {
 }
 
 export function Container() {
+  const { t, i18n } = useTranslation("altSession");
   const { setLoad } = useMain();
   const { getData } = useStorage();
   const { toast } = useToast();
@@ -75,7 +94,26 @@ export function Container() {
     if (!dateValue) return "-";
     const date = new Date(dateValue);
     if (Number.isNaN(date.getTime())) return "-";
-    return date.toLocaleString("pt-BR");
+    return date.toLocaleString(toDateLocale(i18n.language));
+  };
+
+  const translateStatusLabel = (status: string) => {
+    const key = STATUS_I18N_KEYS[status] ?? STATUS_I18N_KEYS[status === "em_andamento" ? "em andamento" : status];
+    return key ? t(key) : status;
+  };
+
+  const translateSessionTypeLabel = (value: string) => {
+    const raw = value.trim();
+    if (!raw) return "-";
+    return translateTipoAtendimento(raw, i18n.language, raw);
+  };
+
+  const getClinicProfessionFilterLabel = (item: ProfessionalsService.IClinicProfession) => {
+    const raw = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+    if (item.tipo_atendimento?.trim()) {
+      return translateTipoAtendimentoById(item.id, i18n.language, raw);
+    }
+    return translateClinicaProfissaoById(item.id, i18n.language, raw);
   };
 
   useEffect(() => {
@@ -449,22 +487,26 @@ export function Container() {
   };
 
   const columns = [
-    { key: "nome_profissional", label: "Profissional" },
-    { key: "nome_paciente", label: "Aluno" },
-    { key: "tipo_sessao", label: "Tipo de sessão" },
+    { key: "nome_profissional", label: t("table_professional") },
+    { key: "nome_paciente", label: t("table_student") },
+    {
+      key: "tipo_sessao",
+      label: t("table_session_type"),
+      render: (row: AltSessionService.IAltSession) => translateSessionTypeLabel(row.tipo_sessao ?? ""),
+    },
     {
       key: "data_inicio",
-      label: "Data/Hora Início",
+      label: t("table_start"),
       render: (row: AltSessionService.IAltSession) => formatDate(row.data_inicio),
     },
     {
       key: "data_final",
-      label: "Data/Hora Fim",
+      label: t("table_end"),
       render: (row: AltSessionService.IAltSession) => formatDate(row.data_final),
     },
     {
       key: "status",
-      label: "Status",
+      label: t("table_status"),
       render: (row: AltSessionService.IAltSession) =>
         editingStatusSessionId === row.id ? (
           <S.QuickStatusSelect
@@ -474,23 +516,23 @@ export function Container() {
             onBlur={() => setEditingStatusSessionId(null)}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => void handleQuickStatusChange(row, e.target.value as AltSessionService.TAltSessionStatus)}
           >
-            <option value="aberta">aberta</option>
-            <option value="em_andamento">em andamento</option>
-            <option value="finalizada">finalizada</option>
-            <option value="cancelada">cancelada</option>
+            <option value="aberta">{t("status_open")}</option>
+            <option value="em_andamento">{t("status_in_progress")}</option>
+            <option value="finalizada">{t("status_finished")}</option>
+            <option value="cancelada">{t("status_cancelled")}</option>
           </S.QuickStatusSelect>
         ) : (
-          <S.StatusTagButton type="button" title="Clique para alterar status" onClick={() => setEditingStatusSessionId(row.id)}>
-            <S.StatusTag $status={normalizeStatus(row.status)}>{normalizeStatus(row.status)}</S.StatusTag>
+          <S.StatusTagButton type="button" title={t("status_change_title")} onClick={() => setEditingStatusSessionId(row.id)}>
+            <S.StatusTag $status={normalizeStatus(row.status)}>{translateStatusLabel(row.status)}</S.StatusTag>
           </S.StatusTagButton>
         ),
     },
     {
       key: "editar",
-      label: "Editar",
+      label: t("table_edit"),
       render: (row: AltSessionService.IAltSession) => (
         <S.ActionCell>
-          <S.ActionIcon type="button" aria-label={`Editar sessão ${row.id}`} onClick={() => void handleOpenForm(row)}>
+          <S.ActionIcon type="button" aria-label={t("edit_session_aria", { id: row.id })} onClick={() => void handleOpenForm(row)}>
             <FaPencil />
           </S.ActionIcon>
         </S.ActionCell>
@@ -498,14 +540,14 @@ export function Container() {
     },
     {
       key: "formulario",
-      label: "Formulário",
+      label: t("table_form"),
       render: (row: AltSessionService.IAltSession) => (
         <S.ActionCell>
           {normalizeStatus(row.status) === "finalizada" ? (
             <>
               <S.ActionIcon
                 type="button"
-                aria-label={`Abrir formulário da sessão ${row.id}`}
+                aria-label={t("open_form_aria", { id: row.id })}
                 onClick={() => handleOpenMedicalRecordForm(row)}
               >
                 <FaRegFileLines />
@@ -515,15 +557,15 @@ export function Container() {
                 <>
                   <S.ActionStatusIcon
                     $variant="check"
-                    title="Prontuário preenchido."
-                    aria-label={`Formulário preenchido da sessão ${row.id}`}
+                    title={t("form_filled_title")}
+                    aria-label={t("form_filled_aria", { id: row.id })}
                   >
                     <FaCircleCheck />
                   </S.ActionStatusIcon>
                   <S.ActionIcon
                     type="button"
-                    title={downloadingSessionId === row.id ? "Gerando PDF..." : "Baixar prontuário em PDF."}
-                    aria-label={`Baixar prontuário da sessão ${row.id}`}
+                    title={downloadingSessionId === row.id ? t("generating_pdf_title") : t("download_pdf_title")}
+                    aria-label={t("download_pdf_aria", { id: row.id })}
                     disabled={downloadingSessionId === row.id}
                     onClick={() => void handleDownloadMedicalRecordPdf(row)}
                   >
@@ -533,8 +575,8 @@ export function Container() {
               ) : (
                 <S.ActionStatusIcon
                   $variant="warning"
-                  title="Prontuário não preenchido."
-                  aria-label={`Atenção: formulário pendente da sessão ${row.id}`}
+                  title={t("form_pending_title")}
+                  aria-label={t("form_pending_aria", { id: row.id })}
                 >
                   <FaTriangleExclamation />
                 </S.ActionStatusIcon>
@@ -568,52 +610,66 @@ export function Container() {
                 <S.FilterInput
                   value={professionalName}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setProfessionalName(e.target.value)}
-                  placeholder="Nome do Profissional"
+                  placeholder={t("filter_professional_placeholder")}
+                  aria-label={t("filter_professional_placeholder")}
                 />
                 <S.FilterInput
                   value={patientName}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setPatientName(e.target.value)}
-                  placeholder="Nome do Aluno"
+                  placeholder={t("filter_student_placeholder")}
+                  aria-label={t("filter_student_placeholder")}
                 />
-                <S.FilterSelect value={sessionType} onChange={(e: ChangeEvent<HTMLSelectElement>) => setSessionType(e.target.value)}>
-                  <option value="">Tipo de Sessão</option>
+                <S.FilterSelect
+                  value={sessionType}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => setSessionType(e.target.value)}
+                  aria-label={t("filter_session_type")}
+                >
+                  <option value="">{t("filter_session_type")}</option>
                   {sessionType.trim() &&
                     !sessionTypeFilterOptions.some(
                       (item) => (item.tipo_atendimento ?? item.descricao ?? "").trim() === sessionType.trim()
                     ) && (
-                      <option value={sessionType}>{sessionType}</option>
+                      <option value={sessionType}>{translateSessionTypeLabel(sessionType)}</option>
                     )}
                   {sessionTypeFilterOptions.map((item) => {
                     const label = (item.tipo_atendimento ?? item.descricao ?? "").trim();
                     return (
                       <option key={item.id} value={label}>
-                        {label}
+                        {getClinicProfessionFilterLabel(item)}
                       </option>
                     );
                   })}
                 </S.FilterSelect>
-                <S.FilterSelect value={dateRange} onChange={(e: ChangeEvent<HTMLSelectElement>) => setDateRange(e.target.value)}>
-                  <option value="">Data</option>
-                  <option value="hoje">Hoje</option>
-                  <option value="ultimos_7_dias">Ultimos 7 dias</option>
-                  <option value="ultimos_15_dias">Ultimos 15 dias</option>
-                  <option value="ultimos_30_dias">Ultimos 30 dias</option>
+                <S.FilterSelect
+                  value={dateRange}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => setDateRange(e.target.value)}
+                  aria-label={t("filter_date")}
+                >
+                  <option value="">{t("filter_date")}</option>
+                  <option value="hoje">{t("filter_date_today")}</option>
+                  <option value="ultimos_7_dias">{t("filter_date_last_7_days")}</option>
+                  <option value="ultimos_15_dias">{t("filter_date_last_15_days")}</option>
+                  <option value="ultimos_30_dias">{t("filter_date_last_30_days")}</option>
                 </S.FilterSelect>
-                <S.FilterSelect value={statusFilter} onChange={(e: ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value)}>
-                  <option value="">Status</option>
-                  <option value="aberta">aberta</option>
-                  <option value="em_andamento">em andamento</option>
-                  <option value="finalizada">finalizada</option>
-                  <option value="cancelada">cancelada</option>
+                <S.FilterSelect
+                  value={statusFilter}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value)}
+                  aria-label={t("filter_status")}
+                >
+                  <option value="">{t("filter_status")}</option>
+                  <option value="aberta">{t("status_open")}</option>
+                  <option value="em_andamento">{t("status_in_progress")}</option>
+                  <option value="finalizada">{t("status_finished")}</option>
+                  <option value="cancelada">{t("status_cancelled")}</option>
                 </S.FilterSelect>
               </S.FilterGrid>
 
               <S.FilterActions>
                 <S.FilterButton type="button" $variant="secondary" onClick={handleClearFilters}>
-                  Limpar
+                  {t("filter_clear")}
                 </S.FilterButton>
                 <S.FilterButton type="button" $variant="primary" onClick={handleApplyFilters}>
-                  Aplicar filtros
+                  {t("filter_apply")}
                 </S.FilterButton>
               </S.FilterActions>
             </S.FilterBox>
@@ -647,23 +703,23 @@ export function Container() {
                   rows={sessions}
                   getRowKey={(row) => row.id}
                   getRowClassName={(row) => getSessionRowClassName(row)}
-                  emptyMessage="Nenhuma sessão encontrada."
+                  emptyMessage={t("empty_sessions")}
                 />
 
                 <S.LegendBox>
-                  <S.LegendTitle>Legenda de alertas</S.LegendTitle>
+                  <S.LegendTitle>{t("legend_title")}</S.LegendTitle>
                   <S.LegendList>
                     <S.LegendItem>
                       <S.LegendColor $variant="red" />
-                      Sessao de dia passado pendente (nao finalizada/cancelada)
+                      {t("legend_danger")}
                     </S.LegendItem>
                     <S.LegendItem>
                       <S.LegendColor $variant="yellow" />
-                      Sessao aberta em andamento no horario atual
+                      {t("legend_warning")}
                     </S.LegendItem>
                     <S.LegendItem>
                       <S.LegendColor $variant="orange" />
-                      Sessao em andamento com horario final excedido
+                      {t("legend_attention")}
                     </S.LegendItem>
                   </S.LegendList>
                 </S.LegendBox>
@@ -681,7 +737,7 @@ export function Container() {
         )}
       </S.Main>
 
-      {!showForm && !showMedicalRecordForm && <FloatingAddButton onClick={() => void handleOpenForm()} ariaLabel="Cadastrar sessão ALT" />}
+      {!showForm && !showMedicalRecordForm && <FloatingAddButton onClick={() => void handleOpenForm()} ariaLabel={t("floating_add_aria")} />}
     </S.Container>
   );
 }

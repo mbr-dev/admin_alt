@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { EXPORT_CHART_SIZE } from "../../utils";
 import { ALTDevelopmentReportService } from "@/data/models";
 import { useTranslation } from "react-i18next";
+import { translateSkillCategory } from "@/lib/i18n/translate-skill-category";
 import {
   Radar,
   Tooltip,
@@ -150,6 +151,11 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
   const isMobile = useIsMobile();
   const { width, height } = EXPORT_CHART_SIZE.wide;
 
+  const chartData = categories.map((item) => ({
+    ...item,
+    categoria: translateSkillCategory(t, item.categoria),
+  }));
+
   return (
     <S.Card>
       <S.Title>{t("dev_categoryTitle")}</S.Title>
@@ -157,7 +163,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
 
       <S.ChartWrapper $exporting={isExporting}>
         {isExporting ? (
-          <RadarChart width={width} height={height} data={categories} outerRadius="55%">
+          <RadarChart width={width} height={height} data={chartData} outerRadius="55%">
             <PolarGrid stroke="#E0E0E0" />
             <PolarAngleAxis dataKey="categoria" tick={<AngleTick />} />
             <PolarRadiusAxis
@@ -177,7 +183,7 @@ export const CategoryPerformance = ({ categories, isExporting = false }: ICatego
           </RadarChart>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
-            {renderRadarChart(categories, t("dev_categoryTitle"), isMobile)}
+            {renderRadarChart(chartData, t("dev_categoryTitle"), isMobile)}
           </ResponsiveContainer>
         )}
       </S.ChartWrapper>

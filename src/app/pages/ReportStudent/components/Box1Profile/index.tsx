@@ -7,6 +7,8 @@ import {
   normalizeCidRows,
 } from "./formatters";
 import { FaCalendarDays, FaEnvelope, FaPhone } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
+import { translateCidById } from "@/lib/i18n/tables/lookup";
 
 export type Box1ProfileVariant = "full" | "personal-cid" | "guardian";
 
@@ -17,12 +19,16 @@ type Props = {
 };
 
 export function Box1Profile({ data, variant = "full" }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const alunoNome = data.aluno?.nome?.trim() || "—";
   const cidRows = normalizeCidRows(data.cid_usuario);
 
+  const birthWithAge = (birthDate: string | null | undefined) =>
+    formatBirthWithAge(birthDate, (date, age) => t("birth_with_age", { date, age }));
+
   const dadosPessoaisBlock = (
     <S.Section aria-labelledby="report-dados-pessoais">
-      <S.BlockTitle id="report-dados-pessoais">Dados pessoais</S.BlockTitle>
+      <S.BlockTitle id="report-dados-pessoais">{t("personal_data")}</S.BlockTitle>
       <S.PersonalRow>
         <S.InitialsCircle aria-hidden>{getStudentInitials(alunoNome)}</S.InitialsCircle>
         <S.PersonalTextCol>
@@ -31,7 +37,7 @@ export function Box1Profile({ data, variant = "full" }: Props) {
             <S.MetaIcon>
               <FaCalendarDays aria-hidden />
             </S.MetaIcon>
-            <span>{formatBirthWithAge(data.aluno?.data_nascimento)}</span>
+            <span>{birthWithAge(data.aluno?.data_nascimento)}</span>
           </S.MetaRow>
         </S.PersonalTextCol>
       </S.PersonalRow>
@@ -40,14 +46,14 @@ export function Box1Profile({ data, variant = "full" }: Props) {
 
   const responsavelBlock = (
     <S.Section aria-labelledby="report-responsavel">
-      <S.BlockTitle id="report-responsavel">Responsável</S.BlockTitle>
+      <S.BlockTitle id="report-responsavel">{t("guardian")}</S.BlockTitle>
       <S.GuardianBlock>
         <S.GuardianName>{data.responsavel?.nome?.trim() || "—"}</S.GuardianName>
         <S.InfoRow>
           <S.MetaIcon>
             <FaCalendarDays aria-hidden />
           </S.MetaIcon>
-          <span>{formatBirthWithAge(data.responsavel?.data_nascimento)}</span>
+          <span>{birthWithAge(data.responsavel?.data_nascimento)}</span>
         </S.InfoRow>
         <S.InfoRow>
           <S.MetaIcon>
@@ -67,14 +73,19 @@ export function Box1Profile({ data, variant = "full" }: Props) {
 
   const cidBlock = (
     <S.Section aria-labelledby="report-cid">
-      <S.BlockTitle id="report-cid">CID</S.BlockTitle>
+      <S.BlockTitle id="report-cid">{t("cid")}</S.BlockTitle>
       <S.CidBlock>
         {cidRows.length === 0 ? (
-          <S.CidEmpty>Nenhum CID cadastrado.</S.CidEmpty>
+          <S.CidEmpty>{t("empty_cid")}</S.CidEmpty>
         ) : (
-          cidRows.map((row, index) => (
-            <S.CidLine key={`${row.sigla}-${row.descricao}-${index}`}>{formatCidLine(row)}</S.CidLine>
-          ))
+          cidRows.map((row, index) => {
+            const descricao = translateCidById(row.id_cid, i18n.language, row.descricao);
+            return (
+              <S.CidLine key={`${row.id_cid ?? row.sigla}-${index}`}>
+                {formatCidLine({ ...row, descricao })}
+              </S.CidLine>
+            );
+          })
         )}
       </S.CidBlock>
     </S.Section>

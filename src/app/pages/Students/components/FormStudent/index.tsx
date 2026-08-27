@@ -4,6 +4,12 @@ import { getCidGroupIcon, getCidGroupSelectedCount } from "./helpers/cidGroup";
 import { ChangeEvent, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { StudentService } from "@/data/models";
+import { useTranslation } from "react-i18next";
+import {
+  translateCidById,
+  translateCidCategoriaByTitulo,
+  translateCidSubcategoriaByTitulo,
+} from "@/lib/i18n/tables/lookup";
 
 interface IFormStudentProps {
   studentToEdit?: StudentService.IStudent | null;
@@ -12,6 +18,7 @@ interface IFormStudentProps {
 }
 
 export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormStudentProps) {
+  const { t, i18n } = useTranslation("students");
   const props = useFormStudent({ onClose, onSuccess, studentToEdit });
   const [expandedCidSections, setExpandedCidSections] = useState<Record<string, boolean>>({});
   const stylesWithCid = S as typeof S & {
@@ -48,20 +55,20 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderStudentStep = () => (
     <S.Section>
-      <S.SectionTitle>Dados do aluno</S.SectionTitle>
+      <S.SectionTitle>{t("section_student")}</S.SectionTitle>
       <S.Grid>
         <S.Label htmlFor="student-name">
-          Nome
+          {t("field_name")}
           <S.Input id="student-name" value={props.studentName} onChange={handleInputChange(props.setStudentName)} />
         </S.Label>
 
         <S.Label htmlFor="student-email">
-          E-mail
+          {t("field_email")}
           <S.Input id="student-email" type="email" value={props.studentEmail} onChange={handleInputChange(props.setStudentEmail)} />
         </S.Label>
 
         <S.Label htmlFor="student-birth">
-          Data de nascimento
+          {t("field_birth")}
           <S.Input
             id="student-birth"
             type="date"
@@ -72,16 +79,16 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
         </S.Label>
 
         <S.Label htmlFor="student-sex">
-          Sexo
+          {t("field_sex")}
           <S.Select
             id="student-sex"
             value={props.studentSex}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setStudentSex(e.target.value)}
           >
-            <option value="">Selecione o sexo</option>
-            <option value="masculino">Masculino</option>
-            <option value="feminino">Feminino</option>
-            <option value="nao_binario">Não binário</option>
+            <option value="">{t("field_sex_placeholder")}</option>
+            <option value="masculino">{t("sex_male")}</option>
+            <option value="feminino">{t("sex_female")}</option>
+            <option value="nao_binario">{t("sex_non_binary")}</option>
           </S.Select>
         </S.Label>
       </S.Grid>
@@ -90,10 +97,10 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderAccessStep = () => (
     <S.Section>
-      <S.SectionTitle>Acesso</S.SectionTitle>
+      <S.SectionTitle>{t("section_access")}</S.SectionTitle>
       <S.Grid>
         <S.Label htmlFor="student-user">
-          Usuário
+          {t("field_user")}
           <S.Input
             id="student-user"
             value={props.user}
@@ -104,21 +111,21 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
         </S.Label>
 
         <S.Label htmlFor="student-password">
-          Senha
+          {t("field_password")}
           <S.Input id="student-password" type="password" value={props.password} onChange={handleInputChange(props.setPassword)} />
         </S.Label>
 
         <S.Label htmlFor="student-unit">
-          Unidade
+          {t("field_unit")}
           <S.Select
             id="student-unit"
             value={props.selectedUnitId}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setSelectedUnitId(e.target.value)}
             disabled={props.hasSingleUnit}
           >
-            {props.units.length === 0 && <option value="">Nenhuma unidade encontrada</option>}
+            {props.units.length === 0 && <option value="">{t("empty_units")}</option>}
             {props.hasSingleUnit ? (
-              <option value={props.units[0]?.id}>{props.units[0]?.descricao ?? "Nenhuma unidade encontrada"}</option>
+              <option value={props.units[0]?.id}>{props.units[0]?.descricao ?? t("empty_units")}</option>
             ) : (
               props.units.map((unit) => (
                 <option key={unit.id} value={unit.id}>
@@ -134,7 +141,7 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderCidStep = () => (
     <S.Section>
-      <S.SectionTitle>Diagnóstico e Classificação CID</S.SectionTitle>
+      <S.SectionTitle>{t("section_cid")}</S.SectionTitle>
       <CidListContainer>
         {props.isCidLoading ? (
           <>
@@ -151,7 +158,7 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
           </>
         ) : (
           <>
-            {props.cidGroups.length === 0 && <CidEmpty>Nenhum CID encontrado.</CidEmpty>}
+            {props.cidGroups.length === 0 && <CidEmpty>{t("empty_cid")}</CidEmpty>}
 
             {props.cidGroups.map((group) => {
               const groupKey = `group-${group.titulo}`;
@@ -159,6 +166,11 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
               const GroupIcon = getCidGroupIcon(group.titulo);
               const selectedCount = getCidGroupSelectedCount(group, props.selectedCidIds);
               const hasSelection = selectedCount > 0;
+              const groupTitle = translateCidCategoriaByTitulo(
+                group.titulo,
+                i18n.language,
+                group.titulo
+              );
 
               return (
                 <S.CidAccordion key={group.titulo}>
@@ -171,12 +183,14 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
                       <S.CidGroupIcon aria-hidden>
                         <GroupIcon />
                       </S.CidGroupIcon>
-                      <S.CidAccordionTitle>{group.titulo}</S.CidAccordionTitle>
+                      <S.CidAccordionTitle>{groupTitle}</S.CidAccordionTitle>
                     </S.CidAccordionTitleWrap>
 
                     <S.CidAccordionMeta>
                       <S.CidSelectionCounter $hasSelection={hasSelection}>
-                        {selectedCount} selecionado{selectedCount === 1 ? "" : "s"}
+                        {t(selectedCount === 1 ? "cid_selected_one" : "cid_selected_other", {
+                          count: selectedCount,
+                        })}
                       </S.CidSelectionCounter>
                       <S.CidAccordionIcon aria-hidden>
                         {isGroupOpen ? <FaChevronUp /> : <FaChevronDown />}
@@ -190,6 +204,11 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
                         const subcategoryKey = `sub-${group.titulo}-${subcategory.titulo || "default"}`;
                         const hasSubcategoryTitle = !!subcategory.titulo;
                         const isSubcategoryOpen = hasSubcategoryTitle ? !!expandedCidSections[subcategoryKey] : true;
+                        const subcategoryTitle = translateCidSubcategoriaByTitulo(
+                          subcategory.titulo,
+                          i18n.language,
+                          subcategory.titulo
+                        );
 
                         const cidList = (
                           <CidList>
@@ -201,7 +220,10 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
                                     checked={props.selectedCidIds.includes(sigla.id)}
                                     onChange={() => props.toggleCidSelection(sigla.id)}
                                   />
-                                  <span>{sigla.sigla} - {sigla.descricao}</span>
+                                  <span>
+                                    {sigla.sigla} -{" "}
+                                    {translateCidById(sigla.id, i18n.language, sigla.descricao)}
+                                  </span>
                                 </CidCheckLabel>
                               </CidItem>
                             ))}
@@ -219,7 +241,7 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
                               onClick={() => toggleCidSection(subcategoryKey)}
                               aria-expanded={isSubcategoryOpen}
                             >
-                              <span>{subcategory.titulo}</span>
+                              <span>{subcategoryTitle}</span>
                               <S.CidAccordionIcon aria-hidden>
                                 {isSubcategoryOpen ? <FaChevronUp /> : <FaChevronDown />}
                               </S.CidAccordionIcon>
@@ -242,20 +264,20 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderGuardianStep = () => (
     <S.Section>
-      <S.SectionTitle>Dados do responsável</S.SectionTitle>
+      <S.SectionTitle>{t("section_guardian")}</S.SectionTitle>
       <S.Grid>
         <S.Label htmlFor="guardian-name">
-          Nome
+          {t("field_name")}
           <S.Input id="guardian-name" value={props.guardianName} onChange={handleInputChange(props.setGuardianName)} />
         </S.Label>
 
         <S.Label htmlFor="guardian-email">
-          E-mail
+          {t("field_email")}
           <S.Input id="guardian-email" type="email" value={props.guardianEmail} onChange={handleInputChange(props.setGuardianEmail)} />
         </S.Label>
 
         <S.Label htmlFor="guardian-birth">
-          Data de nascimento
+          {t("field_birth")}
           <S.Input
             id="guardian-birth"
             type="date"
@@ -266,12 +288,12 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
         </S.Label>
 
         <S.Label htmlFor="guardian-cpf-cnpj">
-          CPF/CNPJ
+          {t("field_cpf_cnpj")}
           <S.Input id="guardian-cpf-cnpj" value={props.guardianCpfCnpj} onChange={handleInputChange(props.setGuardianCpfCnpj)} />
         </S.Label>
 
         <S.Label htmlFor="guardian-kinship">
-          Parentesco
+          {t("field_kinship")}
           <S.Input id="guardian-kinship" value={props.guardianKinship} onChange={handleInputChange(props.setGuardianKinship)} />
         </S.Label>
       </S.Grid>
@@ -280,48 +302,48 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderAddressStep = () => (
     <S.Section>
-      <S.SectionTitle>Endereço do responsável</S.SectionTitle>
+      <S.SectionTitle>{t("section_address")}</S.SectionTitle>
       <S.Grid>
         <S.Label htmlFor="address-cep">
-          CEP
+          {t("field_cep")}
           <S.Input id="address-cep" value={props.addressCep} onChange={handleInputChange(props.setAddressCep)} onBlur={props.handleCepBlur} />
         </S.Label>
 
         <S.Label htmlFor="address-street">
-          Logradouro
+          {t("field_street")}
           <S.Input id="address-street" value={props.addressStreet} onChange={handleInputChange(props.setAddressStreet)} />
         </S.Label>
 
         <S.Label htmlFor="address-number">
-          Número
+          {t("field_number")}
           <S.Input id="address-number" value={props.addressNumber} onChange={handleInputChange(props.setAddressNumber)} />
         </S.Label>
 
         <S.Label htmlFor="address-complement">
-          Complemento
+          {t("field_complement")}
           <S.Input id="address-complement" value={props.addressComplement} onChange={handleInputChange(props.setAddressComplement)} />
         </S.Label>
 
         <S.Label htmlFor="address-district">
-          Bairro
+          {t("field_district")}
           <S.Input id="address-district" value={props.addressDistrict} onChange={handleInputChange(props.setAddressDistrict)} />
         </S.Label>
 
         <S.Label htmlFor="address-region">
-          Região
+          {t("field_region")}
           <S.Input id="address-region" value={props.addressRegion} onChange={handleInputChange(props.setAddressRegion)} />
         </S.Label>
 
         <S.Label htmlFor="address-type">
-          Tipo
+          {t("field_type")}
           <S.Select
             id="address-type"
             value={props.addressType}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setAddressType(e.target.value)}
           >
-            <option value="residencial">Residencial</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="outro">Outro</option>
+            <option value="residencial">{t("type_residential")}</option>
+            <option value="trabalho">{t("type_work")}</option>
+            <option value="outro">{t("type_other")}</option>
           </S.Select>
         </S.Label>
       </S.Grid>
@@ -330,28 +352,28 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
   const renderContactStep = () => (
     <S.Section>
-      <S.SectionTitle>Contato do responsável</S.SectionTitle>
+      <S.SectionTitle>{t("section_contact")}</S.SectionTitle>
       <S.Grid>
         <S.Label htmlFor="contact-name">
-          Nome do responsável
+          {t("field_contact_name")}
           <S.Input id="contact-name" value={props.contactGuardianName} onChange={handleInputChange(props.setContactGuardianName)} />
         </S.Label>
 
         <S.Label htmlFor="contact-value">
-          Contato
+          {t("field_contact")}
           <S.Input id="contact-value" value={props.contactValue} onChange={handleInputChange(props.setContactValue)} />
         </S.Label>
 
         <S.Label htmlFor="contact-type">
-          Tipo
+          {t("field_type")}
           <S.Select
             id="contact-type"
             value={props.contactType}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setContactType(e.target.value)}
           >
-            <option value="residencial">Residencial</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="outro">Outro</option>
+            <option value="residencial">{t("type_residential")}</option>
+            <option value="trabalho">{t("type_work")}</option>
+            <option value="outro">{t("type_other")}</option>
           </S.Select>
         </S.Label>
       </S.Grid>
@@ -398,15 +420,19 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
     <S.Container>
       <S.FormCard>
         <S.Header>
-          <S.FormTitle>Cadastro de aluno</S.FormTitle>
+          <S.FormTitle>{studentToEdit ? t("form_edit_title") : t("form_create_title")}</S.FormTitle>
         </S.Header>
 
         <S.StepProgress>
           <S.StepProgressText>
-            Etapa {props.currentStep + 1} de {props.totalSteps}: {currentStepData?.label}
+            {t("step_progress", {
+              current: props.currentStep + 1,
+              total: props.totalSteps,
+              label: currentStepData?.label,
+            })}
           </S.StepProgressText>
 
-          <S.StepsList aria-label="Progresso do cadastro">
+          <S.StepsList aria-label={t("step_progress_aria")}>
             {props.formSteps.map((step, index) => {
               const isActive = index === props.currentStep;
               const isCompleted = index < props.currentStep;
@@ -429,24 +455,24 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
         <S.Footer>
           {onClose ? (
             <S.Button type="button" $variant="secondary" onClick={onClose}>
-              Cancelar
+              {t("button_cancel")}
             </S.Button>
           ) : null}
 
           <S.FooterActions>
             {!props.isFirstStep ? (
               <S.Button type="button" $variant="secondary" onClick={props.goToPreviousStep}>
-                Anterior
+                {t("button_previous")}
               </S.Button>
             ) : null}
 
             {props.isLastStep ? (
               <S.Button type="button" $variant="primary" onClick={props.handleSubmit} disabled={props.disabledBtn}>
-                Confirmar
+                {t("button_confirm")}
               </S.Button>
             ) : (
               <S.Button type="button" $variant="primary" onClick={props.goToNextStep}>
-                Próximo
+                {t("button_next")}
               </S.Button>
             )}
           </S.FooterActions>

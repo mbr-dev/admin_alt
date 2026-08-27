@@ -16,8 +16,10 @@ import { StudentService } from "@/data/models";
 import { decryptJS } from "@/lib/utils";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Container() {
+  const { t } = useTranslation("reportStudent");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { getClinicStudentByUserId } = Student();
@@ -85,10 +87,10 @@ export function Container() {
 
       <S.Main>
         <S.ContentArea>
-          <S.Title>Relatório do aluno</S.Title>
+          <S.Title>{t("title")}</S.Title>
 
           {loading ? (
-            <S.LoadingBox>Carregando dados do aluno…</S.LoadingBox>
+            <S.LoadingBox>{t("loading_student")}</S.LoadingBox>
           ) : studentPayload && reportUserId != null ? (
             <S.ReportShell>
               <ReportSidebar

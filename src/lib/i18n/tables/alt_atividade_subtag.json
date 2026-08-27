@@ -1,0 +1,787 @@
+[
+  {
+    "name": "alt_atividade_subtag",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Reconhecimento auditivo",
+        "descricao_en": "Auditory recognition",
+        "descricao_es": "Reconocimiento auditivo"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "associação áudio-imagem",
+        "descricao_en": "audio-image association",
+        "descricao_es": "asociación audio-imagen"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Discriminação visual",
+        "descricao_en": "Visual discrimination",
+        "descricao_es": "Discriminación visual"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "atenção visual seletiva",
+        "descricao_en": "selective visual attention",
+        "descricao_es": "atención visual selectiva"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Atenção seletiva",
+        "descricao_en": "Selective attention",
+        "descricao_es": "Atención selectiva"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "controle inibitório",
+        "descricao_en": "inhibitory control",
+        "descricao_es": "control inhibitorio"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Princípio alfabético",
+        "descricao_en": "Alphabetic principle",
+        "descricao_es": "Principio alfabético"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "associação fonema-grafema",
+        "descricao_en": "phoneme-grapheme association",
+        "descricao_es": "asociación fonema-grafema"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "reconhecimento de letras",
+        "descricao_en": "letter recognition",
+        "descricao_es": "reconocimiento de letras"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "atenção visual",
+        "descricao_en": "visual attention",
+        "descricao_es": "atención visual"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Coordenação óculo-manual",
+        "descricao_en": "Eye-hand coordination",
+        "descricao_es": "Coordinación óculo-manual"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "controle do arrasto",
+        "descricao_en": "drag control",
+        "descricao_es": "control del arrastre"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Memória visual",
+        "descricao_en": "Visual memory",
+        "descricao_es": "Memoria visual"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "reconhecimento de padrões",
+        "descricao_en": "pattern recognition",
+        "descricao_es": "reconocimiento de patrones"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Memória de curto prazo",
+        "descricao_en": "Short-term memory",
+        "descricao_es": "Memoria a corto plazo"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "memória de trabalho",
+        "descricao_en": "working memory",
+        "descricao_es": "memoria de trabajo"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Atenção sustentada",
+        "descricao_en": "Sustained attention",
+        "descricao_es": "Atención sostenida"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Memória auditiva",
+        "descricao_en": "Auditory memory",
+        "descricao_es": "Memoria auditiva"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "compreensão de sequência",
+        "descricao_en": "sequence comprehension",
+        "descricao_es": "comprensión de secuencia"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Sequenciamento",
+        "descricao_en": "Sequencing",
+        "descricao_es": "Secuenciación"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Planejamento",
+        "descricao_en": "Planning",
+        "descricao_es": "Planificación"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Atenção visual sustentada",
+        "descricao_en": "Sustained visual attention",
+        "descricao_es": "Atención visual sostenida"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "rastreamento visual",
+        "descricao_en": "visual tracking",
+        "descricao_es": "rastreo visual"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Coordenação visuo-motora",
+        "descricao_en": "Visuomotor coordination",
+        "descricao_es": "Coordinación visomotora"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "precisão e timing do toque",
+        "descricao_en": "touch precision and timing",
+        "descricao_es": "precisión y timing del toque"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Velocidade de processamento",
+        "descricao_en": "Processing speed",
+        "descricao_es": "Velocidad de procesamiento"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Numeracia: reconhecimento de numerais",
+        "descricao_en": "Numeracy: numeral recognition",
+        "descricao_es": "Numeracidad: reconocimiento de numerales"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "associação número-quantidade",
+        "descricao_en": "number-quantity association",
+        "descricao_es": "asociación número-cantidad"
+      },
+      {
+        "id": "29",
+        "descricao_pt": "Reconhecimento e discriminação de cores",
+        "descricao_en": "Color recognition and discrimination",
+        "descricao_es": "Reconocimiento y discriminación de colores"
+      },
+      {
+        "id": "30",
+        "descricao_pt": "Vocabulário (objetos)",
+        "descricao_en": "Vocabulary (objects)",
+        "descricao_es": "Vocabulario (objetos)"
+      },
+      {
+        "id": "31",
+        "descricao_pt": "associação palavra-imagem",
+        "descricao_en": "word-image association",
+        "descricao_es": "asociación palabra-imagen"
+      },
+      {
+        "id": "32",
+        "descricao_pt": "Reconhecimento emocional",
+        "descricao_en": "Emotional recognition",
+        "descricao_es": "Reconocimiento emocional"
+      },
+      {
+        "id": "33",
+        "descricao_pt": "leitura de expressões",
+        "descricao_en": "reading of expressions",
+        "descricao_es": "lectura de expresiones"
+      },
+      {
+        "id": "34",
+        "descricao_pt": "vocabulário emocional",
+        "descricao_en": "emotional vocabulary",
+        "descricao_es": "vocabulario emocional"
+      },
+      {
+        "id": "35",
+        "descricao_pt": "Vocabulário (alimentos)",
+        "descricao_en": "Vocabulary (foods)",
+        "descricao_es": "Vocabulario (alimentos)"
+      },
+      {
+        "id": "36",
+        "descricao_pt": "Vocabulário (transportes)",
+        "descricao_en": "Vocabulary (transport)",
+        "descricao_es": "Vocabulario (transportes)"
+      },
+      {
+        "id": "37",
+        "descricao_pt": "Vocabulário (partes do corpo)",
+        "descricao_en": "Vocabulary (body parts)",
+        "descricao_es": "Vocabulario (partes del cuerpo)"
+      },
+      {
+        "id": "38",
+        "descricao_pt": "esquema corporal",
+        "descricao_en": "body schema",
+        "descricao_es": "esquema corporal"
+      },
+      {
+        "id": "39",
+        "descricao_pt": "Reconhecimento e discriminação de formas",
+        "descricao_en": "Shape recognition and discrimination",
+        "descricao_es": "Reconocimiento y discriminación de formas"
+      },
+      {
+        "id": "40",
+        "descricao_pt": "Vocabulário (animais)",
+        "descricao_en": "Vocabulary (animals)",
+        "descricao_es": "Vocabulario (animales)"
+      },
+      {
+        "id": "41",
+        "descricao_pt": "associação som-imagem",
+        "descricao_en": "sound-image association",
+        "descricao_es": "asociación sonido-imagen"
+      },
+      {
+        "id": "42",
+        "descricao_pt": "Controle do arrasto",
+        "descricao_en": "Drag control",
+        "descricao_es": "Control del arrastre"
+      },
+      {
+        "id": "43",
+        "descricao_pt": "Consciência fonológica",
+        "descricao_en": "Phonological awareness",
+        "descricao_es": "Conciencia fonológica"
+      },
+      {
+        "id": "44",
+        "descricao_pt": "segmentação e síntese silábica",
+        "descricao_en": "syllabic segmentation and synthesis",
+        "descricao_es": "segmentación y síntesis silábica"
+      },
+      {
+        "id": "45",
+        "descricao_pt": "princípio alfabético",
+        "descricao_en": "alphabetic principle",
+        "descricao_es": "principio alfabético"
+      },
+      {
+        "id": "46",
+        "descricao_pt": "Compreensão auditiva",
+        "descricao_en": "Auditory comprehension",
+        "descricao_es": "Comprensión auditiva"
+      },
+      {
+        "id": "47",
+        "descricao_pt": "associação áudio-alvo",
+        "descricao_en": "audio-target association",
+        "descricao_es": "asociación audio-objetivo"
+      },
+      {
+        "id": "48",
+        "descricao_pt": "coordenação óculo-manual",
+        "descricao_en": "eye-hand coordination",
+        "descricao_es": "coordinación óculo-manual"
+      },
+      {
+        "id": "49",
+        "descricao_pt": "Discriminação fonêmica",
+        "descricao_en": "Phonemic discrimination",
+        "descricao_es": "Discriminación fonémica"
+      },
+      {
+        "id": "50",
+        "descricao_pt": "reter o alvo",
+        "descricao_en": "retain the target",
+        "descricao_es": "retener el objetivo"
+      },
+      {
+        "id": "51",
+        "descricao_pt": "Análise e síntese (composição de partes)",
+        "descricao_en": "Analysis and synthesis (composition of parts)",
+        "descricao_es": "Análisis y síntesis (composición de partes)"
+      },
+      {
+        "id": "52",
+        "descricao_pt": "Memória de trabalho",
+        "descricao_en": "Working memory",
+        "descricao_es": "Memoria de trabajo"
+      },
+      {
+        "id": "53",
+        "descricao_pt": "Reter o alvo sorteado",
+        "descricao_en": "Retain the drawn target",
+        "descricao_es": "Retener el objetivo sorteado"
+      },
+      {
+        "id": "54",
+        "descricao_pt": "flexibilidade",
+        "descricao_en": "flexibility",
+        "descricao_es": "flexibilidad"
+      },
+      {
+        "id": "55",
+        "descricao_pt": "Precisão do toque (estourar)",
+        "descricao_en": "Touch precision (popping)",
+        "descricao_es": "Precisión del toque (reventar)"
+      },
+      {
+        "id": "56",
+        "descricao_pt": "Atenção visual",
+        "descricao_en": "Visual attention",
+        "descricao_es": "Atención visual"
+      },
+      {
+        "id": "57",
+        "descricao_pt": "Reter o alvo ouvido",
+        "descricao_en": "Retain the heard target",
+        "descricao_es": "Retener el objetivo escuchado"
+      },
+      {
+        "id": "58",
+        "descricao_pt": "rastreamento",
+        "descricao_en": "tracking",
+        "descricao_es": "rastreo"
+      },
+      {
+        "id": "59",
+        "descricao_pt": "Precisão e timing do toque",
+        "descricao_en": "Touch precision and timing",
+        "descricao_es": "Precisión y timing del toque"
+      },
+      {
+        "id": "60",
+        "descricao_pt": "Memória de trabalho (ordem)",
+        "descricao_en": "Working memory (order)",
+        "descricao_es": "Memoria de trabajo (orden)"
+      },
+      {
+        "id": "61",
+        "descricao_pt": "Grafomotricidade",
+        "descricao_en": "Graphomotor skills",
+        "descricao_es": "Grafomotricidad"
+      },
+      {
+        "id": "62",
+        "descricao_pt": "coordenação motora fina",
+        "descricao_en": "fine motor coordination",
+        "descricao_es": "coordinación motora fina"
+      },
+      {
+        "id": "63",
+        "descricao_pt": "planejamento motor",
+        "descricao_en": "motor planning",
+        "descricao_es": "planificación motora"
+      },
+      {
+        "id": "64",
+        "descricao_pt": "Formação de grafemas",
+        "descricao_en": "Grapheme formation",
+        "descricao_es": "Formación de grafemas"
+      },
+      {
+        "id": "65",
+        "descricao_pt": "Atenção sustentada (sob tempo)",
+        "descricao_en": "Sustained attention (under time)",
+        "descricao_es": "Atención sostenida (bajo tiempo)"
+      },
+      {
+        "id": "66",
+        "descricao_pt": "Persistência",
+        "descricao_en": "Persistence",
+        "descricao_es": "Persistencia"
+      },
+      {
+        "id": "67",
+        "descricao_pt": "engajamento",
+        "descricao_en": "engagement",
+        "descricao_es": "compromiso"
+      },
+      {
+        "id": "68",
+        "descricao_pt": "Cálculo",
+        "descricao_en": "Calculation",
+        "descricao_es": "Cálculo"
+      },
+      {
+        "id": "69",
+        "descricao_pt": "raciocínio aritmético",
+        "descricao_en": "arithmetic reasoning",
+        "descricao_es": "razonamiento aritmético"
+      },
+      {
+        "id": "70",
+        "descricao_pt": "Operação narrada",
+        "descricao_en": "Narrated operation",
+        "descricao_es": "Operación narrada"
+      },
+      {
+        "id": "71",
+        "descricao_pt": "Controle inibitório",
+        "descricao_en": "Inhibitory control",
+        "descricao_es": "Control inhibitorio"
+      },
+      {
+        "id": "72",
+        "descricao_pt": "Leitura simbólica da operação",
+        "descricao_en": "Symbolic reading of the operation",
+        "descricao_es": "Lectura simbólica de la operación"
+      },
+      {
+        "id": "73",
+        "descricao_pt": "Adição",
+        "descricao_en": "Addition",
+        "descricao_es": "Suma"
+      },
+      {
+        "id": "74",
+        "descricao_pt": "cálculo",
+        "descricao_en": "calculation",
+        "descricao_es": "cálculo"
+      },
+      {
+        "id": "75",
+        "descricao_pt": "decomposição",
+        "descricao_en": "decomposition",
+        "descricao_es": "descomposición"
+      },
+      {
+        "id": "76",
+        "descricao_pt": "Decomposição",
+        "descricao_en": "Decomposition",
+        "descricao_es": "Descomposición"
+      },
+      {
+        "id": "77",
+        "descricao_pt": "equivalência",
+        "descricao_en": "equivalence",
+        "descricao_es": "equivalencia"
+      },
+      {
+        "id": "78",
+        "descricao_pt": "Leitura da operação",
+        "descricao_en": "Reading of the operation",
+        "descricao_es": "Lectura de la operación"
+      },
+      {
+        "id": "79",
+        "descricao_pt": "Raciocínio combinatório",
+        "descricao_en": "Combinatorial reasoning",
+        "descricao_es": "Razonamiento combinatorio"
+      },
+      {
+        "id": "80",
+        "descricao_pt": "flexibilidade aritmética",
+        "descricao_en": "arithmetic flexibility",
+        "descricao_es": "flexibilidad aritmética"
+      },
+      {
+        "id": "81",
+        "descricao_pt": "Flexibilidade cognitiva",
+        "descricao_en": "Cognitive flexibility",
+        "descricao_es": "Flexibilidad cognitiva"
+      },
+      {
+        "id": "82",
+        "descricao_pt": "planejamento",
+        "descricao_en": "planning",
+        "descricao_es": "planificación"
+      },
+      {
+        "id": "83",
+        "descricao_pt": "Leitura simbólica",
+        "descricao_en": "Symbolic reading",
+        "descricao_es": "Lectura simbólica"
+      },
+      {
+        "id": "84",
+        "descricao_pt": "Compreensão da operação narrada",
+        "descricao_en": "Comprehension of the narrated operation",
+        "descricao_es": "Comprensión de la operación narrada"
+      },
+      {
+        "id": "85",
+        "descricao_pt": "verificação",
+        "descricao_en": "verification",
+        "descricao_es": "verificación"
+      },
+      {
+        "id": "86",
+        "descricao_pt": "autoverificação",
+        "descricao_en": "self-verification",
+        "descricao_es": "autoverificación"
+      },
+      {
+        "id": "87",
+        "descricao_pt": "Inferência/dedução",
+        "descricao_en": "Inference/deduction",
+        "descricao_es": "Inferencia/deducción"
+      },
+      {
+        "id": "88",
+        "descricao_pt": "Arrasto/seleção",
+        "descricao_en": "Drag/selection",
+        "descricao_es": "Arrastre/selección"
+      },
+      {
+        "id": "89",
+        "descricao_pt": "Subtração",
+        "descricao_en": "Subtraction",
+        "descricao_es": "Resta"
+      },
+      {
+        "id": "90",
+        "descricao_pt": "Contagem",
+        "descricao_en": "Counting",
+        "descricao_es": "Conteo"
+      },
+      {
+        "id": "91",
+        "descricao_pt": "cardinalidade",
+        "descricao_en": "cardinality",
+        "descricao_es": "cardinalidad"
+      },
+      {
+        "id": "92",
+        "descricao_pt": "correspondência um-a-um",
+        "descricao_en": "one-to-one correspondence",
+        "descricao_es": "correspondencia uno a uno"
+      },
+      {
+        "id": "93",
+        "descricao_pt": "classificação",
+        "descricao_en": "classification",
+        "descricao_es": "clasificación"
+      },
+      {
+        "id": "94",
+        "descricao_pt": "Quantidade + item narrados",
+        "descricao_en": "Quantity + item narrated",
+        "descricao_es": "Cantidad + ítem narrados"
+      },
+      {
+        "id": "95",
+        "descricao_pt": "Localizar/contar os itens",
+        "descricao_en": "Locate/count the items",
+        "descricao_es": "Localizar/contar los ítems"
+      },
+      {
+        "id": "96",
+        "descricao_pt": "discriminação dupla (item + número)",
+        "descricao_en": "double discrimination (item + number)",
+        "descricao_es": "discriminación doble (ítem + número)"
+      },
+      {
+        "id": "97",
+        "descricao_pt": "Toque/seleção e confirmação",
+        "descricao_en": "Touch/selection and confirmation",
+        "descricao_es": "Toque/selección y confirmación"
+      },
+      {
+        "id": "98",
+        "descricao_pt": "Quantidade + item",
+        "descricao_en": "Quantity + item",
+        "descricao_es": "Cantidad + ítem"
+      },
+      {
+        "id": "99",
+        "descricao_pt": "Atenção",
+        "descricao_en": "Attention",
+        "descricao_es": "Atención"
+      },
+      {
+        "id": "100",
+        "descricao_pt": "cardinalidade (produção de quantidade)",
+        "descricao_en": "cardinality (quantity production)",
+        "descricao_es": "cardinalidad (producción de cantidad)"
+      },
+      {
+        "id": "101",
+        "descricao_pt": "Controle do arrasto (repetido)",
+        "descricao_en": "Drag control (repeated)",
+        "descricao_es": "Control del arrastre (repetido)"
+      },
+      {
+        "id": "102",
+        "descricao_pt": "Quantidade ouvida",
+        "descricao_en": "Quantity heard",
+        "descricao_es": "Cantidad escuchada"
+      },
+      {
+        "id": "103",
+        "descricao_pt": "Monitoramento da contagem",
+        "descricao_en": "Count monitoring",
+        "descricao_es": "Monitoreo del conteo"
+      },
+      {
+        "id": "104",
+        "descricao_pt": "Associação quantidade-numeral",
+        "descricao_en": "Quantity-numeral association",
+        "descricao_es": "Asociación cantidad-numeral"
+      },
+      {
+        "id": "105",
+        "descricao_pt": "Contar a quantidade exibida",
+        "descricao_en": "Count the displayed quantity",
+        "descricao_es": "Contar la cantidad mostrada"
+      },
+      {
+        "id": "106",
+        "descricao_pt": "Flexão de número",
+        "descricao_en": "Number inflection",
+        "descricao_es": "Flexión de número"
+      },
+      {
+        "id": "107",
+        "descricao_pt": "concordância",
+        "descricao_en": "agreement",
+        "descricao_es": "concordancia"
+      },
+      {
+        "id": "108",
+        "descricao_pt": "Discriminar singular/plural na fala",
+        "descricao_en": "Discriminate singular/plural in speech",
+        "descricao_es": "Discriminar singular/plural en el habla"
+      },
+      {
+        "id": "109",
+        "descricao_pt": "Relação quantidade ↔ flexão",
+        "descricao_en": "Quantity ↔ inflection relationship",
+        "descricao_es": "Relación cantidad ↔ flexión"
+      },
+      {
+        "id": "110",
+        "descricao_pt": "Escolha entre distratores",
+        "descricao_en": "Choice among distractors",
+        "descricao_es": "Elección entre distractores"
+      },
+      {
+        "id": "111",
+        "descricao_pt": "Discriminação auditiva",
+        "descricao_en": "Auditory discrimination",
+        "descricao_es": "Discriminación auditiva"
+      },
+      {
+        "id": "112",
+        "descricao_pt": "Flexão/concordância",
+        "descricao_en": "Inflection/agreement",
+        "descricao_es": "Flexión/concordancia"
+      },
+      {
+        "id": "113",
+        "descricao_pt": "decisão",
+        "descricao_en": "decision",
+        "descricao_es": "decisión"
+      },
+      {
+        "id": "114",
+        "descricao_pt": "Gesto direcional",
+        "descricao_en": "Directional gesture",
+        "descricao_es": "Gesto direccional"
+      },
+      {
+        "id": "115",
+        "descricao_pt": "Discriminar singular/plural",
+        "descricao_en": "Discriminate singular/plural",
+        "descricao_es": "Discriminar singular/plural"
+      },
+      {
+        "id": "116",
+        "descricao_pt": "Atenção sustentada (8 áudios)",
+        "descricao_en": "Sustained attention (8 audios)",
+        "descricao_es": "Atención sostenida (8 audios)"
+      },
+      {
+        "id": "117",
+        "descricao_pt": "Pronomes pessoais",
+        "descricao_en": "Personal pronouns",
+        "descricao_es": "Pronombres personales"
+      },
+      {
+        "id": "118",
+        "descricao_pt": "referência (dêixis)",
+        "descricao_en": "reference (deixis)",
+        "descricao_es": "referencia (deixis)"
+      },
+      {
+        "id": "119",
+        "descricao_pt": "Associação áudio-imagem",
+        "descricao_en": "Audio-image association",
+        "descricao_es": "Asociación audio-imagen"
+      },
+      {
+        "id": "120",
+        "descricao_pt": "timing",
+        "descricao_en": "timing",
+        "descricao_es": "timing"
+      },
+      {
+        "id": "121",
+        "descricao_pt": "Vocabulário (lugares)",
+        "descricao_en": "Vocabulary (places)",
+        "descricao_es": "Vocabulario (lugares)"
+      },
+      {
+        "id": "122",
+        "descricao_pt": "Categorização (tipos de lugar)",
+        "descricao_en": "Categorization (types of place)",
+        "descricao_es": "Categorización (tipos de lugar)"
+      },
+      {
+        "id": "123",
+        "descricao_pt": "codificação sob tempo",
+        "descricao_en": "encoding under time",
+        "descricao_es": "codificación bajo tiempo"
+      },
+      {
+        "id": "124",
+        "descricao_pt": "Toque",
+        "descricao_en": "Touch",
+        "descricao_es": "Toque"
+      },
+      {
+        "id": "125",
+        "descricao_pt": "Categorização",
+        "descricao_en": "Categorization",
+        "descricao_es": "Categorización"
+      },
+      {
+        "id": "126",
+        "descricao_pt": "exclusão do intruso",
+        "descricao_en": "exclusion of the odd one out",
+        "descricao_es": "exclusión del intruso"
+      },
+      {
+        "id": "127",
+        "descricao_pt": "Conceito de categoria",
+        "descricao_en": "Concept of category",
+        "descricao_es": "Concepto de categoría"
+      },
+      {
+        "id": "128",
+        "descricao_pt": "vocabulário",
+        "descricao_en": "vocabulary",
+        "descricao_es": "vocabulario"
+      },
+      {
+        "id": "129",
+        "descricao_pt": "Categoria narrada",
+        "descricao_en": "Narrated category",
+        "descricao_es": "Categoría narrada"
+      },
+      {
+        "id": "130",
+        "descricao_pt": "discriminação",
+        "descricao_en": "discrimination",
+        "descricao_es": "discriminación"
+      }
+    ]
+  }
+]

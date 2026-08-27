@@ -1,0 +1,559 @@
+[
+  {
+    "name": "prontuario_opcoes",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Sensório-Motora: (Tônus, equilíbrio, práxis, integração sensorial)",
+        "descricao_en": "Sensory-Motor: (Tone, balance, praxis, sensory integration)",
+        "descricao_es": "Sensoriomotora: (Tono, equilibrio, praxis, integración sensorial)"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Cognitiva/Executiva: (Memória, atenção, raciocínio, alfabetização)",
+        "descricao_en": "Cognitive/Executive: (Memory, attention, reasoning, literacy)",
+        "descricao_es": "Cognitiva/Ejecutiva: (Memoria, atención, razonamiento, alfabetización)"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Comunicação/Linguagem: (Expressiva, receptiva, pragmática, fonológica)",
+        "descricao_en": "Communication/Language: (Expressive, receptive, pragmatic, phonological)",
+        "descricao_es": "Comunicación/Lenguaje: (Expresiva, receptiva, pragmática, fonológica)"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Socioemocional: (Interação, autorregulação, teoria da mente)",
+        "descricao_en": "Socio-emotional: (Interaction, self-regulation, theory of mind)",
+        "descricao_es": "Socioemocional: (Interacción, autorregulación, teoría de la mente)"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Vida Diária (AVDs): (Vestuário, alimentação, higiene, autonomia)",
+        "descricao_en": "Daily Living (ADLs): (Dressing, feeding, hygiene, autonomy)",
+        "descricao_es": "Vida Diaria (AVD): (Vestido, alimentación, higiene, autonomía)"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Funcional",
+        "descricao_en": "Functional",
+        "descricao_es": "Funcional"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Autorregulação",
+        "descricao_en": "Self-regulation",
+        "descricao_es": "Autorregulación"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Outra",
+        "descricao_en": "Other",
+        "descricao_es": "Otra"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Sensório-Motora: (Tônus, equilíbrio, práxis, integração sensorial)",
+        "descricao_en": "Sensory-Motor: (Tone, balance, praxis, sensory integration)",
+        "descricao_es": "Sensoriomotora: (Tono, equilibrio, praxis, integración sensorial)"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Cognitiva/Executiva: (Memória, atenção, raciocínio, alfabetização)",
+        "descricao_en": "Cognitive/Executive: (Memory, attention, reasoning, literacy)",
+        "descricao_es": "Cognitiva/Ejecutiva: (Memoria, atención, razonamiento, alfabetización)"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Comunicação/Linguagem: (Expressiva, receptiva, pragmática, fonológica)",
+        "descricao_en": "Communication/Language: (Expressive, receptive, pragmatic, phonological)",
+        "descricao_es": "Comunicación/Lenguaje: (Expresiva, receptiva, pragmática, fonológica)"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Socioemocional: (Interação, autorregulação, teoria da mente)",
+        "descricao_en": "Socio-emotional: (Interaction, self-regulation, theory of mind)",
+        "descricao_es": "Socioemocional: (Interacción, autorregulación, teoría de la mente)"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Vida Diária (AVDs): (Vestuário, alimentação, higiene, autonomia)",
+        "descricao_en": "Daily Living (ADLs): (Dressing, feeding, hygiene, autonomy)",
+        "descricao_es": "Vida Diaria (AVD): (Vestido, alimentación, higiene, autonomía)"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Independente (I): Sem auxílio",
+        "descricao_en": "Independent (I): No assistance",
+        "descricao_es": "Independiente (I): Sin ayuda"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Dica Visual (V): Fotos, cartões, cronômetro",
+        "descricao_en": "Visual Cue (V): Photos, cards, timer",
+        "descricao_es": "Pista Visual (V): Fotos, tarjetas, cronómetro"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "Dica Gestual (G): Apontar, olhar direcionado",
+        "descricao_en": "Gestural Cue (G): Pointing, directed gaze",
+        "descricao_es": "Pista Gestual (G): Señalar, mirada dirigida"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Dica Verbal (VB): Instrução direta ou indireta",
+        "descricao_en": "Verbal Cue (VB): Direct or indirect instruction",
+        "descricao_es": "Pista Verbal (VB): Instrucción directa o indirecta"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Modelagem (M): Profissional demonstra a ação",
+        "descricao_en": "Modeling (M): Professional demonstrates the action",
+        "descricao_es": "Modelado (M): El profesional demuestra la acción"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "Ajuda Física Leve (FL): Toque de direcionamento (cotovelo/ombro)",
+        "descricao_en": "Light Physical Assistance (FL): Guiding touch (elbow/shoulder)",
+        "descricao_es": "Ayuda Física Leve (FL): Toque de direccionamiento (codo/hombro)"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Ajuda Física Total (FT): Mão sobre mão (Suporte total)",
+        "descricao_en": "Full Physical Assistance (FT): Hand over hand (Full support)",
+        "descricao_es": "Ayuda Física Total (FT): Mano sobre mano (Apoyo total)"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Outro",
+        "descricao_en": "Other",
+        "descricao_es": "Otro"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Muito alto",
+        "descricao_en": "Very high",
+        "descricao_es": "Muy alto"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "Alto",
+        "descricao_en": "High",
+        "descricao_es": "Alto"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Moderado",
+        "descricao_en": "Moderate",
+        "descricao_es": "Moderado"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "Baixo",
+        "descricao_en": "Low",
+        "descricao_es": "Bajo"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Muito baixo",
+        "descricao_en": "Very low",
+        "descricao_es": "Muy bajo"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Sustentada",
+        "descricao_en": "Sustained",
+        "descricao_es": "Sostenida"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "Oscilante",
+        "descricao_en": "Fluctuating",
+        "descricao_es": "Oscilante"
+      },
+      {
+        "id": "29",
+        "descricao_pt": "Dispersa",
+        "descricao_en": "Scattered",
+        "descricao_es": "Dispersa"
+      },
+      {
+        "id": "30",
+        "descricao_pt": "Hiperfoco",
+        "descricao_en": "Hyperfocus",
+        "descricao_es": "Hiperfoco"
+      },
+      {
+        "id": "31",
+        "descricao_pt": "Estável",
+        "descricao_en": "Stable",
+        "descricao_es": "Estable"
+      },
+      {
+        "id": "32",
+        "descricao_pt": "Labilidade leve",
+        "descricao_en": "Mild lability",
+        "descricao_es": "Labilidad leve"
+      },
+      {
+        "id": "33",
+        "descricao_pt": "Desorganização/Crise",
+        "descricao_en": "Disorganization/Crisis",
+        "descricao_es": "Desorganización/Crisis"
+      },
+      {
+        "id": "34",
+        "descricao_pt": "Desorganização intensa",
+        "descricao_en": "Intense disorganization",
+        "descricao_es": "Desorganización intensa"
+      },
+      {
+        "id": "35",
+        "descricao_pt": "Fuga/Esquiva ",
+        "descricao_en": "Escape/Avoidance ",
+        "descricao_es": "Huida/Evitación "
+      },
+      {
+        "id": "36",
+        "descricao_pt": "Estereotipias ",
+        "descricao_en": "Stereotypies ",
+        "descricao_es": "Estereotipias "
+      },
+      {
+        "id": "37",
+        "descricao_pt": "Auto/Heteroagressividade ",
+        "descricao_en": "Self/Hetero-aggression ",
+        "descricao_es": "Auto/Heteroagresividad "
+      },
+      {
+        "id": "38",
+        "descricao_pt": "Oposição/Recusa ",
+        "descricao_en": "Opposition/Refusal ",
+        "descricao_es": "Oposición/Rechazo "
+      },
+      {
+        "id": "39",
+        "descricao_pt": "Acesso a item ",
+        "descricao_en": "Access to item ",
+        "descricao_es": "Acceso a un ítem "
+      },
+      {
+        "id": "40",
+        "descricao_pt": "Atenção ",
+        "descricao_en": "Attention ",
+        "descricao_es": "Atención "
+      },
+      {
+        "id": "41",
+        "descricao_pt": "Fuga de demanda",
+        "descricao_en": "Demand escape",
+        "descricao_es": "Evitación de la demanda"
+      },
+      {
+        "id": "42",
+        "descricao_pt": "Sensorial",
+        "descricao_en": "Sensory",
+        "descricao_es": "Sensorial"
+      },
+      {
+        "id": "43",
+        "descricao_pt": "Hiperatividade",
+        "descricao_en": "Hyperactivity",
+        "descricao_es": "Hiperactividad"
+      },
+      {
+        "id": "44",
+        "descricao_pt": "Inibição",
+        "descricao_en": "Inhibition",
+        "descricao_es": "Inhibición"
+      },
+      {
+        "id": "45",
+        "descricao_pt": "Cooperação",
+        "descricao_en": "Cooperation",
+        "descricao_es": "Cooperación"
+      },
+      {
+        "id": "46",
+        "descricao_pt": "Proatividade",
+        "descricao_en": "Proactivity",
+        "descricao_es": "Proactividad"
+      },
+      {
+        "id": "47",
+        "descricao_pt": "Outro",
+        "descricao_en": "Other",
+        "descricao_es": "Otro"
+      },
+      {
+        "id": "48",
+        "descricao_pt": "Meta Atingida: Critério de êxito alcançado",
+        "descricao_en": "Goal Achieved: Success criterion reached",
+        "descricao_es": "Meta Alcanzada: Criterio de éxito logrado"
+      },
+      {
+        "id": "49",
+        "descricao_pt": "Evolução Parcial: Necessita de mais repetições",
+        "descricao_en": "Partial Progress: Requires more repetitions",
+        "descricao_es": "Evolución Parcial: Necesita más repeticiones"
+      },
+      {
+        "id": "50",
+        "descricao_pt": "Estagnação: Revisar estratégia/reforçador",
+        "descricao_en": "Stagnation: Review strategy/reinforcer",
+        "descricao_es": "Estancamiento: Revisar estrategia/reforzador"
+      },
+      {
+        "id": "51",
+        "descricao_pt": "Regressão: Analisar variáveis externas (sono, medicação, saúde)",
+        "descricao_en": "Regression: Analyze external variables (sleep, medication, health)",
+        "descricao_es": "Regresión: Analizar variables externas (sueño, medicación, salud)"
+      },
+      {
+        "id": "52",
+        "descricao_pt": "Apático",
+        "descricao_en": "Apathetic",
+        "descricao_es": "Apático"
+      },
+      {
+        "id": "53",
+        "descricao_pt": "Engajado",
+        "descricao_en": "Engaged",
+        "descricao_es": "Comprometido"
+      },
+      {
+        "id": "54",
+        "descricao_pt": "Calmo",
+        "descricao_en": "Calm",
+        "descricao_es": "Tranquilo"
+      },
+      {
+        "id": "55",
+        "descricao_pt": "Agitado",
+        "descricao_en": "Agitated",
+        "descricao_es": "Agitado"
+      },
+      {
+        "id": "56",
+        "descricao_pt": "Desorganizado",
+        "descricao_en": "Disorganized",
+        "descricao_es": "Desorganizado"
+      },
+      {
+        "id": "57",
+        "descricao_pt": "Outro",
+        "descricao_en": "Other",
+        "descricao_es": "Otro"
+      },
+      {
+        "id": "58",
+        "descricao_pt": "Leve",
+        "descricao_en": "Mild",
+        "descricao_es": "Leve"
+      },
+      {
+        "id": "59",
+        "descricao_pt": "Moderada",
+        "descricao_en": "Moderate",
+        "descricao_es": "Moderada"
+      },
+      {
+        "id": "60",
+        "descricao_pt": "Intensa",
+        "descricao_en": "Intense",
+        "descricao_es": "Intensa"
+      },
+      {
+        "id": "61",
+        "descricao_pt": "Pai",
+        "descricao_en": "Father",
+        "descricao_es": "Padre"
+      },
+      {
+        "id": "62",
+        "descricao_pt": "Mãe",
+        "descricao_en": "Mother",
+        "descricao_es": "Madre"
+      },
+      {
+        "id": "63",
+        "descricao_pt": "Professor",
+        "descricao_en": "Teacher",
+        "descricao_es": "Profesor"
+      },
+      {
+        "id": "64",
+        "descricao_pt": "TO",
+        "descricao_en": "OT",
+        "descricao_es": "TO"
+      },
+      {
+        "id": "65",
+        "descricao_pt": "AT",
+        "descricao_en": "Therapeutic Aide",
+        "descricao_es": "AT"
+      },
+      {
+        "id": "66",
+        "descricao_pt": "Psicólogo",
+        "descricao_en": "Psychologist",
+        "descricao_es": "Psicólogo"
+      },
+      {
+        "id": "67",
+        "descricao_pt": "Fono",
+        "descricao_en": "Speech Therapist",
+        "descricao_es": "Fonoaudiólogo"
+      },
+      {
+        "id": "68",
+        "descricao_pt": "Outro profissional",
+        "descricao_en": "Other professional",
+        "descricao_es": "Otro profesional"
+      },
+      {
+        "id": "69",
+        "descricao_pt": "Sem terceiros",
+        "descricao_en": "Without third parties",
+        "descricao_es": "Sin terceros"
+      },
+      {
+        "id": "70",
+        "descricao_pt": "Melhorou progressivamente",
+        "descricao_en": "Improved progressively",
+        "descricao_es": "Mejoró progresivamente"
+      },
+      {
+        "id": "71",
+        "descricao_pt": "Melhorou parcialmente",
+        "descricao_en": "Improved partially",
+        "descricao_es": "Mejoró parcialmente"
+      },
+      {
+        "id": "72",
+        "descricao_pt": "Manteve padrão",
+        "descricao_en": "Maintained pattern",
+        "descricao_es": "Mantuvo el patrón"
+      },
+      {
+        "id": "73",
+        "descricao_pt": "Piorou",
+        "descricao_en": "Worsened",
+        "descricao_es": "Empeoró"
+      },
+      {
+        "id": "74",
+        "descricao_pt": "Não respondeu",
+        "descricao_en": "Did not respond",
+        "descricao_es": "No respondió"
+      },
+      {
+        "id": "75",
+        "descricao_pt": "Evoluiu significativamente",
+        "descricao_en": "Progressed significantly",
+        "descricao_es": "Evolucionó significativamente"
+      },
+      {
+        "id": "76",
+        "descricao_pt": "Evoluiu levemente",
+        "descricao_en": "Progressed slightly",
+        "descricao_es": "Evolucionó levemente"
+      },
+      {
+        "id": "77",
+        "descricao_pt": "Manteve padrão",
+        "descricao_en": "Maintained pattern",
+        "descricao_es": "Mantuvo el patrón"
+      },
+      {
+        "id": "78",
+        "descricao_pt": "Regressão leve",
+        "descricao_en": "Mild regression",
+        "descricao_es": "Regresión leve"
+      },
+      {
+        "id": "79",
+        "descricao_pt": "Regressão significativa",
+        "descricao_en": "Significant regression",
+        "descricao_es": "Regresión significativa"
+      },
+      {
+        "id": "80",
+        "descricao_pt": "Aquisição de nova habilidade",
+        "descricao_en": "Acquisition of new skill",
+        "descricao_es": "Adquisición de nueva habilidad"
+      },
+      {
+        "id": "81",
+        "descricao_pt": "Manutenção",
+        "descricao_en": "Maintenance",
+        "descricao_es": "Mantenimiento"
+      },
+      {
+        "id": "82",
+        "descricao_pt": "Avaliação/Sondagem",
+        "descricao_en": "Assessment/Probing",
+        "descricao_es": "Evaluación/Sondeo"
+      },
+      {
+        "id": "83",
+        "descricao_pt": "Manejo de comportamento/Crise",
+        "descricao_en": "Behavior/Crisis management",
+        "descricao_es": "Manejo de comportamiento/Crisis"
+      },
+      {
+        "id": "84",
+        "descricao_pt": "Nenhum",
+        "descricao_en": "None",
+        "descricao_es": "Ninguno"
+      },
+      {
+        "id": "85",
+        "descricao_pt": "Antecipação visual ",
+        "descricao_en": "Visual anticipation ",
+        "descricao_es": "Anticipación visual "
+      },
+      {
+        "id": "86",
+        "descricao_pt": "Economia de fichas ",
+        "descricao_en": "Token economy ",
+        "descricao_es": "Economía de fichas "
+      },
+      {
+        "id": "87",
+        "descricao_pt": "Pausa sensorial",
+        "descricao_en": "Sensory break",
+        "descricao_es": "Pausa sensorial"
+      },
+      {
+        "id": "88",
+        "descricao_pt": "Redução de demanda",
+        "descricao_en": "Demand reduction",
+        "descricao_es": "Reducción de la demanda"
+      },
+      {
+        "id": "89",
+        "descricao_pt": "Generalização",
+        "descricao_en": "Generalization",
+        "descricao_es": "Generalización"
+      },
+      {
+        "id": "90",
+        "descricao_pt": "Leve",
+        "descricao_en": "Mild",
+        "descricao_es": "Leve"
+      },
+      {
+        "id": "91",
+        "descricao_pt": "Moderada",
+        "descricao_en": "Moderate",
+        "descricao_es": "Moderada"
+      },
+      {
+        "id": "92",
+        "descricao_pt": "Grave",
+        "descricao_en": "Severe",
+        "descricao_es": "Grave"
+      }
+    ]
+  }
+]

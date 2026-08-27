@@ -10,5 +10,14 @@
   "position": "Your position:",
   "literacy": "Literacy",
   "start": "Start",
-  "alt_session": "Sessions"
+  "alt_session": "Sessions",
+  "empty_sessions_today": "No sessions for today.",
+  "view_more": "See more",
+  "col_professional": "Professional",
+  "col_student": "Student",
+  "col_session_type": "Session type",
+  "col_start": "Start date/time",
+  "col_end": "End date/time",
+  "col_status": "Status",
+  "welcome": "WELCOME, {{name}}!"
 }

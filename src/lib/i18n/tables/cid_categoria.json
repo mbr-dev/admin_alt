@@ -1,0 +1,67 @@
+[ 
+  {
+    "name": "cid_categoria",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "TRANSTORNOS DO NEURODESENVOLVIMENTO (F80–F89)",
+        "descricao_en": "NEURODEVELOPMENTAL DISORDERS (F80–F89)",
+        "descricao_es": "TRASTORNOS DEL NEURODESARROLLO (F80–F89)"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "DEFICIÊNCIA INTELECTUAL (F70–F79)",
+        "descricao_en": "INTELLECTUAL DISABILITY (F70–F79)",
+        "descricao_es": "DISCAPACIDAD INTELECTUAL (F70–F79)"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "TRANSTORNOS EMOCIONAIS E COMPORTAMENTAIS (F40–F49 / F90–F98)",
+        "descricao_en": "EMOTIONAL AND BEHAVIORAL DISORDERS (F40–F49 / F90–F98)",
+        "descricao_es": "TRASTORNOS EMOCIONALES Y DEL COMPORTAMIENTO (F40–F49 / F90–F98)"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "DEFICIÊNCIAS SENSORIAIS",
+        "descricao_en": "SENSORY IMPAIRMENTS",
+        "descricao_es": "DEFICIENCIAS SENSORIALES"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "CONDIÇÕES NEUROLÓGICAS (G00–G99)",
+        "descricao_en": "NEUROLOGICAL CONDITIONS (G00–G99)",
+        "descricao_es": "CONDICIONES NEUROLÓGICAS (G00–G99)"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "TRANSTORNOS DA COMUNICAÇÃO E FLUÊNCIA",
+        "descricao_en": "COMMUNICATION AND FLUENCY DISORDERS",
+        "descricao_es": "TRASTORNOS DE LA COMUNICACIÓN Y LA FLUIDEZ"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "TRANSTORNOS DO COMPORTAMENTO ALIMENTAR (em adolescentes)",
+        "descricao_en": "EATING BEHAVIOR DISORDERS (in adolescents)",
+        "descricao_es": "TRASTORNOS DE LA CONDUCTA ALIMENTARIA (en adolescentes)"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "TRANSTORNOS DO SONO (impacto escolar)",
+        "descricao_en": "SLEEP DISORDERS (school impact)",
+        "descricao_es": "TRASTORNOS DEL SUEÑO (impacto escolar)"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "CONDIÇÕES MOTORAS E ORTOPÉDICAS",
+        "descricao_en": "MOTOR AND ORTHOPEDIC CONDITIONS",
+        "descricao_es": "CONDICIONES MOTORAS Y ORTOPÉDICAS"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "OUTRAS CONDIÇÕES FREQUENTES EM CONTEXTO ESCOLAR",
+        "descricao_en": "OTHER CONDITIONS FREQUENT IN THE SCHOOL CONTEXT",
+        "descricao_es": "OTRAS CONDICIONES FRECUENTES EN EL CONTEXTO ESCOLAR"
+      }
+    ]
+  }
+]

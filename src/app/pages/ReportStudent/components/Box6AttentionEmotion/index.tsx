@@ -1,7 +1,9 @@
 import * as S from "./styles";
 import { ReportUserSession } from "@/data/services";
 import { ReportUserSessionService } from "@/data/models";
+import { translateProntuarioOpcaoById } from "@/lib/i18n/tables/lookup";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, type PieLabelRenderProps } from "recharts";
 
 const PIE_COLORS = ["#FA912C", "#F07DB0", "#46C080", "#E14FBE", "#F9A05D", "#48D8BB", "#FDDB20", "#F37A69"];
@@ -14,13 +16,19 @@ type PieDatum = {
   quantidade: number;
 };
 
-function reportToPieData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): PieDatum[] {
+function reportToPieData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  language: string
+): PieDatum[] {
   if (!res?.data?.length) return [];
-  return res.data.map((item) => ({
-    name: item.descricao.trim() || "—",
-    value: Math.max(0, item.frequencia),
-    quantidade: item.quantidade,
-  }));
+  return res.data.map((item) => {
+    const fallback = item.descricao.trim() || "—";
+    return {
+      name: translateProntuarioOpcaoById(item.id_resposta, language, fallback),
+      value: Math.max(0, item.frequencia),
+      quantidade: item.quantidade,
+    };
+  });
 }
 
 /** Rótulo % dentro da fatia — semicírculo ([Straight Angle Pie Chart](https://recharts.github.io/en-US/examples/StraightAnglePieChart/)). */
@@ -50,13 +58,14 @@ type TooltipPieProps = {
 };
 
 function PieTooltip({ active, payload }: TooltipPieProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.name}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.value}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.value })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
@@ -117,13 +126,8 @@ type Props = {
   idUsuario: number;
 };
 
-const ATTENTION_SUBTITLE =
-  "Mostra o padrão de foco do paciente durante as sessões, como atenção sustentada, oscilante ou dispersa.";
-
-const EMOTION_SUBTITLE =
-  "Indica a estabilidade emocional do paciente, identificando possíveis oscilações ou crises.";
-
 export function Box6AttentionEmotion({ idUsuario }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const { getAttention, getEmotionalRegulation } = ReportUserSession();
 
   const [loading, setLoading] = useState(true);
@@ -155,31 +159,37 @@ export function Box6AttentionEmotion({ idUsuario }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idUsuario]);
 
-  const attentionData = useMemo(() => reportToPieData(attentionRes), [attentionRes]);
-  const emotionData = useMemo(() => reportToPieData(emotionRes), [emotionRes]);
+  const attentionData = useMemo(
+    () => reportToPieData(attentionRes, i18n.language),
+    [attentionRes, i18n.language]
+  );
+  const emotionData = useMemo(
+    () => reportToPieData(emotionRes, i18n.language),
+    [emotionRes, i18n.language]
+  );
 
   return (
     <S.Box6>
-      <S.BoxTitle>Atenção e regulação emocional</S.BoxTitle>
+      <S.BoxTitle>{t("attention_emotion_title")}</S.BoxTitle>
       {loading ? (
-        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">Carregando gráficos…</div>
+        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">{t("loading_charts")}</div>
       ) : (
         <S.ChartsGrid>
           <S.ChartCard>
-            <S.ChartCardTitle>Atenção</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{ATTENTION_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("attention_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("attention_subtitle")}</S.ChartCardSubtitle>
             {attentionData.length === 0 ? (
-              <S.EmptyHint>Sem dados de atenção.</S.EmptyHint>
+              <S.EmptyHint>{t("empty_attention")}</S.EmptyHint>
             ) : (
               <StraightAnglePie data={attentionData} />
             )}
           </S.ChartCard>
 
           <S.ChartCard>
-            <S.ChartCardTitle>Regulação emocional</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{EMOTION_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("emotion_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("emotion_subtitle")}</S.ChartCardSubtitle>
             {emotionData.length === 0 ? (
-              <S.EmptyHint>Sem dados de regulação emocional.</S.EmptyHint>
+              <S.EmptyHint>{t("empty_emotion")}</S.EmptyHint>
             ) : (
               <StraightAnglePie data={emotionData} />
             )}

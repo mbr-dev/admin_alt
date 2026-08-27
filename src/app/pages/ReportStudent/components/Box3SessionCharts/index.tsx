@@ -1,7 +1,9 @@
 import * as S from "./styles";
 import { ReportUserSession } from "@/data/services";
 import { ReportUserSessionService } from "@/data/models";
+import { translateProntuarioOpcaoById } from "@/lib/i18n/tables/lookup";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Bar,
   BarChart,
@@ -20,6 +22,13 @@ import {
 const PIE_COLORS = ["#FA912C", "#F07DB0", "#3F37A6", "#46C080"];
 const RADIAN = Math.PI / 180;
 
+type AreaLabelKey =
+  | "area_sensorimotor"
+  | "area_cognitive"
+  | "area_communication"
+  | "area_socioemotional"
+  | "area_daily_living";
+
 type BarDatum = {
   label: string;
   descricao: string;
@@ -33,25 +42,14 @@ type PieDatum = {
   quantidade: number;
 };
 
-/** Eixo fixo de áreas trabalhadas — valores da API casados por trechos em `patterns` (texto normalizado). */
-const AREAS_WORKED_AXIS: { label: string; patterns: string[] }[] = [
-  { label: "Sensório-Motora", patterns: ["sensorio motora", "sensoriomotora", "sensorio-motora"] },
-  { label: "Cognitiva/Executiva", patterns: ["cognitiva executiva", "cognitiva/executiva"] },
-  { label: "Comunicação/Linguagem", patterns: ["comunicacao linguagem", "comunicacao/linguagem"] },
-  { label: "Socioemocional", patterns: ["socioemocional", "socio emocional"] },
-  {
-    label: "Vida Diária (AVDs)",
-    patterns: ["vida diaria", "atividades da vida diaria", "avds"],
-  },
+/** Eixo fixo — `idsResposta` casa `data[].id_resposta` com `prontuario_opcoes.json` (ids 1–5 e 9–13). */
+const AREAS_WORKED_AXIS: { labelKey: AreaLabelKey; idsResposta: number[] }[] = [
+  { labelKey: "area_sensorimotor", idsResposta: [1, 9] },
+  { labelKey: "area_cognitive", idsResposta: [2, 10] },
+  { labelKey: "area_communication", idsResposta: [3, 11] },
+  { labelKey: "area_socioemotional", idsResposta: [4, 12] },
+  { labelKey: "area_daily_living", idsResposta: [5, 13] },
 ];
-
-function normalizeForMatch(s: string): string {
-  return s
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
-}
 
 type RoundedBarPayload = Readonly<{
   fill?: string;
@@ -80,30 +78,39 @@ function RoundedTopBar(props: unknown) {
   return <path d={d.trim()} fill={fill} stroke="none" />;
 }
 
-function reportToAreasWorkedData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): BarDatum[] {
+function reportToAreasWorkedData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  resolveLabel: (key: AreaLabelKey) => string,
+  language: string
+): BarDatum[] {
   const rows = res?.data ?? [];
-  return AREAS_WORKED_AXIS.map(({ label, patterns }) => {
-    const found = rows.find((item) => {
-      const n = normalizeForMatch(item.descricao ?? "");
-      if (label === "Vida Diária (AVDs)" && /\bavds?\b/.test(n)) return true;
-      return patterns.some((p) => n.includes(p));
-    });
+  return AREAS_WORKED_AXIS.map(({ labelKey, idsResposta }) => {
+    const label = resolveLabel(labelKey);
+    const found = rows.find((item) => idsResposta.includes(item.id_resposta));
+    const idResposta = found?.id_resposta ?? idsResposta[0];
+    const fallback = found?.descricao?.trim() || label;
     return {
       label,
-      descricao: found?.descricao?.trim() || label,
+      descricao: translateProntuarioOpcaoById(idResposta, language, fallback),
       frequencia: found?.frequencia ?? 0,
       quantidade: found?.quantidade ?? 0,
     };
   });
 }
 
-function reportToPieData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): PieDatum[] {
+function reportToPieData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  language: string
+): PieDatum[] {
   if (!res?.data?.length) return [];
-  return res.data.map((item) => ({
-    name: item.descricao.trim() || "—",
-    value: Math.max(0, item.frequencia),
-    quantidade: item.quantidade,
-  }));
+  return res.data.map((item) => {
+    const fallback = item.descricao.trim() || "—";
+    return {
+      name: translateProntuarioOpcaoById(item.id_resposta, language, fallback),
+      value: Math.max(0, item.frequencia),
+      quantidade: item.quantidade,
+    };
+  });
 }
 
 function renderPieLabel(props: PieLabelRenderProps) {
@@ -132,13 +139,14 @@ type BarTooltipProps = {
 };
 
 function BarDatumTooltip({ active, payload }: BarTooltipProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.descricao}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.frequencia}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.frequencia })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
@@ -149,13 +157,14 @@ type TooltipPieProps = {
 };
 
 function PieTooltip({ active, payload }: TooltipPieProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.name}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.value}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.value })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
@@ -164,13 +173,8 @@ type Props = {
   idUsuario: number;
 };
 
-const AREAS_SUBTITLE =
-  "Indica quais domínios do desenvolvimento foram mais estimulados, como cognição, linguagem, socioemocional e atividades de vida diária.";
-
-const TYPE_ACTIVITY_SUBTITLE =
-  "Mostra a distribuição dos tipos de intervenção realizados, como aquisição de habilidades, generalização, avaliação ou manejo comportamental.";
-
 export function Box3SessionCharts({ idUsuario }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const { getAreasWorked, getTypeActivity } = ReportUserSession();
 
   const [loading, setLoading] = useState(true);
@@ -202,19 +206,25 @@ export function Box3SessionCharts({ idUsuario }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- callbacks do serviço mudam a cada render (useApi)
   }, [idUsuario]);
 
-  const areasData = useMemo(() => reportToAreasWorkedData(areasRes), [areasRes]);
-  const pieData = useMemo(() => reportToPieData(typeActivityRes), [typeActivityRes]);
+  const areasData = useMemo(
+    () => reportToAreasWorkedData(areasRes, (key) => t(key), i18n.language),
+    [areasRes, t, i18n.language]
+  );
+  const pieData = useMemo(
+    () => reportToPieData(typeActivityRes, i18n.language),
+    [typeActivityRes, i18n.language]
+  );
 
   return (
     <S.Box3>
-      <S.BoxTitle>Áreas Trabalhadas & Planejamentos</S.BoxTitle>
+      <S.BoxTitle>{t("areas_title")}</S.BoxTitle>
       {loading ? (
-        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">Carregando gráficos…</div>
+        <div className="px-4 py-10 text-center text-sm text-mbr-gray-50 sm:px-6">{t("loading_charts")}</div>
       ) : (
         <S.ChartsGrid>
           <S.ChartCard>
-            <S.ChartCardTitle>Áreas trabalhadas</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{AREAS_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("areas_worked_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("areas_worked_subtitle")}</S.ChartCardSubtitle>
             <S.ChartWrap>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={areasData} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
@@ -229,17 +239,17 @@ export function Box3SessionCharts({ idUsuario }: Props) {
                   />
                   <YAxis domain={[0, 100]} width={40} tick={{ fontSize: 10, fill: "#5C5C5C" }} tickFormatter={(v) => `${v}%`} />
                   <Tooltip content={<BarDatumTooltip />} cursor={{ fill: "rgba(0, 101, 164, 0.06)" }} />
-                  <Bar dataKey="frequencia" name="Frequência" fill="#0065A4" shape={RoundedTopBar} maxBarSize={40} />
+                  <Bar dataKey="frequencia" name={t("frequency")} fill="#0065A4" shape={RoundedTopBar} maxBarSize={40} />
                 </BarChart>
               </ResponsiveContainer>
             </S.ChartWrap>
           </S.ChartCard>
 
           <S.ChartCard>
-            <S.ChartCardTitle>Tipos de atividade</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{TYPE_ACTIVITY_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("activity_types_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("activity_types_subtitle")}</S.ChartCardSubtitle>
             {pieData.length === 0 ? (
-              <S.EmptyHint>Sem dados de tipos de atividade para este aluno.</S.EmptyHint>
+              <S.EmptyHint>{t("empty_activity_types")}</S.EmptyHint>
             ) : (
               <S.ChartWrap>
                 <ResponsiveContainer width="100%" height="100%">

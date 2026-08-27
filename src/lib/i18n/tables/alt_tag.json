@@ -1,0 +1,559 @@
+[  
+  {
+    "name": "alt_tag",
+    "data": [
+      {
+        "id": "94",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Conteúdo alfabético nas 5 atividades",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Alphabetic content across the 5 activities",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. Contenido alfabético en las 5 actividades"
+      },
+      {
+        "id": "95",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Conteúdo alfabético nas 5 atividades",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Alphabetic content across the 5 activities",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. Contenido alfabético en las 5 actividades"
+      },
+      {
+        "id": "96",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Conteúdo alfabético nas 5 atividades",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Alphabetic content across the 5 activities",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. Contenido alfabético en las 5 actividades"
+      },
+      {
+        "id": "97",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Conteúdo alfabético nas 5 atividades",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Alphabetic content across the 5 activities",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. Contenido alfabético en las 5 actividades"
+      },
+      {
+        "id": "98",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Conteúdo alfabético nas 5 atividades",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Alphabetic content across the 5 activities",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. Contenido alfabético en las 5 actividades"
+      },
+      {
+        "id": "99",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Também trabalha Linguagem e Comunicação (nome do número)",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Also works Language and Communication (name of the number)",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. También trabaja Lenguaje y Comunicación (nombre del número)"
+      },
+      {
+        "id": "100",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Também trabalha Linguagem e Comunicação (nome do número)",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Also works Language and Communication (name of the number)",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. También trabaja Lenguaje y Comunicación (nombre del número)"
+      },
+      {
+        "id": "101",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Também trabalha Linguagem e Comunicação (nome do número)",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Also works Language and Communication (name of the number)",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. También trabaja Lenguaje y Comunicación (nombre del número)"
+      },
+      {
+        "id": "102",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Também trabalha Linguagem e Comunicação (nome do número)",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Also works Language and Communication (name of the number)",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. También trabaja Lenguaje y Comunicación (nombre del número)"
+      },
+      {
+        "id": "103",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Também trabalha Linguagem e Comunicação (nome do número)",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Also works Language and Communication (name of the number)",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. También trabaja Lenguaje y Comunicación (nombre del número)"
+      },
+      {
+        "id": "104",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Também trabalha Linguagem e Comunicação (vocabulário de cores)",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Also works Language and Communication (color vocabulary)",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. También trabaja Lenguaje y Comunicación (vocabulario de colores)"
+      },
+      {
+        "id": "105",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Também trabalha Linguagem e Comunicação (vocabulário de cores)",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Also works Language and Communication (color vocabulary)",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. También trabaja Lenguaje y Comunicación (vocabulario de colores)"
+      },
+      {
+        "id": "106",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Também trabalha Linguagem e Comunicação (vocabulário de cores)",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Also works Language and Communication (color vocabulary)",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. También trabaja Lenguaje y Comunicación (vocabulario de colores)"
+      },
+      {
+        "id": "107",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Também trabalha Linguagem e Comunicação (vocabulário de cores)",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Also works Language and Communication (color vocabulary)",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. También trabaja Lenguaje y Comunicación (vocabulario de colores)"
+      },
+      {
+        "id": "108",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Também trabalha Linguagem e Comunicação (vocabulário de cores)",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Also works Language and Communication (color vocabulary)",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. También trabaja Lenguaje y Comunicación (vocabulario de colores)"
+      },
+      {
+        "id": "109",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Também trabalha Cognição (raciocínio espacial)",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Also works Cognition (spatial reasoning)",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. También trabaja Cognición (razonamiento espacial)"
+      },
+      {
+        "id": "110",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Também trabalha Cognição (raciocínio espacial)",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Also works Cognition (spatial reasoning)",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. También trabaja Cognición (razonamiento espacial)"
+      },
+      {
+        "id": "111",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Também trabalha Cognição (raciocínio espacial)",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Also works Cognition (spatial reasoning)",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. También trabaja Cognición (razonamiento espacial)"
+      },
+      {
+        "id": "112",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Também trabalha Cognição (raciocínio espacial)",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Also works Cognition (spatial reasoning)",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. También trabaja Cognición (razonamiento espacial)"
+      },
+      {
+        "id": "113",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Também trabalha Cognição (raciocínio espacial)",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Also works Cognition (spatial reasoning)",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. También trabaja Cognición (razonamiento espacial)"
+      },
+      {
+        "id": "114",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema.",
+        "observacao_en": "Low motor demand (touch only) | Theme content.",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema."
+      },
+      {
+        "id": "115",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema.",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content.",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema."
+      },
+      {
+        "id": "116",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema.",
+        "observacao_en": "No prior preview: raises memory demand | Theme content.",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema."
+      },
+      {
+        "id": "117",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema.",
+        "observacao_en": "A good activity for assessing working memory | Theme content.",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema."
+      },
+      {
+        "id": "118",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema.",
+        "observacao_en": "Continuous movement adds time pressure | Theme content.",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema."
+      },
+      {
+        "id": "119",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "120",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "121",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "122",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "123",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "124",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema.",
+        "observacao_en": "Low motor demand (touch only) | Theme content.",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema."
+      },
+      {
+        "id": "125",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema.",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content.",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema."
+      },
+      {
+        "id": "126",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema.",
+        "observacao_en": "No prior preview: raises memory demand | Theme content.",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema."
+      },
+      {
+        "id": "127",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema.",
+        "observacao_en": "A good activity for assessing working memory | Theme content.",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema."
+      },
+      {
+        "id": "128",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema.",
+        "observacao_en": "Continuous movement adds time pressure | Theme content.",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema."
+      },
+      {
+        "id": "129",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. O áudio costuma ser o som do animal, reforçando o Processamento Auditivo",
+        "observacao_en": "Low motor demand (touch only) | Theme content. The audio is usually the animal's sound, reinforcing Auditory Processing",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. El audio suele ser el sonido del animal, reforzando el Procesamiento Auditivo"
+      },
+      {
+        "id": "130",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. O áudio costuma ser o som do animal, reforçando o Processamento Auditivo",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. The audio is usually the animal's sound, reinforcing Auditory Processing",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. El audio suele ser el sonido del animal, reforzando el Procesamiento Auditivo"
+      },
+      {
+        "id": "131",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. O áudio costuma ser o som do animal, reforçando o Processamento Auditivo",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. The audio is usually the animal's sound, reinforcing Auditory Processing",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. El audio suele ser el sonido del animal, reforzando el Procesamiento Auditivo"
+      },
+      {
+        "id": "132",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. O áudio costuma ser o som do animal, reforçando o Processamento Auditivo",
+        "observacao_en": "A good activity for assessing working memory | Theme content. The audio is usually the animal's sound, reinforcing Auditory Processing",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. El audio suele ser el sonido del animal, reforzando el Procesamiento Auditivo"
+      },
+      {
+        "id": "133",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. O áudio costuma ser o som do animal, reforçando o Processamento Auditivo",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. The audio is usually the animal's sound, reinforcing Auditory Processing",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. El audio suele ser el sonido del animal, reforzando el Procesamiento Auditivo"
+      },
+      {
+        "id": "134",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "Low motor demand (touch only) | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "135",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "136",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "137",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "A good activity for assessing working memory | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "138",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Também trabalha Cognição (categorização)",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. Also works Cognition (categorization)",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. También trabaja Cognición (categorización)"
+      },
+      {
+        "id": "139",
+        "observacao_pt": "Exigência motora baixa (apenas toque) | Conteúdo do tema. Único tema socioemocional; relevante no cruzamento com o prontuário",
+        "observacao_en": "Low motor demand (touch only) | Theme content. The only socio-emotional theme; relevant when cross-referenced with the medical record",
+        "observacao_es": "Exigencia motora baja (solo toque) | Contenido del tema. Único tema socioemocional; relevante en el cruce con el expediente"
+      },
+      {
+        "id": "140",
+        "observacao_pt": "6 itens elevam a discriminação e a carga atencional | Conteúdo do tema. Único tema socioemocional; relevante no cruzamento com o prontuário",
+        "observacao_en": "6 items raise discrimination and attentional load | Theme content. The only socio-emotional theme; relevant when cross-referenced with the medical record",
+        "observacao_es": "6 ítems elevan la discriminación y la carga atencional | Contenido del tema. Único tema socioemocional; relevante en el cruce con el expediente"
+      },
+      {
+        "id": "141",
+        "observacao_pt": "Sem preview prévio: eleva a exigência de memória | Conteúdo do tema. Único tema socioemocional; relevante no cruzamento com o prontuário",
+        "observacao_en": "No prior preview: raises memory demand | Theme content. The only socio-emotional theme; relevant when cross-referenced with the medical record",
+        "observacao_es": "Sin vista previa: eleva la exigencia de memoria | Contenido del tema. Único tema socioemocional; relevante en el cruce con el expediente"
+      },
+      {
+        "id": "142",
+        "observacao_pt": "Boa atividade para avaliar memória de trabalho | Conteúdo do tema. Único tema socioemocional; relevante no cruzamento com o prontuário",
+        "observacao_en": "A good activity for assessing working memory | Theme content. The only socio-emotional theme; relevant when cross-referenced with the medical record",
+        "observacao_es": "Buena actividad para evaluar la memoria de trabajo | Contenido del tema. Único tema socioemocional; relevante en el cruce con el expediente"
+      },
+      {
+        "id": "143",
+        "observacao_pt": "Movimento contínuo adiciona pressão temporal | Conteúdo do tema. Único tema socioemocional; relevante no cruzamento com o prontuário",
+        "observacao_en": "Continuous movement adds time pressure | Theme content. The only socio-emotional theme; relevant when cross-referenced with the medical record",
+        "observacao_es": "El movimiento continuo añade presión temporal | Contenido del tema. Único tema socioemocional; relevante en el cruce con el expediente"
+      },
+      {
+        "id": "144",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "145",
+        "observacao_pt": "Conteúdo do tema. Integra vocabulário de módulos anteriores (Letras, Alimentos)",
+        "observacao_en": "Theme content. Integrates vocabulary from previous modules (Letters, Foods)",
+        "observacao_es": "Contenido del tema. Integra vocabulario de módulos anteriores (Letras, Alimentos)"
+      },
+      {
+        "id": "146",
+        "observacao_pt": "Variante com distrator eleva a demanda | Conteúdo do tema. Integra vocabulário de módulos anteriores (Letras, Alimentos)",
+        "observacao_en": "Variant with distractor raises the demand | Theme content. Integrates vocabulary from previous modules (Letters, Foods)",
+        "observacao_es": "La variante con distractor eleva la demanda | Contenido del tema. Integra vocabulario de módulos anteriores (Letras, Alimentos)"
+      },
+      {
+        "id": "147",
+        "observacao_pt": "Conteúdo do tema. Integra vocabulário de módulos anteriores (Letras, Alimentos)",
+        "observacao_en": "Theme content. Integrates vocabulary from previous modules (Letters, Foods)",
+        "observacao_es": "Contenido del tema. Integra vocabulario de módulos anteriores (Letras, Alimentos)"
+      },
+      {
+        "id": "148",
+        "observacao_pt": "O sorteio impede sequência fixa | Conteúdo do tema. Integra vocabulário de módulos anteriores (Letras, Alimentos)",
+        "observacao_en": "The random draw prevents a fixed sequence | Theme content. Integrates vocabulary from previous modules (Letters, Foods)",
+        "observacao_es": "El sorteo impide una secuencia fija | Contenido del tema. Integra vocabulario de módulos anteriores (Letras, Alimentos)"
+      },
+      {
+        "id": "149",
+        "observacao_pt": "Movimento + ordem = alta demanda | Conteúdo do tema. Integra vocabulário de módulos anteriores (Letras, Alimentos)",
+        "observacao_en": "Movement + order = high demand | Theme content. Integrates vocabulary from previous modules (Letters, Foods)",
+        "observacao_es": "Movimiento + orden = alta demanda | Contenido del tema. Integra vocabulario de módulos anteriores (Letras, Alimentos)"
+      },
+      {
+        "id": "150",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "151",
+        "observacao_pt": "Conteúdo do tema. Pré-requisito: Contagem",
+        "observacao_en": "Theme content. Prerequisite: Counting",
+        "observacao_es": "Contenido del tema. Requisito previo: Conteo"
+      },
+      {
+        "id": "152",
+        "observacao_pt": "Conteúdo do tema. Pré-requisito: Contagem",
+        "observacao_en": "Theme content. Prerequisite: Counting",
+        "observacao_es": "Contenido del tema. Requisito previo: Conteo"
+      },
+      {
+        "id": "153",
+        "observacao_pt": "Conteúdo do tema. Pré-requisito: Contagem",
+        "observacao_en": "Theme content. Prerequisite: Counting",
+        "observacao_es": "Contenido del tema. Requisito previo: Conteo"
+      },
+      {
+        "id": "154",
+        "observacao_pt": "Conteúdo do tema. Pré-requisito: Contagem",
+        "observacao_en": "Theme content. Prerequisite: Counting",
+        "observacao_es": "Contenido del tema. Requisito previo: Conteo"
+      },
+      {
+        "id": "155",
+        "observacao_pt": "Conteúdo do tema. Pré-requisito: Contagem",
+        "observacao_en": "Theme content. Prerequisite: Counting",
+        "observacao_es": "Contenido del tema. Requisito previo: Conteo"
+      },
+      {
+        "id": "156",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "157",
+        "observacao_pt": "Mesma dinâmica de ADIÇÃO Atividade 1. | Conteúdo do tema. Mesma estrutura de ADIÇÃO; muda o operador",
+        "observacao_en": "Same dynamic as ADDITION Activity 1. | Theme content. Same structure as ADDITION; the operator changes",
+        "observacao_es": "Misma dinámica de SUMA Actividad 1. | Contenido del tema. Misma estructura de SUMA; cambia el operador"
+      },
+      {
+        "id": "158",
+        "observacao_pt": "Mesma dinâmica de ADIÇÃO Atividade 2. | Conteúdo do tema. Mesma estrutura de ADIÇÃO; muda o operador",
+        "observacao_en": "Same dynamic as ADDITION Activity 2. | Theme content. Same structure as ADDITION; the operator changes",
+        "observacao_es": "Misma dinámica de SUMA Actividad 2. | Contenido del tema. Misma estructura de SUMA; cambia el operador"
+      },
+      {
+        "id": "159",
+        "observacao_pt": "Mesma dinâmica de ADIÇÃO Atividade 3. | Conteúdo do tema. Mesma estrutura de ADIÇÃO; muda o operador",
+        "observacao_en": "Same dynamic as ADDITION Activity 3. | Theme content. Same structure as ADDITION; the operator changes",
+        "observacao_es": "Misma dinámica de SUMA Actividad 3. | Contenido del tema. Misma estructura de SUMA; cambia el operador"
+      },
+      {
+        "id": "160",
+        "observacao_pt": "Mesma dinâmica de ADIÇÃO Atividade 4. | Conteúdo do tema. Mesma estrutura de ADIÇÃO; muda o operador",
+        "observacao_en": "Same dynamic as ADDITION Activity 4. | Theme content. Same structure as ADDITION; the operator changes",
+        "observacao_es": "Misma dinámica de SUMA Actividad 4. | Contenido del tema. Misma estructura de SUMA; cambia el operador"
+      },
+      {
+        "id": "161",
+        "observacao_pt": "Mesma dinâmica de ADIÇÃO Atividade 5. | Conteúdo do tema. Mesma estrutura de ADIÇÃO; muda o operador",
+        "observacao_en": "Same dynamic as ADDITION Activity 5. | Theme content. Same structure as ADDITION; the operator changes",
+        "observacao_es": "Misma dinámica de SUMA Actividad 5. | Contenido del tema. Misma estructura de SUMA; cambia el operador"
+      },
+      {
+        "id": "162",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "163",
+        "observacao_pt": "Variante com múltiplos corretos eleva a demanda | Conteúdo do tema.",
+        "observacao_en": "Variant with multiple correct answers raises the demand | Theme content.",
+        "observacao_es": "La variante con múltiples correctas eleva la demanda | Contenido del tema."
+      },
+      {
+        "id": "164",
+        "observacao_pt": "Mesma dinâmica de PLURAL Atividade 1. Variante: múltiplos corretos | Variante com múltiplos corretos eleva a demanda | Conteúdo do tema.",
+        "observacao_en": "Same dynamic as PLURAL Activity 1. Variant: multiple correct answers | Variant with multiple correct answers raises the demand | Theme content.",
+        "observacao_es": "Misma dinámica de PLURAL Actividad 1. Variante: múltiples correctas | La variante con múltiples correctas eleva la demanda | Contenido del tema."
+      },
+      {
+        "id": "165",
+        "observacao_pt": "Bolhas em movimento elevam a demanda | Conteúdo do tema.",
+        "observacao_en": "Moving bubbles raise the demand | Theme content.",
+        "observacao_es": "Las burbujas en movimiento elevan la demanda | Contenido del tema."
+      },
+      {
+        "id": "166",
+        "observacao_pt": "Conteúdo do tema.",
+        "observacao_en": "Theme content.",
+        "observacao_es": "Contenido del tema."
+      },
+      {
+        "id": "167",
+        "observacao_pt": "Roleta + 8 áudios = alta carga | Conteúdo do tema.",
+        "observacao_en": "Wheel + 8 audios = high load | Theme content.",
+        "observacao_es": "Ruleta + 8 audios = alta carga | Contenido del tema."
+      },
+      {
+        "id": "168",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "187",
+        "observacao_pt": "Conteúdo do tema. Os itens variam (não é contagem por atributo fixo)",
+        "observacao_en": "Theme content. The items vary (it is not counting by a fixed attribute)",
+        "observacao_es": "Contenido del tema. Los ítems varían (no es conteo por atributo fijo)"
+      },
+      {
+        "id": "188",
+        "observacao_pt": "Mesma dinâmica de CONTAGEM Atividade 1. Variante: itens em movimento | Conteúdo do tema. Os itens variam (não é contagem por atributo fixo)",
+        "observacao_en": "Same dynamic as COUNTING Activity 1. Variant: moving items | Theme content. The items vary (it is not counting by a fixed attribute)",
+        "observacao_es": "Misma dinámica de CONTEO Actividad 1. Variante: ítems en movimiento | Contenido del tema. Los ítems varían (no es conteo por atributo fijo)"
+      },
+      {
+        "id": "189",
+        "observacao_pt": "Conteúdo do tema. Os itens variam (não é contagem por atributo fixo)",
+        "observacao_en": "Theme content. The items vary (it is not counting by a fixed attribute)",
+        "observacao_es": "Contenido del tema. Los ítems varían (no es conteo por atributo fijo)"
+      },
+      {
+        "id": "190",
+        "observacao_pt": "Conteúdo do tema. Os itens variam (não é contagem por atributo fixo)",
+        "observacao_en": "Theme content. The items vary (it is not counting by a fixed attribute)",
+        "observacao_es": "Contenido del tema. Los ítems varían (no es conteo por atributo fijo)"
+      },
+      {
+        "id": "191",
+        "observacao_pt": "Conteúdo do tema. Os itens variam (não é contagem por atributo fixo)",
+        "observacao_en": "Theme content. The items vary (it is not counting by a fixed attribute)",
+        "observacao_es": "Contenido del tema. Los ítems varían (no es conteo por atributo fijo)"
+      },
+      {
+        "id": "192",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "193",
+        "observacao_pt": "Exigência motora baixa (toque) | Conteúdo do tema. eu, você, ele, ela, nós, vocês, eles, elas",
+        "observacao_en": "Low motor demand (touch) | Theme content. I, you, he, she, we, you (plural), they (m.), they (f.)",
+        "observacao_es": "Exigencia motora baja (toque) | Contenido del tema. yo, tú, él, ella, nosotros, ustedes, ellos, ellas"
+      },
+      {
+        "id": "194",
+        "observacao_pt": "Mesma dinâmica de PLURAL Atividade 3. | Bolhas em movimento elevam a demanda | Conteúdo do tema. eu, você, ele, ela, nós, vocês, eles, elas",
+        "observacao_en": "Same dynamic as PLURAL Activity 3. | Moving bubbles raise the demand | Theme content. I, you, he, she, we, you (plural), they (m.), they (f.)",
+        "observacao_es": "Misma dinámica de PLURAL Actividad 3. | Las burbujas en movimiento elevan la demanda | Contenido del tema. yo, tú, él, ella, nosotros, ustedes, ellos, ellas"
+      },
+      {
+        "id": "195",
+        "observacao_pt": "Mesma dinâmica de SÍLABAS Atividade 2. Variante: com distrator | Variante com distrator eleva a demanda | Conteúdo do tema. eu, você, ele, ela, nós, vocês, eles, elas",
+        "observacao_en": "Same dynamic as SYLLABLES Activity 2. Variant: with distractor | Variant with distractor raises the demand | Theme content. I, you, he, she, we, you (plural), they (m.), they (f.)",
+        "observacao_es": "Misma dinámica de SÍLABAS Actividad 2. Variante: con distractor | La variante con distractor eleva la demanda | Contenido del tema. yo, tú, él, ella, nosotros, ustedes, ellos, ellas"
+      },
+      {
+        "id": "196",
+        "observacao_pt": "Mesma dinâmica de SÍLABAS Atividade 2. | Variante com distrator eleva a demanda | Conteúdo do tema. eu, você, ele, ela, nós, vocês, eles, elas",
+        "observacao_en": "Same dynamic as SYLLABLES Activity 2. | Variant with distractor raises the demand | Theme content. I, you, he, she, we, you (plural), they (m.), they (f.)",
+        "observacao_es": "Misma dinámica de SÍLABAS Actividad 2. | La variante con distractor eleva la demanda | Contenido del tema. yo, tú, él, ella, nosotros, ustedes, ellos, ellas"
+      },
+      {
+        "id": "197",
+        "observacao_pt": "Alvos em movimento adicionam pressão | Conteúdo do tema. eu, você, ele, ela, nós, vocês, eles, elas",
+        "observacao_en": "Moving targets add pressure | Theme content. I, you, he, she, we, you (plural), they (m.), they (f.)",
+        "observacao_es": "Los objetivos en movimiento añaden presión | Contenido del tema. yo, tú, él, ella, nosotros, ustedes, ellos, ellas"
+      },
+      {
+        "id": "198",
+        "observacao_pt": "Exposição (fase de apresentação). Não gera métrica de desempenho — registrar apenas se o aluno fez ou não.",
+        "observacao_en": "Exposure (presentation phase). Does not generate a performance metric — record only whether or not the student did it.",
+        "observacao_es": "Exposición (fase de presentación). No genera métrica de desempeño — registrar solo si el alumno lo hizo o no."
+      },
+      {
+        "id": "199",
+        "observacao_pt": "Mesma dinâmica de PRONOMES Atividade 1. | Exigência motora baixa (toque) | Conteúdo do tema. | Conteúdo do tema. Atividade 5 (odd-one-out)",
+        "observacao_en": "Same dynamic as PRONOUNS Activity 1. | Low motor demand (touch) | Theme content. | Theme content. Activity 5 (odd-one-out)",
+        "observacao_es": "Misma dinámica de PRONOMBRES Actividad 1. | Exigencia motora baja (toque) | Contenido del tema. | Contenido del tema. Actividad 5 (odd-one-out)"
+      },
+      {
+        "id": "200",
+        "observacao_pt": "Mesma dinâmica de SÍLABAS Atividade 2. | Variante com distrator eleva a demanda | Conteúdo do tema. | Conteúdo do tema. Atividade 5 (odd-one-out)",
+        "observacao_en": "Same dynamic as SYLLABLES Activity 2. | Variant with distractor raises the demand | Theme content. | Theme content. Activity 5 (odd-one-out)",
+        "observacao_es": "Misma dinámica de SÍLABAS Actividad 2. | La variante con distractor eleva la demanda | Contenido del tema. | Contenido del tema. Actividad 5 (odd-one-out)"
+      },
+      {
+        "id": "201",
+        "observacao_pt": "10s de memorização = parâmetro de tempo | Conteúdo do tema. | Conteúdo do tema. Atividade 5 (odd-one-out)",
+        "observacao_en": "10s of memorization = time parameter | Theme content. | Theme content. Activity 5 (odd-one-out)",
+        "observacao_es": "10s de memorización = parámetro de tiempo | Contenido del tema. | Contenido del tema. Actividad 5 (odd-one-out)"
+      },
+      {
+        "id": "202",
+        "observacao_pt": "Mesma dinâmica de PLURAL Atividade 3. | Bolhas em movimento elevam a demanda | Conteúdo do tema. | Conteúdo do tema. Atividade 5 (odd-one-out)",
+        "observacao_en": "Same dynamic as PLURAL Activity 3. | Moving bubbles raise the demand | Theme content. | Theme content. Activity 5 (odd-one-out)",
+        "observacao_es": "Misma dinámica de PLURAL Actividad 3. | Las burbujas en movimiento elevan la demanda | Contenido del tema. | Contenido del tema. Actividad 5 (odd-one-out)"
+      },
+      {
+        "id": "203",
+        "observacao_pt": "Conteúdo do tema. | Conteúdo do tema. Atividade 5 (odd-one-out)",
+        "observacao_en": "Theme content. | Theme content. Activity 5 (odd-one-out)",
+        "observacao_es": "Contenido del tema. | Contenido del tema. Actividad 5 (odd-one-out)"
+      }
+    ]
+  }
+]

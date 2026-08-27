@@ -2,6 +2,11 @@ import i18n from "i18next";
 import * as lg from "../lib/i18n/index.ts";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import {
+  DEFAULT_LANGUAGE,
+  resolveLanguageFromBrowser,
+  SUPPORTED_LANGUAGES,
+} from "./i18n/resolve-language";
 
 i18n
   .use(LanguageDetector)
@@ -18,7 +23,11 @@ i18n
         indicators: lg.indicators_ptBR,
         header: lg.header_ptBR,
         units: lg.units_ptBR,
-        professionals: lg.professionals_ptBR
+        professionals: lg.professionals_ptBR,
+        login: lg.login_ptBR,
+        students: lg.students_ptBR,
+        reportStudent: lg.reportStudent_ptBR,
+        altSession: lg.altSession_ptBR,
       },
       en: {
         common: lg.common_en,
@@ -30,7 +39,11 @@ i18n
         indicators: lg.indicators_en,
         header: lg.header_en,
         units: lg.units_en,
-        professionals: lg.professionals_en
+        professionals: lg.professionals_en,
+        login: lg.login_en,
+        students: lg.students_en,
+        reportStudent: lg.reportStudent_en,
+        altSession: lg.altSession_en,
       },
       es: {
         common: lg.common_es,
@@ -42,11 +55,15 @@ i18n
         indicators: lg.indicators_es,
         header: lg.header_es,
         units: lg.units_es,
-        professionals: lg.professionals_es
-      }
+        professionals: lg.professionals_es,
+        login: lg.login_es,
+        students: lg.students_es,
+        reportStudent: lg.reportStudent_es,
+        altSession: lg.altSession_es,
+      },
     },
-    fallbackLng: "pt_BR",
-    lng: "pt_BR",
+    supportedLngs: [...SUPPORTED_LANGUAGES],
+    fallbackLng: DEFAULT_LANGUAGE,
     ns: [
       "common",
       "profile",
@@ -57,17 +74,19 @@ i18n
       "indicators",
       "header",
       "units",
-      "professionals"
+      "professionals",
+      "login",
+      "students",
+      "reportStudent",
+      "altSession",
     ],
     defaultNS: "common",
     interpolation: { escapeValue: false },
+    detection: {
+      order: ["navigator"],
+      caches: [],
+      convertDetectedLanguage: (lng) => resolveLanguageFromBrowser(lng),
+    },
   });
-// Console logs para debug do idioma
-console.log("🎯 Idioma atual:", i18n.language);
-console.log("🔄 Idioma detectado pelo navegador:", navigator.language);
-// Listener para mudanças de idioma
-i18n.on('languageChanged', (lng) => {
-  console.log("🔄 Idioma alterado para:", lng);
-});
 
 export default i18n;

@@ -1,5 +1,15 @@
 {
-  "select": "Selecione",
-  "next": "Próximo",
-  "previous": "Anterior"
+  "select": "Seleccione",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "skill_auditory_processing": "Procesamiento auditivo",
+  "skill_visual_processing": "Procesamiento visual",
+  "skill_executive_functions": "Funciones ejecutivas",
+  "skill_language_communication": "Lenguaje y comunicación",
+  "skill_motor_coordination": "Coordinación motora",
+  "skill_cognition": "Cognición",
+  "skill_behavioral_socioemotional": "Desarrollo conductual y socioemocional",
+  "activity_type_learning": "Aprendiendo",
+  "activity_type_activity": "Actividad",
+  "activity_type_writing": "Escribiendo"
 }

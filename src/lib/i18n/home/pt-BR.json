@@ -10,5 +10,14 @@
   "position": "Sua posição:",
   "literacy": "Alfabetização",
   "start": "Começar",
-  "alt_session": "Sessões"
+  "alt_session": "Sessões",
+  "empty_sessions_today": "Nenhuma sessão para hoje.",
+  "view_more": "Ver mais",
+  "col_professional": "Profissional",
+  "col_student": "Aluno",
+  "col_session_type": "Tipo de Sessão",
+  "col_start": "Data/Hora Início",
+  "col_end": "Data/Hora Término",
+  "col_status": "Status",
+  "welcome": "BEM-VINDO(A), {{name}}!"
 }

@@ -1,0 +1,211 @@
+[
+  {
+    "name": "alt_atividade_dinamica",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Ouvir e selecionar a imagem correta",
+        "descricao_en": "Listen and select the correct image",
+        "descricao_es": "Escuchar y seleccionar la imagen correcta"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Ouvir e arrastar a resposta correta (6 itens)",
+        "descricao_en": "Listen and drag the correct answer (6 items)",
+        "descricao_es": "Escuchar y arrastrar la respuesta correcta (6 ítems)"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Jogo da memória (sem mostrar as imagens previamente)",
+        "descricao_en": "Memory game (without showing the images beforehand)",
+        "descricao_es": "Juego de memoria (sin mostrar las imágenes previamente)"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Ouvir uma sequência e organizar as imagens na ordem",
+        "descricao_en": "Listen to a sequence and arrange the images in order",
+        "descricao_es": "Escuchar una secuencia y organizar las imágenes en orden"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Conteúdo em movimento contínuo (identificar o item do áudio)",
+        "descricao_en": "Content in continuous movement (identify the audio item)",
+        "descricao_es": "Contenido en movimiento continuo (identificar el ítem del audio)"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Apresentação das sílabas",
+        "descricao_en": "Presentation of the syllables",
+        "descricao_es": "Presentación de las sílabas"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Ouvir e ordenar arrastando (reorganização sequencial)",
+        "descricao_en": "Listen and order by dragging (sequential rearrangement)",
+        "descricao_es": "Escuchar y ordenar arrastrando (reorganización secuencial)"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Ligar/arrastar o áudio ao alvo",
+        "descricao_en": "Connect/drag the audio to the target",
+        "descricao_es": "Conectar/arrastrar el audio al objetivo"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Compor escolhendo as partes (consoante + vogal)",
+        "descricao_en": "Compose by choosing the parts (consonant + vowel)",
+        "descricao_es": "Componer eligiendo las partes (consonante + vocal)"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Roleta sorteia e formar estourando bolhas",
+        "descricao_en": "Wheel draws and form by popping bubbles",
+        "descricao_es": "La ruleta sortea y formar reventando burbujas"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Selecionar elementos em movimento na ordem",
+        "descricao_en": "Select moving elements in order",
+        "descricao_es": "Seleccionar elementos en movimiento en orden"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Traçado guiado gamificado (Escrevendo)",
+        "descricao_en": "Gamified guided tracing (Writing)",
+        "descricao_es": "Trazado guiado gamificado (Escribiendo)"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Montar a conta com setas e ouvir a narração",
+        "descricao_en": "Build the equation with arrows and listen to the narration",
+        "descricao_es": "Montar la cuenta con flechas y escuchar la narración"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Arrastar o resultado à lacuna (com distratores)",
+        "descricao_en": "Drag the result to the blank (with distractors)",
+        "descricao_es": "Arrastrar el resultado al espacio en blanco (con distractores)"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Arrastar as parcelas que compõem o resultado",
+        "descricao_en": "Drag the addends that make up the result",
+        "descricao_es": "Arrastrar los sumandos que componen el resultado"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "Formar várias equações (combinatória)",
+        "descricao_en": "Form several equations (combinatorial)",
+        "descricao_es": "Formar varias ecuaciones (combinatoria)"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Validar a equação narrada (com distrator)",
+        "descricao_en": "Validate the narrated equation (with distractor)",
+        "descricao_es": "Validar la ecuación narrada (con distractor)"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Completar a lacuna da equação",
+        "descricao_en": "Complete the blank in the equation",
+        "descricao_es": "Completar el espacio en blanco de la ecuación"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "Numeral + quantidade + gesto da mão",
+        "descricao_en": "Numeral + quantity + hand gesture",
+        "descricao_es": "Numeral + cantidad + gesto de la mano"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Selecionar por contagem e confirmar",
+        "descricao_en": "Select by counting and confirm",
+        "descricao_es": "Seleccionar por conteo y confirmar"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Arrastar itens conforme a quantidade ouvida",
+        "descricao_en": "Drag items according to the quantity heard",
+        "descricao_es": "Arrastrar ítems según la cantidad escuchada"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Produzir a quantidade (arrastar N vezes)",
+        "descricao_en": "Produce the quantity (drag N times)",
+        "descricao_es": "Producir la cantidad (arrastrar N veces)"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "Associar a quantidade ao numeral",
+        "descricao_en": "Associate the quantity with the numeral",
+        "descricao_es": "Asociar la cantidad con el numeral"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Singular x Plural narrado",
+        "descricao_en": "Singular vs. Plural narrated",
+        "descricao_es": "Singular vs. Plural narrado"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "Validar a concordância (singular/plural) por áudio",
+        "descricao_en": "Validate the agreement (singular/plural) by audio",
+        "descricao_es": "Validar la concordancia (singular/plural) por audio"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Estourar a bolha do áudio",
+        "descricao_en": "Pop the audio bubble",
+        "descricao_es": "Reventar la burbuja del audio"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Escolha binária por áudio (direita/esquerda)",
+        "descricao_en": "Binary choice by audio (right/left)",
+        "descricao_es": "Elección binaria por audio (derecha/izquierda)"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "Arrastar os áudios à roleta (singular/plural)",
+        "descricao_en": "Drag the audios to the wheel (singular/plural)",
+        "descricao_es": "Arrastrar los audios a la ruleta (singular/plural)"
+      },
+      {
+        "id": "29",
+        "descricao_pt": "Cada pronome: imagem + áudio + grafia (forma e cursiva)",
+        "descricao_en": "Each pronoun: image + audio + spelling (print and cursive)",
+        "descricao_es": "Cada pronombre: imagen + audio + grafía (imprenta y cursiva)"
+      },
+      {
+        "id": "30",
+        "descricao_pt": "Ouvir e clicar na imagem/cena",
+        "descricao_en": "Listen and click on the image/scene",
+        "descricao_es": "Escuchar y hacer clic en la imagen/escena"
+      },
+      {
+        "id": "31",
+        "descricao_pt": "Arrastar áudios a alvos em movimento",
+        "descricao_en": "Drag audios to moving targets",
+        "descricao_es": "Arrastrar audios a objetivos en movimiento"
+      },
+      {
+        "id": "32",
+        "descricao_pt": "Apresentação dos lugares",
+        "descricao_en": "Presentation of the places",
+        "descricao_es": "Presentación de los lugares"
+      },
+      {
+        "id": "33",
+        "descricao_pt": "Jogo da memória cronometrado",
+        "descricao_en": "Timed memory game",
+        "descricao_es": "Juego de memoria cronometrado"
+      },
+      {
+        "id": "34",
+        "descricao_pt": "Categorizar com item intruso (odd-one-out)",
+        "descricao_en": "Categorize with an odd item (odd-one-out)",
+        "descricao_es": "Categorizar con ítem intruso (odd-one-out)"
+      }
+    ]
+  }
+]

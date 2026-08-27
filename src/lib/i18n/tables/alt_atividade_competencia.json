@@ -1,0 +1,787 @@
+[
+  {
+    "name": "alt_atividade_competencia",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Compreender o áudio e relacioná-lo à imagem correta",
+        "descricao_en": "Understand the audio and relate it to the correct image",
+        "descricao_es": "Comprender el audio y relacionarlo con la imagen correcta"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Localizar a imagem correta entre as opções",
+        "descricao_en": "Locate the correct image among the options",
+        "descricao_es": "Localizar la imagen correcta entre las opciones"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Focar o alvo e inibir as opções incorretas",
+        "descricao_en": "Focus on the target and inhibit the incorrect options",
+        "descricao_es": "Enfocar el objetivo e inhibir las opciones incorrectas"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Reconhecer letras e relacionar som e grafia",
+        "descricao_en": "Recognize letters and relate sound and spelling",
+        "descricao_es": "Reconocer letras y relacionar sonido y grafía"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Compreender o áudio e identificar a resposta",
+        "descricao_en": "Understand the audio and identify the answer",
+        "descricao_es": "Comprender el audio e identificar la respuesta"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Diferenciar a resposta correta entre 6 itens",
+        "descricao_en": "Differentiate the correct answer among 6 items",
+        "descricao_es": "Diferenciar la respuesta correcta entre 6 ítems"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Arrastar a resposta até o destino correto",
+        "descricao_en": "Drag the answer to the correct destination",
+        "descricao_es": "Arrastrar la respuesta hasta el destino correcto"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Sustentar o foco diante de mais distratores",
+        "descricao_en": "Sustain focus in the face of more distractors",
+        "descricao_es": "Sostener el foco ante más distractores"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Lembrar a posição e a imagem dos pares",
+        "descricao_en": "Remember the position and image of the pairs",
+        "descricao_es": "Recordar la posición y la imagen de los pares"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Reter e parear elementos de memória",
+        "descricao_en": "Retain and match elements from memory",
+        "descricao_es": "Retener y emparejar elementos de memoria"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Manter o foco ao longo das tentativas",
+        "descricao_en": "Maintain focus throughout the attempts",
+        "descricao_es": "Mantener el foco a lo largo de los intentos"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Reter a sequência apresentada por áudio",
+        "descricao_en": "Retain the sequence presented by audio",
+        "descricao_es": "Retener la secuencia presentada por audio"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Ordenar as imagens conforme a sequência ouvida",
+        "descricao_en": "Order the images according to the sequence heard",
+        "descricao_es": "Ordenar las imágenes según la secuencia escuchada"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Posicionar/arrastar as imagens na ordem",
+        "descricao_en": "Position/drag the images in order",
+        "descricao_es": "Posicionar/arrastrar las imágenes en orden"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Planejar a ordenação antes de executar",
+        "descricao_en": "Plan the ordering before executing",
+        "descricao_es": "Planificar el ordenamiento antes de ejecutar"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "Relacionar o áudio ao item em movimento",
+        "descricao_en": "Relate the audio to the moving item",
+        "descricao_es": "Relacionar el audio con el ítem en movimiento"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Acompanhar os itens em movimento",
+        "descricao_en": "Track the moving items",
+        "descricao_es": "Seguir los ítems en movimiento"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Tocar o alvo correto em movimento",
+        "descricao_en": "Tap the correct moving target",
+        "descricao_es": "Tocar el objetivo correcto en movimiento"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "Responder corretamente sob pressão temporal",
+        "descricao_en": "Respond correctly under time pressure",
+        "descricao_es": "Responder correctamente bajo presión temporal"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Reconhecer numerais e relacioná-los a quantidades",
+        "descricao_en": "Recognize numerals and relate them to quantities",
+        "descricao_es": "Reconocer numerales y relacionarlos con cantidades"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Identificar e diferenciar cores",
+        "descricao_en": "Identify and differentiate colors",
+        "descricao_es": "Identificar y diferenciar colores"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Ampliar vocabulário e nomear objetos",
+        "descricao_en": "Expand vocabulary and name objects",
+        "descricao_es": "Ampliar vocabulario y nombrar objetos"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "Reconhecer e nomear emoções",
+        "descricao_en": "Recognize and name emotions",
+        "descricao_es": "Reconocer y nombrar emociones"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Ampliar vocabulário e nomear alimentos",
+        "descricao_en": "Expand vocabulary and name foods",
+        "descricao_es": "Ampliar vocabulario y nombrar alimentos"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "Ampliar vocabulário e nomear meios de transporte",
+        "descricao_en": "Expand vocabulary and name means of transport",
+        "descricao_es": "Ampliar vocabulario y nombrar medios de transporte"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Nomear partes do corpo e reconhecer o esquema corporal",
+        "descricao_en": "Name body parts and recognize the body schema",
+        "descricao_es": "Nombrar partes del cuerpo y reconocer el esquema corporal"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Identificar e diferenciar formas geométricas",
+        "descricao_en": "Identify and differentiate geometric shapes",
+        "descricao_es": "Identificar y diferenciar formas geométricas"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "Nomear animais e relacionar som e imagem",
+        "descricao_en": "Name animals and relate sound and image",
+        "descricao_es": "Nombrar animales y relacionar sonido e imagen"
+      },
+      {
+        "id": "29",
+        "descricao_pt": "Reter a ordem apresentada",
+        "descricao_en": "Retain the presented order",
+        "descricao_es": "Retener el orden presentado"
+      },
+      {
+        "id": "30",
+        "descricao_pt": "Reconstruir a ordem correta",
+        "descricao_en": "Reconstruct the correct order",
+        "descricao_es": "Reconstruir el orden correcto"
+      },
+      {
+        "id": "31",
+        "descricao_pt": "Posicionar os elementos na ordem",
+        "descricao_en": "Position the elements in order",
+        "descricao_es": "Posicionar los elementos en orden"
+      },
+      {
+        "id": "32",
+        "descricao_pt": "Planejar a ordenação",
+        "descricao_en": "Plan the ordering",
+        "descricao_es": "Planificar el ordenamiento"
+      },
+      {
+        "id": "33",
+        "descricao_pt": "Manipular sílabas e relacionar som e grafia",
+        "descricao_en": "Manipulate syllables and relate sound and spelling",
+        "descricao_es": "Manipular sílabas y relacionar sonido y grafía"
+      },
+      {
+        "id": "34",
+        "descricao_pt": "Relacionar o áudio ao alvo",
+        "descricao_en": "Relate the audio to the target",
+        "descricao_es": "Relacionar el audio con el objetivo"
+      },
+      {
+        "id": "35",
+        "descricao_pt": "Conduzir/ligar até o alvo",
+        "descricao_en": "Guide/connect to the target",
+        "descricao_es": "Conducir/conectar hasta el objetivo"
+      },
+      {
+        "id": "36",
+        "descricao_pt": "Selecionar o alvo certo",
+        "descricao_en": "Select the correct target",
+        "descricao_es": "Seleccionar el objetivo correcto"
+      },
+      {
+        "id": "37",
+        "descricao_pt": "Diferenciar os alvos",
+        "descricao_en": "Differentiate the targets",
+        "descricao_es": "Diferenciar los objetivos"
+      },
+      {
+        "id": "38",
+        "descricao_pt": "Reter a sílaba a formar",
+        "descricao_en": "Retain the syllable to be formed",
+        "descricao_es": "Retener la sílaba a formar"
+      },
+      {
+        "id": "39",
+        "descricao_pt": "Combinar partes no todo",
+        "descricao_en": "Combine parts into the whole",
+        "descricao_es": "Combinar partes en el todo"
+      },
+      {
+        "id": "40",
+        "descricao_pt": "Escolher as partes corretas",
+        "descricao_en": "Choose the correct parts",
+        "descricao_es": "Elegir las partes correctas"
+      },
+      {
+        "id": "41",
+        "descricao_pt": "Memorizar a sílaba sorteada",
+        "descricao_en": "Memorize the drawn syllable",
+        "descricao_es": "Memorizar la sílaba sorteada"
+      },
+      {
+        "id": "42",
+        "descricao_pt": "Trabalhar com alvo aleatório",
+        "descricao_en": "Work with a random target",
+        "descricao_es": "Trabajar con un objetivo aleatorio"
+      },
+      {
+        "id": "43",
+        "descricao_pt": "Estourar as bolhas certas",
+        "descricao_en": "Pop the correct bubbles",
+        "descricao_es": "Reventar las burbujas correctas"
+      },
+      {
+        "id": "44",
+        "descricao_pt": "Localizar as letras certas",
+        "descricao_en": "Locate the correct letters",
+        "descricao_es": "Localizar las letras correctas"
+      },
+      {
+        "id": "45",
+        "descricao_pt": "Memorizar a sílaba-alvo",
+        "descricao_en": "Memorize the target syllable",
+        "descricao_es": "Memorizar la sílaba objetivo"
+      },
+      {
+        "id": "46",
+        "descricao_pt": "Acompanhar os balões em movimento",
+        "descricao_en": "Track the moving balloons",
+        "descricao_es": "Seguir los globos en movimiento"
+      },
+      {
+        "id": "47",
+        "descricao_pt": "Tocar as letras certas em movimento",
+        "descricao_en": "Tap the correct moving letters",
+        "descricao_es": "Tocar las letras correctas en movimiento"
+      },
+      {
+        "id": "48",
+        "descricao_pt": "Clicar na ordem correta",
+        "descricao_en": "Click in the correct order",
+        "descricao_es": "Hacer clic en el orden correcto"
+      },
+      {
+        "id": "49",
+        "descricao_pt": "Formar o grafema seguindo o guia",
+        "descricao_en": "Form the grapheme following the guide",
+        "descricao_es": "Formar el grafema siguiendo la guía"
+      },
+      {
+        "id": "50",
+        "descricao_pt": "Traçar a sílaba/letra",
+        "descricao_en": "Trace the syllable/letter",
+        "descricao_es": "Trazar la sílaba/letra"
+      },
+      {
+        "id": "51",
+        "descricao_pt": "Manter o foco enquanto o tempo corre",
+        "descricao_en": "Maintain focus while time runs",
+        "descricao_es": "Mantener el foco mientras corre el tiempo"
+      },
+      {
+        "id": "52",
+        "descricao_pt": "Persistir na prática",
+        "descricao_en": "Persist in the practice",
+        "descricao_es": "Persistir en la práctica"
+      },
+      {
+        "id": "53",
+        "descricao_pt": "Calcular o resultado da operação",
+        "descricao_en": "Calculate the result of the operation",
+        "descricao_es": "Calcular el resultado de la operación"
+      },
+      {
+        "id": "54",
+        "descricao_pt": "Compreender a operação ouvida",
+        "descricao_en": "Understand the operation heard",
+        "descricao_es": "Comprender la operación escuchada"
+      },
+      {
+        "id": "55",
+        "descricao_pt": "Inibir distratores",
+        "descricao_en": "Inhibit distractors",
+        "descricao_es": "Inhibir distractores"
+      },
+      {
+        "id": "56",
+        "descricao_pt": "Levar o resultado à lacuna",
+        "descricao_en": "Bring the result to the blank",
+        "descricao_es": "Llevar el resultado al espacio en blanco"
+      },
+      {
+        "id": "57",
+        "descricao_pt": "Ler a conta apresentada",
+        "descricao_en": "Read the presented equation",
+        "descricao_es": "Leer la cuenta presentada"
+      },
+      {
+        "id": "58",
+        "descricao_pt": "Resolver adições",
+        "descricao_en": "Solve additions",
+        "descricao_es": "Resolver sumas"
+      },
+      {
+        "id": "59",
+        "descricao_pt": "Decompor o resultado em parcelas",
+        "descricao_en": "Decompose the result into addends",
+        "descricao_es": "Descomponer el resultado en sumandos"
+      },
+      {
+        "id": "60",
+        "descricao_pt": "Testar combinações válidas",
+        "descricao_en": "Test valid combinations",
+        "descricao_es": "Probar combinaciones válidas"
+      },
+      {
+        "id": "61",
+        "descricao_pt": "Posicionar as parcelas",
+        "descricao_en": "Position the addends",
+        "descricao_es": "Posicionar los sumandos"
+      },
+      {
+        "id": "62",
+        "descricao_pt": "Ler a estrutura da conta",
+        "descricao_en": "Read the structure of the equation",
+        "descricao_es": "Leer la estructura de la cuenta"
+      },
+      {
+        "id": "63",
+        "descricao_pt": "Montar várias equações válidas",
+        "descricao_en": "Build several valid equations",
+        "descricao_es": "Montar varias ecuaciones válidas"
+      },
+      {
+        "id": "64",
+        "descricao_pt": "Combinar sem repetir",
+        "descricao_en": "Combine without repeating",
+        "descricao_es": "Combinar sin repetir"
+      },
+      {
+        "id": "65",
+        "descricao_pt": "Compor as equações",
+        "descricao_en": "Compose the equations",
+        "descricao_es": "Componer las ecuaciones"
+      },
+      {
+        "id": "66",
+        "descricao_pt": "Ler números e operadores",
+        "descricao_en": "Read numbers and operators",
+        "descricao_es": "Leer números y operadores"
+      },
+      {
+        "id": "67",
+        "descricao_pt": "Entender a operação ouvida",
+        "descricao_en": "Understand the operation heard",
+        "descricao_es": "Entender la operación escuchada"
+      },
+      {
+        "id": "68",
+        "descricao_pt": "Conferir o resultado",
+        "descricao_en": "Check the result",
+        "descricao_es": "Verificar el resultado"
+      },
+      {
+        "id": "69",
+        "descricao_pt": "Rejeitar o áudio incorreto",
+        "descricao_en": "Reject the incorrect audio",
+        "descricao_es": "Rechazar el audio incorrecto"
+      },
+      {
+        "id": "70",
+        "descricao_pt": "Levar ao “?” correto",
+        "descricao_en": "Bring to the correct “?”",
+        "descricao_es": "Llevar al “?” correcto"
+      },
+      {
+        "id": "71",
+        "descricao_pt": "Inferir o número que falta",
+        "descricao_en": "Infer the missing number",
+        "descricao_es": "Inferir el número que falta"
+      },
+      {
+        "id": "72",
+        "descricao_pt": "Ler a equação incompleta",
+        "descricao_en": "Read the incomplete equation",
+        "descricao_es": "Leer la ecuación incompleta"
+      },
+      {
+        "id": "73",
+        "descricao_pt": "Manter os termos em mente",
+        "descricao_en": "Keep the terms in mind",
+        "descricao_es": "Mantener los términos en mente"
+      },
+      {
+        "id": "74",
+        "descricao_pt": "Preencher a lacuna",
+        "descricao_en": "Fill in the blank",
+        "descricao_es": "Rellenar el espacio en blanco"
+      },
+      {
+        "id": "75",
+        "descricao_pt": "Resolver subtrações",
+        "descricao_en": "Solve subtractions",
+        "descricao_es": "Resolver restas"
+      },
+      {
+        "id": "76",
+        "descricao_pt": "Contar e selecionar a quantidade certa",
+        "descricao_en": "Count and select the correct quantity",
+        "descricao_es": "Contar y seleccionar la cantidad correcta"
+      },
+      {
+        "id": "77",
+        "descricao_pt": "Compreender o que foi pedido",
+        "descricao_en": "Understand what was requested",
+        "descricao_es": "Comprender lo que se pidió"
+      },
+      {
+        "id": "78",
+        "descricao_pt": "Encontrar os itens certos",
+        "descricao_en": "Find the correct items",
+        "descricao_es": "Encontrar los ítems correctos"
+      },
+      {
+        "id": "79",
+        "descricao_pt": "Separar categoria e quantidade",
+        "descricao_en": "Separate category and quantity",
+        "descricao_es": "Separar categoría y cantidad"
+      },
+      {
+        "id": "80",
+        "descricao_pt": "Selecionar e confirmar no check",
+        "descricao_en": "Select and confirm on the check",
+        "descricao_es": "Seleccionar y confirmar en el check"
+      },
+      {
+        "id": "81",
+        "descricao_pt": "Contar e relacionar quantidade e numeral",
+        "descricao_en": "Count and relate quantity and numeral",
+        "descricao_es": "Contar y relacionar cantidad y numeral"
+      },
+      {
+        "id": "82",
+        "descricao_pt": "Selecionar a quantidade certa",
+        "descricao_en": "Select the correct quantity",
+        "descricao_es": "Seleccionar la cantidad correcta"
+      },
+      {
+        "id": "83",
+        "descricao_pt": "Compreender o pedido",
+        "descricao_en": "Understand the request",
+        "descricao_es": "Comprender el pedido"
+      },
+      {
+        "id": "84",
+        "descricao_pt": "Arrastar os itens ao alvo",
+        "descricao_en": "Drag the items to the target",
+        "descricao_es": "Arrastrar los ítems al objetivo"
+      },
+      {
+        "id": "85",
+        "descricao_pt": "Manter a contagem",
+        "descricao_en": "Keep the count",
+        "descricao_es": "Mantener el conteo"
+      },
+      {
+        "id": "86",
+        "descricao_pt": "Produzir a quantidade pedida",
+        "descricao_en": "Produce the requested quantity",
+        "descricao_es": "Producir la cantidad pedida"
+      },
+      {
+        "id": "87",
+        "descricao_pt": "Arrastar o número de vezes correto",
+        "descricao_en": "Drag the correct number of times",
+        "descricao_es": "Arrastrar el número de veces correcto"
+      },
+      {
+        "id": "88",
+        "descricao_pt": "Compreender quanto produzir",
+        "descricao_en": "Understand how much to produce",
+        "descricao_es": "Comprender cuánto producir"
+      },
+      {
+        "id": "89",
+        "descricao_pt": "Acompanhar quanto já fez",
+        "descricao_en": "Track how much has been done",
+        "descricao_es": "Seguir cuánto ya hizo"
+      },
+      {
+        "id": "90",
+        "descricao_pt": "Relacionar quantidade e numeral",
+        "descricao_en": "Relate quantity and numeral",
+        "descricao_es": "Relacionar cantidad y numeral"
+      },
+      {
+        "id": "91",
+        "descricao_pt": "Quantificar a fileira",
+        "descricao_en": "Quantify the row",
+        "descricao_es": "Cuantificar la fila"
+      },
+      {
+        "id": "92",
+        "descricao_pt": "Levar o numeral ao lugar",
+        "descricao_en": "Bring the numeral to its place",
+        "descricao_es": "Llevar el numeral a su lugar"
+      },
+      {
+        "id": "93",
+        "descricao_pt": "Manter o foco na fileira certa",
+        "descricao_en": "Keep focus on the correct row",
+        "descricao_es": "Mantener el foco en la fila correcta"
+      },
+      {
+        "id": "94",
+        "descricao_pt": "Relacionar quantidade e flexão",
+        "descricao_en": "Relate quantity and inflection",
+        "descricao_es": "Relacionar cantidad y flexión"
+      },
+      {
+        "id": "95",
+        "descricao_pt": "Ouvir a forma correta",
+        "descricao_en": "Listen to the correct form",
+        "descricao_es": "Escuchar la forma correcta"
+      },
+      {
+        "id": "96",
+        "descricao_pt": "Associar o número à forma",
+        "descricao_en": "Associate the number with the form",
+        "descricao_es": "Asociar el número con la forma"
+      },
+      {
+        "id": "97",
+        "descricao_pt": "Arrastar o áudio certo",
+        "descricao_en": "Drag the correct audio",
+        "descricao_es": "Arrastrar el audio correcto"
+      },
+      {
+        "id": "98",
+        "descricao_pt": "Selecionar a forma correta",
+        "descricao_en": "Select the correct form",
+        "descricao_es": "Seleccionar la forma correcta"
+      },
+      {
+        "id": "99",
+        "descricao_pt": "Aplicar singular e plural",
+        "descricao_en": "Apply singular and plural",
+        "descricao_es": "Aplicar singular y plural"
+      },
+      {
+        "id": "100",
+        "descricao_pt": "Relacionar o áudio ao alvo certo",
+        "descricao_en": "Relate the audio to the correct target",
+        "descricao_es": "Relacionar el audio con el objetivo correcto"
+      },
+      {
+        "id": "101",
+        "descricao_pt": "Agir rápido sobre o alvo certo",
+        "descricao_en": "Act quickly on the correct target",
+        "descricao_es": "Actuar rápido sobre el objetivo correcto"
+      },
+      {
+        "id": "102",
+        "descricao_pt": "Estourar a bolha correta",
+        "descricao_en": "Pop the correct bubble",
+        "descricao_es": "Reventar la burbuja correcta"
+      },
+      {
+        "id": "103",
+        "descricao_pt": "Achar o alvo entre as bolhas",
+        "descricao_en": "Find the target among the bubbles",
+        "descricao_es": "Encontrar el objetivo entre las burbujas"
+      },
+      {
+        "id": "104",
+        "descricao_pt": "Distinguir as duas opções",
+        "descricao_en": "Distinguish the two options",
+        "descricao_es": "Distinguir las dos opciones"
+      },
+      {
+        "id": "105",
+        "descricao_pt": "Reconhecer a forma correta",
+        "descricao_en": "Recognize the correct form",
+        "descricao_es": "Reconocer la forma correcta"
+      },
+      {
+        "id": "106",
+        "descricao_pt": "Decidir a direção certa",
+        "descricao_en": "Decide the correct direction",
+        "descricao_es": "Decidir la dirección correcta"
+      },
+      {
+        "id": "107",
+        "descricao_pt": "Indicar direita ou esquerda",
+        "descricao_en": "Indicate right or left",
+        "descricao_es": "Indicar derecha o izquierda"
+      },
+      {
+        "id": "108",
+        "descricao_pt": "Classificar singular/plural",
+        "descricao_en": "Classify singular/plural",
+        "descricao_es": "Clasificar singular/plural"
+      },
+      {
+        "id": "109",
+        "descricao_pt": "Ouvir cada item",
+        "descricao_en": "Listen to each item",
+        "descricao_es": "Escuchar cada ítem"
+      },
+      {
+        "id": "110",
+        "descricao_pt": "Arrastar ao item da roleta",
+        "descricao_en": "Drag to the wheel item",
+        "descricao_es": "Arrastrar al ítem de la ruleta"
+      },
+      {
+        "id": "111",
+        "descricao_pt": "Manter o foco na sequência",
+        "descricao_en": "Keep focus on the sequence",
+        "descricao_es": "Mantener el foco en la secuencia"
+      },
+      {
+        "id": "112",
+        "descricao_pt": "Compreender o áudio e achar o alvo",
+        "descricao_en": "Understand the audio and find the target",
+        "descricao_es": "Comprender el audio y encontrar el objetivo"
+      },
+      {
+        "id": "113",
+        "descricao_pt": "Localizar a imagem/cena correta",
+        "descricao_en": "Locate the correct image/scene",
+        "descricao_es": "Localizar la imagen/escena correcta"
+      },
+      {
+        "id": "114",
+        "descricao_pt": "Focar o alvo e inibir distratores",
+        "descricao_en": "Focus on the target and inhibit distractors",
+        "descricao_es": "Enfocar el objetivo e inhibir distractores"
+      },
+      {
+        "id": "115",
+        "descricao_pt": "Compreender e usar pronomes",
+        "descricao_en": "Understand and use pronouns",
+        "descricao_es": "Comprender y usar pronombres"
+      },
+      {
+        "id": "116",
+        "descricao_pt": "Relacionar o áudio à imagem certa",
+        "descricao_en": "Relate the audio to the correct image",
+        "descricao_es": "Relacionar el audio con la imagen correcta"
+      },
+      {
+        "id": "117",
+        "descricao_pt": "Acompanhar alvos em movimento",
+        "descricao_en": "Track moving targets",
+        "descricao_es": "Seguir objetivos en movimiento"
+      },
+      {
+        "id": "118",
+        "descricao_pt": "Arrastar ao alvo em movimento",
+        "descricao_en": "Drag to the moving target",
+        "descricao_es": "Arrastrar al objetivo en movimiento"
+      },
+      {
+        "id": "119",
+        "descricao_pt": "Responder sob pressão temporal",
+        "descricao_en": "Respond under time pressure",
+        "descricao_es": "Responder bajo presión temporal"
+      },
+      {
+        "id": "120",
+        "descricao_pt": "Nomear e reconhecer lugares",
+        "descricao_en": "Name and recognize places",
+        "descricao_es": "Nombrar y reconocer lugares"
+      },
+      {
+        "id": "121",
+        "descricao_pt": "Classificar lugares por categoria",
+        "descricao_en": "Classify places by category",
+        "descricao_es": "Clasificar lugares por categoría"
+      },
+      {
+        "id": "122",
+        "descricao_pt": "Lembrar imagens/posições",
+        "descricao_en": "Remember images/positions",
+        "descricao_es": "Recordar imágenes/posiciones"
+      },
+      {
+        "id": "123",
+        "descricao_pt": "Reter e parear de memória",
+        "descricao_en": "Retain and match from memory",
+        "descricao_es": "Retener y emparejar de memoria"
+      },
+      {
+        "id": "124",
+        "descricao_pt": "Memorizar em 10s",
+        "descricao_en": "Memorize in 10s",
+        "descricao_es": "Memorizar en 10s"
+      },
+      {
+        "id": "125",
+        "descricao_pt": "Selecionar os pares",
+        "descricao_en": "Select the pairs",
+        "descricao_es": "Seleccionar los pares"
+      },
+      {
+        "id": "126",
+        "descricao_pt": "Agrupar por categoria e excluir o intruso",
+        "descricao_en": "Group by category and exclude the odd one out",
+        "descricao_es": "Agrupar por categoría y excluir el intruso"
+      },
+      {
+        "id": "127",
+        "descricao_pt": "Compreender a categoria",
+        "descricao_en": "Understand the category",
+        "descricao_es": "Comprender la categoría"
+      },
+      {
+        "id": "128",
+        "descricao_pt": "Ouvir a categoria-alvo",
+        "descricao_en": "Listen to the target category",
+        "descricao_es": "Escuchar la categoría objetivo"
+      },
+      {
+        "id": "129",
+        "descricao_pt": "Rejeitar o item que não pertence",
+        "descricao_en": "Reject the item that does not belong",
+        "descricao_es": "Rechazar el ítem que no pertenece"
+      },
+      {
+        "id": "130",
+        "descricao_pt": "Arrastar as opções ao local",
+        "descricao_en": "Drag the options to the location",
+        "descricao_es": "Arrastrar las opciones al lugar"
+      }
+    ]
+  }
+]

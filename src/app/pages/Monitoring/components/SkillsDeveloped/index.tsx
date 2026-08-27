@@ -4,6 +4,7 @@ import { ImgSVG } from "@/components/images";
 import { useMonitoring } from "../../hook";
 import { useTranslation } from "react-i18next";
 import { FaArrowUp, FaArrowDown, FaArrowRight } from "react-icons/fa";
+import { translateSkillCategory } from "@/lib/i18n/translate-skill-category";
 import {
   Radar,
   Tooltip,
@@ -167,7 +168,7 @@ function SkillsRadarCard() {
 
   const chartData =
     skillsDeveloped?.skills_tag?.categorias?.map((item) => ({
-      categoria: item.categoria,
+      categoria: translateSkillCategory(t, item.categoria),
       media: item.media ?? 0,
     })) ?? [];
 

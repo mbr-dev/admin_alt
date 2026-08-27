@@ -15,5 +15,6 @@ export * as ProjectInfosService from "./project-infos-service";
 export * as ClassTeacherService from "./class-teacher-service";
 export * as ReportUserSessionService from "./report-user-session-service";
 export * as ReportABASessionService from "./report-aba-session-service";
+export * as PreferenceUserService from "./preference-user-service";
 export * as ALTDevelopmentReportService from "./alt-development-report-service";
 export * as ALTDevelopmentNetworkService from "./alt-development-network-service";

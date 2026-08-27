@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { CHART_COLORS, EXPORT_CHART_SIZE } from "../../utils";
 import { useTranslation } from "react-i18next";
 import { ALTDevelopmentReportService } from "@/data/models";
+import { translateSkillCategory } from "@/lib/i18n/translate-skill-category";
 import {
   Pie,
   Cell,
@@ -23,10 +24,13 @@ type PieDatum = {
   value: number;
 };
 
+type TranslateFn = (key: string, options?: { ns?: string }) => string;
+
 const RADIAN = Math.PI / 180;
 
 const toPieData = (
-  items: ALTDevelopmentReportService.IDistributionActivitiesPerformedItem[]
+  items: ALTDevelopmentReportService.IDistributionActivitiesPerformedItem[],
+  t: TranslateFn
 ): PieDatum[] =>
   items
     .map((item) => {
@@ -40,9 +44,11 @@ const toPieData = (
             ? atividadeRealizada
             : 0;
 
+      const rawTag = item.tag?.trim() || "—";
+
       return {
         id: item.id_tag,
-        name: item.tag?.trim() || "—",
+        name: rawTag === "—" ? rawTag : translateSkillCategory(t, rawTag),
         value,
       };
     })
@@ -109,7 +115,7 @@ export const ActivityDistribution = ({ items, isExporting = false }: IActivityDi
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const { width: exportWidth, height: exportHeight } = EXPORT_CHART_SIZE.distribution;
 
-  const pieData = useMemo(() => toPieData(items), [items]);
+  const pieData = useMemo(() => toPieData(items, t), [items, t]);
   const hasData = pieData.length > 0;
 
   useLayoutEffect(() => {

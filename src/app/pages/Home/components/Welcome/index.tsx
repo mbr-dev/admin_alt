@@ -3,9 +3,12 @@ import { useHome } from "../../hook";
 import { Animations } from "./components";
 import { ImgSVG } from "@/components/images";
 import { TypeAnimation } from "react-type-animation";
+import { useTranslation } from "react-i18next";
 
-export const Welcome = () => {
+export function Welcome() {
   const homeContext = useHome();
+  const { t, i18n } = useTranslation("home");
+  const welcomeText = t("welcome", { name: homeContext.name });
 
   return (
     <S.Container>
@@ -13,17 +16,16 @@ export const Welcome = () => {
 
       <S.Main>
         <S.Div>
-          {homeContext.name !== "" &&
+          {homeContext.name !== "" && (
             <TypeAnimation
-              sequence={[
-                `BEM-VINDO(A), ${homeContext.name}!`,
-                1000,
-              ]}
+              key={`${i18n.language}-${homeContext.name}`}
+              sequence={[welcomeText, 1000]}
               wrapper="span"
               speed={50}
               style={{ fontWeight: "bold", display: "inline-block" }}
               repeat={Infinity}
-            />}
+            />
+          )}
         </S.Div>
 
         <S.Kid>
@@ -31,5 +33,5 @@ export const Welcome = () => {
         </S.Kid>
       </S.Main>
     </S.Container>
-  )
+  );
 }

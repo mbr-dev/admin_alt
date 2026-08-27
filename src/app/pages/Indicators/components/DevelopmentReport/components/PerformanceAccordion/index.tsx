@@ -4,21 +4,25 @@ import { PerformanceBar } from "../PerformanceBar";
 import { useTranslation } from "react-i18next";
 import { ALTDevelopmentReportService } from "@/data/models";
 import { getPerformanceColor, formatPercent } from "../../utils";
+import { toCamelCaseLabel } from "@/lib/utils";
+import {
+  translateAltSubtagById,
+  translateAltTagById,
+} from "@/lib/i18n/tables/lookup";
 
 interface IPerformanceAccordion {
   tags: ALTDevelopmentReportService.IPerformanceSubtagTag[];
   isExporting?: boolean;
 }
 
-//Média de desempenho de uma categoria a partir das suas subtags
 const getAverage = (subtags: ALTDevelopmentReportService.IPerformanceSubtagItem[]): number => {
   if (!subtags.length) return 0;
   const total = subtags.reduce((acc, item) => acc + (item.percentual ?? 0), 0);
   return total / subtags.length;
 };
 
-export const PerformanceAccordion = ({ tags, isExporting = false }: IPerformanceAccordion) => {
-  const { t } = useTranslation("indicators");
+export function PerformanceAccordion({ tags, isExporting = false }: IPerformanceAccordion) {
+  const { t, i18n } = useTranslation("indicators");
   const [openIds, setOpenIds] = useState<number[]>(tags.length ? [tags[0].id_tag] : []);
 
   const toggle = (id: number) => {
@@ -46,6 +50,7 @@ export const PerformanceAccordion = ({ tags, isExporting = false }: IPerformance
         {tags.map((tag) => {
           const isOpen = !isExporting && openIds.includes(tag.id_tag);
           const average = getAverage(tag.subtags);
+          const tagLabel = translateAltTagById(tag.id_tag, i18n.language, tag.tag);
 
           return (
             <S.Item key={tag.id_tag} $exporting={isExporting}>
@@ -57,7 +62,7 @@ export const PerformanceAccordion = ({ tags, isExporting = false }: IPerformance
                 $exporting={isExporting}
               >
                 <S.HeaderLeft $exporting={isExporting}>
-                  <S.Category $exporting={isExporting}>{tag.tag}</S.Category>
+                  <S.Category $exporting={isExporting}>{tagLabel}</S.Category>
                   {!isExporting && (
                     <S.Count>
                       ({tag.subtags.length} {t("dev_col_skill").toLocaleLowerCase()})
@@ -75,14 +80,22 @@ export const PerformanceAccordion = ({ tags, isExporting = false }: IPerformance
 
               {isOpen && (
                 <S.Body id={`category-${tag.id_tag}`}>
-                  {tag.subtags.map((subtag) => (
-                    <S.Row key={subtag.id_subtag}>
-                      <S.Skill>{subtag.subtag}</S.Skill>
-                      <S.BarBox>
-                        <PerformanceBar value={subtag.percentual} />
-                      </S.BarBox>
-                    </S.Row>
-                  ))}
+                  {tag.subtags.map((subtag) => {
+                    const subtagLabel = translateAltSubtagById(
+                      subtag.id_subtag,
+                      i18n.language,
+                      subtag.subtag
+                    );
+
+                    return (
+                      <S.Row key={subtag.id_subtag}>
+                        <S.Skill>{toCamelCaseLabel(subtagLabel)}</S.Skill>
+                        <S.BarBox>
+                          <PerformanceBar value={subtag.percentual} />
+                        </S.BarBox>
+                      </S.Row>
+                    );
+                  })}
                 </S.Body>
               )}
             </S.Item>
@@ -91,4 +104,4 @@ export const PerformanceAccordion = ({ tags, isExporting = false }: IPerformance
       </S.List>
     </S.Card>
   );
-};
+}

@@ -1,0 +1,397 @@
+[
+  {
+    "name": "cid",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Autismo infantil",
+        "descricao_en": "Childhood autism",
+        "descricao_es": "Autismo infantil"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Autismo atípico",
+        "descricao_en": "Atypical autism",
+        "descricao_es": "Autismo atípico"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Síndrome de Asperger",
+        "descricao_en": "Asperger's syndrome",
+        "descricao_es": "Síndrome de Asperger"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "TGD não especificado",
+        "descricao_en": "Pervasive developmental disorder, unspecified",
+        "descricao_es": "TGD no especificado"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Transtorno de atividade e atenção",
+        "descricao_en": "Disturbance of activity and attention",
+        "descricao_es": "Trastorno de la actividad y la atención"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Transtorno hipercinético de conduta",
+        "descricao_en": "Hyperkinetic conduct disorder",
+        "descricao_es": "Trastorno hipercinético de la conducta"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Transtorno específico da articulação",
+        "descricao_en": "Specific speech articulation disorder",
+        "descricao_es": "Trastorno específico de la articulación"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Transtorno da linguagem expressiva",
+        "descricao_en": "Expressive language disorder",
+        "descricao_es": "Trastorno del lenguaje expresivo"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Transtorno da linguagem receptiva",
+        "descricao_en": "Receptive language disorder",
+        "descricao_es": "Trastorno del lenguaje receptivo"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Dislexia",
+        "descricao_en": "Dyslexia",
+        "descricao_es": "Dislexia"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Disortografia",
+        "descricao_en": "Dysorthographia",
+        "descricao_es": "Disortografía"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Discalculia",
+        "descricao_en": "Dyscalculia",
+        "descricao_es": "Discalculia"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Transtorno misto das habilidades escolares",
+        "descricao_en": "Mixed disorder of scholastic skills",
+        "descricao_es": "Trastorno mixto de las habilidades escolares"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Transtorno do Desenvolvimento da Coordenação",
+        "descricao_en": "Developmental Coordination Disorder",
+        "descricao_es": "Trastorno del Desarrollo de la Coordinación"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Leve",
+        "descricao_en": "Mild",
+        "descricao_es": "Leve"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "Moderada",
+        "descricao_en": "Moderate",
+        "descricao_es": "Moderada"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Grave",
+        "descricao_en": "Severe",
+        "descricao_es": "Grave"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Profunda",
+        "descricao_en": "Profound",
+        "descricao_es": "Profunda"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "Não especificada",
+        "descricao_en": "Unspecified",
+        "descricao_es": "No especificada"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Ansiedade generalizada",
+        "descricao_en": "Generalized anxiety",
+        "descricao_es": "Ansiedad generalizada"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Fobia social",
+        "descricao_en": "Social phobia",
+        "descricao_es": "Fobia social"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Episódio depressivo",
+        "descricao_en": "Depressive episode",
+        "descricao_es": "Episodio depresivo"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "Transtorno depressivo recorrente",
+        "descricao_en": "Recurrent depressive disorder",
+        "descricao_es": "Trastorno depresivo recurrente"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Transtorno de conduta restrito ao contexto familiar",
+        "descricao_en": "Conduct disorder confined to the family context",
+        "descricao_es": "Trastorno de conducta limitado al contexto familiar"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "Transtorno opositor desafiante",
+        "descricao_en": "Oppositional defiant disorder",
+        "descricao_es": "Trastorno negativista desafiante"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Perda auditiva neurossensorial bilateral",
+        "descricao_en": "Bilateral sensorineural hearing loss",
+        "descricao_es": "Pérdida auditiva neurosensorial bilateral"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Perda auditiva não especificada",
+        "descricao_en": "Unspecified hearing loss",
+        "descricao_es": "Pérdida auditiva no especificada"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "Cegueira",
+        "descricao_en": "Blindness",
+        "descricao_es": "Ceguera"
+      },
+      {
+        "id": "29",
+        "descricao_pt": "Baixa visão",
+        "descricao_en": "Low vision",
+        "descricao_es": "Baja visión"
+      },
+      {
+        "id": "30",
+        "descricao_pt": "Paralisia cerebral espástica quadriplégica",
+        "descricao_en": "Spastic quadriplegic cerebral palsy",
+        "descricao_es": "Parálisis cerebral espástica cuadripléjica"
+      },
+      {
+        "id": "31",
+        "descricao_pt": "Epilepsia e síndromes epilépticas idiopáticas relacionadas à localização (focais) com crises de início focal",
+        "descricao_en": "Localization-related (focal) idiopathic epilepsy and epileptic syndromes with seizures of focal onset",
+        "descricao_es": "Epilepsia y síndromes epilépticos idiopáticos relacionados con la localización (focales) con crisis de inicio focal"
+      },
+      {
+        "id": "32",
+        "descricao_pt": "Síndrome de Down",
+        "descricao_en": "Down syndrome",
+        "descricao_es": "Síndrome de Down"
+      },
+      {
+        "id": "33",
+        "descricao_pt": "Síndrome de Edwards",
+        "descricao_en": "Edwards syndrome",
+        "descricao_es": "Síndrome de Edwards"
+      },
+      {
+        "id": "34",
+        "descricao_pt": "Deleções cromossômicas",
+        "descricao_en": "Chromosomal deletions",
+        "descricao_es": "Deleciones cromosómicas"
+      },
+      {
+        "id": "35",
+        "descricao_pt": "Gagueira",
+        "descricao_en": "Stuttering",
+        "descricao_es": "Tartamudez"
+      },
+      {
+        "id": "36",
+        "descricao_pt": "Fala rápida",
+        "descricao_en": "Rapid speech",
+        "descricao_es": "Habla rápida"
+      },
+      {
+        "id": "37",
+        "descricao_pt": "Anorexia nervosa",
+        "descricao_en": "Anorexia nervosa",
+        "descricao_es": "Anorexia nerviosa"
+      },
+      {
+        "id": "38",
+        "descricao_pt": "Bulimia nervosa",
+        "descricao_en": "Bulimia nervosa",
+        "descricao_es": "Bulimia nerviosa"
+      },
+      {
+        "id": "39",
+        "descricao_pt": "Insônia não orgânica",
+        "descricao_en": "Nonorganic insomnia",
+        "descricao_es": "Insomnio no orgánico"
+      },
+      {
+        "id": "40",
+        "descricao_pt": "Insônia",
+        "descricao_en": "Insomnia",
+        "descricao_es": "Insomnio"
+      },
+      {
+        "id": "41",
+        "descricao_pt": "Deformidades adquiridas dos membros",
+        "descricao_en": "Acquired deformities of limbs",
+        "descricao_es": "Deformidades adquiridas de los miembros"
+      },
+      {
+        "id": "42",
+        "descricao_pt": "Malformações congênitas",
+        "descricao_en": "Congenital malformations",
+        "descricao_es": "Malformaciones congénitas"
+      },
+      {
+        "id": "43",
+        "descricao_pt": "Atraso no desenvolvimento",
+        "descricao_en": "Developmental delay",
+        "descricao_es": "Retraso en el desarrollo"
+      },
+      {
+        "id": "44",
+        "descricao_pt": "Problemas relacionados à educação e alfabetização",
+        "descricao_en": "Problems related to education and literacy",
+        "descricao_es": "Problemas relacionados con la educación y la alfabetización"
+      },
+      {
+        "id": "45",
+        "descricao_pt": "Estresse",
+        "descricao_en": "Stress",
+        "descricao_es": "Estrés"
+      },
+      {
+        "id": "46",
+        "descricao_pt": "Transtorno de conduta não socializado",
+        "descricao_en": "Unsocialized conduct disorder",
+        "descricao_es": "Trastorno de conducta no socializado"
+      },
+      {
+        "id": "47",
+        "descricao_pt": "Transtorno de conduta socializado",
+        "descricao_en": "Socialized conduct disorder",
+        "descricao_es": "Trastorno de conducta socializado"
+      },
+      {
+        "id": "48",
+        "descricao_pt": "Transtorno desafiador de oposição",
+        "descricao_en": "Oppositional defiant disorder",
+        "descricao_es": "Trastorno negativista desafiante"
+      },
+      {
+        "id": "49",
+        "descricao_pt": "Outros transtornos de conduta",
+        "descricao_en": "Other conduct disorders",
+        "descricao_es": "Otros trastornos de conducta"
+      },
+      {
+        "id": "50",
+        "descricao_pt": "Transtorno de conduta não especificado",
+        "descricao_en": "Conduct disorder, unspecified",
+        "descricao_es": "Trastorno de conducta no especificado"
+      },
+      {
+        "id": "51",
+        "descricao_pt": "Paralisia cerebral espástica diplégica",
+        "descricao_en": "Spastic diplegic cerebral palsy",
+        "descricao_es": "Parálisis cerebral espástica dipléjica"
+      },
+      {
+        "id": "52",
+        "descricao_pt": "Paralisia cerebral espástica hemiplégica",
+        "descricao_en": "Spastic hemiplegic cerebral palsy",
+        "descricao_es": "Parálisis cerebral espástica hemipléjica"
+      },
+      {
+        "id": "53",
+        "descricao_pt": "Paralisia cerebral discinética",
+        "descricao_en": "Dyskinetic cerebral palsy",
+        "descricao_es": "Parálisis cerebral discinética"
+      },
+      {
+        "id": "54",
+        "descricao_pt": "Paralisia cerebral atáxica",
+        "descricao_en": "Ataxic cerebral palsy",
+        "descricao_es": "Parálisis cerebral atáxica"
+      },
+      {
+        "id": "55",
+        "descricao_pt": "Outras formas de paralisia cerebral",
+        "descricao_en": "Other forms of cerebral palsy",
+        "descricao_es": "Otras formas de parálisis cerebral"
+      },
+      {
+        "id": "56",
+        "descricao_pt": "Paralisia cerebral não especificada",
+        "descricao_en": "Cerebral palsy, unspecified",
+        "descricao_es": "Parálisis cerebral no especificada"
+      },
+      {
+        "id": "57",
+        "descricao_pt": "Epilepsia e síndromes epilépticas sintomáticas relacionadas à localização (focais) com crises parciais simples",
+        "descricao_en": "Localization-related (focal) symptomatic epilepsy and epileptic syndromes with simple partial seizures",
+        "descricao_es": "Epilepsia y síndromes epilépticos sintomáticos relacionados con la localización (focales) con crisis parciales simples"
+      },
+      {
+        "id": "58",
+        "descricao_pt": "Epilepsia e síndromes epilépticas sintomáticas relacionadas à localização (focais) com crises parciais complexas",
+        "descricao_en": "Localization-related (focal) symptomatic epilepsy and epileptic syndromes with complex partial seizures",
+        "descricao_es": "Epilepsia y síndromes epilépticos sintomáticos relacionados con la localización (focales) con crisis parciales complejas"
+      },
+      {
+        "id": "59",
+        "descricao_pt": "Epilepsia generalizada idiopática",
+        "descricao_en": "Idiopathic generalized epilepsy",
+        "descricao_es": "Epilepsia generalizada idiopática"
+      },
+      {
+        "id": "60",
+        "descricao_pt": "Outras epilepsias generalizadas",
+        "descricao_en": "Other generalized epilepsies",
+        "descricao_es": "Otras epilepsias generalizadas"
+      },
+      {
+        "id": "61",
+        "descricao_pt": "Síndromes epilépticas especiais",
+        "descricao_en": "Special epileptic syndromes",
+        "descricao_es": "Síndromes epilépticos especiales"
+      },
+      {
+        "id": "62",
+        "descricao_pt": "Crises epilépticas do tipo grande mal, não especificadas (com ou sem pequeno mal)",
+        "descricao_en": "Grand mal seizures, unspecified (with or without petit mal)",
+        "descricao_es": "Crisis epilépticas de tipo gran mal, no especificadas (con o sin pequeño mal)"
+      },
+      {
+        "id": "63",
+        "descricao_pt": "Pequeno mal, não especificado, sem menção de grande mal",
+        "descricao_en": "Petit mal, unspecified, without mention of grand mal",
+        "descricao_es": "Pequeño mal, no especificado, sin mención de gran mal"
+      },
+      {
+        "id": "64",
+        "descricao_pt": "Outras epilepsias",
+        "descricao_en": "Other epilepsies",
+        "descricao_es": "Otras epilepsias"
+      },
+      {
+        "id": "65",
+        "descricao_pt": "Epilepsia, não especificada",
+        "descricao_en": "Epilepsy, unspecified",
+        "descricao_es": "Epilepsia no especificada"
+      }
+    ]
+  }
+]

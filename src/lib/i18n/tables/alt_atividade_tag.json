@@ -1,0 +1,49 @@
+[
+  {
+    "name": "alt_atividade_tag",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Processamento Auditivo",
+        "descricao_en": "Auditory Processing",
+        "descricao_es": "Procesamiento Auditivo"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Processamento Visual",
+        "descricao_en": "Visual Processing",
+        "descricao_es": "Procesamiento Visual"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Funções Executivas",
+        "descricao_en": "Executive Functions",
+        "descricao_es": "Funciones Ejecutivas"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Linguagem e Comunicação",
+        "descricao_en": "Language and Communication",
+        "descricao_es": "Lenguaje y Comunicación"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Coordenação Motora",
+        "descricao_en": "Motor Coordination",
+        "descricao_es": "Coordinación Motora"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Cognição",
+        "descricao_en": "Cognition",
+        "descricao_es": "Cognición"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Comportamental e Socioemocional",
+        "descricao_en": "Behavioral and Socio-emotional",
+        "descricao_es": "Conductual y Socioemocional"
+      }
+    ]
+  }
+]

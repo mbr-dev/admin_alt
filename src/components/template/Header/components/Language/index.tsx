@@ -1,11 +1,12 @@
 import * as S from "./styles";
 import { ModalLanguage } from "../";
 import { useLanguage } from "./hook";
-import { useStorage } from "@/data/hooks";
+import { useTranslation } from "react-i18next";
 
-export const Language = () => {
+export function Language() {
   const hook = useLanguage();
-  const { getData } = useStorage();
+  const { t } = useTranslation("header");
+  const currentFlag = hook.currentLanguage?.img;
 
   return (
     <S.Container>
@@ -16,9 +17,16 @@ export const Language = () => {
         changeLanguage={hook.handleLanguageChange}
       />
 
-      <S.Flag onClick={() => hook.setShowFlags(true)}>
-        <img src={hook.flags[Number(getData("id_idioma"))].img} alt="Bandeiras" />
+      <S.Flag
+        type="button"
+        onClick={() => hook.setShowFlags(true)}
+        aria-label={t("language")}
+        title={t("language")}
+      >
+        {currentFlag ? (
+          <img src={currentFlag} alt={hook.currentLanguage?.label ?? t("language")} />
+        ) : null}
       </S.Flag>
     </S.Container>
-  )
+  );
 }

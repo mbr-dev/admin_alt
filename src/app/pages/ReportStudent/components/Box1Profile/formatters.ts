@@ -38,34 +38,55 @@ export function getAgeYears(birthDate: string | null | undefined): number | null
   return age;
 }
 
-export function formatBirthWithAge(birthDate: string | null | undefined): string {
+/**
+ * Formata nascimento com idade.
+ * Passe `formatWithAge` (ex.: via i18n `birth_with_age`) para o rótulo localizado.
+ */
+export function formatBirthWithAge(
+  birthDate: string | null | undefined,
+  formatWithAge?: (date: string, age: number) => string
+): string {
   const dateStr = formatBirthDateDisplay(birthDate);
   const age = getAgeYears(birthDate);
   if (dateStr === "—" && age === null) return "—";
   if (age === null) return dateStr;
+  if (formatWithAge) return formatWithAge(dateStr, age);
   return `${dateStr} • ${age} anos`;
 }
 
+export type CidRow = {
+  id_cid?: number;
+  sigla: string;
+  descricao: string;
+};
+
 export function normalizeCidRows(
   cid: StudentService.IClinicCidUsuarioFromApi | undefined
-): { sigla: string; descricao: string }[] {
+): CidRow[] {
   if (cid === undefined || cid === null) return [];
   if (Array.isArray(cid)) {
     if (cid.length === 0) return [];
     const first = cid[0];
     if (typeof first === "number") {
-      return (cid as number[]).map((id) => ({ sigla: String(id), descricao: "" }));
+      return (cid as number[]).map((id) => ({ id_cid: id, sigla: String(id), descricao: "" }));
     }
     return (cid as StudentService.IClinicCidUsuarioItem[]).map((item) => ({
+      id_cid: item.id_cid,
       sigla: item.sigla?.trim() || "—",
       descricao: item.descricao?.trim() ?? "",
     }));
   }
   const item = cid as StudentService.IClinicCidUsuarioItem;
-  return [{ sigla: item.sigla?.trim() || "—", descricao: item.descricao?.trim() ?? "" }];
+  return [
+    {
+      id_cid: item.id_cid,
+      sigla: item.sigla?.trim() || "—",
+      descricao: item.descricao?.trim() ?? "",
+    },
+  ];
 }
 
-export function formatCidLine(row: { sigla: string; descricao: string }): string {
+export function formatCidLine(row: CidRow): string {
   if (!row.descricao) return row.sigla;
   return `${row.sigla} - ${row.descricao}`;
 }

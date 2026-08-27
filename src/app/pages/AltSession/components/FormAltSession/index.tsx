@@ -1,9 +1,11 @@
 import * as S from "./styles";
 import { useFormAltSession } from "./hook";
 import { ChangeEvent } from "react";
-import { AltSessionService } from "@/data/models";
+import { AltSessionService, ProfessionalsService } from "@/data/models";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useTranslation } from "react-i18next";
+import { translateClinicaProfissaoById, translateTipoAtendimento, translateTipoAtendimentoById } from "@/lib/i18n/tables/lookup";
 
 interface IFormAltSession {
   onClose: () => void;
@@ -13,7 +15,23 @@ interface IFormAltSession {
 }
 
 export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoading = false }: IFormAltSession) {
+  const { t, i18n } = useTranslation("altSession");
   const props = useFormAltSession({ onClose, onSuccess, sessionToEdit });
+
+  const translateSessionTypeLabel = (value: string) => {
+    const raw = value.trim();
+    if (!raw) return value;
+    return translateTipoAtendimento(raw, i18n.language, raw);
+  };
+
+  const getClinicProfessionOptionLabel = (item: ProfessionalsService.IClinicProfession) => {
+    const raw = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+    if (item.tipo_atendimento?.trim()) {
+      return translateTipoAtendimentoById(item.id, i18n.language, raw);
+    }
+    return translateClinicaProfissaoById(item.id, i18n.language, raw);
+  };
+
   const stylesWithExtras = S as typeof S & {
     SearchWrapper: typeof S.Container;
     OptionsList: typeof S.Container;
@@ -55,55 +73,55 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
     <S.Container>
       <S.FormCard>
         <S.Header>
-          <S.FormTitle>{props.isEditMode ? "Editar sessão ALT" : "Cadastro de sessão ALT"}</S.FormTitle>
+          <S.FormTitle>{props.isEditMode ? t("form_edit_title") : t("form_create_title")}</S.FormTitle>
         </S.Header>
 
         <S.Sections>
           <S.Section>
-            <S.SectionTitle>Dados da sessão</S.SectionTitle>
+            <S.SectionTitle>{t("form_section_session")}</S.SectionTitle>
             <S.Grid>
             <S.Label htmlFor="session-type">
-                Tipo da sessão
+                {t("field_session_type")}
                 <S.Select id="session-type" value={props.sessionType} onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setSessionType(e.target.value)}>
-                  <option value="">Selecione o tipo</option>
+                  <option value="">{t("field_session_type_placeholder")}</option>
                   {props.sessionType.trim() &&
                     !props.sessionTypeOptions.some(
                       (item) => (item.tipo_atendimento ?? item.descricao ?? "").trim() === props.sessionType.trim()
                     ) && (
-                      <option value={props.sessionType}>{props.sessionType}</option>
+                      <option value={props.sessionType}>{translateSessionTypeLabel(props.sessionType)}</option>
                     )}
                   {props.sessionTypeOptions.map((item) => {
-                    const label = (item.tipo_atendimento ?? item.descricao ?? "").trim();
+                    const value = (item.tipo_atendimento ?? item.descricao ?? "").trim();
                     return (
-                      <option key={item.id} value={label}>
-                        {label}
+                      <option key={item.id} value={value}>
+                        {getClinicProfessionOptionLabel(item)}
                       </option>
                     );
                   })}
                 </S.Select>
               </S.Label>
               <S.Label htmlFor="session-status">
-                Status
+                {t("field_status")}
                 <StatusSelect
                   id="session-status"
                   value={props.status}
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => props.setStatus(e.target.value)}
                   $status={props.status}
                 >
-                  <option value="aberta">aberta</option>
-                  <option value="em_andamento">em andamento</option>
-                  <option value="finalizada">finalizada</option>
-                  <option value="cancelada">cancelada</option>
+                  <option value="aberta">{t("status_open")}</option>
+                  <option value="em_andamento">{t("status_in_progress")}</option>
+                  <option value="finalizada">{t("status_finished")}</option>
+                  <option value="cancelada">{t("status_cancelled")}</option>
                 </StatusSelect>
               </S.Label>
               <S.Label htmlFor="session-patient-id">
-                Paciente
+                {t("field_patient")}
                 <SearchWrapper>
                   <S.Input
                     id="session-patient-id"
                     value={props.patientName}
                     onChange={handleInputChange(props.setPatientName)}
-                    placeholder={props.isLoadingOptions ? "Carregando pacientes..." : "Digite para filtrar"}
+                    placeholder={props.isLoadingOptions ? t("placeholder_loading_patients") : t("placeholder_filter")}
                   />
                   {props.patientName && !props.idPatient && props.filteredStudents.length > 0 && (
                     <OptionsList>
@@ -117,13 +135,13 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
                 </SearchWrapper>
               </S.Label>
               <S.Label htmlFor="session-professional-id">
-                Profissional
+                {t("field_professional")}
                 <SearchWrapper>
                   <S.Input
                     id="session-professional-id"
                     value={props.professionalName}
                     onChange={handleInputChange(props.setProfessionalName)}
-                    placeholder={props.isLoadingOptions ? "Carregando profissionais..." : "Digite para filtrar"}
+                    placeholder={props.isLoadingOptions ? t("placeholder_loading_professionals") : t("placeholder_filter")}
                   />
                   {props.professionalName && !props.idProfessional && props.filteredProfessionals.length > 0 && (
                     <OptionsList>
@@ -138,7 +156,7 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
               </S.Label>
 
               <S.Label htmlFor="session-start">
-                Data/Hora início
+                {t("field_start")}
                 <S.Input
                   id="session-start"
                   type="datetime-local"
@@ -148,7 +166,7 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
               </S.Label>
 
               <S.Label htmlFor="session-end">
-                Data/Hora final
+                {t("field_end")}
                 <S.Input
                   id="session-end"
                   type="datetime-local"
@@ -162,10 +180,10 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
 
         <S.Footer>
           <S.Button type="button" $variant="secondary" onClick={onClose}>
-            Voltar
+            {t("button_back")}
           </S.Button>
           <S.Button type="button" $variant="primary" onClick={props.handleSubmit} disabled={props.disabledBtn}>
-            {props.isEditMode ? "Atualizar" : "Confirmar"}
+            {props.isEditMode ? t("button_update") : t("button_confirm")}
           </S.Button>
         </S.Footer>
       </S.FormCard>
@@ -177,17 +195,17 @@ export function FormAltSession({ onClose, onSuccess, sessionToEdit = null, isLoa
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>Tipo da sessão</DialogTitle>
+          <DialogTitle>{t("mismatch_title")}</DialogTitle>
           <DialogDescription>
-            Este profissional não possui a especialização selecionada no tipo da sessão, deseja realmente continuar?
+            {t("mismatch_description")}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex-col gap-2 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" onClick={() => props.setShowProfessionMismatchDialog(false)}>
-            Não
+            {t("mismatch_no")}
           </Button>
           <Button type="button" onClick={() => void props.handleMismatchDialogYes()}>
-            Sim
+            {t("mismatch_yes")}
           </Button>
         </DialogFooter>
       </DialogContent>

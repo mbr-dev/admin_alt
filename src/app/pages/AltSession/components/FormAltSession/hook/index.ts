@@ -4,6 +4,7 @@ import { AltSessionService } from "@/data/models";
 import { ProfessionalsService, StudentService } from "@/data/models";
 import { useMain, useStorage, useToast } from "@/data/hooks";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function professionalMatchesSessionType(
   professional: ProfessionalsService.IProfessionalByNetwork,
@@ -28,6 +29,7 @@ interface IUseFormAltSession {
 }
 
 export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: IUseFormAltSession) {
+  const { t } = useTranslation("altSession");
   const { setLoad } = useMain();
   const { toast } = useToast();
   const { getData } = useStorage();
@@ -205,23 +207,23 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
 
   const verifyData = () => {
     if (!idProfessional.trim()) {
-      toast({ title: "Sessões ALT", description: "Selecione o profissional!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_professional"), variant: "destructive" });
       return false;
     }
     if (!idPatient.trim()) {
-      toast({ title: "Sessões ALT", description: "Selecione o paciente!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_patient"), variant: "destructive" });
       return false;
     }
     if (!sessionType.trim()) {
-      toast({ title: "Sessões ALT", description: "Informe o tipo da sessão!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_session_type"), variant: "destructive" });
       return false;
     }
     if (!startDate) {
-      toast({ title: "Sessões ALT", description: "Informe a data/hora de início!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_start"), variant: "destructive" });
       return false;
     }
     if (!endDate) {
-      toast({ title: "Sessões ALT", description: "Informe a data/hora de fim!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_end"), variant: "destructive" });
       return false;
     }
     return true;
@@ -256,7 +258,7 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
         if (!changedStatus) return;
       }
 
-      toast({ title: "Sessões ALT", description: "Sessão atualizada com sucesso!", variant: "successful" });
+      toast({ title: t("toast_title"), description: t("success_update"), variant: "successful" });
       await onSuccess();
       onClose();
       return;
@@ -265,7 +267,7 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
     const response = await createAltSession(dataToSend);
     if (!response) return;
 
-    toast({ title: "Sessões ALT", description: "Sessão cadastrada com sucesso!", variant: "successful" });
+    toast({ title: t("toast_title"), description: t("success_create"), variant: "successful" });
     await onSuccess();
     onClose();
   }, [
@@ -283,6 +285,7 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
     onSuccess,
     onClose,
     toast,
+    t,
   ]);
 
   const handleSubmit = async () => {
@@ -294,7 +297,7 @@ export function useFormAltSession({ onClose, onSuccess, sessionToEdit = null }: 
 
       const selectedProfessional = professionals.find((p) => String(p.id_usuario) === idProfessional.trim());
       if (!selectedProfessional) {
-        toast({ title: "Sessões ALT", description: "Selecione o profissional!", variant: "destructive" });
+        toast({ title: t("toast_title"), description: t("validation_professional"), variant: "destructive" });
         return;
       }
 

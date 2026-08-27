@@ -5,6 +5,7 @@ import { CidService, StudentService, UnitService } from "@/data/models";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStorage, useToast, useMain } from "@/data/hooks";
 import { consultarCep } from "@/lib/consultarCep";
+import { useTranslation } from "react-i18next";
 
 interface IUseFormStudent {
   onSuccess?: () => Promise<void> | void;
@@ -12,18 +13,19 @@ interface IUseFormStudent {
   studentToEdit?: StudentService.IStudent | null;
 }
 
-export const FORM_STEPS = [
-  { key: "student", label: "Dados do aluno" },
-  { key: "access", label: "Acesso" },
-  { key: "cid", label: "Diagnóstico CID" },
-  { key: "guardian", label: "Dados do responsável" },
-  { key: "address", label: "Endereço" },
-  { key: "contact", label: "Contato" },
+const FORM_STEP_KEYS = [
+  { key: "student", labelKey: "step_student" },
+  { key: "access", labelKey: "step_access" },
+  { key: "cid", labelKey: "step_cid" },
+  { key: "guardian", labelKey: "step_guardian" },
+  { key: "address", labelKey: "step_address" },
+  { key: "contact", labelKey: "step_contact" },
 ] as const;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormStudent = {}) => {
+  const { t } = useTranslation("students");
   const { toast } = useToast();
   const { setLoad } = useMain();
   const { createClinicStudent, updateClinicStudentByUserId, verifyUser, getClinicStudentByUserId } = Student();
@@ -34,7 +36,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [studentName, setStudentName] = useState<string>("");
   const [studentEmail, setStudentEmail] = useState<string>("");
   const [studentBirth, setStudentBirth] = useState<string>("");
-  const [studentSex, setStudentSex] = useState<string>("M");
+  const [studentSex, setStudentSex] = useState<string>("");
 
   const [guardianName, setGuardianName] = useState<string>("");
   const [guardianEmail, setGuardianEmail] = useState<string>("");
@@ -67,7 +69,11 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isEditMode = !!studentToEdit;
-  const totalSteps = FORM_STEPS.length;
+  const formSteps = useMemo(
+    () => FORM_STEP_KEYS.map((step) => ({ key: step.key, label: t(step.labelKey) })),
+    [t]
+  );
+  const totalSteps = formSteps.length;
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;
   const previousUserPrefixRef = useRef<string>("");
@@ -110,7 +116,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
           setStudentName(clinicStudent.aluno?.nome ?? "");
           setStudentEmail(clinicStudent.aluno?.email ?? "");
           setStudentBirth(clinicStudent.aluno?.data_nascimento?.split("T")[0] ?? "");
-          setStudentSex(clinicStudent.aluno?.sexo ?? "M");
+          setStudentSex(clinicStudent.aluno?.sexo ?? "");
 
           setGuardianName(clinicStudent.responsavel?.nome ?? "");
           setGuardianEmail(clinicStudent.responsavel?.email ?? "");
@@ -224,7 +230,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     }
 
     if (!response) {
-      toast({ title: "Usuário", description: `Usuário válido ${user}!`, variant: "successful" });
+      toast({ title: t("toast_user_title"), description: t("toast_user_valid", { user }), variant: "successful" });
       setValidatedUser(user.trim());
       setVerified(true);
     }
@@ -291,7 +297,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
       if (isEditMode && studentToEdit?.id_usuario) {
         const response = await updateClinicStudentByUserId(studentToEdit.id_usuario, dataToSend);
         if (response) {
-          toast({ title: "Alunos", description: `Aluno ${user} atualizado com sucesso`, variant: "successful" });
+          toast({ title: t("toast_title"), description: t("toast_success_update", { user }), variant: "successful" });
           cleanData();
           if (onSuccess) await onSuccess();
           if (onClose) onClose();
@@ -302,7 +308,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
       const response = await createClinicStudent(dataToSend);
 
       if (response) {
-        toast({ title: "Alunos", description: `Aluno ${user} cadastrado com sucesso`, variant: "successful" });
+        toast({ title: t("toast_title"), description: t("toast_success_create", { user }), variant: "successful" });
         cleanData();
         if (onSuccess) await onSuccess();
         if (onClose) onClose();
@@ -318,22 +324,27 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
   const verifyStudentStep = () => {
     if (!studentName.trim()) {
-      toast({ title: "Alunos", description: "Informe o nome!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_student_name"), variant: "destructive" });
       return false;
     }
 
     if (!studentEmail.trim()) {
-      toast({ title: "Alunos", description: "Informe o e-mail!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_student_email"), variant: "destructive" });
       return false;
     }
 
     if (!EMAIL_REGEX.test(studentEmail.trim())) {
-      toast({ title: "Alunos", description: "E-mail inválido!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_student_email_invalid"), variant: "destructive" });
       return false;
     }
 
     if (!studentBirth) {
-      toast({ title: "Alunos", description: "Informe a data de nascimento do aluno!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_student_birth"), variant: "destructive" });
+      return false;
+    }
+
+    if (!studentSex.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_student_sex"), variant: "destructive" });
       return false;
     }
 
@@ -341,28 +352,28 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   };
 
   const verifyAccessStep = () => {
-    if (user === "") {
-      toast({ title: "Alunos", description: "Informe o usuário!", variant: "destructive" });
+    if (!user.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_user"), variant: "destructive" });
       return false;
     }
 
     if (!isEditMode && !password.trim()) {
-      toast({ title: "Alunos", description: "Informe a senha!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_password"), variant: "destructive" });
       return false;
     }
 
     if (!selectedUnitId) {
-      toast({ title: "Alunos", description: "Selecione a unidade!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_unit"), variant: "destructive" });
       return false;
     }
 
     if (!isEditMode && !verified) {
-      toast({ title: "Alunos", description: "Precisa verificar o usuário primeiro!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_user_verify"), variant: "destructive" });
       return false;
     }
 
     if (!isEditMode && validatedUser !== user.trim()) {
-      toast({ title: "Alunos", description: "Usuário alterado. Verifique novamente antes de cadastrar!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_user_changed"), variant: "destructive" });
       return false;
     }
 
@@ -371,17 +382,80 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
   const verifyGuardianStep = () => {
     if (!guardianName.trim()) {
-      toast({ title: "Alunos", description: "Informe o nome do responsável!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_guardian_name"), variant: "destructive" });
       return false;
     }
 
-    if (guardianEmail.trim() && !EMAIL_REGEX.test(guardianEmail.trim())) {
-      toast({ title: "Alunos", description: "E-mail do responsável inválido!", variant: "destructive" });
+    if (!guardianEmail.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_email"), variant: "destructive" });
+      return false;
+    }
+
+    if (!EMAIL_REGEX.test(guardianEmail.trim())) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_email_invalid"), variant: "destructive" });
+      return false;
+    }
+
+    if (!guardianBirth) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_birth"), variant: "destructive" });
+      return false;
+    }
+
+    if (!guardianCpfCnpj.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_cpf"), variant: "destructive" });
       return false;
     }
 
     if (!guardianKinship.trim()) {
-      toast({ title: "Alunos", description: "Informe o parentesco do responsável!", variant: "destructive" });
+      toast({ title: t("toast_title"), description: t("validation_guardian_kinship"), variant: "destructive" });
+      return false;
+    }
+
+    return true;
+  };
+
+  const verifyAddressStep = () => {
+    if (!addressCep.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_cep"), variant: "destructive" });
+      return false;
+    }
+
+    if (!addressStreet.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_street"), variant: "destructive" });
+      return false;
+    }
+
+    if (!addressNumber.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_number"), variant: "destructive" });
+      return false;
+    }
+
+    if (!addressDistrict.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_district"), variant: "destructive" });
+      return false;
+    }
+
+    if (!addressRegion.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_region"), variant: "destructive" });
+      return false;
+    }
+
+    return true;
+  };
+
+  const verifyContactStep = () => {
+    if (!contactGuardianName.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_contact_name"), variant: "destructive" });
+      return false;
+    }
+
+    if (contactGuardianName.trim().length < 3) {
+      toast({ title: t("toast_title"), description: t("validation_contact_name_min"), variant: "destructive" });
+      return false;
+    }
+
+    if (!contactValue.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_contact"), variant: "destructive" });
       return false;
     }
 
@@ -389,11 +463,13 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   };
 
   const verifyStep = (step: number) => {
-    const stepKey = FORM_STEPS[step]?.key;
+    const stepKey = formSteps[step]?.key;
 
     if (stepKey === "student") return verifyStudentStep();
     if (stepKey === "access") return verifyAccessStep();
     if (stepKey === "guardian") return verifyGuardianStep();
+    if (stepKey === "address") return verifyAddressStep();
+    if (stepKey === "contact") return verifyContactStep();
 
     return true;
   };
@@ -421,7 +497,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setStudentName("");
     setStudentEmail("");
     setStudentBirth("");
-    setStudentSex("M");
+    setStudentSex("");
     setGuardianName("");
     setGuardianEmail("");
     setGuardianBirth("");
@@ -468,7 +544,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     isLastStep,
     goToNextStep,
     goToPreviousStep,
-    formSteps: FORM_STEPS,
+    formSteps,
     user,
     setUser,
     password,

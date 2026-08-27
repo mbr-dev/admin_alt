@@ -92,38 +92,38 @@ export const Infos = () => {
           ) : (
             <SessionsBox>
               {sessions.length === 0 ? (
-                <EmptyBox>Nenhuma sessão para hoje.</EmptyBox>
+                <EmptyBox>{t("empty_sessions_today")}</EmptyBox>
               ) : (
                 sessions.map((session) => (
                   <SessionCard key={session.id} $status={normalizeStatus(session.status)}>
                     <SessionRow>
                       <SessionItem>
-                        <ItemLabel>Profissional</ItemLabel>
+                        <ItemLabel>{t("col_professional")}</ItemLabel>
                         <ItemValue>{session.nome_profissional || "-"}</ItemValue>
                       </SessionItem>
 
                       <SessionItem>
-                        <ItemLabel>Aluno</ItemLabel>
+                        <ItemLabel>{t("col_student")}</ItemLabel>
                         <ItemValue>{session.nome_paciente || "-"}</ItemValue>
                       </SessionItem>
 
                       <SessionItem>
-                        <ItemLabel>Tipo de Sessão</ItemLabel>
+                        <ItemLabel>{t("col_session_type")}</ItemLabel>
                         <ItemValue>{session.tipo_sessao || "-"}</ItemValue>
                       </SessionItem>
 
                       <SessionItem>
-                        <ItemLabel>Data/Hora Início</ItemLabel>
+                        <ItemLabel>{t("col_start")}</ItemLabel>
                         <ItemValue>{formatDate(session.data_inicio)}</ItemValue>
                       </SessionItem>
 
                       <SessionItem>
-                        <ItemLabel>Data/Hora Término</ItemLabel>
+                        <ItemLabel>{t("col_end")}</ItemLabel>
                         <ItemValue>{formatDate(session.data_final)}</ItemValue>
                       </SessionItem>
 
                       <SessionItem>
-                        <ItemLabel>Status</ItemLabel>
+                        <ItemLabel>{t("col_status")}</ItemLabel>
                         <ItemValue>{normalizeStatus(session.status)}</ItemValue>
                       </SessionItem>
                     </SessionRow>
@@ -134,7 +134,7 @@ export const Infos = () => {
           )}
           <S.Actions>
             <S.ViewMoreButton type="button" onClick={() => navigate("/alt_session")}>
-              Ver mais
+              {t("view_more")}
             </S.ViewMoreButton>
           </S.Actions>
         </S.Infos>

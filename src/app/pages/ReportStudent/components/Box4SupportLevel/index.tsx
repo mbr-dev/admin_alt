@@ -1,7 +1,9 @@
 import * as S from "./styles";
 import { ReportUserSession } from "@/data/services";
 import { ReportUserSessionService } from "@/data/models";
+import { translateProntuarioOpcaoById } from "@/lib/i18n/tables/lookup";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, type PieLabelRenderProps } from "recharts";
 
 /** Trecho dentro do primeiro `(...)` em `descricao`, ex.: "Independente (I): ..." → "I". */
@@ -21,13 +23,16 @@ type PieDatum = {
   descricaoFull: string;
 };
 
-function reportToStrategiesPieData(res: ReportUserSessionService.IReportUserSessionReportResponse | null): PieDatum[] {
+function reportToStrategiesPieData(
+  res: ReportUserSessionService.IReportUserSessionReportResponse | null,
+  language: string
+): PieDatum[] {
   if (!res?.data?.length) return [];
   return res.data.map((item) => {
-    const full = item.descricao.trim();
-    const legendName = full.length > 28 ? `${full.slice(0, 28)}…` : full;
+    const fallback = item.descricao.trim();
+    const full = translateProntuarioOpcaoById(item.id_resposta, language, fallback);
     return {
-      name: legendName || "—",
+      name: full || "—",
       descricaoFull: full,
       value: Math.max(0, item.frequencia),
       quantidade: item.quantidade,
@@ -65,25 +70,24 @@ type TooltipPieProps = {
 };
 
 function StrategiesPieTooltip({ active, payload }: TooltipPieProps) {
+  const { t } = useTranslation("reportStudent");
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
   return (
     <S.TooltipBox>
       <p className="font-medium text-mbr-gray-30">{row.descricaoFull}</p>
-      <p className="mt-1 text-mbr-gray-50">Frequência: {row.value}%</p>
-      <p className="text-mbr-gray-50">Quantidade: {row.quantidade}</p>
+      <p className="mt-1 text-mbr-gray-50">{t("frequency_value", { value: row.value })}</p>
+      <p className="text-mbr-gray-50">{t("quantity_value", { value: row.quantidade })}</p>
     </S.TooltipBox>
   );
 }
-
-const STRATEGIES_SUBTITLE =
-  "Mostra quais abordagens terapêuticas foram mais eficazes durante as sessões.";
 
 type Props = {
   idUsuario: number;
 };
 
 export function Box4SupportLevel({ idUsuario }: Props) {
+  const { t, i18n } = useTranslation("reportStudent");
   const { getStrategies } = ReportUserSession();
 
   const [loading, setLoading] = useState(true);
@@ -111,20 +115,23 @@ export function Box4SupportLevel({ idUsuario }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- getStrategies instável por useApi
   }, [idUsuario]);
 
-  const pieData = useMemo(() => reportToStrategiesPieData(strategiesRes), [strategiesRes]);
+  const pieData = useMemo(
+    () => reportToStrategiesPieData(strategiesRes, i18n.language),
+    [strategiesRes, i18n.language]
+  );
 
   return (
     <S.Box4>
-      <S.BoxTitle>Estratégias terapêuticas</S.BoxTitle>
+      <S.BoxTitle>{t("strategies_title")}</S.BoxTitle>
       <S.ChartBody>
         {loading ? (
-          <p className="py-10 text-center text-sm text-mbr-gray-50">Carregando gráfico…</p>
+          <p className="py-10 text-center text-sm text-mbr-gray-50">{t("loading_chart")}</p>
         ) : (
           <S.ChartCard>
-            <S.ChartCardTitle>Abordagens nas sessões</S.ChartCardTitle>
-            <S.ChartCardSubtitle>{STRATEGIES_SUBTITLE}</S.ChartCardSubtitle>
+            <S.ChartCardTitle>{t("approaches_title")}</S.ChartCardTitle>
+            <S.ChartCardSubtitle>{t("approaches_subtitle")}</S.ChartCardSubtitle>
             {pieData.length === 0 ? (
-              <S.EmptyHint>Sem dados de estratégias.</S.EmptyHint>
+              <S.EmptyHint>{t("empty_strategies")}</S.EmptyHint>
             ) : (
               <S.ChartWrap>
                 <ResponsiveContainer width="100%" height="100%">

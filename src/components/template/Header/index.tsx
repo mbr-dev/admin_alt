@@ -1,17 +1,15 @@
 import * as S from "./styles";
 import { useHeader } from "./hook";
-import { Menu } from "./components";
+import { Language, Menu } from "./components";
 import { Breadcrumb } from "..";
 import { IoMdExit } from "react-icons/io";
-//import { useNavigate } from "react-router-dom";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useApi, useStorage } from "@/data/hooks";
 import { ConfirmActionModal } from "..";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const Header = () => {
-  //const navigate = useNavigate();
+export function Header() {
   const { URL_FILES } = useApi();
   const { getData } = useStorage();
   const hook = useHeader();
@@ -34,8 +32,7 @@ export const Header = () => {
         </S.Menu>
 
         <S.Infos>
-          {/* <Language /> */}
-          {/* <S.Avatar onClick={() => navigate("/profile")}> */}
+          <Language />
           <S.Avatar>
             <img src={`${URL_FILES}images/avatar/${getData("avatar")}.png`} alt="icone do avatar" />
           </S.Avatar>

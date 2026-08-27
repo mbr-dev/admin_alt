@@ -1,0 +1,91 @@
+[
+  {
+    "name": "cid_subcategoria",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Transtornos do Espectro Autista",
+        "descricao_en": "Autism Spectrum Disorders",
+        "descricao_es": "Trastornos del Espectro Autista"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "TDAH",
+        "descricao_en": "ADHD",
+        "descricao_es": "TDAH"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Transtornos específicos do desenvolvimento da fala e linguagem",
+        "descricao_en": "Specific developmental disorders of speech and language",
+        "descricao_es": "Trastornos específicos del desarrollo del habla y del lenguaje"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Transtornos específicos da aprendizagem",
+        "descricao_en": "Specific learning disorders",
+        "descricao_es": "Trastornos específicos del aprendizaje"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Transtorno do desenvolvimento da coordenação",
+        "descricao_en": "Developmental coordination disorder",
+        "descricao_es": "Trastorno del desarrollo de la coordinación"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Ansiedade",
+        "descricao_en": "Anxiety",
+        "descricao_es": "Ansiedad"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Transtornos depressivos",
+        "descricao_en": "Depressive disorders",
+        "descricao_es": "Trastornos depresivos"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Transtornos de conduta",
+        "descricao_en": "Conduct disorders",
+        "descricao_es": "Trastornos de conducta"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Transtorno opositor desafiante",
+        "descricao_en": "Oppositional defiant disorder",
+        "descricao_es": "Trastorno negativista desafiante"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Deficiência auditiva (H90–H91)",
+        "descricao_en": "Hearing impairment (H90–H91)",
+        "descricao_es": "Deficiencia auditiva (H90–H91)"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Deficiência visual (H54)",
+        "descricao_en": "Visual impairment (H54)",
+        "descricao_es": "Deficiencia visual (H54)"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Paralisia cerebral",
+        "descricao_en": "Cerebral palsy",
+        "descricao_es": "Parálisis cerebral"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Epilepsia",
+        "descricao_en": "Epilepsy",
+        "descricao_es": "Epilepsia"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Síndromes genéticas com impacto cognitivo",
+        "descricao_en": "Genetic syndromes with cognitive impact",
+        "descricao_es": "Síndromes genéticos con impacto cognitivo"
+      }
+    ]
+  }
+]

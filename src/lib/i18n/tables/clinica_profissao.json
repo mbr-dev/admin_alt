@@ -1,0 +1,169 @@
+[
+  {
+    "name": "clinica_profissao",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Psicólogo(a)",
+        "descricao_en": "Psychologist",
+        "descricao_es": "Psicólogo(a)",
+        "tipo_atendimento_pt": "Avaliação, Sessão Terapêutica, Devolutiva",
+        "tipo_atendimento_en": "Assessment, Therapeutic Session, Feedback",
+        "tipo_atendimento_es": "Evaluación, Sesión Terapéutica, Devolución"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "Analista do Comportamento (ABA)",
+        "descricao_en": "Behavior Analyst (ABA)",
+        "descricao_es": "Analista del Comportamiento (ABA)",
+        "tipo_atendimento_pt": "Avaliação ABA, Intervenção ABA, Treinamento de Habilidades",
+        "tipo_atendimento_en": "ABA Assessment, ABA Intervention, Skills Training",
+        "tipo_atendimento_es": "Evaluación ABA, Intervención ABA, Entrenamiento de Habilidades"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "Fonoaudiólogo(a)",
+        "descricao_en": "Speech-Language Pathologist",
+        "descricao_es": "Fonoaudiólogo(a)",
+        "tipo_atendimento_pt": "Avaliação, Terapia Fonoaudiológica, Reavaliação",
+        "tipo_atendimento_en": "Assessment, Speech Therapy, Reassessment",
+        "tipo_atendimento_es": "Evaluación, Terapia Fonoaudiológica, Reevaluación"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "Fisioterapeuta",
+        "descricao_en": "Physical Therapist",
+        "descricao_es": "Fisioterapeuta",
+        "tipo_atendimento_pt": "Avaliação Funcional, Sessão de Fisioterapia",
+        "tipo_atendimento_en": "Functional Assessment, Physical Therapy Session",
+        "tipo_atendimento_es": "Evaluación Funcional, Sesión de Fisioterapia"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Terapeuta Ocupacional",
+        "descricao_en": "Occupational Therapist",
+        "descricao_es": "Terapeuta Ocupacional",
+        "tipo_atendimento_pt": "Avaliação, Terapia Ocupacional, Treino de AVD",
+        "tipo_atendimento_en": "Assessment, Occupational Therapy, ADL Training",
+        "tipo_atendimento_es": "Evaluación, Terapia Ocupacional, Entrenamiento de AVD"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Neuropsicólogo(a)",
+        "descricao_en": "Neuropsychologist",
+        "descricao_es": "Neuropsicólogo(a)",
+        "tipo_atendimento_pt": "Avaliação Neuropsicológica, Reavaliação, Devolutiva",
+        "tipo_atendimento_en": "Neuropsychological Assessment, Reassessment, Feedback",
+        "tipo_atendimento_es": "Evaluación Neuropsicológica, Reevaluación, Devolución"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Psicopedagogo(a)",
+        "descricao_en": "Educational Psychologist",
+        "descricao_es": "Psicopedagogo(a)",
+        "tipo_atendimento_pt": "Avaliação Psicopedagógica, Intervenção",
+        "tipo_atendimento_en": "Educational Psychology Assessment, Intervention",
+        "tipo_atendimento_es": "Evaluación Psicopedagógica, Intervención"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Pedagogo(a)",
+        "descricao_en": "Pedagogue",
+        "descricao_es": "Pedagogo(a)",
+        "tipo_atendimento_pt": "Apoio Pedagógico, Reforço Escolar",
+        "tipo_atendimento_en": "Pedagogical Support, Academic Tutoring",
+        "tipo_atendimento_es": "Apoyo Pedagógico, Refuerzo Escolar"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Profissional de Educação Física",
+        "descricao_en": "Physical Education Professional",
+        "descricao_es": "Profesional de Educación Física",
+        "tipo_atendimento_pt": "Avaliação Física, Treinamento, Reabilitação Física",
+        "tipo_atendimento_en": "Physical Assessment, Training, Physical Rehabilitation",
+        "tipo_atendimento_es": "Evaluación Física, Entrenamiento, Rehabilitación Física"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "Musicoterapeuta",
+        "descricao_en": "Music Therapist",
+        "descricao_es": "Musicoterapeuta",
+        "tipo_atendimento_pt": "Sessão de Musicoterapia",
+        "tipo_atendimento_en": "Music Therapy Session",
+        "tipo_atendimento_es": "Sesión de Musicoterapia"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Arteterapeuta",
+        "descricao_en": "Art Therapist",
+        "descricao_es": "Arteterapeuta",
+        "tipo_atendimento_pt": "Sessão de Arteterapia",
+        "tipo_atendimento_en": "Art Therapy Session",
+        "tipo_atendimento_es": "Sesión de Arteterapia"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Nutricionista",
+        "descricao_en": "Nutritionist",
+        "descricao_es": "Nutricionista",
+        "tipo_atendimento_pt": "Consulta Nutricional, Retorno, Plano Alimentar",
+        "tipo_atendimento_en": "Nutritional Consultation, Follow-up, Meal Plan",
+        "tipo_atendimento_es": "Consulta Nutricional, Seguimiento, Plan Alimentario"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Enfermeiro(a)",
+        "descricao_en": "Nurse",
+        "descricao_es": "Enfermero(a)",
+        "tipo_atendimento_pt": "Procedimento, Monitoramento, Orientação",
+        "tipo_atendimento_en": "Procedure, Monitoring, Guidance",
+        "tipo_atendimento_es": "Procedimiento, Monitoreo, Orientación"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Técnico de Enfermagem",
+        "descricao_en": "Nursing Technician",
+        "descricao_es": "Técnico de Enfermería",
+        "tipo_atendimento_pt": "Procedimento Técnico, Apoio Assistencial",
+        "tipo_atendimento_en": "Technical Procedure, Care Support",
+        "tipo_atendimento_es": "Procedimiento Técnico, Apoyo Asistencial"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Psicomotricista",
+        "descricao_en": "Psychomotor Therapist",
+        "descricao_es": "Psicomotricista",
+        "tipo_atendimento_pt": "Avaliação Psicomotora, Sessão Psicomotora",
+        "tipo_atendimento_en": "Psychomotor Assessment, Psychomotor Session",
+        "tipo_atendimento_es": "Evaluación Psicomotora, Sesión Psicomotora"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "Especialista em Integração Sensorial",
+        "descricao_en": "Sensory Integration Specialist",
+        "descricao_es": "Especialista en Integración Sensorial",
+        "tipo_atendimento_pt": "Avaliação Sensorial, Terapia de Integração Sensorial",
+        "tipo_atendimento_en": "Sensory Assessment, Sensory Integration Therapy",
+        "tipo_atendimento_es": "Evaluación Sensorial, Terapia de Integración Sensorial"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Neuropediatra",
+        "descricao_en": "Pediatric Neurologist",
+        "descricao_es": "Neuropediatra",
+        "tipo_atendimento_pt": "Consulta, Retorno, Avaliação Neurológica",
+        "tipo_atendimento_en": "Consultation, Follow-up, Neurological Assessment",
+        "tipo_atendimento_es": "Consulta, Seguimiento, Evaluación Neurológica"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Psiquiatra",
+        "descricao_en": "Psychiatrist",
+        "descricao_es": "Psiquiatra",
+        "tipo_atendimento_pt": "Consulta, Retorno, Ajuste Medicamentoso",
+        "tipo_atendimento_en": "Consultation, Follow-up, Medication Adjustment",
+        "tipo_atendimento_es": "Consulta, Seguimiento, Ajuste de Medicación"
+      }
+    ]
+  }
+]

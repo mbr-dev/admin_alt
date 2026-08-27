@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useApi, useToast } from "@/data/hooks";
 import { StudentService } from "@/data/models";
+import { formatValidationErrorDescription } from "@/data/constants";
 
 export function Student() {
   const { toast } = useToast();
@@ -50,11 +51,15 @@ export function Student() {
       try {
         const { data } = await api.post("clinicStudent/createClinicStudent", dataToSend);
         if (data) return data;
+        return null;
       } catch (error) {
-        console.log(get_error(error));
+        const errorMessage = formatValidationErrorDescription(error);
+        console.log(errorMessage);
+        toast({ title: "Alunos", description: errorMessage, variant: "destructive" });
+        return null;
       }
     },
-    [api, get_error]
+    [api, toast]
   );
 
   const getClinicStudentByUserId = useCallback(
@@ -78,11 +83,13 @@ export function Student() {
         if (data) return data;
         return null;
       } catch (error) {
-        console.log(get_error(error));
+        const errorMessage = formatValidationErrorDescription(error);
+        console.log(errorMessage);
+        toast({ title: "Alunos", description: errorMessage, variant: "destructive" });
         return null;
       }
     },
-    [api, get_error]
+    [api, toast]
   );
 
   const deleteStudentByUserId = useCallback(

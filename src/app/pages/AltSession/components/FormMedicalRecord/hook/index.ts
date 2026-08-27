@@ -2,6 +2,7 @@ import { ATLSession } from "@/data/services";
 import { AltSessionService } from "@/data/models";
 import { useMain, useToast } from "@/data/hooks";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IUseFormMedicalRecord {
   session: AltSessionService.IAltSession;
@@ -16,6 +17,7 @@ interface IAnswerValue {
 }
 
 export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMedicalRecord) {
+  const { t } = useTranslation("altSession");
   const { setLoad } = useMain();
   const { toast } = useToast();
   const { getMedicalRecordQuestions, createMedicalRecordSession, getMedicalRecordSessionBySessionId, updateMedicalRecordSessionBySessionId } =
@@ -124,7 +126,7 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
 
   const verifyData = () => {
     if (!hasQuestions) {
-      toast({ title: "Prontuário", description: "Nenhuma pergunta disponível para preenchimento.", variant: "destructive" });
+      toast({ title: t("toast_record_title"), description: t("validation_no_questions"), variant: "destructive" });
       return false;
     }
 
@@ -133,24 +135,24 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
       const questionType = getQuestionType(question);
 
       if (questionType === "check" && (!answer?.id_respostas || answer.id_respostas.length === 0)) {
-        toast({ title: "Prontuário", description: "Preencha todas as perguntas obrigatórias.", variant: "destructive" });
+        toast({ title: t("toast_record_title"), description: t("validation_required_questions"), variant: "destructive" });
         return false;
       }
 
       if (questionType === "select" && !answer?.id_resposta) {
-        toast({ title: "Prontuário", description: "Preencha todas as perguntas obrigatórias.", variant: "destructive" });
+        toast({ title: t("toast_record_title"), description: t("validation_required_questions"), variant: "destructive" });
         return false;
       }
 
       if ((questionType === "input" || questionType === "input_number") && !answer?.resposta_texto?.trim()) {
-        toast({ title: "Prontuário", description: "Preencha todas as perguntas obrigatórias.", variant: "destructive" });
+        toast({ title: t("toast_record_title"), description: t("validation_required_questions"), variant: "destructive" });
         return false;
       }
 
       if (questionType === "input_number" && answer?.resposta_texto?.trim()) {
         const n = Number(answer.resposta_texto);
         if (!Number.isFinite(n)) {
-          toast({ title: "Prontuário", description: "Informe um número válido em todas as perguntas numéricas.", variant: "destructive" });
+          toast({ title: t("toast_record_title"), description: t("validation_invalid_number"), variant: "destructive" });
           return false;
         }
       }
@@ -197,8 +199,8 @@ export function useFormMedicalRecord({ session, onClose, onSuccess }: IUseFormMe
       if (!response) return;
 
       toast({
-        title: "Prontuário",
-        description: isEditMode ? "Prontuário atualizado com sucesso!" : "Prontuário salvo com sucesso!",
+        title: t("toast_record_title"),
+        description: isEditMode ? t("success_record_update") : t("success_record_create"),
         variant: "successful",
       });
       await onSuccess();

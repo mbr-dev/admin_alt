@@ -1,5 +1,34 @@
 import { AxiosError } from "axios";
 
+export function formatValidationFieldMessage(message: string): string {
+  const parts = message.split(".");
+  const fieldPart = parts.length > 1 ? parts[1] : parts[0];
+  const fieldName = fieldPart.split(" must ")[0]?.trim() ?? fieldPart.trim();
+  return fieldName.replace(/_/g, " ");
+}
+
+export function formatValidationErrorDescription(error: unknown): string {
+  if (error instanceof AxiosError) {
+    const data = error.response?.data;
+    if (data && typeof data === "object") {
+      const msg = (data as Record<string, unknown>).message;
+      if (Array.isArray(msg)) {
+        const formatted = [...new Set(
+          msg
+            .filter((item): item is string => typeof item === "string")
+            .map(formatValidationFieldMessage)
+        )];
+
+        if (formatted.length) {
+          return `Revise o formulário para verificar se existe algum campo faltando ou inválido: ${formatted.join(", ")}.`;
+        }
+      }
+    }
+  }
+
+  return GetError(error);
+}
+
 /** Extrai texto de `response.data` (NestJS, validação, etc.). */
 export function extractApiErrorMessage(data: unknown): string | undefined {
   if (data == null) return undefined;

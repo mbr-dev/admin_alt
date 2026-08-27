@@ -1,0 +1,175 @@
+[
+  {
+    "name": "prontuario_perguntas",
+    "data": [
+      {
+        "id": "1",
+        "descricao_pt": "Objetivo da Sessão",
+        "descricao_en": "Session Objective",
+        "descricao_es": "Objetivo de la Sesión"
+      },
+      {
+        "id": "2",
+        "descricao_pt": "ÁREAS TRABALHADAS (Linguagem Global)",
+        "descricao_en": "AREAS ADDRESSED (Global Language)",
+        "descricao_es": "ÁREAS TRABAJADAS (Lenguaje Global)"
+      },
+      {
+        "id": "3",
+        "descricao_pt": "HIERARQUIA DE AJUDA (Nível de Suporte - Crucial para Evolução)",
+        "descricao_en": "ASSISTANCE HIERARCHY (Support Level - Crucial for Progress)",
+        "descricao_es": "JERARQUÍA DE AYUDA (Nivel de Apoyo - Crucial para la Evolución)"
+      },
+      {
+        "id": "4",
+        "descricao_pt": "HIERARQUIA DE AJUDA (Nível de Suporte - Crucial para Evolução)",
+        "descricao_en": "ASSISTANCE HIERARCHY (Support Level - Crucial for Progress)",
+        "descricao_es": "JERARQUÍA DE AYUDA (Nivel de Apoyo - Crucial para la Evolución)"
+      },
+      {
+        "id": "5",
+        "descricao_pt": "Nível de engajamento",
+        "descricao_en": "Engagement level",
+        "descricao_es": "Nivel de compromiso"
+      },
+      {
+        "id": "6",
+        "descricao_pt": "Análise de Comportamento (Atenção)",
+        "descricao_en": "Behavior Analysis (Attention)",
+        "descricao_es": "Análisis del Comportamiento (Atención)"
+      },
+      {
+        "id": "7",
+        "descricao_pt": "Análise de Comportamento (Regulação Emocional)",
+        "descricao_en": "Behavior Analysis (Emotional Regulation)",
+        "descricao_es": "Análisis del Comportamiento (Regulación Emocional)"
+      },
+      {
+        "id": "8",
+        "descricao_pt": "Análise de Comportamento (Comportamentos Interferentes)",
+        "descricao_en": "Behavior Analysis (Interfering Behaviors)",
+        "descricao_es": "Análisis del Comportamiento (Comportamientos Interferentes)"
+      },
+      {
+        "id": "9",
+        "descricao_pt": "Análise de Comportamento (Função Provável da Intercorrência)",
+        "descricao_en": "Behavior Analysis (Probable Function of the Incident)",
+        "descricao_es": "Análisis del Comportamiento (Función Probable del Incidente)"
+      },
+      {
+        "id": "10",
+        "descricao_pt": "RESULTADO DA INTERVENÇÃO",
+        "descricao_en": "INTERVENTION OUTCOME",
+        "descricao_es": "RESULTADO DE LA INTERVENCIÓN"
+      },
+      {
+        "id": "11",
+        "descricao_pt": "Reforçador Eficaz (o que motivou o aluno hoje?)",
+        "descricao_en": "Effective Reinforcer (what motivated the student today?)",
+        "descricao_es": "Reforzador Eficaz (¿qué motivó al alumno hoy?)"
+      },
+      {
+        "id": "12",
+        "descricao_pt": "Pessoas envolvidas no contexto",
+        "descricao_en": "People involved in the context",
+        "descricao_es": "Personas involucradas en el contexto"
+      },
+      {
+        "id": "13",
+        "descricao_pt": "Como o aluno respondeu às intervenções?",
+        "descricao_en": "How did the student respond to the interventions?",
+        "descricao_es": "¿Cómo respondió el alumno a las intervenciones?"
+      },
+      {
+        "id": "14",
+        "descricao_pt": "Estratégias que funcionaram",
+        "descricao_en": "Strategies that worked",
+        "descricao_es": "Estrategias que funcionaron"
+      },
+      {
+        "id": "15",
+        "descricao_pt": "Comparado às sessões anteriores",
+        "descricao_en": "Compared to previous sessions",
+        "descricao_es": "Comparado con las sesiones anteriores"
+      },
+      {
+        "id": "16",
+        "descricao_pt": "OBSERVAÇÃO TÉCNICA (Obrigatório)",
+        "descricao_en": "TECHNICAL OBSERVATION (Required)",
+        "descricao_es": "OBSERVACIÓN TÉCNICA (Obligatorio)"
+      },
+      {
+        "id": "17",
+        "descricao_pt": "Tipo de Atividade",
+        "descricao_en": "Type of Activity",
+        "descricao_es": "Tipo de Actividad"
+      },
+      {
+        "id": "18",
+        "descricao_pt": "Reforçador Eficaz (o que motivou o aluno hoje?)",
+        "descricao_en": "Effective Reinforcer (what motivated the student today?)",
+        "descricao_es": "Reforzador Eficaz (¿qué motivó al alumno hoy?)"
+      },
+      {
+        "id": "19",
+        "descricao_pt": "Estratégia de Sucesso",
+        "descricao_en": "Success Strategy",
+        "descricao_es": "Estrategia de Éxito"
+      },
+      {
+        "id": "20",
+        "descricao_pt": "Orientações à Família/Escola (Generalização)",
+        "descricao_en": "Guidance for Family/School (Generalization)",
+        "descricao_es": "Orientaciones a la Familia/Escuela (Generalización)"
+      },
+      {
+        "id": "21",
+        "descricao_pt": "Número de tentativas",
+        "descricao_en": "Number of attempts",
+        "descricao_es": "Número de intentos"
+      },
+      {
+        "id": "22",
+        "descricao_pt": "Acertos independentes",
+        "descricao_en": "Independent correct responses",
+        "descricao_es": "Aciertos independientes"
+      },
+      {
+        "id": "23",
+        "descricao_pt": "Acertos com ajuda",
+        "descricao_en": "Correct responses with assistance",
+        "descricao_es": "Aciertos con ayuda"
+      },
+      {
+        "id": "24",
+        "descricao_pt": "Latência para resposta (em segundos)",
+        "descricao_en": "Response latency (in seconds)",
+        "descricao_es": "Latencia de respuesta (en segundos)"
+      },
+      {
+        "id": "25",
+        "descricao_pt": "Tempo de engajamento (em minutos)",
+        "descricao_en": "Engagement time (in minutes)",
+        "descricao_es": "Tiempo de compromiso (en minutos)"
+      },
+      {
+        "id": "26",
+        "descricao_pt": "Frequência dos comportamentos interferentes",
+        "descricao_en": "Frequency of interfering behaviors",
+        "descricao_es": "Frecuencia de los comportamientos interferentes"
+      },
+      {
+        "id": "27",
+        "descricao_pt": "Intensidade dos comportamentos interferentes",
+        "descricao_en": "Intensity of interfering behaviors",
+        "descricao_es": "Intensidad de los comportamientos interferentes"
+      },
+      {
+        "id": "28",
+        "descricao_pt": "Total de erros",
+        "descricao_en": "Total errors",
+        "descricao_es": "Total de errores"
+      }
+    ]
+  }
+]

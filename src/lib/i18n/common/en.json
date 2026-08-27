@@ -1,5 +1,15 @@
 {
-  "select": "Selecione",
+  "select": "Select",
   "next": "Next",
-  "previous": "Previous"
+  "previous": "Previous",
+  "skill_auditory_processing": "Auditory Processing",
+  "skill_visual_processing": "Visual Processing",
+  "skill_executive_functions": "Executive Functions",
+  "skill_language_communication": "Language and Communication",
+  "skill_motor_coordination": "Motor Coordination",
+  "skill_cognition": "Cognition",
+  "skill_behavioral_socioemotional": "Behavioral and Socio-emotional",
+  "activity_type_learning": "Learning",
+  "activity_type_activity": "Activity",
+  "activity_type_writing": "Writing"
 }

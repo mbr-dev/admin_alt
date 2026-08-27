@@ -7,6 +7,7 @@ import { FaChartSimple, FaMagnifyingGlass, FaPenToSquare } from "react-icons/fa6
 import { useNavigate } from "react-router-dom";
 import { FloatingAddButton, Pagination } from "@/components/template";
 import { encryptJS } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 /** Primeira letra do nome + primeira letra do segundo termo (ex.: João Santos → JS; Maria Castro Alves → MC). */
 function getStudentInitials(fullName: string): string {
@@ -34,6 +35,7 @@ function getStudentAgeYears(birthDate: string | null | undefined): number | null
 }
 
 export function Container() {
+  const { t } = useTranslation("students");
   const navigate = useNavigate();
   const studentsContext = useStudents();
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -80,10 +82,10 @@ export function Container() {
                     handleSearch();
                   }
                 }}
-                placeholder="Buscar por nome"
-                aria-label="Buscar por nome"
+                placeholder={t("search_placeholder")}
+                aria-label={t("search_placeholder")}
               />
-              <S.SearchButton type="button" aria-label="Pesquisar aluno por nome" onClick={handleSearch}>
+              <S.SearchButton type="button" aria-label={t("search_aria")} onClick={handleSearch}>
                 <FaMagnifyingGlass />
               </S.SearchButton>
             </S.FilterBox>
@@ -110,26 +112,28 @@ export function Container() {
                       <S.StudentCard key={student.id}>
                         <S.InitialsCircle aria-hidden>{getStudentInitials(student.nome)}</S.InitialsCircle>
                         <S.CardName>{student.nome}</S.CardName>
-                        <S.CardAge>{age !== null ? `${age} anos` : "Idade não informada"}</S.CardAge>
-                        <S.CardSessions>Total de sessões: 0</S.CardSessions>
+                        <S.CardAge>
+                          {age !== null ? `${age} ${t("years")}` : t("age_not_informed")}
+                        </S.CardAge>
+                        <S.CardSessions>{t("total_sessions", { count: 0 })}</S.CardSessions>
                         <S.CardActions>
                           <S.CardActionButton
                             type="button"
-                            aria-label={`Editar informações de ${student.nome}`}
+                            aria-label={t("edit_info_aria", { name: student.nome })}
                             onClick={() => handleOpenForm(student)}
                           >
                             <FaPenToSquare aria-hidden />
-                            Editar Informações
+                            {t("edit_info")}
                           </S.CardActionButton>
                           <S.CardActionButton
                             type="button"
-                            aria-label={`Ver relatório de ${student.nome}`}
+                            aria-label={t("view_report_aria", { name: student.nome })}
                             onClick={() =>
                               navigate(`/report-student?id=${encodeURIComponent(encryptJS(String(student.id_usuario)))}`)
                             }
                           >
                             <FaChartSimple aria-hidden />
-                            Ver Relatório
+                            {t("view_report")}
                           </S.CardActionButton>
                         </S.CardActions>
                       </S.StudentCard>

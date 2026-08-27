@@ -3,6 +3,11 @@ import * as S from "./styles";
 import { useApi } from "@/data/hooks";
 import { useTranslation } from "react-i18next";
 import { ALTDevelopmentReportService } from "@/data/models";
+import {
+  translateActivityTypeLabel,
+  translateAltTagById,
+  translateProjetoModuloById,
+} from "@/lib/i18n/tables/lookup";
 
 interface IRecommendedActivities {
   groups: ALTDevelopmentReportService.IRecommendedActivityGroup[];
@@ -25,8 +30,11 @@ function flattenActivities(
   return Array.from(seen.values());
 }
 
-export const RecommendedActivities = ({ groups, isExporting = false }: IRecommendedActivities) => {
-  const { t } = useTranslation("indicators");
+export function RecommendedActivities({
+  groups,
+  isExporting = false,
+}: IRecommendedActivities) {
+  const { t, i18n } = useTranslation("indicators");
   const { URL_FILES } = useApi();
 
   const activities = useMemo(() => flattenActivities(groups ?? []), [groups]);
@@ -43,6 +51,16 @@ export const RecommendedActivities = ({ groups, isExporting = false }: IRecommen
               ? `${URL_FILES}${activity.icone_modulo}`
               : null;
             const backgroundColor = activity.cor_modulo?.trim() || "#F73571";
+            const moduleLabel = translateProjetoModuloById(
+              activity.id_modulo,
+              i18n.language,
+              activity.descricao_modulo
+            );
+            const typeLabel = translateActivityTypeLabel(
+              t,
+              activity.descricao,
+              activity.descricao
+            );
 
             return (
               <S.ActivityCard
@@ -58,15 +76,17 @@ export const RecommendedActivities = ({ groups, isExporting = false }: IRecommen
                   )}
 
                   <S.HeaderText>
-                    <S.ActivityTitle>{activity.descricao_modulo}</S.ActivityTitle>
-                    <S.ActivitySubtitle>{activity.descricao}</S.ActivitySubtitle>
+                    <S.ActivityTitle>{moduleLabel}</S.ActivityTitle>
+                    <S.ActivitySubtitle>{typeLabel}</S.ActivitySubtitle>
                   </S.HeaderText>
                 </S.HeaderRow>
 
                 {activity.tags?.length > 0 && (
                   <S.TagsList>
                     {activity.tags.map((tag) => (
-                      <S.TagItem key={tag.id_tag}>{tag.tag}</S.TagItem>
+                      <S.TagItem key={tag.id_tag}>
+                        {translateAltTagById(tag.id_tag, i18n.language, tag.tag)}
+                      </S.TagItem>
                     ))}
                   </S.TagsList>
                 )}
@@ -81,4 +101,4 @@ export const RecommendedActivities = ({ groups, isExporting = false }: IRecommen
       )}
     </S.Card>
   );
-};
+}

@@ -18,5 +18,25 @@
   "secretary_save_pending": "Secretary update endpoint is not integrated yet.",
   "secretary_required_name": "Enter the name.",
   "secretary_required_password": "Enter the password.",
-  "secretary_update_success": "Secretary data updated successfully."
+  "secretary_update_success": "Secretary data updated successfully.",
+  "hello": "Hello, {{name}}!",
+  "units": "Units",
+  "professionals": "Professionals",
+  "students": "Students",
+  "secretary_org": "Organization",
+  "secretary_location": "Location",
+  "secretary_role": "Role",
+  "secretary_role_value": "Unit coordinator",
+  "secretary_last_access": "Last access",
+  "secretary_required_email": "Enter the email.",
+  "secretary_invalid_email": "Enter a valid email.",
+  "show_password": "Show password",
+  "hide_password": "Hide password",
+  "permissions": {
+    "title": "Access permissions",
+    "manageUnits": "Manage classes",
+    "manageProfessionals": "Manage professionals",
+    "viewReports": "View reports",
+    "fullNetworkAccess": "Full unit access"
+  }
 }

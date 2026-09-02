@@ -2,7 +2,8 @@ import tw from "tailwind-styled-components";
 
 export const Container = tw.div`
 w-[300px]
-h-[300px]
+min-h-[300px]
+h-auto
 flex
 flex-col
 items-center
@@ -17,12 +18,15 @@ z-10
 border-2
 border-mbr-gray-20
 relative
+px-4
+py-6
 
 md:w-[400px]
-md:h-[400px]
+md:min-h-[400px]
+md:py-8
 
 landscape:lg:w-[360px]
-landscape:lg:h-[360px]
+landscape:lg:min-h-[360px]
 `;
 
 export const Avatar = tw.div`
@@ -132,4 +136,35 @@ md:pl-6
 landscape:lg:[&>img]:w-[36px]
 landscape:lg:[&>p]:text-2xl
 landscape:lg:pl-6
+`;
+
+export const SecretaryDetails = tw.ul`
+w-full
+flex
+flex-col
+gap-2
+px-2
+
+md:px-4
+`;
+
+export const SecretaryRow = tw.li`
+flex
+items-center
+gap-2
+min-w-0
+
+[&>svg]:shrink-0
+[&>svg]:text-lg
+[&>svg]:text-white
+
+[&>p]:min-w-0
+[&>p]:flex-1
+[&>p]:truncate
+[&>p]:text-sm
+[&>p]:text-white
+[&>p]:font-semibold
+
+md:[&>svg]:text-xl
+md:[&>p]:text-base
 `;

@@ -18,5 +18,25 @@
   "secretary_save_pending": "El endpoint de actualizacion de secretaria aun no esta integrado.",
   "secretary_required_name": "Ingrese el nombre.",
   "secretary_required_password": "Ingrese la contrasena.",
-  "secretary_update_success": "Datos de secretaria actualizados con exito."
+  "secretary_update_success": "Datos de secretaria actualizados con exito.",
+  "hello": "Hola, {{name}}!",
+  "units": "Unidades",
+  "professionals": "Profesionales",
+  "students": "Alumnos",
+  "secretary_org": "Organismo",
+  "secretary_location": "Local",
+  "secretary_role": "Cargo",
+  "secretary_role_value": "Coordinador de la unidad",
+  "secretary_last_access": "Ultimo acceso",
+  "secretary_required_email": "Ingrese el correo electronico.",
+  "secretary_invalid_email": "Ingrese un correo electronico valido.",
+  "show_password": "Mostrar contrasena",
+  "hide_password": "Ocultar contrasena",
+  "permissions": {
+    "title": "Permisos de acceso",
+    "manageUnits": "Gestionar grupos",
+    "manageProfessionals": "Gestionar profesionales",
+    "viewReports": "Visualizar informes",
+    "fullNetworkAccess": "Acceso total a la unidad"
+  }
 }

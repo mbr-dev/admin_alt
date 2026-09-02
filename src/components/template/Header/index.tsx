@@ -33,8 +33,12 @@ export function Header() {
 
         <S.Infos>
           <Language />
-          <S.Avatar>
-            <img src={`${URL_FILES}images/avatar/${getData("avatar")}.png`} alt="icone do avatar" />
+          <S.Avatar
+            type="button"
+            onClick={() => hook.handleNavigate("/profile")}
+            aria-label={t("go_to_profile")}
+          >
+            <img src={`${URL_FILES}images/avatar/${getData("avatar")}.png`} alt="" />
           </S.Avatar>
           <S.ButtonExit onClick={() => setShowLogoutModal(true)}><IoMdExit /></S.ButtonExit>
         </S.Infos>

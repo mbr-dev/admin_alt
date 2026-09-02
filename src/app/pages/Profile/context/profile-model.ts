@@ -8,7 +8,7 @@ export interface IProfileContextProvider {
 
 export interface IProfileContext {
   achievements: AchievementService.IAchievementsUserService | null;
-  userData: ProfileService.IProfileService | SmeService.ISecretaryByUserId | null;
+  userData: ProfileService.IProfileService | SmeService.ISecretaryProfile | null;
   showAvatars: boolean;
   tempAvatar: number;
   dropDown: number | null;

@@ -4,6 +4,7 @@ export const Container = tw.div`
 w-[300px]
 flex
 flex-col
+gap-4
 z-10
 
 md:w-[400px]
@@ -72,6 +73,34 @@ disabled:text-mbr-gray-80
 disabled:cursor-not-allowed
 `;
 
+export const PasswordWrap = tw.div`
+w-full
+relative
+`;
+
+export const PasswordInput = tw(Input)`
+pr-11
+`;
+
+export const ButtonEyes = tw.button`
+w-[28px]
+h-[28px]
+flex
+items-center
+justify-center
+absolute
+right-2
+top-1/2
+-translate-y-1/2
+cursor-pointer
+bg-transparent
+border-0
+p-0
+
+[&>svg]:text-xl
+[&>svg]:text-mbr-gray-80
+`;
+
 export const Footer = tw.div`
 w-full
 flex
@@ -89,4 +118,43 @@ text-sm
 cursor-pointer
 
 md:text-base
+`;
+
+export const PermissionList = tw.ul`
+w-full
+grid
+grid-cols-2
+gap-3
+`;
+
+export const PermissionItem = tw.li`
+w-full
+flex
+items-center
+gap-3
+min-w-0
+
+[&>p]:min-w-0
+[&>p]:flex-1
+[&>p]:truncate
+[&>p]:text-sm
+[&>p]:font-semibold
+[&>p]:text-mbr-gray-80
+
+md:[&>p]:text-base
+`;
+
+export const PermissionIcon = tw.span`
+w-9
+h-9
+flex
+items-center
+justify-center
+rounded-lg
+bg-mbr-gray-10
+shrink-0
+
+[&>svg]:w-5
+[&>svg]:h-5
+[&>svg]:text-mbr-blue-10
 `;

@@ -13,9 +13,9 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
   const { setData, getData } = useStorage();
   const { t } = useTranslation("profile");
   const { getStudentByStudentId, getTeacherProfile, getCoordinatorProfile, getAllAchievementsForHomeByUserId, getAllAvatars, updateAvatar } = Profile();
-  const { getSecretaryByUserId } = SME();
+  const { getSecretaryProfile } = SME();
 
-  const [userData, setUserData] = useState<null | ProfileService.IProfileService | SmeService.ISecretaryByUserId>(null);
+  const [userData, setUserData] = useState<null | ProfileService.IProfileService | SmeService.ISecretaryProfile>(null);
   const [allAvatars, setAllAvatars] = useState<AvatarService.IAvatarService[]>([]);
   const [showAvatars, setShowAvatars] = useState<boolean>(false);
   const [tempAvatar, setTempAvatar] = useState<number>(0);
@@ -37,7 +37,7 @@ export function ProfileContextProvider({ children }: IHC.IProfileContextProvider
       const response = 
         Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentByStudentId(Number(getData("id_hierarquia"))) :
         Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherProfile() :
-        Number(getData("hierarquia")) === UserRole.SECRETARY ? await getSecretaryByUserId(Number(getData("id"))) :
+        Number(getData("hierarquia")) === UserRole.SECRETARY ? await getSecretaryProfile() :
         await getCoordinatorProfile();
 
       const responseAvatar = await getAllAvatars();

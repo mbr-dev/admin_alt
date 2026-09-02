@@ -22,6 +22,19 @@ export function SME() {
     [api, get_error, toast]
   );
 
+  const getSecretaryProfile = useCallback(async (): Promise<SmeService.ISecretaryProfile | null> => {
+    try {
+      const { data } = await api.get("secretary/getSecretaryProfile");
+      if (data) return data;
+      return null;
+    } catch (error) {
+      const errorMessage = get_error(error);
+      console.log(errorMessage);
+      toast({ title: "SME", description: errorMessage, variant: "destructive" });
+      return null;
+    }
+  }, [api, get_error, toast]);
+
   const updateSecretaryByUserId = useCallback(
     async (id: number, dataToSend: SmeService.ISecretaryUpdateByUserId) => {
       try {
@@ -38,5 +51,5 @@ export function SME() {
     [api, get_error, toast]
   );
 
-  return { getSecretaryByUserId, updateSecretaryByUserId };
+  return { getSecretaryByUserId, getSecretaryProfile, updateSecretaryByUserId };
 }

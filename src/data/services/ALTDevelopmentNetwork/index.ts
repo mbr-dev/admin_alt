@@ -118,10 +118,43 @@ export function ALTDevelopmentNetwork() {
     [api, get_error, toast]
   );
 
+  const getProgressionFunnelStudents = useCallback(
+    async (
+      params: ALTDevelopmentNetworkService.IGetProgressionFunnelStudentsParams
+    ): Promise<ALTDevelopmentNetworkService.IGetProgressionFunnelStudentsResponse | null> => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.set("id_rede", String(params.id_rede));
+        searchParams.set("filter", String(params.filter));
+
+        if (params.page !== undefined) searchParams.set("page", String(params.page));
+        if (params.limit !== undefined) searchParams.set("limit", String(params.limit));
+        if (params.classificacao) searchParams.set("classificacao", params.classificacao);
+
+        const { data } = await api.get(
+          `altDevelopmentNetwork/getProgressionFunnelStudents?${searchParams.toString()}`
+        );
+        if (!data) return null;
+        return data as ALTDevelopmentNetworkService.IGetProgressionFunnelStudentsResponse;
+      } catch (error) {
+        const errorMessage = get_error(error);
+        console.log(errorMessage);
+        toast({
+          title: "Rede de Desenvolvimento",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        return null;
+      }
+    },
+    [api, get_error, toast]
+  );
+
   return {
     getStatisticNetwork,
     getNumbersNetwork,
     getSkillsDeveloped,
     getUnitCompare,
+    getProgressionFunnelStudents,
   };
 }

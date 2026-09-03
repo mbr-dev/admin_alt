@@ -1,8 +1,15 @@
 import * as S from "./styles";
-import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Table } from "@/components/ui";
 import { ImgSVG } from "@/components/images";
 import { useMonitoring } from "../../hook";
+import { useStorage } from "@/data/hooks";
 import { useTranslation } from "react-i18next";
+import { Pagination } from "@/components/template";
+import { IoClose } from "react-icons/io5";
+import { ALTDevelopmentNetwork } from "@/data/services";
+import { ALTDevelopmentNetworkService } from "@/data/models";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaArrowUp, FaArrowDown, FaArrowRight } from "react-icons/fa";
 import { translateSkillCategory } from "@/lib/i18n/translate-skill-category";
 import {
@@ -22,6 +29,15 @@ const FUNNEL_COLORS = {
 } as const;
 
 type TFunnelKey = keyof typeof FUNNEL_COLORS;
+
+const FUNNEL_LABEL_KEYS: Record<TFunnelKey, string> = {
+  evoluiram: "funnelEvoluiram",
+  mantiveram: "funnelMantiveram",
+  regrediram: "funnelRegrediram",
+};
+
+const FUNNEL_STUDENTS_LIMIT = 20;
+const FUNNEL_DIALOG_TITLE_ID = "funnel-students-dialog-title";
 
 const MOBILE_BREAKPOINT = 768;
 const LABEL_OUTWARD_OFFSET = 12;
@@ -43,6 +59,17 @@ function formatPercentValue(value: number): string {
     ? String(abs)
     : abs.toFixed(1).replace(".", ",");
   return `${formatted}%`;
+}
+
+function formatSignedPercent(value: number): string {
+  const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+  return `${sign}${formatPercentValue(value)}`;
+}
+
+function getVariationTone(value: number): "positive" | "negative" | "neutral" {
+  if (value > 0) return "positive";
+  if (value < 0) return "negative";
+  return "neutral";
 }
 
 //Detecta viewport mobile para compactar os rótulos do radar
@@ -210,10 +237,204 @@ function SkillsRadarCard() {
   );
 }
 
+function FunnelStudentsDialog({
+  classification,
+  isLoading,
+  page,
+  response,
+  onClose,
+  onChangePage,
+}: {
+  classification: TFunnelKey;
+  isLoading: boolean;
+  page: number;
+  response: ALTDevelopmentNetworkService.IGetProgressionFunnelStudentsResponse | null;
+  onClose: () => void;
+  onChangePage: (page: number) => void;
+}) {
+  const { t } = useTranslation("monitoring");
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const classificationLabel = t(FUNNEL_LABEL_KEYS[classification]);
+  const students = response?.data ?? [];
+  const totalPages = response?.totalPages ?? 1;
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  return createPortal(
+    <S.ModalRoot>
+      <S.ModalBackdrop type="button" aria-label={t("funnelCloseStudents")} onClick={onClose} />
+
+      <S.ModalPanel
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={FUNNEL_DIALOG_TITLE_ID}
+        aria-busy={isLoading}
+      >
+        <S.ModalHeader>
+          <S.ModalTitle id={FUNNEL_DIALOG_TITLE_ID}>
+            {t("funnelStudentsDialogTitle", { classification: classificationLabel })}
+          </S.ModalTitle>
+        </S.ModalHeader>
+
+        <S.ModalClose
+          ref={closeButtonRef}
+          type="button"
+          onClick={onClose}
+          aria-label={t("funnelCloseStudents")}
+        >
+          <IoClose aria-hidden />
+        </S.ModalClose>
+
+        <S.ModalBody>
+          {isLoading ? (
+            <S.ModalSkeleton aria-label={t("funnelStudentsLoading")} />
+          ) : students.length === 0 ? (
+            <S.ModalEmpty>{t("funnelStudentsEmpty")}</S.ModalEmpty>
+          ) : (
+            <>
+              <Table.Table>
+                <Table.TableHeader>
+                  <Table.TableRow>
+                    <S.Head>{t("funnelStudentName")}</S.Head>
+                    <S.Head>{t("unit")}</S.Head>
+                    <S.Head>{t("funnelStudentPrevious")}</S.Head>
+                    <S.Head>{t("funnelStudentCurrent")}</S.Head>
+                    <S.Head>{t("funnelStudentVariation")}</S.Head>
+                    <S.Head>{t("funnelStudentClassification")}</S.Head>
+                  </Table.TableRow>
+                </Table.TableHeader>
+
+                <Table.TableBody>
+                  {students.map((student) => (
+                    <Table.TableRow key={`${student.id_usuario}-${student.id_unidade}`}>
+                      <S.Cell>{student.nome}</S.Cell>
+                      <S.Cell>{student.unidade}</S.Cell>
+                      <S.Cell>{formatPercentValue(student.percentual_anterior)}</S.Cell>
+                      <S.Cell>{formatPercentValue(student.percentual_atual)}</S.Cell>
+                      <S.Cell>
+                        <S.Variation $tone={getVariationTone(student.variacao)}>
+                          {formatSignedPercent(student.variacao)}
+                        </S.Variation>
+                      </S.Cell>
+                      <S.Cell>{t(FUNNEL_LABEL_KEYS[student.classificacao])}</S.Cell>
+                    </Table.TableRow>
+                  ))}
+                </Table.TableBody>
+              </Table.Table>
+
+              {totalPages > 1 && (
+                <Pagination
+                  numberOfPageButton={totalPages}
+                  currentPage={page}
+                  onChangePage={onChangePage}
+                />
+              )}
+            </>
+          )}
+        </S.ModalBody>
+      </S.ModalPanel>
+    </S.ModalRoot>,
+    document.body
+  );
+}
+
 function ProgressionFunnelCard() {
   const { t } = useTranslation("monitoring");
-  const { skillsDeveloped } = useMonitoring();
+  const { getData } = useStorage();
+  const { skillsDeveloped, filter } = useMonitoring();
+  const { getProgressionFunnelStudents } = ALTDevelopmentNetwork();
   const funnel = skillsDeveloped?.progression_funnel;
+
+  const [page, setPage] = useState(1);
+  const [isStudentsLoading, setIsStudentsLoading] = useState(false);
+  const [selectedClassification, setSelectedClassification] = useState<TFunnelKey | null>(null);
+  const [studentsResponse, setStudentsResponse] =
+    useState<ALTDevelopmentNetworkService.IGetProgressionFunnelStudentsResponse | null>(null);
+
+  const requestIdRef = useRef(0);
+  const getDataRef = useRef(getData);
+  const getProgressionFunnelStudentsRef = useRef(getProgressionFunnelStudents);
+
+  useEffect(() => {
+    getDataRef.current = getData;
+    getProgressionFunnelStudentsRef.current = getProgressionFunnelStudents;
+  }, [getData, getProgressionFunnelStudents]);
+
+  const fetchStudents = useCallback(async (classificacao: TFunnelKey, nextPage: number) => {
+    const idRede = Number(getDataRef.current("id_rede"));
+    if (Number.isNaN(idRede) || idRede <= 0) return;
+
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
+    setIsStudentsLoading(true);
+
+    const response = await getProgressionFunnelStudentsRef.current({
+      id_rede: idRede,
+      filter,
+      page: nextPage,
+      limit: FUNNEL_STUDENTS_LIMIT,
+      classificacao,
+    });
+
+    if (requestId !== requestIdRef.current) return;
+
+    setStudentsResponse(response);
+    setIsStudentsLoading(false);
+  }, [filter]);
+
+  const handleCloseStudents = useCallback(() => {
+    requestIdRef.current += 1;
+    setSelectedClassification(null);
+    setStudentsResponse(null);
+    setIsStudentsLoading(false);
+    setPage(1);
+  }, []);
+
+  const handleSelectClassification = useCallback(
+    (classificacao: TFunnelKey) => {
+      setSelectedClassification(classificacao);
+      setPage(1);
+      setStudentsResponse(null);
+      void fetchStudents(classificacao, 1);
+    },
+    [fetchStudents]
+  );
+
+  const handleChangePage = useCallback(
+    (nextPage: number) => {
+      if (!selectedClassification) return;
+      setPage(nextPage);
+      void fetchStudents(selectedClassification, nextPage);
+    },
+    [fetchStudents, selectedClassification]
+  );
+
+  useEffect(() => {
+    if (!selectedClassification) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedClassification]);
+
+  useEffect(() => {
+    return () => {
+      requestIdRef.current += 1;
+    };
+  }, []);
 
   const rows: Array<{
     key: TFunnelKey;
@@ -227,7 +448,7 @@ function ProgressionFunnelCard() {
       key: "evoluiram",
       image: ImgSVG.MonitoringVerde,
       quantity: funnel?.evoluiram?.quantidade ?? 0,
-      labelKey: "funnelEvoluiram",
+      labelKey: FUNNEL_LABEL_KEYS.evoluiram,
       difference: funnel?.percentual_diferenca?.evoluiram,
       width: "100%",
     },
@@ -235,7 +456,7 @@ function ProgressionFunnelCard() {
       key: "mantiveram",
       image: ImgSVG.MonitoringAmarelo,
       quantity: funnel?.mantiveram?.quantidade ?? 0,
-      labelKey: "funnelMantiveram",
+      labelKey: FUNNEL_LABEL_KEYS.mantiveram,
       difference: funnel?.percentual_diferenca?.mantiveram,
       width: "72%",
     },
@@ -243,7 +464,7 @@ function ProgressionFunnelCard() {
       key: "regrediram",
       image: ImgSVG.MonitoringVermelho,
       quantity: funnel?.regrediram?.quantidade ?? 0,
-      labelKey: "funnelRegrediram",
+      labelKey: FUNNEL_LABEL_KEYS.regrediram,
       difference: funnel?.percentual_diferenca?.regrediram,
       width: "48%",
     },
@@ -251,15 +472,31 @@ function ProgressionFunnelCard() {
 
   return (
     <S.Card aria-label={t("funnelTitle")}>
-      <S.CardHeader>
+      <S.FunnelHeader>
         <S.CardTitle>{t("funnelTitle")}</S.CardTitle>
-      </S.CardHeader>
+        <S.FunnelSubtitle>{t("funnelSubtitle", { filter })}</S.FunnelSubtitle>
+        <S.FunnelSubtitleSecondary>
+          {t("funnelSubtitleComparison", { current: filter, previous: filter })}
+        </S.FunnelSubtitleSecondary>
+        <S.FunnelSubtitleSecondary>{t("funnelSubtitleExplanation")}</S.FunnelSubtitleSecondary>
+        <S.FunnelAnalyzed>
+          {t("funnelStudentsAnalyzed", { count: funnel?.alunos_analisados ?? 0 })}
+        </S.FunnelAnalyzed>
+      </S.FunnelHeader>
 
       <S.FunnelBody>
         {rows.map((row) => (
           <S.FunnelRow key={row.key}>
             <S.FunnelSegmentWrap>
-              <S.FunnelSegment style={{ width: row.width }}>
+              <S.FunnelSegment
+                type="button"
+                style={{ width: row.width }}
+                $selected={selectedClassification === row.key}
+                aria-pressed={selectedClassification === row.key}
+                aria-haspopup="dialog"
+                aria-label={t("funnelOpenStudents", { label: t(row.labelKey) })}
+                onClick={() => handleSelectClassification(row.key)}
+              >
                 <S.FunnelImage src={row.image} alt="" />
                 <S.FunnelOverlay>
                   <S.FunnelValue>{row.quantity}</S.FunnelValue>
@@ -277,6 +514,18 @@ function ProgressionFunnelCard() {
           </S.FunnelRow>
         ))}
       </S.FunnelBody>
+
+      {selectedClassification && (
+        <FunnelStudentsDialog
+          key={selectedClassification}
+          classification={selectedClassification}
+          isLoading={isStudentsLoading}
+          page={page}
+          response={studentsResponse}
+          onClose={handleCloseStudents}
+          onChangePage={handleChangePage}
+        />
+      )}
     </S.Card>
   );
 }

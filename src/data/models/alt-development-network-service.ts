@@ -69,6 +69,7 @@ export interface IProgressionFunnelDifference {
 }
 
 export interface IProgressionFunnel {
+  alunos_analisados: number;
   regrediram: IProgressionFunnelStage;
   mantiveram: IProgressionFunnelStage;
   evoluiram: IProgressionFunnelStage;
@@ -106,4 +107,38 @@ export interface IGetUnitCompareResponse {
   filter: number;
   units: IUnitCompareItem[];
   media_rede: IUnitCompareNetworkAverage;
+}
+
+export type TProgressionFunnelClassification =
+  | "evoluiram"
+  | "mantiveram"
+  | "regrediram";
+
+/** Parâmetros de `GET altDevelopmentNetwork/getProgressionFunnelStudents`. */
+export interface IGetProgressionFunnelStudentsParams
+  extends IALTDevelopmentNetworkQueryParams {
+  page?: number;
+  limit?: number;
+  classificacao?: TProgressionFunnelClassification;
+}
+
+export interface IProgressionFunnelStudent {
+  id_usuario: number;
+  id_unidade: number;
+  nome: string;
+  unidade: string;
+  percentual_anterior: number;
+  percentual_atual: number;
+  variacao: number;
+  classificacao: TProgressionFunnelClassification;
+}
+
+/** Resposta de `GET altDevelopmentNetwork/getProgressionFunnelStudents`. */
+export interface IGetProgressionFunnelStudentsResponse {
+  data: IProgressionFunnelStudent[];
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
 }

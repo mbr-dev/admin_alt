@@ -386,23 +386,13 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
       return false;
     }
 
-    if (!guardianEmail.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_guardian_email"), variant: "destructive" });
-      return false;
-    }
-
-    if (!EMAIL_REGEX.test(guardianEmail.trim())) {
+    if (guardianEmail.trim() && !EMAIL_REGEX.test(guardianEmail.trim())) {
       toast({ title: t("toast_title"), description: t("validation_guardian_email_invalid"), variant: "destructive" });
       return false;
     }
 
     if (!guardianBirth) {
       toast({ title: t("toast_title"), description: t("validation_guardian_birth"), variant: "destructive" });
-      return false;
-    }
-
-    if (!guardianCpfCnpj.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_guardian_cpf"), variant: "destructive" });
       return false;
     }
 
@@ -415,11 +405,6 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   };
 
   const verifyAddressStep = () => {
-    if (!addressCep.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_cep"), variant: "destructive" });
-      return false;
-    }
-
     if (!addressStreet.trim()) {
       toast({ title: t("toast_title"), description: t("validation_street"), variant: "destructive" });
       return false;
@@ -427,16 +412,6 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
     if (!addressNumber.trim()) {
       toast({ title: t("toast_title"), description: t("validation_number"), variant: "destructive" });
-      return false;
-    }
-
-    if (!addressDistrict.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_district"), variant: "destructive" });
-      return false;
-    }
-
-    if (!addressRegion.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_region"), variant: "destructive" });
       return false;
     }
 

@@ -1,6 +1,7 @@
 export { Home } from "./Home";
 export { Login } from "./Login";
 export { Groups } from "./Groups";
+export { Classes } from "./Classes";
 export { Profile } from "./Profile";
 export { Support } from "./Support";
 export { Students } from "./Students";

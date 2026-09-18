@@ -9,6 +9,7 @@ export { Monitoring } from "./Monitoring";
 export { Indicators } from "./Indicators";
 export { PainelStudent } from "./PainelStudent";
 export { Unit } from "./Unit";
+export { Class } from "./Class";
 export { Professionals } from "./Professionals";
 export { SME } from "./SME";
 export { User } from "./User";

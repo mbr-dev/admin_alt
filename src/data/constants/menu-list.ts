@@ -71,6 +71,12 @@ export const MENU_LIST: IMENU_LIST[] = [
         hierarchy: [UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
       },
       {
+        id: 7,
+        route: "/classes",
+        name: "management_classes",
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.COORDINATOR, UserRole.TEACHER]
+      },
+      {
         id: 6,
         route: "/alt_session",
         name: "alt_session",

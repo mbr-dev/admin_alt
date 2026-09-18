@@ -40,6 +40,9 @@ import reportStudent_es from "./reportStudent/es.json";
 import altSession_ptBR from "./altSession/pt-BR.json";
 import altSession_en from "./altSession/en.json";
 import altSession_es from "./altSession/es.json";
+import classes_ptBR from "./classes/pt-BR.json";
+import classes_en from "./classes/en.json";
+import classes_es from "./classes/es.json";
 
 export {
   profile_ptBR,
@@ -84,4 +87,7 @@ export {
   altSession_ptBR,
   altSession_en,
   altSession_es,
+  classes_ptBR,
+  classes_en,
+  classes_es,
 };

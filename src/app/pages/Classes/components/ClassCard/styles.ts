@@ -82,10 +82,11 @@ w-full
 flex
 items-center
 justify-end
+flex-wrap
 gap-2
 `;
 
-export const ActionButton = tw.button<{ $variant: "students" | "teachers" | "edit" | "delete" }>`
+export const ActionButton = tw.button<{ $variant: "students" | "teachers" | "qrcode" | "edit" | "delete" }>`
 w-9
 h-9
 rounded-lg
@@ -101,6 +102,7 @@ hover:opacity-90
 ${({ $variant }) => {
   if ($variant === "students") return "bg-mbr-blue-10 text-white";
   if ($variant === "teachers") return "bg-mbr-green-30 text-white";
+  if ($variant === "qrcode") return "bg-mbr-blue-70 text-white";
   if ($variant === "edit") return "bg-mbr-gray-20 text-mbr-blue-10";
   return "bg-mbr-red-10 text-white";
 }}

@@ -1,9 +1,15 @@
 export { Alt } from "./Alt";
 export { SME } from "./SME";
 export { Infos } from "./Infos";
+export { ClinicInfos } from "./ClinicInfos";
 export { Painel } from "./Painel";
 export { Student } from "./Student";
 export { Welcome } from "./Welcome";
+export { WelcomeHero } from "./WelcomeHero";
+export { StatsCards } from "./StatsCards";
+export { QuickAccess } from "./QuickAccess";
+export { SessionsActivities } from "./SessionsActivities";
+export { DailyTip } from "./DailyTip";
 export { Teacher } from "./Teacher";
 export { Container } from "./Container";
 export { Coordinator } from "./Coordinator";

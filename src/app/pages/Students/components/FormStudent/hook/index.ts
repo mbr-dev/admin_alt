@@ -23,12 +23,57 @@ const FORM_STEP_KEYS = [
 ] as const;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const NAME_PARTICLES = new Set(["de", "da", "do", "das", "dos", "e", "di", "del"]);
+const ACCESS_CODE_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ACCESS_CODE_LENGTH = 8;
+const MAX_ACCESS_CODE_ATTEMPTS = 10;
+
+function createRandomAccessCode() {
+  const bytes = new Uint32Array(ACCESS_CODE_LENGTH);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (value) => ACCESS_CODE_CHARACTERS[value % ACCESS_CODE_CHARACTERS.length]).join("");
+}
+
+function normalizeNameWords(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .split(/\s+/)
+    .filter((word) => word.length > 0 && !NAME_PARTICLES.has(word));
+}
+
+function buildUserSuffixFromName(name: string) {
+  const words = normalizeNameWords(name);
+  if (words.length === 0) return "";
+
+  const [firstName, ...surnames] = words;
+  return `${firstName}${surnames.map((word) => word[0]).join("")}`;
+}
+
+function buildGuardianUsername(name: string) {
+  const words = normalizeNameWords(name);
+  if (words.length === 0) return "";
+  if (words.length === 1) return words[0];
+  return `${words[0]}.${words[words.length - 1]}`;
+}
+
+function sanitizeUserSuffix(value: string) {
+  if (value.includes(" ")) return buildUserSuffixFromName(value);
+
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
 
 export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormStudent = {}) => {
   const { t } = useTranslation("students");
   const { toast } = useToast();
   const { setLoad } = useMain();
-  const { createClinicStudent, updateClinicStudentByUserId, verifyUser, getClinicStudentByUserId } = Student();
+  const { createClinicStudent, updateClinicStudentByUserId, verifyUser, verifyAccessCode, getClinicStudentByUserId } = Student();
   const { getAllUnitByNetworkIdPaged } = Unit();
   const { getAllCidGrouped } = CID();
   const { getData } = useStorage();
@@ -43,6 +88,9 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [guardianBirth, setGuardianBirth] = useState<string>("");
   const [guardianCpfCnpj, setGuardianCpfCnpj] = useState<string>("");
   const [guardianKinship, setGuardianKinship] = useState<string>("");
+  const [guardianUser, setGuardianUser] = useState<string>("");
+  const [guardianPassword, setGuardianPassword] = useState<string>("");
+  const [guardianAccessCode, setGuardianAccessCode] = useState<string>("");
 
   const [addressStreet, setAddressStreet] = useState<string>("");
   const [addressNumber, setAddressNumber] = useState<string>("");
@@ -77,6 +125,35 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;
   const previousUserPrefixRef = useRef<string>("");
+  const lastAutoUserSuffixRef = useRef<string>("");
+  const userRef = useRef<string>("");
+  const verifyAccessCodeRef = useRef(verifyAccessCode);
+  const accessCodeRequestIdRef = useRef(0);
+  verifyAccessCodeRef.current = verifyAccessCode;
+
+  const resolveUniqueAccessCode = async (currentCode?: string) => {
+    const requestId = accessCodeRequestIdRef.current + 1;
+    accessCodeRequestIdRef.current = requestId;
+
+    let candidate = currentCode?.trim() || createRandomAccessCode();
+    setGuardianAccessCode(candidate);
+
+    for (let attempt = 0; attempt < MAX_ACCESS_CODE_ATTEMPTS; attempt += 1) {
+      if (requestId !== accessCodeRequestIdRef.current) return "";
+
+      if (attempt > 0) {
+        candidate = createRandomAccessCode();
+        setGuardianAccessCode(candidate);
+      }
+
+      const result = await verifyAccessCodeRef.current(candidate);
+      if (requestId !== accessCodeRequestIdRef.current) return "";
+      if (!result) return candidate;
+      if (result.valido && !result.em_uso) return candidate;
+    }
+
+    return candidate;
+  };
 
   const fetchData = async (studentToEditData?: StudentService.IStudent | null) => {
     try {
@@ -123,6 +200,9 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
           setGuardianBirth(clinicStudent.responsavel?.data_nascimento?.split("T")[0] ?? "");
           setGuardianCpfCnpj(clinicStudent.responsavel?.cpf_cnpj ?? "");
           setGuardianKinship(clinicStudent.responsavel?.parentesco ?? "");
+          setGuardianUser(clinicStudent.responsavel?.usuario ?? "");
+          setGuardianPassword("");
+          setGuardianAccessCode(clinicStudent.responsavel?.codigo_acesso ?? "");
 
           setAddressStreet(clinicStudent.responsavel_endereco?.logradouro ?? "");
           setAddressNumber(clinicStudent.responsavel_endereco?.numero ?? "");
@@ -149,25 +229,13 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
           setSelectedCidIds(normalizedCidIds);
         }
+      } else {
+        void resolveUniqueAccessCode();
       }
     } finally {
       setIsCidLoading(false);
       setIsFormLoading(false);
     }
-  };
-
-  const generateUser = (value: string) => {  
-    const valueWithoutPrefix = userPrefix && value.startsWith(userPrefix) ? value.slice(userPrefix.length) : value;
-    const formattedName = valueWithoutPrefix
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, "_");
-  
-    const userToSet = !isEditMode && userPrefix ? `${userPrefix}${formattedName}` : formattedName;
-    setUser(userToSet);
-    setValidatedUser("");
-    setVerified(false);
   };
 
   const selectedUnit = useMemo(
@@ -193,6 +261,16 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   };
 
   const userPrefix = !isEditMode && selectedUnit?.descricao ? buildUserPrefix(selectedUnit.descricao) : "";
+  userRef.current = user;
+
+  const generateUser = (value: string) => {
+    const valueWithoutPrefix = userPrefix && value.startsWith(userPrefix) ? value.slice(userPrefix.length) : value;
+    const formattedName = sanitizeUserSuffix(valueWithoutPrefix);
+    const userToSet = !isEditMode && userPrefix ? `${userPrefix}${formattedName}` : formattedName;
+    setUser(userToSet);
+    setValidatedUser("");
+    setVerified(false);
+  };
 
   useEffect(() => {
     if (isEditMode) return;
@@ -204,20 +282,32 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     if (isEditMode) return;
 
     const previousPrefix = previousUserPrefixRef.current;
-    if (!userPrefix) {
-      previousUserPrefixRef.current = "";
-      return;
-    }
+    const autoSuffix = buildUserSuffixFromName(studentName);
+    const prevValue = userRef.current;
+    const currentSuffix =
+      previousPrefix && prevValue.startsWith(previousPrefix)
+        ? prevValue.slice(previousPrefix.length)
+        : userPrefix && prevValue.startsWith(userPrefix)
+          ? prevValue.slice(userPrefix.length)
+          : prevValue;
+    const shouldUseAuto = currentSuffix === "" || currentSuffix === lastAutoUserSuffixRef.current;
+    const nextSuffix = shouldUseAuto ? autoSuffix : currentSuffix;
+    const nextUser = userPrefix ? `${userPrefix}${nextSuffix}` : nextSuffix;
 
-    setUser((prevValue) => {
-      const baseSuffix =
-        previousPrefix && prevValue.startsWith(previousPrefix) ? prevValue.slice(previousPrefix.length) : prevValue;
-      return `${userPrefix}${baseSuffix}`;
-    });
+    lastAutoUserSuffixRef.current = autoSuffix;
+    previousUserPrefixRef.current = userPrefix;
+
+    if (prevValue === nextUser) return;
+
+    setUser(nextUser);
     setValidatedUser("");
     setVerified(false);
-    previousUserPrefixRef.current = userPrefix;
-  }, [isEditMode, userPrefix]);
+  }, [isEditMode, studentName, userPrefix]);
+
+  useEffect(() => {
+    if (isEditMode) return;
+    setGuardianUser(buildGuardianUsername(guardianName));
+  }, [guardianName, isEditMode]);
 
   const verifyIfUserExists = async () => {
     if (user === "") return;
@@ -258,7 +348,12 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
       if (!verifyData()) return;
 
-      const dataToSend = {
+      let accessCode = guardianAccessCode.trim();
+      if (!isEditMode) {
+        accessCode = (await resolveUniqueAccessCode(accessCode)) || accessCode;
+      }
+
+      const dataToSend: StudentService.ICreateClinicStudentPayload = {
         usuario: {
           usuario: user.trim(),
           senha: isEditMode ? (password.trim() ? password.trim() : null) : password.trim(),
@@ -271,6 +366,9 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
           sexo: studentSex,
         },
         responsavel: {
+          usuario: guardianUser.trim() || buildGuardianUsername(guardianName),
+          senha: isEditMode ? (guardianPassword.trim() ? guardianPassword.trim() : null) : guardianPassword.trim(),
+          codigo_acesso: accessCode,
           nome: guardianName.trim(),
           email: guardianEmail.trim(),
           data_nascimento: guardianBirth ? new Date(`${guardianBirth}T00:00:00`).toISOString() : "",
@@ -401,6 +499,11 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
       return false;
     }
 
+    if (!isEditMode && !guardianPassword.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_password"), variant: "destructive" });
+      return false;
+    }
+
     return true;
   };
 
@@ -460,7 +563,14 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const goToNextStep = () => {
     if (!verifyStep(currentStep)) return;
     if (isLastStep) return;
-    setCurrentStep((prev) => prev + 1);
+
+    const nextStep = currentStep + 1;
+    setCurrentStep(nextStep);
+
+    const isGoingToAccessStep = formSteps[nextStep]?.key === "access";
+    if (!isEditMode && isGoingToAccessStep && user.trim() && user !== userPrefix) {
+      void verifyIfUserExists();
+    }
   };
 
   const goToPreviousStep = () => {
@@ -478,6 +588,9 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setGuardianBirth("");
     setGuardianCpfCnpj("");
     setGuardianKinship("");
+    setGuardianUser("");
+    setGuardianPassword("");
+    void resolveUniqueAccessCode();
     setAddressStreet("");
     setAddressNumber("");
     setAddressComplement("");
@@ -491,6 +604,8 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setUser("");
     setValidatedUser("");
     setPassword("");
+    lastAutoUserSuffixRef.current = "";
+    previousUserPrefixRef.current = "";
     if (units.length > 0) {
       setSelectedUnitId(String(units[0].id));
     } else {
@@ -552,6 +667,10 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setGuardianCpfCnpj,
     guardianKinship,
     setGuardianKinship,
+    guardianUser,
+    guardianPassword,
+    setGuardianPassword,
+    guardianAccessCode,
     addressStreet,
     setAddressStreet,
     addressNumber,

@@ -7,6 +7,7 @@ export { Support } from "./Support";
 export { Students } from "./Students";
 export { ReportStudent } from "./ReportStudent";
 export { AltSession } from "./AltSession";
+export { AltLogs } from "./AltLogs";
 export { Indicators } from "./Indicators";
 export { Monitoring } from "./Monitoring";
 export { ChoiceDidactic } from "./Didactic";

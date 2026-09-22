@@ -19,6 +19,7 @@ export const MainRouter = () => {
       <Route path="/units" element={<Page.Units />} />
       <Route path="/professionals" element={<Page.Professionals />} />
       <Route path="/alt_session" element={<Page.AltSession />} />
+      <Route path="/alt_logs" element={<Page.AltLogs />} />
       <Route path="*" element={<Navigate to="/home" />} />
     </Routes>
   )

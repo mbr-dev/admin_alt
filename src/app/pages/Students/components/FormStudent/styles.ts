@@ -94,6 +94,69 @@ text-sm
 md:text-base
 `;
 
+export const ReadOnlyInput = tw.input`
+w-full
+p-3
+rounded-lg
+bg-mbr-gray-20
+text-black
+text-sm
+font-semibold
+tracking-[0.18em]
+uppercase
+cursor-default
+
+md:text-base
+`;
+
+export const ReadOnlyUserInput = tw.input`
+w-full
+p-3
+rounded-lg
+bg-mbr-gray-20
+text-black
+text-sm
+cursor-default
+
+md:text-base
+`;
+
+export const FieldHint = tw.span`
+text-mbr-gray-50
+text-xs
+font-normal
+
+md:text-sm
+`;
+
+export const PasswordWrap = tw.div`
+w-full
+relative
+`;
+
+export const PasswordInput = tw(Input)`
+pr-11
+`;
+
+export const ButtonEyes = tw.button`
+w-[28px]
+h-[28px]
+flex
+items-center
+justify-center
+absolute
+right-2
+top-1/2
+-translate-y-1/2
+cursor-pointer
+bg-transparent
+border-0
+p-0
+
+[&>svg]:text-xl
+[&>svg]:text-[#f21a6f]
+`;
+
 export const Select = tw.select`
 w-full
 p-3

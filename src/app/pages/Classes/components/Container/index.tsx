@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ConfirmActionModal, FloatingAddButton, LabelSelect, Pagination } from "@/components/template";
 import { UserRole } from "@/data/constants/user-roles";
-import { Animations, ClassCard, FormClass, ListModal } from "..";
+import { Animations, ClassCard, FormClass, ListModal, QRCodeModal } from "..";
 
 const CARDS_PER_PAGE = 8;
 
@@ -33,6 +33,7 @@ export function Container() {
   const [isMembersLoading, setIsMembersLoading] = useState<boolean>(false);
   const [showStudentsModal, setShowStudentsModal] = useState<boolean>(false);
   const [showTeachersModal, setShowTeachersModal] = useState<boolean>(false);
+  const [classToShowQr, setClassToShowQr] = useState<ClassService.IClassService | null>(null);
 
   const hierarchy = Number(getData("hierarquia"));
   const isSecretary = hierarchy === UserRole.SECRETARY;
@@ -296,6 +297,7 @@ export function Container() {
                       data={classItem}
                       onViewStudents={(item) => void handleViewStudents(item)}
                       onViewTeachers={(item) => void handleViewTeachers(item)}
+                      onViewQrCode={setClassToShowQr}
                       onEdit={(item) => void handleOpenForm(item)}
                       onDelete={setClassToDelete}
                     />
@@ -337,6 +339,13 @@ export function Container() {
         isLoading={isMembersLoading}
         items={teacherItems}
         onClose={() => setShowTeachersModal(false)}
+      />
+
+      <QRCodeModal
+        isOpen={!!classToShowQr}
+        classDescription={classToShowQr?.descricao ?? ""}
+        code={classToShowQr?.codigo ?? ""}
+        onClose={() => setClassToShowQr(null)}
       />
 
       <ConfirmActionModal

@@ -29,6 +29,7 @@ i18n
         reportStudent: lg.reportStudent_ptBR,
         altSession: lg.altSession_ptBR,
         classes: lg.classes_ptBR,
+        altLogs: lg.altLogs_ptBR,
       },
       en: {
         common: lg.common_en,
@@ -46,6 +47,7 @@ i18n
         reportStudent: lg.reportStudent_en,
         altSession: lg.altSession_en,
         classes: lg.classes_en,
+        altLogs: lg.altLogs_en,
       },
       es: {
         common: lg.common_es,
@@ -63,6 +65,7 @@ i18n
         reportStudent: lg.reportStudent_es,
         altSession: lg.altSession_es,
         classes: lg.classes_es,
+        altLogs: lg.altLogs_es,
       },
     },
     supportedLngs: [...SUPPORTED_LANGUAGES],
@@ -83,6 +86,7 @@ i18n
       "reportStudent",
       "altSession",
       "classes",
+      "altLogs",
     ],
     defaultNS: "common",
     interpolation: { escapeValue: false },

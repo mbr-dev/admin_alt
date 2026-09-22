@@ -1,17 +1,19 @@
 import * as S from "./styles";
 import { ClassService } from "@/data/models";
 import { useTranslation } from "react-i18next";
+import { FaQrcode } from "react-icons/fa";
 import { FaChalkboardUser, FaPencil, FaTrash, FaUsers } from "react-icons/fa6";
 
 interface IClassCard {
   data: ClassService.IClassService;
   onViewStudents: (classItem: ClassService.IClassService) => void;
   onViewTeachers: (classItem: ClassService.IClassService) => void;
+  onViewQrCode: (classItem: ClassService.IClassService) => void;
   onEdit: (classItem: ClassService.IClassService) => void;
   onDelete: (classItem: ClassService.IClassService) => void;
 }
 
-export function ClassCard({ data, onViewStudents, onViewTeachers, onEdit, onDelete }: IClassCard) {
+export function ClassCard({ data, onViewStudents, onViewTeachers, onViewQrCode, onEdit, onDelete }: IClassCard) {
   const { t } = useTranslation("classes");
   const isActive = data.status === 1;
 
@@ -57,6 +59,14 @@ export function ClassCard({ data, onViewStudents, onViewTeachers, onEdit, onDele
           onClick={() => onViewTeachers(data)}
         >
           <FaChalkboardUser />
+        </S.ActionButton>
+        <S.ActionButton
+          type="button"
+          $variant="qrcode"
+          aria-label={`${t("button_qrcode")} ${data.descricao}`}
+          onClick={() => onViewQrCode(data)}
+        >
+          <FaQrcode />
         </S.ActionButton>
         <S.ActionButton
           type="button"

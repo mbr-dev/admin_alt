@@ -15,6 +15,7 @@
   "management_units": "Units",
   "management_professionals": "Profissionals",
   "alt_session":"Sessions",
+  "alt_logs": "Activities",
   "breadcrumb_aria_label": "Breadcrumb navigation",
   "breadcrumb_report_student": "Student report",
   "logout_modal_title": "Confirm logout",

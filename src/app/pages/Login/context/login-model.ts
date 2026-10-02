@@ -8,4 +8,5 @@ export interface ILoginContextProvider {
 export interface ILoginContext {
   load: boolean;
   handleSignIn: (user: string, password: string) => Promise<void>;
+  handleAccessByCode: (codigo: string) => Promise<boolean>;
 }

@@ -1,5 +1,6 @@
 export { Home } from "./Home";
 export { Login } from "./Login";
+export { TokenAccess } from "./TokenAccess";
 export { Groups } from "./Groups";
 export { Classes } from "./Classes";
 export { Profile } from "./Profile";

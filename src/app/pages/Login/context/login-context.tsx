@@ -51,11 +51,6 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
     }
   };
 
-  const redirectToHome = () => {
-    const basename = String(import.meta.env.VITE_BASENAME ?? "").replace(/\/$/, "");
-    window.location.replace(`${window.location.origin}${basename}/`);
-  };
-
   //Faz o login
   const handleSignIn = async (user: string, password: string) => {
     try {
@@ -76,16 +71,11 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
       setLoad(true);
 
       const response = await Auth({ codigo });
-      if (!response?.access_token) {
-        nav("/login", { replace: true });
-        return false;
-      }
+      if (!response?.access_token) return false;
 
       await establishSession(response);
-      redirectToHome();
       return true;
     } catch {
-      nav("/login", { replace: true });
       return false;
     } finally {
       setLoad(false);

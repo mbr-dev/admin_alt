@@ -3,5 +3,8 @@
   "user": "Usuario",
   "password": "Contraseña",
   "submit": "Entrar",
-  "loading": "Cargando"
+  "loading": "Cargando",
+  "codeLoading": "Loading...",
+  "codeSuccess": "Autenticación completada",
+  "codeError": "Error de autenticación"
 }

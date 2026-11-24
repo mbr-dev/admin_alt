@@ -8,3 +8,4 @@ export { Animations } from "./Animations";
 export { StudentData } from "./StudentData";
 export { Coordinator } from "./Coordinator";
 export { FormStudent } from "./FormStudent";
+export { BlockAccessModal } from "./BlockAccessModal";

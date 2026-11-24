@@ -2,6 +2,13 @@ import tw from "tailwind-styled-components";
 
 export type TStatTone = "students" | "professionals" | "sessions" | "frequency";
 
+function cardSurface(tone: TStatTone) {
+  if (tone === "students") return "bg-[#FDF2F5]";
+  if (tone === "professionals") return "bg-[#F2F6FC]";
+  if (tone === "sessions") return "bg-[#F9FBF2]";
+  return "bg-[#F6F4FA]";
+}
+
 export const Grid = tw.section`
 w-full
 grid
@@ -26,12 +33,30 @@ shadow-sm
 
 md:p-5
 
-${({ $tone }) => {
-  if ($tone === "students") return "bg-[#FDF2F5]";
-  if ($tone === "professionals") return "bg-[#F2F6FC]";
-  if ($tone === "sessions") return "bg-[#F9FBF2]";
-  return "bg-[#F6F4FA]";
-}}
+${({ $tone }) => cardSurface($tone)}
+`;
+
+export const CardButton = tw.button<{ $tone: TStatTone }>`
+w-full
+flex
+items-center
+gap-4
+rounded-2xl
+p-4
+shadow-sm
+cursor-pointer
+text-left
+border-0
+
+md:p-5
+
+hover:shadow-md
+focus-visible:outline-none
+focus-visible:ring-2
+focus-visible:ring-[#3A393A]/30
+focus-visible:ring-offset-2
+
+${({ $tone }) => cardSurface($tone)}
 `;
 
 export const IconCircle = tw.span<{ $tone: TStatTone }>`

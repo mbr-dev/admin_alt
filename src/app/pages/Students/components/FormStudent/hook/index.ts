@@ -116,6 +116,9 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const [verified, setVerified] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [highestReachedStep, setHighestReachedStep] = useState<number>(() =>
+    studentToEdit ? FORM_STEP_KEYS.length - 1 : 0
+  );
   const isEditMode = !!studentToEdit;
   const formSteps = useMemo(
     () => FORM_STEP_KEYS.map((step) => ({ key: step.key, label: t(step.labelKey) })),
@@ -484,7 +487,12 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
       return false;
     }
 
-    if (guardianEmail.trim() && !EMAIL_REGEX.test(guardianEmail.trim())) {
+    if (!guardianEmail.trim()) {
+      toast({ title: t("toast_title"), description: t("validation_guardian_email"), variant: "destructive" });
+      return false;
+    }
+
+    if (!EMAIL_REGEX.test(guardianEmail.trim())) {
       toast({ title: t("toast_title"), description: t("validation_guardian_email_invalid"), variant: "destructive" });
       return false;
     }
@@ -507,19 +515,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     return true;
   };
 
-  const verifyAddressStep = () => {
-    if (!addressStreet.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_street"), variant: "destructive" });
-      return false;
-    }
-
-    if (!addressNumber.trim()) {
-      toast({ title: t("toast_title"), description: t("validation_number"), variant: "destructive" });
-      return false;
-    }
-
-    return true;
-  };
+  const verifyAddressStep = () => true;
 
   const verifyContactStep = () => {
     if (!contactGuardianName.trim()) {
@@ -566,6 +562,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
     const nextStep = currentStep + 1;
     setCurrentStep(nextStep);
+    setHighestReachedStep((prev) => Math.max(prev, nextStep));
 
     const isGoingToAccessStep = formSteps[nextStep]?.key === "access";
     if (!isEditMode && isGoingToAccessStep && user.trim() && user !== userPrefix) {
@@ -576,6 +573,18 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
   const goToPreviousStep = () => {
     if (isFirstStep) return;
     setCurrentStep((prev) => prev - 1);
+  };
+
+  const goToStep = (step: number) => {
+    if (step === currentStep || step < 0 || step > highestReachedStep) return;
+    if (step > currentStep && !verifyStep(currentStep)) return;
+
+    setCurrentStep(step);
+
+    const isGoingToAccessStep = formSteps[step]?.key === "access";
+    if (!isEditMode && isGoingToAccessStep && user.trim() && user !== userPrefix) {
+      void verifyIfUserExists();
+    }
   };
 
   const cleanData = () => {
@@ -614,9 +623,11 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setSelectedCidIds([]);
     setVerified(false);
     setCurrentStep(0);
+    setHighestReachedStep(studentToEdit ? FORM_STEP_KEYS.length - 1 : 0);
   };
 
   useEffect(() => {
+    setHighestReachedStep(studentToEdit ? FORM_STEP_KEYS.length - 1 : 0);
     void fetchData(studentToEdit);
     // Dispara somente quando muda o id em edição (ou entra/sai do modo edição)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -629,11 +640,13 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     generateUser,
     disabledBtn,
     currentStep,
+    highestReachedStep,
     totalSteps,
     isFirstStep,
     isLastStep,
     goToNextStep,
     goToPreviousStep,
+    goToStep,
     formSteps,
     user,
     setUser,

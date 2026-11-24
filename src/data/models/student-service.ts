@@ -74,6 +74,16 @@ export interface IStudent {
   codigo_emoji: string[];
 }
 
+export type AccessBlockTarget = "none" | "app" | "platform" | "both";
+
+export type DeactivateClinicStudentAccessTarget = "aluno" | "responsavel" | "ambos";
+
+export interface IDeactivateClinicStudentAccessPayload {
+  alvo: DeactivateClinicStudentAccessTarget;
+}
+
+export type IReactivateClinicStudentAccessPayload = IDeactivateClinicStudentAccessPayload;
+
 export interface ICreateClinicStudentPayload {
   usuario: {
     usuario: string;

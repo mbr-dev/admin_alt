@@ -541,13 +541,31 @@ pb-1
 md:gap-2
 `;
 
-export const StepItem = tw.li<{ $active?: boolean; $completed?: boolean }>`
+export const StepItem = tw.li`
 flex
 items-center
 gap-1
 shrink-0
+`;
+
+export const StepButton = tw.button<{ $active?: boolean; $completed?: boolean; $clickable?: boolean }>`
+flex
+items-center
+gap-1
+shrink-0
+bg-transparent
+border-0
+p-0
+text-left
+disabled:opacity-100
 
 ${(props) => (props.$active || props.$completed ? "text-[#f21a6f]" : "text-mbr-gray-60")}
+${(props) => (props.$clickable ? "cursor-pointer hover:opacity-80" : "cursor-default")}
+
+focus-visible:outline-none
+focus-visible:ring-2
+focus-visible:ring-[#ec5691]/60
+focus-visible:rounded-lg
 `;
 
 export const StepCircle = tw.span<{ $active?: boolean; $completed?: boolean }>`

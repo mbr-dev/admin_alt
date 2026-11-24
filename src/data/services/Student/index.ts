@@ -24,7 +24,7 @@ export function Student() {
     async (id_rede: number, page = 1, limit = 10, nome = "") => {
       try {
         const nomeQuery = nome ? `&nome=${encodeURIComponent(nome)}` : "";
-        const { data } = await api.get(`student/getAllStudentsNetwork/${id_rede}?page=${page}&limit=${limit}${nomeQuery}`);
+        const { data } = await api.get(`student/getAllStudentsNetwork/${id_rede}?page=${page}&limit=${limit}${nomeQuery}&status=all`);
         if (data) return data;
         return {} as StudentService.IStudent;
       } catch (error) {
@@ -74,6 +74,36 @@ export function Student() {
       }
     },
     [api, get_error]
+  );
+
+  const deactivateClinicStudentAccess = useCallback(
+    async (id: number, dataToSend: StudentService.IDeactivateClinicStudentAccessPayload) => {
+      try {
+        const { data } = await api.patch(`clinicStudent/deactivateClinicStudentAccess/${id}`, dataToSend);
+        return data ?? true;
+      } catch (error) {
+        const errorMessage = formatValidationErrorDescription(error);
+        console.log(errorMessage);
+        toast({ title: "Alunos", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, toast]
+  );
+
+  const reactivateClinicStudentAccess = useCallback(
+    async (id: number, dataToSend: StudentService.IReactivateClinicStudentAccessPayload) => {
+      try {
+        const { data } = await api.patch(`clinicStudent/reactivateClinicStudentAccess/${id}`, dataToSend);
+        return data ?? true;
+      } catch (error) {
+        const errorMessage = formatValidationErrorDescription(error);
+        console.log(errorMessage);
+        toast({ title: "Alunos", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, toast]
   );
 
   const updateClinicStudentByUserId = useCallback(
@@ -171,6 +201,8 @@ export function Student() {
     registerStudent,
     createClinicStudent,
     getClinicStudentByUserId,
+    deactivateClinicStudentAccess,
+    reactivateClinicStudentAccess,
     updateClinicStudentByUserId,
     deleteStudentByUserId,
     updateStudentByUserId,

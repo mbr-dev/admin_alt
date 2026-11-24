@@ -139,6 +139,7 @@ bg-mbr-gray-20
 `;
 
 export const StudentCard = tw.article`
+relative
 flex
 flex-col
 items-center
@@ -156,6 +157,43 @@ ease-out
 
 hover:scale-105
 hover:shadow-md
+`;
+
+export const StatusBadge = tw.span`
+group
+absolute
+top-3
+right-3
+z-10
+flex
+`;
+
+export const StatusDot = tw.span<{ $active?: boolean }>`
+block
+h-3
+w-3
+rounded-full
+
+${(props) => (props.$active ? "bg-mbr-green-30" : "bg-mbr-red-10")}
+`;
+
+export const StatusTooltip = tw.span`
+pointer-events-none
+absolute
+top-5
+right-0
+whitespace-nowrap
+rounded-md
+bg-black
+px-2
+py-1
+text-xs
+font-medium
+text-white
+opacity-0
+
+group-hover:opacity-100
+group-focus-within:opacity-100
 `;
 
 export const InitialsCircle = tw.div`

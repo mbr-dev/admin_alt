@@ -327,7 +327,15 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
         <S.Label htmlFor="guardian-email">
           {t("field_email")}
-          <S.Input id="guardian-email" type="email" value={props.guardianEmail} onChange={handleInputChange(props.setGuardianEmail)} />
+          <S.Input
+            id="guardian-email"
+            type="email"
+            value={props.guardianEmail}
+            onChange={handleInputChange(props.setGuardianEmail)}
+            aria-required="true"
+            aria-describedby="guardian-email-hint"
+          />
+          <S.FieldHint id="guardian-email-hint">{t("field_guardian_email_hint")}</S.FieldHint>
         </S.Label>
 
         <S.Label htmlFor="guardian-birth">
@@ -500,15 +508,30 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
           <S.StepsList aria-label={t("step_progress_aria")}>
             {props.formSteps.map((step, index) => {
               const isActive = index === props.currentStep;
-              const isCompleted = index < props.currentStep;
+              const isReached = index <= props.highestReachedStep;
+              const isClickable = isReached && !isActive;
+              const isFilled = isReached && !isActive;
 
               return (
-                <S.StepItem key={step.key} $active={isActive} $completed={isCompleted}>
-                  <S.StepCircle $active={isActive} $completed={isCompleted} aria-current={isActive ? "step" : undefined}>
-                    {index + 1}
-                  </S.StepCircle>
-                  <S.StepLabel>{step.label}</S.StepLabel>
-                  {index < props.formSteps.length - 1 && <S.StepConnector $completed={isCompleted} />}
+                <S.StepItem key={step.key}>
+                  <S.StepButton
+                    type="button"
+                    disabled={!isReached}
+                    $active={isActive}
+                    $completed={isFilled}
+                    $clickable={isClickable}
+                    aria-current={isActive ? "step" : undefined}
+                    aria-label={isActive ? step.label : t("step_go_to", { label: step.label })}
+                    onClick={() => props.goToStep(index)}
+                  >
+                    <S.StepCircle $active={isActive} $completed={isFilled}>
+                      {index + 1}
+                    </S.StepCircle>
+                    <S.StepLabel>{step.label}</S.StepLabel>
+                  </S.StepButton>
+                  {index < props.formSteps.length - 1 && (
+                    <S.StepConnector $completed={index < props.highestReachedStep} />
+                  )}
                 </S.StepItem>
               );
             })}

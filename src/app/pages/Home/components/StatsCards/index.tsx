@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import { useHome } from "../../hook";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaUser, FaChalkboardTeacher, FaCalendarAlt } from "react-icons/fa";
 import { BsGraphUpArrow } from "react-icons/bs";
@@ -11,10 +12,13 @@ interface IStatCardConfig {
   labelKey: string;
   value: string;
   icon: IconType;
+  route?: string;
+  ariaKey?: string;
 }
 
 export function StatsCards() {
   const { t } = useTranslation("home");
+  const navigate = useNavigate();
   const homeContext = useHome();
 
   if (homeContext.isLoading) {
@@ -30,8 +34,8 @@ export function StatsCards() {
 
   const data = homeContext.clinicData;
   const cards: IStatCardConfig[] = [
-    { id: "students", labelKey: "stats_students", value: String(data?.students ?? 0), icon: FaUser },
-    { id: "professionals", labelKey: "stats_professionals", value: String(data?.professionals ?? 0), icon: FaChalkboardTeacher },
+    { id: "students", labelKey: "stats_students", value: String(data?.students ?? 0), icon: FaUser, route: "/students", ariaKey: "stats_students_open" },
+    { id: "professionals", labelKey: "stats_professionals", value: String(data?.professionals ?? 0), icon: FaChalkboardTeacher, route: "/professionals", ariaKey: "stats_professionals_open" },
     { id: "sessions", labelKey: "stats_sessions_today", value: String(data?.sessions_today ?? 0), icon: FaCalendarAlt },
     { id: "frequency", labelKey: "stats_frequency", value: String(data?.frequency ?? 0), icon: BsGraphUpArrow },
   ];
@@ -41,8 +45,8 @@ export function StatsCards() {
       {cards.map((card) => {
         const Icon = card.icon;
 
-        return (
-          <S.Card key={card.id} $tone={card.id}>
+        const content = (
+          <>
             <S.IconCircle $tone={card.id} aria-hidden>
               <Icon />
             </S.IconCircle>
@@ -50,6 +54,26 @@ export function StatsCards() {
               <S.Value $tone={card.id}>{card.value}</S.Value>
               <S.Label>{t(card.labelKey)}</S.Label>
             </S.Content>
+          </>
+        );
+
+        if (card.route) {
+          return (
+            <S.CardButton
+              key={card.id}
+              type="button"
+              $tone={card.id}
+              aria-label={t(card.ariaKey ?? card.labelKey)}
+              onClick={() => navigate(card.route as string)}
+            >
+              {content}
+            </S.CardButton>
+          );
+        }
+
+        return (
+          <S.Card key={card.id} $tone={card.id}>
+            {content}
           </S.Card>
         );
       })}

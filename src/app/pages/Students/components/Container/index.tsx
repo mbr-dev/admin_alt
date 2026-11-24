@@ -1,13 +1,15 @@
 import * as S from "./styles";
-import { Animations, FormStudent, ModalShow } from "..";
+import { Animations, BlockAccessModal, FormStudent, ModalShow } from "..";
 import { useStudents } from "../../hook";
 import { StudentService } from "@/data/models";
 import { ChangeEvent, KeyboardEvent, useCallback, useState } from "react";
-import { FaChartSimple, FaMagnifyingGlass, FaPenToSquare } from "react-icons/fa6";
+import { FaBan, FaChartSimple, FaMagnifyingGlass, FaPenToSquare, FaUnlock } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FloatingAddButton, Pagination } from "@/components/template";
 import { encryptJS } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useStorage } from "@/data/hooks";
+import { UserRole } from "@/data/constants/user-roles";
 
 /** Primeira letra do nome + primeira letra do segundo termo (ex.: João Santos → JS; Maria Castro Alves → MC). */
 function getStudentInitials(fullName: string): string {
@@ -36,10 +38,13 @@ function getStudentAgeYears(birthDate: string | null | undefined): number | null
 
 export function Container() {
   const { t } = useTranslation("students");
+  const { getData } = useStorage();
   const navigate = useNavigate();
   const studentsContext = useStudents();
+  const isSecretary = Number(getData("hierarquia")) === UserRole.SECRETARY;
   const [showForm, setShowForm] = useState<boolean>(false);
   const [studentToEdit, setStudentToEdit] = useState<StudentService.IStudent | null>(null);
+  const [studentToBlock, setStudentToBlock] = useState<StudentService.IStudent | null>(null);
   const [searchName, setSearchName] = useState<string>("");
 
   const handleSearch = () => {
@@ -66,6 +71,16 @@ export function Container() {
   return (
     <S.Container>
       {studentsContext.showData && <ModalShow />}
+      {studentToBlock ? (
+        <BlockAccessModal
+          student={studentToBlock}
+          onClose={() => setStudentToBlock(null)}
+          onSuccess={async () => {
+            setStudentToBlock(null);
+            await studentsContext.fetchData();
+          }}
+        />
+      ) : null}
       <Animations />
 
       <S.Main>
@@ -110,6 +125,10 @@ export function Container() {
                     const age = getStudentAgeYears(student.data_nascimento ?? student.nascimento);
                     return (
                       <S.StudentCard key={student.id}>
+                        <S.StatusBadge tabIndex={0} aria-label={student.status === 1 ? t("status_active") : t("status_inactive")}>
+                          <S.StatusDot $active={student.status === 1} />
+                          <S.StatusTooltip>{student.status === 1 ? t("status_active") : t("status_inactive")}</S.StatusTooltip>
+                        </S.StatusBadge>
                         <S.InitialsCircle aria-hidden>{getStudentInitials(student.nome)}</S.InitialsCircle>
                         <S.CardName>{student.nome}</S.CardName>
                         <S.CardAge>
@@ -125,6 +144,16 @@ export function Container() {
                             <FaPenToSquare aria-hidden />
                             {t("edit_info")}
                           </S.CardActionButton>
+                          {isSecretary ? (
+                            <S.CardActionButton
+                              type="button"
+                              aria-label={t(student.status === 0 ? "enable_access_button_aria" : "block_access_button_aria", { name: student.nome })}
+                              onClick={() => setStudentToBlock(student)}
+                            >
+                              {student.status === 0 ? <FaUnlock aria-hidden /> : <FaBan aria-hidden />}
+                              {t(student.status === 0 ? "enable_access_button" : "block_access_button")}
+                            </S.CardActionButton>
+                          ) : null}
                           <S.CardActionButton
                             type="button"
                             aria-label={t("view_report_aria", { name: student.nome })}

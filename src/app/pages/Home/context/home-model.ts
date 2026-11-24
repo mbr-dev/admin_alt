@@ -1,5 +1,6 @@
 
 import React from "react";
+import { HomeService } from "@/data/models";
 
 export interface IHomeContextProvider {
   children: React.ReactNode;
@@ -9,6 +10,8 @@ export interface IHomeContext {
   events: any[];
   name: string;
   ranking: IUserPosition[];
+  clinicData: HomeService.ISecretaryHomeClinicData | null;
+  isLoading: boolean;
 }
 
 export interface IUserPosition {

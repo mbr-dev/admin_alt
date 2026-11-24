@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useApi } from "@/data/hooks";
+import { HomeService } from "@/data/models";
 
 export function Home() {
   const { api, get_error } = useApi();
@@ -26,11 +27,10 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  const getSecretaryDatasForHomeALTClinic = useCallback(async () => {
+  const getSecretaryDatasForHomeALTClinic = useCallback(async (): Promise<HomeService.ISecretaryHomeClinicData | null> => {
     try {
       const { data } = await api.get("home/getSecretaryDatasForHomeALTClinic");
-      if (data) return data;
-      return null;
+      return HomeService.unwrapSecretaryHomeClinicData(data);
     } catch (error) {
       console.log(get_error(error));
       return null;

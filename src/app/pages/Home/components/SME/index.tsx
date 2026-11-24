@@ -1,12 +1,20 @@
 import * as S from "./styles";
-import * as C from "..";
+import { WelcomeHero } from "../WelcomeHero";
+import { StatsCards } from "../StatsCards";
+import { QuickAccess } from "../QuickAccess";
+import { SessionsActivities } from "../SessionsActivities";
+import { DailyTip } from "../DailyTip";
 
 export const SME = () => {
   return (
     <S.Container>
-      <C.Welcome />
-      <C.Painel />
-      <C.Infos />
+      <S.Main>
+        <WelcomeHero />
+        <StatsCards />
+        <QuickAccess />
+        <SessionsActivities />
+        <DailyTip />
+      </S.Main>
     </S.Container>
   )
 }

@@ -15,25 +15,37 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   const [ranking, setRanking] = useState<IHC.IUserPosition[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [name, setName] = useState<string>("");
-  //Função que busca os dados para home
+  const [clinicData, setClinicData] = useState<IHC.IHomeContext["clinicData"]>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       mainContext.setLoad(true);
-      //Busca os dados pela hierarquia
-      const response = 
-        Number(getData("hierarquia")) === UserRole.COORDINATOR ? await getCoordinatorDatasForHomeALTClinc() :
-        Number(getData("hierarquia")) === UserRole.TEACHER ? await getTeacherDatasForHomeALTClinic() :
-        Number(getData("hierarquia")) === UserRole.STUDENT ? await getStudentDatasForHomeALT() : await getSecretaryDatasForHomeALTClinic();
+      const hierarchy = Number(getData("hierarquia"));
+      const storedName = String(getData("nome") ?? getData("usuario") ?? "");
 
-      if (response) {
-        //Filtra o evento pela hierarquia
-        setRanking(response.rakingHome.data);
-        setEvents(response.eventsActivity);
-        setName(response.name);
+      if (hierarchy === UserRole.SECRETARY) {
+        const response = await getSecretaryDatasForHomeALTClinic();
+        if (response) {
+          setClinicData(response);
+          setName(response.nome || storedName);
+        }
+        return;
       }
 
-      mainContext.setLoad(false);
+      const response =
+        hierarchy === UserRole.COORDINATOR || hierarchy === UserRole.ADMIN ? await getCoordinatorDatasForHomeALTClinc() :
+        hierarchy === UserRole.TEACHER ? await getTeacherDatasForHomeALTClinic() :
+        await getStudentDatasForHomeALT();
+
+      if (response) {
+        setRanking(response.rakingHome?.data ?? []);
+        setEvents(response.eventsActivity ?? []);
+        setName(response.name ?? storedName);
+      }
     } finally {
+      setIsLoading(false);
       mainContext.setLoad(false);
     }
   }
@@ -45,7 +57,7 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   }, [mainContext.isReady]);
 
   return (
-    <HomeContext.Provider value={{ ranking, name, events }}>
+    <HomeContext.Provider value={{ ranking, name, events, clinicData, isLoading }}>
       {children}
     </HomeContext.Provider>
   );

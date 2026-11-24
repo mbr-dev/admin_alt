@@ -1,8 +1,9 @@
 import * as S from "./styles";
 import { useFormStudent } from "./hook";
 import { getCidGroupIcon, getCidGroupSelectedCount } from "./helpers/cidGroup";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { StudentService } from "@/data/models";
 import { useTranslation } from "react-i18next";
 import {
@@ -21,6 +22,8 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
   const { t, i18n } = useTranslation("students");
   const props = useFormStudent({ onClose, onSuccess, studentToEdit });
   const [expandedCidSections, setExpandedCidSections] = useState<Record<string, boolean>>({});
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showGuardianPassword, setShowGuardianPassword] = useState<boolean>(false);
   const stylesWithCid = S as typeof S & {
     CidListContainer: typeof S.Container;
     CidEmpty: typeof S.FormTitle;
@@ -112,7 +115,25 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
 
         <S.Label htmlFor="student-password">
           {t("field_password")}
-          <S.Input id="student-password" type="password" value={props.password} onChange={handleInputChange(props.setPassword)} />
+          <S.PasswordWrap>
+            <S.PasswordInput
+              id="student-password"
+              type={showPassword ? "text" : "password"}
+              value={props.password}
+              onChange={handleInputChange(props.setPassword)}
+            />
+            <S.ButtonEyes
+              type="button"
+              onClick={(event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault();
+                event.stopPropagation();
+                setShowPassword((prev) => !prev);
+              }}
+              aria-label={showPassword ? t("hide_password") : t("show_password")}
+            >
+              {showPassword ? <FaRegEyeSlash aria-hidden={true} /> : <FaRegEye aria-hidden={true} />}
+            </S.ButtonEyes>
+          </S.PasswordWrap>
         </S.Label>
 
         <S.Label htmlFor="student-unit">
@@ -271,6 +292,39 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
           <S.Input id="guardian-name" value={props.guardianName} onChange={handleInputChange(props.setGuardianName)} />
         </S.Label>
 
+        <S.Label htmlFor="guardian-user">
+          {t("field_user")}
+          <S.ReadOnlyUserInput
+            id="guardian-user"
+            value={props.guardianUser}
+            readOnly
+            aria-readonly="true"
+          />
+        </S.Label>
+
+        <S.Label htmlFor="guardian-password">
+          {t("field_password")}
+          <S.PasswordWrap>
+            <S.PasswordInput
+              id="guardian-password"
+              type={showGuardianPassword ? "text" : "password"}
+              value={props.guardianPassword}
+              onChange={handleInputChange(props.setGuardianPassword)}
+            />
+            <S.ButtonEyes
+              type="button"
+              onClick={(event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault();
+                event.stopPropagation();
+                setShowGuardianPassword((prev) => !prev);
+              }}
+              aria-label={showGuardianPassword ? t("hide_password") : t("show_password")}
+            >
+              {showGuardianPassword ? <FaRegEyeSlash aria-hidden={true} /> : <FaRegEye aria-hidden={true} />}
+            </S.ButtonEyes>
+          </S.PasswordWrap>
+        </S.Label>
+
         <S.Label htmlFor="guardian-email">
           {t("field_email")}
           <S.Input id="guardian-email" type="email" value={props.guardianEmail} onChange={handleInputChange(props.setGuardianEmail)} />
@@ -295,6 +349,17 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
         <S.Label htmlFor="guardian-kinship">
           {t("field_kinship")}
           <S.Input id="guardian-kinship" value={props.guardianKinship} onChange={handleInputChange(props.setGuardianKinship)} />
+        </S.Label>
+
+        <S.Label htmlFor="guardian-access-code">
+          {t("field_access_code")}
+          <S.ReadOnlyInput
+            id="guardian-access-code"
+            value={props.guardianAccessCode}
+            readOnly
+            aria-readonly="true"
+          />
+          <S.FieldHint>{t("field_access_code_hint")}</S.FieldHint>
         </S.Label>
       </S.Grid>
     </S.Section>

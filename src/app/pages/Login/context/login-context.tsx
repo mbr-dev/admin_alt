@@ -30,6 +30,27 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
     }
   };
 
+  const establishSession = async (response: any) => {
+    saveDataInStorage({ keys: Object.keys(response), values: Object.values(response) });
+
+    if (response.hierarquia === UserRole.SECRETARY) {
+      const responseUnit = await getAllUnitByNetworkId(response.id_rede);
+      if (responseUnit) {
+        setData("id_unidade", responseUnit[0].id);
+      }
+    } else {
+      const responseUnit = await getUserUnitAndIdByIdUser(response.id);
+      if (responseUnit) {
+        setData("id_unidade", responseUnit.id_unidade);
+      }
+    }
+
+    const userId = Number(response.id);
+    if (Number.isFinite(userId) && userId > 0) {
+      await applyLanguageFromPreference(userId);
+    }
+  };
+
   //Faz o login
   const handleSignIn = async (user: string, password: string) => {
     try {
@@ -37,31 +58,29 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
 
       const response = await Auth({ usuario: user, senha: password});
       if (response) {
-        saveDataInStorage({ keys: Object.keys(response), values: Object.values(response) });
-
-        if (response.hierarquia === UserRole.SECRETARY) {
-          const responseUnit = await getAllUnitByNetworkId(response.id_rede);
-          if (responseUnit) {
-            setData("id_unidade", responseUnit[0].id);
-          }
-        } else {
-          const responseUnit = await getUserUnitAndIdByIdUser(response.id);
-          if (responseUnit) {
-            setData("id_unidade", responseUnit.id_unidade);
-          }
-        }
-
-        const userId = Number(response.id);
-        if (Number.isFinite(userId) && userId > 0) {
-          await applyLanguageFromPreference(userId);
-        }
-
+        await establishSession(response);
         goToHome();
       }
     } finally {
       setLoad(false);
     }
-  }
+  };
+
+  const handleAccessByCode = async (codigo: string) => {
+    try {
+      setLoad(true);
+
+      const response = await Auth({ codigo });
+      if (!response?.access_token) return false;
+
+      await establishSession(response);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      setLoad(false);
+    }
+  };
   //Salva os dados no cookie
   const saveDataInStorage = (data: any) => {
     data.keys.forEach((key: any, index: any) => {
@@ -84,7 +103,7 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
   }
 
   return (
-    <LoginContext.Provider value={{ handleSignIn, load }}>
+    <LoginContext.Provider value={{ handleSignIn, handleAccessByCode, load }}>
       {children}
     </LoginContext.Provider>
   );

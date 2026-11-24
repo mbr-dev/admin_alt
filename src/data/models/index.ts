@@ -18,3 +18,4 @@ export * as ReportABASessionService from "./report-aba-session-service";
 export * as PreferenceUserService from "./preference-user-service";
 export * as ALTDevelopmentReportService from "./alt-development-report-service";
 export * as ALTDevelopmentNetworkService from "./alt-development-network-service";
+export * as HomeService from "./home-service";

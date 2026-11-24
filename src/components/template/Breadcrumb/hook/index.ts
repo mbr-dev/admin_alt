@@ -13,6 +13,10 @@ const EXTRA_BREADCRUMBS: Record<string, IBreadcrumbItem[]> = {
     { labelKey: "management_students", route: "/students" },
     { labelKey: "breadcrumb_report_student" },
   ],
+  "/alt_logs": [
+    { labelKey: "management" },
+    { labelKey: "alt_logs" },
+  ],
 };
 
 function normalizePath(pathname: string) {

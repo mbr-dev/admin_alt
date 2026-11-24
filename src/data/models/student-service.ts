@@ -87,6 +87,9 @@ export interface ICreateClinicStudentPayload {
     sexo: string;
   };
   responsavel: {
+    usuario: string;
+    senha: string | null;
+    codigo_acesso: string;
     nome: string;
     email: string;
     data_nascimento: string;
@@ -118,6 +121,11 @@ export interface IClinicCidUsuarioItem {
 }
 
 export type IClinicCidUsuarioFromApi = number[] | IClinicCidUsuarioItem | IClinicCidUsuarioItem[];
+
+export interface IVerifyAccessCode {
+  valido: boolean;
+  em_uso: boolean;
+}
 
 /** Resposta de getClinicStudentByUserId — estrutura base do payload com CID flexível. */
 export interface IClinicStudentDetails extends Omit<ICreateClinicStudentPayload, "cid_usuario"> {

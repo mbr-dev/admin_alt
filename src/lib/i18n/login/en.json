@@ -3,5 +3,8 @@
   "user": "Username",
   "password": "Password",
   "submit": "Sign in",
-  "loading": "Loading"
+  "loading": "Loading",
+  "codeLoading": "Loading...",
+  "codeSuccess": "Authentication successful",
+  "codeError": "Authentication failed"
 }

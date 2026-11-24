@@ -132,6 +132,23 @@ export function Student() {
     [toast, api, get_error]
   );
 
+  const verifyAccessCode = useCallback(
+    async (codigo: string): Promise<StudentService.IVerifyAccessCode | null> => {
+      try {
+        const { data } = await api.get(`clinicStudent/verifyAccessCode/${encodeURIComponent(codigo)}`);
+        const payload = data?.data ?? data;
+        return {
+          valido: payload?.valido === true,
+          em_uso: payload?.em_uso === true,
+        };
+      } catch (error) {
+        console.log(get_error(error));
+        return null;
+      }
+    },
+    [api, get_error]
+  );
+
   const getUnitById = useCallback(
     async (id: number) => {
       try {
@@ -150,6 +167,7 @@ export function Student() {
     getAllStudentsNetwork,
     getUnitById,
     verifyUser,
+    verifyAccessCode,
     registerStudent,
     createClinicStudent,
     getClinicStudentByUserId,

@@ -3,10 +3,9 @@ import { decodeToken } from "react-jwt";
 import { useApi, useToast } from "@/data/hooks";
 import { StudentService } from "@/data/models";
 
-interface IAuthPayload {
-  usuario: string;
-  senha: string;
-}
+type IAuthPayload =
+  | { usuario: string; senha: string }
+  | { codigo: string };
 
 export function Login() {
   const { api, get_error } = useApi();

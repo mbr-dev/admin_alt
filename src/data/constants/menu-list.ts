@@ -23,7 +23,7 @@ export const MENU_LIST: IMENU_LIST[] = [
     route: "/",
     name: "home",
     icon: ImgSVG.Home,
-    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.STUDENT, UserRole.TEACHER],
+    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.STUDENT, UserRole.TEACHER, UserRole.RESPONSIBLE],
     subMenu: []
   },
   {
@@ -32,7 +32,7 @@ export const MENU_LIST: IMENU_LIST[] = [
     route: "NO",
     name: "management",
     icon: ImgSVG.Gestao,
-    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.TEACHER],
+    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.TEACHER, UserRole.RESPONSIBLE],
     subMenu: [
       {
         id: 0,
@@ -44,7 +44,7 @@ export const MENU_LIST: IMENU_LIST[] = [
         id: 1,
         route: "/indicators",
         name: "management_indicators",
-        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR]
+        hierarchy: [UserRole.SECRETARY, UserRole.ADMIN, UserRole.TEACHER, UserRole.COORDINATOR, UserRole.RESPONSIBLE]
       },
       {
         id: 2,
@@ -106,7 +106,7 @@ export const MENU_LIST: IMENU_LIST[] = [
     route: "/profile",
     name: "profile",
     icon: ImgSVG.Perfil,
-    hierarchy: [UserRole.COORDINATOR, UserRole.STUDENT, UserRole.TEACHER],
+    hierarchy: [UserRole.COORDINATOR, UserRole.STUDENT, UserRole.TEACHER, UserRole.RESPONSIBLE],
     subMenu: []
   },
   {
@@ -115,7 +115,7 @@ export const MENU_LIST: IMENU_LIST[] = [
     route: "/support",
     name: "support",
     icon: ImgSVG.Suport,
-    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.STUDENT, UserRole.TEACHER],
+    hierarchy: [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.SECRETARY, UserRole.STUDENT, UserRole.TEACHER, UserRole.RESPONSIBLE],
     subMenu: []
   },
 ]

@@ -105,6 +105,7 @@ export interface ICreateClinicStudentPayload {
     data_nascimento: string;
     cpf_cnpj: string;
     parentesco: string;
+    enviar_email:boolean;
   };
   responsavel_endereco: {
     logradouro: string;

@@ -86,7 +86,7 @@ landscape:xl:mr-6
 
 export const Form = tw.form`
 w-[320px]
-h-[320px]
+h-[390px]
 relative
 flex
 flex-col
@@ -171,6 +171,39 @@ md:h-[32px]
 md:right-2
 md:top-[34px]
 md:[&>svg]:text-2xl
+`;
+
+export const ExtraActions = tw.div`
+z-30
+flex
+w-[180px]
+flex-col
+items-start
+gap-1
+
+md:w-[300px]
+`;
+
+export const TextButton = tw.button`
+bg-transparent
+border-0
+p-0
+text-sm
+font-medium
+text-white
+underline
+underline-offset-2
+cursor-pointer
+
+hover:text-white/80
+focus-visible:outline-2
+focus-visible:outline-offset-2
+focus-visible:outline-white
+
+disabled:cursor-not-allowed
+disabled:opacity-60
+
+md:text-base
 `;
 
 export const Button = tw.button`

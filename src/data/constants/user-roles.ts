@@ -4,4 +4,5 @@ export enum UserRole {
   TEACHER = 3,
   STUDENT = 4,
   SECRETARY = 5,
+  RESPONSIBLE = 9,
 }

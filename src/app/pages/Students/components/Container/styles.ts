@@ -258,6 +258,8 @@ transition-colors
 outline-none
 
 hover:bg-[#ec5691]/10
+disabled:cursor-not-allowed
+disabled:opacity-60
 focus-visible:ring-2
 focus-visible:ring-[#ec5691]
 focus-visible:ring-offset-2

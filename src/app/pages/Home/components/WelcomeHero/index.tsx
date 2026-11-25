@@ -1,9 +1,18 @@
 import * as S from "./styles";
+import { Fragment } from "react";
 import { useHome } from "../../hook";
 import { useTranslation } from "react-i18next";
 import homeVideo from "@/components/videos/home.mp4";
 
-export function WelcomeHero() {
+interface IWelcomeHeroProps {
+  gladKey?: string;
+  subtitleKeys?: string[];
+}
+
+export function WelcomeHero({
+  gladKey = "welcome_glad",
+  subtitleKeys = ["welcome_line3", "welcome_line4"],
+}: IWelcomeHeroProps) {
   const { t } = useTranslation("home");
   const homeContext = useHome();
 
@@ -22,11 +31,14 @@ export function WelcomeHero() {
       <S.Overlay aria-hidden />
       <S.Content>
         <S.Hello>{hello}</S.Hello>
-        <S.Glad>{t("welcome_glad")}</S.Glad>
+        <S.Glad>{t(gladKey)}</S.Glad>
         <S.Subtitle>
-          {t("welcome_line3")}
-          <br />
-          {t("welcome_line4")}
+          {subtitleKeys.map((key, index) => (
+            <Fragment key={key}>
+              {index > 0 ? <br /> : null}
+              {t(key)}
+            </Fragment>
+          ))}
         </S.Subtitle>
       </S.Content>
     </S.Card>

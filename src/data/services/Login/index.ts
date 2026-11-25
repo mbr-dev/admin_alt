@@ -3,9 +3,16 @@ import { decodeToken } from "react-jwt";
 import { useApi, useToast } from "@/data/hooks";
 import { StudentService } from "@/data/models";
 
-type IAuthPayload =
-  | { usuario: string; senha: string }
-  | { codigo: string };
+type IAuthPayload = { usuario: string; senha: string };
+
+type ILoginResponsiblePayload = { codigo: string };
+
+function withDecodedToken(data: { access_token?: string } | null | undefined) {
+  if (!data?.access_token) return {};
+
+  const decoded = decodeToken(data.access_token);
+  return { ...data, ...(decoded && typeof decoded === "object" ? decoded : {}) };
+}
 
 export function Login() {
   const { api, get_error } = useApi();
@@ -14,11 +21,17 @@ export function Login() {
   const Auth = useCallback(async (dataToSend: IAuthPayload) => {
     try {
       const { data } = await api.post("authWebALT/login", dataToSend);
-      if (data?.access_token) {
-        const decoded = decodeToken(data.access_token);
-        return { ...data, ...(decoded && typeof decoded === "object" ? decoded : {}) };
-      }
-      return {};
+      return withDecodedToken(data);
+    } catch (error) {
+      console.log(get_error(error));
+      toast({ title: "Login", description: get_error(error), variant: "destructive" });
+    }
+  }, [api, get_error, toast]);
+
+  const loginResponsible = useCallback(async (dataToSend: ILoginResponsiblePayload) => {
+    try {
+      const { data } = await api.post("authWebALT/loginResponsible", dataToSend);
+      return withDecodedToken(data);
     } catch (error) {
       console.log(get_error(error));
       toast({ title: "Login", description: get_error(error), variant: "destructive" });
@@ -53,5 +66,5 @@ export function Login() {
     [api, get_error]
   );
 
-  return { Auth, getUserUnitAndIdByIdUser, getAllUnitByNetworkId };
+  return { Auth, loginResponsible, getUserUnitAndIdByIdUser, getAllUnitByNetworkId };
 }

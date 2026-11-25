@@ -91,6 +91,21 @@ export function Student() {
     [api, toast]
   );
 
+  const resendResponsibleAccessEmail = useCallback(
+    async (id: number) => {
+      try {
+        const { data } = await api.post(`clinicStudent/resendResponsibleAccessEmail/${id}`);
+        return data ?? true;
+      } catch (error) {
+        const errorMessage = formatValidationErrorDescription(error);
+        console.log(errorMessage);
+        toast({ title: "Alunos", description: errorMessage, variant: "destructive" });
+        return null;
+      }
+    },
+    [api, toast]
+  );
+
   const reactivateClinicStudentAccess = useCallback(
     async (id: number, dataToSend: StudentService.IReactivateClinicStudentAccessPayload) => {
       try {
@@ -202,6 +217,7 @@ export function Student() {
     createClinicStudent,
     getClinicStudentByUserId,
     deactivateClinicStudentAccess,
+    resendResponsibleAccessEmail,
     reactivateClinicStudentAccess,
     updateClinicStudentByUserId,
     deleteStudentByUserId,

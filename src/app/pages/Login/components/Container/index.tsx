@@ -1,20 +1,24 @@
 import * as S from "./styles";
+import { FirstAccessModal } from "../FirstAccessModal";
 import { useLogin } from "../../hook";
 import { FormEvent, useEffect, useState } from "react";
 import { ImgSVG, ImgPng } from "@/components/images";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useStorage } from "@/data/hooks";
 import { resolveLanguageFromBrowser } from "@/lib/i18n/resolve-language";
 
 export function Container() {
   const loginContext = useLogin();
+  const navigate = useNavigate();
   const { getData } = useStorage();
   const { t, i18n } = useTranslation("login");
 
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showFirstAccess, setShowFirstAccess] = useState<boolean>(false);
 
   useEffect(() => {
     const isLoggedIn = Boolean(getData("token"));
@@ -31,8 +35,23 @@ export function Container() {
     loginContext.handleSignIn(name, password);
   };
 
+  const handleFirstAccess = async (codigo: string) => {
+    const authenticated = await loginContext.handleAccessByCode(codigo);
+    if (!authenticated) return;
+
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <S.Container style={{ backgroundImage: `url(${ImgSVG.Login4})` }}>
+      {showFirstAccess ? (
+        <FirstAccessModal
+          isSubmitting={loginContext.load}
+          onClose={() => setShowFirstAccess(false)}
+          onConfirm={handleFirstAccess}
+        />
+      ) : null}
       <S.Wave>
         <img src={ImgSVG.Login3} alt="" />
       </S.Wave>
@@ -81,6 +100,19 @@ export function Container() {
               {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
             </S.ButtonEyes>
           </S.Label>
+
+          <S.ExtraActions>
+            <S.TextButton
+              type="button"
+              onClick={() => setShowFirstAccess(true)}
+              disabled={loginContext.load}
+            >
+              {t("first_access")}
+            </S.TextButton>
+            <S.TextButton type="button" disabled={loginContext.load}>
+              {t("forgot_password")}
+            </S.TextButton>
+          </S.ExtraActions>
 
           <S.Button type="submit" disabled={loginContext.load}>
             {loginContext.load ? t("loading") : t("submit")}

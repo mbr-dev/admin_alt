@@ -37,6 +37,17 @@ export function Home() {
     }
   }, [api, get_error]);
 
+  const getResponsibleDatasForHomeALTClinic = useCallback(async (): Promise<HomeService.IGetResponsibleDatasForHomeALTClinic | null> => {
+    try {
+      const { data } = await api.get<HomeService.IGetResponsibleDatasForHomeALTClinicResponse>("home/getResponsibleDatasForHomeALTClinic");
+      if (data?.data) return data.data;
+      return null;
+    } catch (error) {
+      console.log(get_error(error));
+      return null;
+    }
+  }, [api, get_error]);
+
   const getCoordinatorDatasForHomeALTClinc = useCallback(async () => {
     try {
       const { data } = await api.get("home/getCoordinatorDatasForHomeALTClinc");
@@ -48,5 +59,11 @@ export function Home() {
     }
   }, [api, get_error]);
 
-  return { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALTClinic, getCoordinatorDatasForHomeALTClinc };
+  return {
+    getStudentDatasForHomeALT,
+    getTeacherDatasForHomeALTClinic,
+    getSecretaryDatasForHomeALTClinic,
+    getResponsibleDatasForHomeALTClinic,
+    getCoordinatorDatasForHomeALTClinc,
+  };
 }

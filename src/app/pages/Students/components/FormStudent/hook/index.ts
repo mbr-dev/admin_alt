@@ -85,6 +85,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
   const [guardianName, setGuardianName] = useState<string>("");
   const [guardianEmail, setGuardianEmail] = useState<string>("");
+  const [sendGuardianEmail, setSendGuardianEmail] = useState<boolean>(true);
   const [guardianBirth, setGuardianBirth] = useState<string>("");
   const [guardianCpfCnpj, setGuardianCpfCnpj] = useState<string>("");
   const [guardianKinship, setGuardianKinship] = useState<string>("");
@@ -200,6 +201,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
 
           setGuardianName(clinicStudent.responsavel?.nome ?? "");
           setGuardianEmail(clinicStudent.responsavel?.email ?? "");
+          setSendGuardianEmail(clinicStudent.responsavel?.enviar_email !== false);
           setGuardianBirth(clinicStudent.responsavel?.data_nascimento?.split("T")[0] ?? "");
           setGuardianCpfCnpj(clinicStudent.responsavel?.cpf_cnpj ?? "");
           setGuardianKinship(clinicStudent.responsavel?.parentesco ?? "");
@@ -374,6 +376,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
           codigo_acesso: accessCode,
           nome: guardianName.trim(),
           email: guardianEmail.trim(),
+          enviar_email: sendGuardianEmail,
           data_nascimento: guardianBirth ? new Date(`${guardianBirth}T00:00:00`).toISOString() : "",
           cpf_cnpj: guardianCpfCnpj.trim(),
           parentesco: guardianKinship.trim(),
@@ -594,6 +597,7 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setStudentSex("");
     setGuardianName("");
     setGuardianEmail("");
+    setSendGuardianEmail(true);
     setGuardianBirth("");
     setGuardianCpfCnpj("");
     setGuardianKinship("");
@@ -674,6 +678,8 @@ export const useFormStudent = ({ onSuccess, onClose, studentToEdit }: IUseFormSt
     setGuardianName,
     guardianEmail,
     setGuardianEmail,
+    sendGuardianEmail,
+    setSendGuardianEmail,
     guardianBirth,
     setGuardianBirth,
     guardianCpfCnpj,

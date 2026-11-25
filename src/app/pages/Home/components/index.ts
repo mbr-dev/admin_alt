@@ -13,3 +13,4 @@ export { DailyTip } from "./DailyTip";
 export { Teacher } from "./Teacher";
 export { Container } from "./Container";
 export { Coordinator } from "./Coordinator";
+export { Responsible } from "./Responsible";

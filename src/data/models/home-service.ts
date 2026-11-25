@@ -58,3 +58,62 @@ export function unwrapSecretaryHomeClinicData(payload: unknown): ISecretaryHomeC
     recent_activities: Array.isArray(source.recent_activities) ? source.recent_activities : [],
   };
 }
+
+/** Notificação da Home do responsável (`id_hierarquia` 9). */
+export interface IResponsibleHomeNotification {
+  id: number;
+  id_notificacao_user: number;
+  titulo: string;
+  mensagem: string;
+  prioridade: number;
+  status_visualizacao: number;
+  data_cadastro: string;
+}
+
+export interface IResponsibleHomeChildActivity {
+  id: number;
+  id_modulo: number;
+  modulo: string | null;
+  id_atividade: number;
+  atividade: string | null;
+  alternativa_correta: string;
+  alternativa_escolhida: string;
+  acertou: boolean;
+  data_inicio: Date;
+  data_termino: Date;
+  data_cadastro: Date;
+}
+
+export interface IResponsibleHomeChild {
+  id_paciente: number;
+  id_usuario: number | null;
+  nome: string | null;
+  parentesco: string | null;
+  usuario: string | null;
+  unidade: string | null;
+  ultimas_atividades: IResponsibleHomeChildActivity[];
+}
+
+export interface IResponsibleHomeUpcomingSession {
+  id: number;
+  tipo_sessao: string | null;
+  data_inicio: Date | null;
+  data_final: Date | null;
+  status: "aberta" | "finalizada" | "cancelada" | "em_andamento" | null;
+  nome_aluno: string | null;
+  nome_profissional: string | null;
+}
+
+/** Payload de `GET home/getResponsibleDatasForHomeALTClinic`. */
+export interface IGetResponsibleDatasForHomeALTClinic {
+  nome: string;
+  filhos: number;
+  sessoes_hoje: number;
+  filhos_vinculados: IResponsibleHomeChild[];
+  proximas_sessoes: IResponsibleHomeUpcomingSession[];
+  notificacoes: IResponsibleHomeNotification[];
+}
+
+export interface IGetResponsibleDatasForHomeALTClinicResponse {
+  data: IGetResponsibleDatasForHomeALTClinic;
+}

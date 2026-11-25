@@ -3,12 +3,13 @@ import { Animations, BlockAccessModal, FormStudent, ModalShow } from "..";
 import { useStudents } from "../../hook";
 import { StudentService } from "@/data/models";
 import { ChangeEvent, KeyboardEvent, useCallback, useState } from "react";
-import { FaBan, FaChartSimple, FaMagnifyingGlass, FaPenToSquare, FaUnlock } from "react-icons/fa6";
+import { FaBan, FaChartSimple, FaEnvelope, FaMagnifyingGlass, FaPenToSquare, FaUnlock } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FloatingAddButton, Pagination } from "@/components/template";
 import { encryptJS } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import { useStorage } from "@/data/hooks";
+import { useStorage, useToast } from "@/data/hooks";
+import { Student } from "@/data/services";
 import { UserRole } from "@/data/constants/user-roles";
 
 /** Primeira letra do nome + primeira letra do segundo termo (ex.: João Santos → JS; Maria Castro Alves → MC). */
@@ -38,10 +39,15 @@ function getStudentAgeYears(birthDate: string | null | undefined): number | null
 
 export function Container() {
   const { t } = useTranslation("students");
+  const { toast } = useToast();
   const { getData } = useStorage();
   const navigate = useNavigate();
   const studentsContext = useStudents();
-  const isSecretary = Number(getData("hierarquia")) === UserRole.SECRETARY;
+  const { resendResponsibleAccessEmail } = Student();
+  const hierarchy = Number(getData("hierarquia"));
+  const isSecretary = hierarchy === UserRole.SECRETARY;
+  const canResendResponsibleEmail = hierarchy === UserRole.ADMIN || hierarchy === UserRole.SECRETARY || hierarchy === 6;
+  const [resendingUserId, setResendingUserId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [studentToEdit, setStudentToEdit] = useState<StudentService.IStudent | null>(null);
   const [studentToBlock, setStudentToBlock] = useState<StudentService.IStudent | null>(null);
@@ -60,6 +66,22 @@ export function Container() {
   const handleCloseForm = () => {
     setStudentToEdit(null);
     setShowForm(false);
+  };
+
+  const handleResendEmail = async (student: StudentService.IStudent) => {
+    if (resendingUserId !== null) return;
+
+    setResendingUserId(student.id_usuario);
+    const response = await resendResponsibleAccessEmail(student.id_usuario);
+    setResendingUserId(null);
+
+    if (!response) return;
+
+    toast({
+      title: t("toast_title"),
+      description: t("toast_resend_email_success", { name: student.nome }),
+      variant: "successful",
+    });
   };
 
   const handleFormSuccess = async () => {
@@ -152,6 +174,17 @@ export function Container() {
                             >
                               {student.status === 0 ? <FaUnlock aria-hidden /> : <FaBan aria-hidden />}
                               {t(student.status === 0 ? "enable_access_button" : "block_access_button")}
+                            </S.CardActionButton>
+                          ) : null}
+                          {canResendResponsibleEmail ? (
+                            <S.CardActionButton
+                              type="button"
+                              disabled={resendingUserId === student.id_usuario}
+                              aria-label={t("resend_email_button_aria", { name: student.nome })}
+                              onClick={() => handleResendEmail(student)}
+                            >
+                              <FaEnvelope aria-hidden />
+                              {resendingUserId === student.id_usuario ? t("resend_email_sending") : t("resend_email_button")}
                             </S.CardActionButton>
                           ) : null}
                           <S.CardActionButton

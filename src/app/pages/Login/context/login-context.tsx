@@ -11,7 +11,7 @@ export const LoginContext = createContext({} as ILC.ILoginContext);
 
 export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
   const nav = useNavigate();
-  const { Auth, getUserUnitAndIdByIdUser, getAllUnitByNetworkId } = Login();
+  const { Auth, loginResponsible, getUserUnitAndIdByIdUser, getAllUnitByNetworkId } = Login();
   const { getPreferenceByUserId } = PreferenceUser();
   const { setData } = useStorage();
 
@@ -70,7 +70,7 @@ export function LoginContextProvider({ children }: ILC.ILoginContextProvider) {
     try {
       setLoad(true);
 
-      const response = await Auth({ codigo });
+      const response = await loginResponsible({ codigo });
       if (!response?.access_token) return false;
 
       await establishSession(response);

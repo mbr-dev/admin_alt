@@ -121,6 +121,28 @@ cursor-default
 md:text-base
 `;
 
+export const CheckLabel = tw.label`
+w-full
+flex
+flex-row
+items-center
+gap-2
+self-end
+text-sm
+font-medium
+text-black
+cursor-pointer
+
+md:text-base
+`;
+
+export const CheckInput = tw.input`
+w-4
+h-4
+shrink-0
+accent-[#ec5691]
+`;
+
 export const FieldHint = tw.span`
 text-mbr-gray-50
 text-xs

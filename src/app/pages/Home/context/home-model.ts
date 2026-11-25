@@ -11,6 +11,7 @@ export interface IHomeContext {
   name: string;
   ranking: IUserPosition[];
   clinicData: HomeService.ISecretaryHomeClinicData | null;
+  responsibleData: HomeService.IGetResponsibleDatasForHomeALTClinic | null;
   isLoading: boolean;
 }
 

@@ -1,5 +1,6 @@
 import * as IHC from "./home-model";
 import { Home } from "@/data/services";
+import { HomeService } from "@/data/models";
 import { useMain, useStorage } from "@/data/hooks";
 import { UserRole } from "@/data/constants/user-roles";
 import { useState, createContext, useEffect } from "react";
@@ -10,12 +11,13 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   const mainContext = useMain();
   const { getData } = useStorage();
 
-  const { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALTClinic, getCoordinatorDatasForHomeALTClinc } = Home();
+  const { getStudentDatasForHomeALT, getTeacherDatasForHomeALTClinic, getSecretaryDatasForHomeALTClinic, getResponsibleDatasForHomeALTClinic, getCoordinatorDatasForHomeALTClinc } = Home();
 
   const [ranking, setRanking] = useState<IHC.IUserPosition[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [name, setName] = useState<string>("");
   const [clinicData, setClinicData] = useState<IHC.IHomeContext["clinicData"]>(null);
+  const [responsibleData, setResponsibleData] = useState<HomeService.IGetResponsibleDatasForHomeALTClinic | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchData = async () => {
@@ -29,6 +31,15 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
         const response = await getSecretaryDatasForHomeALTClinic();
         if (response) {
           setClinicData(response);
+          setName(response.nome || storedName);
+        }
+        return;
+      }
+
+      if (hierarchy === UserRole.RESPONSIBLE) {
+        const response = await getResponsibleDatasForHomeALTClinic();
+        if (response) {
+          setResponsibleData(response);
           setName(response.nome || storedName);
         }
         return;
@@ -57,7 +68,7 @@ export function HomeContextProvider({ children }: IHC.IHomeContextProvider) {
   }, [mainContext.isReady]);
 
   return (
-    <HomeContext.Provider value={{ ranking, name, events, clinicData, isLoading }}>
+    <HomeContext.Provider value={{ ranking, name, events, clinicData, responsibleData, isLoading }}>
       {children}
     </HomeContext.Provider>
   );

@@ -338,6 +338,16 @@ export function FormStudent({ onClose, onSuccess, studentToEdit = null }: IFormS
           <S.FieldHint id="guardian-email-hint">{t("field_guardian_email_hint")}</S.FieldHint>
         </S.Label>
 
+        <S.CheckLabel htmlFor="guardian-send-email">
+          <S.CheckInput
+            id="guardian-send-email"
+            type="checkbox"
+            checked={props.sendGuardianEmail}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => props.setSendGuardianEmail(event.target.checked)}
+          />
+          {t("field_send_email")}
+        </S.CheckLabel>
+
         <S.Label htmlFor="guardian-birth">
           {t("field_birth")}
           <S.Input

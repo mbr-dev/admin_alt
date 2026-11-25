@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { Student } from "@/data/services";
 import { StudentService } from "@/data/models";
 import { useToast } from "@/data/hooks";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface IBlockAccessModalProps {
@@ -72,7 +72,7 @@ export function BlockAccessModal({ student, onClose, onSuccess }: IBlockAccessMo
         role="dialog"
         aria-modal="true"
         aria-labelledby="block-access-title"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}
       >
         <S.Title id="block-access-title">{t(isEnableMode ? "section_enable_access" : "section_block_access")}</S.Title>
         <S.StudentName>{student.nome}</S.StudentName>

@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface IFirstAccessModalProps {
@@ -41,7 +41,7 @@ export function FirstAccessModal({ isSubmitting, onClose, onConfirm }: IFirstAcc
         aria-modal="true"
         aria-labelledby="first-access-title"
         aria-describedby="first-access-hint"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}
       >
         <S.Title id="first-access-title">{t("first_access_title")}</S.Title>
         <S.Hint id="first-access-hint">{t("first_access_hint")}</S.Hint>
